@@ -62,7 +62,6 @@ public class ProjectController {
         }
     }
 
-    //TODO
     public void edit(Project project) throws NonexistentEntityException {
         try {
             em = JpaUtils.getEntityManager();
@@ -122,15 +121,26 @@ public class ProjectController {
         }
     }
 
-    //TODO
-    public void sendToRecyclebin(long projectId) {
-
+    public void sendToRecyclebin(long projectId) throws NonexistentEntityException {
+        Project p = findProject(projectId);
+        p.setDeletion(true);
+        edit(p);
     }
 
-    //TODO
-    public void delete(long projectId) {
-
-    }
+        public boolean delete(long projectId) {
+            EntityManager em = JpaUtils.getEntityManager();
+            try {
+                em.getTransaction().begin();
+               int i = em.createNativeQuery("delete from Project p where p.id = ?").
+                        setParameter(1, projectId).executeUpdate();
+                em.getTransaction().commit();
+               return true;
+            } catch (Exception ex) {
+                return false;
+            } finally {
+                em.close();
+            }
+        }
 
 
     public List<Project> findProjects() {
