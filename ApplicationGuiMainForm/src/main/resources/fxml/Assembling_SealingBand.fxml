@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Assembling_SealingBandController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="32.0" minHeight="-Infinity" minWidth="-Infinity" text="Nageldichtband" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" layoutY="84.0" spacing="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="71.0" layoutY="84.0" prefHeight="215.0" prefWidth="259.0">
+               <children>
+                  <TextField layoutX="97.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
+                  <Label layoutY="166.0" text="Nageldichtband: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox layoutX="97.0" layoutY="1.0" prefWidth="150.0" />
+                  <Label layoutY="54.0" text="Verschnitt:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="97.0" layoutY="28.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
+                  <Label layoutX="254.0" layoutY="27.0" text="€">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="27.0" text="Preis/Lfm: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="252.0" layoutY="54.0" text="\%">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button layoutY="90.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="246.0" text="Nageldichtband berechnen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Label layoutY="139.0" text="Verschnitt: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Produkt: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="146.0" layoutY="139.0" prefHeight="27.0" prefWidth="120.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="146.0" layoutY="166.0" prefHeight="27.0" prefWidth="120.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="391.0" layoutY="88.0" prefHeight="207.0" prefWidth="328.0">
+               <children>
+                  <Label text="Facharbeiter Stunde: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="27.0" text="Gesamte Montage Zeit: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="196.0" layoutY="28.0" prefHeight="25.0" prefWidth="102.0" promptText="Zeit in h" />
+                  <Label layoutX="301.0" text="€/h">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="196.0" layoutY="1.0" prefHeight="25.0" prefWidth="102.0" promptText="Kosten in €/h" />
+                  <Label layoutX="303.0" layoutY="27.0" text="h">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button layoutY="60.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="296.0" text="Gesamtkosten berechnen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Label layoutY="134.0" text="Kosten Produkt: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="161.0" text="Kosten Montage: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="188.0" text="Gesamtkosten: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="156.0" layoutY="134.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="156.0" layoutY="161.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="156.0" layoutY="188.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="299.0" prefHeight="100.0" prefWidth="927.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <TableView layoutX="151.0" layoutY="319.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="625.0" HBox.hgrow="NEVER">
+              <columns>
+                <TableColumn prefWidth="249.0" text="Name" />
+                <TableColumn prefWidth="195.0" text="Länge der Dachsparren" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <HBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </HBox.margin>
+            </TableView>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

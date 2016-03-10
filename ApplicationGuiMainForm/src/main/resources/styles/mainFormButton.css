@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28.12.2015, 16:47:05
+    Author     : Andreas
+*/
+
+.button{
+    -fx-background-color:transparent;
+    -fx-border-radius:2px;
+}
+.button:hover{
+    -fx-background-color:whitesmoke;
+}
+#bt_CreateProject{
+	-fx-graphic: url("../images/new.png");
+}
+#bt_PrintProject{
+	-fx-graphic: url("../images/printer.png");
+}
+#bt_Parameter{
+	-fx-graphic: url("../images/parameter.png");
+}
+#bt_ShowProjects{
+	-fx-graphic: url("../images/showAll.png");
+}
+#bt_ProductList{
+	-fx-graphic: url("../images/box.png");
+}
+#bt_Customer{
+	-fx-graphic: url("../images/client.png");
+}
+#bt_Options{
+	-fx-graphic: url("../images/option.png");
+}
+#openProject{
+    -fx-background-color:transparent;
+    -fx-graphic: url("../images/open.png");
+}
+#openProject:hover{
+    -fx-background-color:whitesmoke;
+}

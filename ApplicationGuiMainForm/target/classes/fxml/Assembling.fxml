@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane stylesheets="@../styles/projectButtons.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AssemblingController">
+   <children>
+      <HBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <TabPane fx:id="tb_AssemblingPane" stylesheets="@../styles/projectButtons.css" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+          <tabs>
+            <Tab closable="false" text="Schalung">
+                 <content>
+                     <fx:include source="Assembling_Formwork.fxml" />
+                 </content>    
+            </Tab>
+            <Tab closable="false" text="sichtbare Schalung">
+                <content>
+                    <fx:include source="Assembling_VisibleFormwork.fxml" />
+                </content>  
+            </Tab>  
+            <Tab closable="false" text="Folie">
+                <content>
+                    <fx:include source="Assembling_Foil.fxml" />
+                </content>  
+            </Tab>
+            <Tab closable="false" text="Nageldichtband">
+            <content>
+                    <fx:include source="Assembling_SealingBand.fxml" />
+                </content>  
+            </Tab>
+            <Tab closable="false" text="Konterlattung">
+                <content>
+                    <fx:include source="Assembling_CounterBatten.fxml" />
+                </content>  
+            </Tab>
+            <Tab closable="false" text="Lattung oder Vollschalung">
+                <content>
+                    <fx:include source="Assembling_BattensOrFullFormwork.fxml" />
+                </content>  
+            </Tab>
+          </tabs>
+        </TabPane>
+      </HBox>
+   </children>
+</AnchorPane>

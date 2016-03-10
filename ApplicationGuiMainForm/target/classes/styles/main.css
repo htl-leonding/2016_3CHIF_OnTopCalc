@@ -1,0 +1,9 @@
+#middlePane{
+	-fx-background-color:white;
+}
+#cb_OpenProject{
+	-fx-background-image: url("../images/open.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 5% center;
+	-fx-background-color:transparent;
+}

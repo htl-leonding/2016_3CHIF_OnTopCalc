@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_TransportController">
+   <children>
+      <Label alignment="CENTER" text="Transport" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER" layoutY="61.0" nodeOrientation="LEFT_TO_RIGHT" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="100.0" layoutY="50.0" nodeOrientation="LEFT_TO_RIGHT">
+               <children>
+                  <Label layoutY="29.0" text="Kilometergeld: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="58.0" text="einfache Fahrt:  ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="126.0" layoutY="88.0" prefHeight="25.0" prefWidth="121.0" promptText="Tage" />
+                  <TextField layoutX="126.0" layoutY="30.0" prefHeight="25.0" prefWidth="121.0" promptText="Kilometergeld in  €" />
+                  <Label layoutY="87.0" text="Fahrtage: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Kosten für PKW: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="126.0" layoutY="59.0" prefHeight="25.0" prefWidth="121.0" promptText="Enternung in km" />
+                  <Label alignment="CENTER" layoutX="252.0" layoutY="29.0" text="€">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="253.0" layoutY="58.0" text="km">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="252.0" layoutY="87.0" text="d">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane nodeOrientation="LEFT_TO_RIGHT">
+               <children>
+                  <Label layoutY="29.0" text="Preis LKW/Stunde: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="58.0" text="Dauer: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="150.0" layoutY="30.0" prefHeight="25.0" prefWidth="121.0" promptText="Kosten in €/h" />
+                  <Label text="Kosten für LKW: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="149.0" layoutY="59.0" prefHeight="25.0" prefWidth="121.0" promptText="Dauer in h" />
+                  <Label alignment="CENTER" layoutX="276.0" layoutY="29.0" text="€/h">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="276.0" layoutY="58.0" text="h">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="275.0" layoutY="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="275.0" layoutY="200.0" prefHeight="96.0" prefWidth="264.0">
+               <children>
+                  <Label layoutY="51.0" text="Kosten Transport: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1.0" layoutY="75.0" text="Kosten Aufenthalt: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="264.0" text="Kosten berechnen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="153.0" layoutY="51.0" text="0.00€">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="153.0" layoutY="75.0" text="0.00€">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="1.0" layoutY="111.0" text="Gesamtkosten: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="151.0" layoutY="111.0" text="0.00€">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,9 @@
+/*
+    Author     : Kepplinger
+*/
+#bt_Next{
+	-fx-graphic: url("../images/next2.png");
+}
+#bt_Prev{
+	-fx-graphic: url("../images/back.png");
+}

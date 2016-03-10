@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefWidth="872.0" style="-fx-background-color: White;" stylesheets="@../styles/projectButtons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProjectViewController">
+   <children>
+      <GridPane layoutY="568.0" style="-fx-background-color: linear-gradient(#ffffff  0%, lightgrey  20%, lightgrey 80%, lightgrey 100%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="bt_Dismiss" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#dismiss" text="Projekt verwerfen">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="bt_Prev" disable="true" mnemonicParsing="false" onAction="#selectPreviousTab" text="Zurück" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="bt_Next" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#selectNextTab" text="Weiter" GridPane.columnIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="bt_Save" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#saveProject" text="Projekt erstellen" GridPane.columnIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </GridPane>
+      <TabPane fx:id="tb_MainPane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <tabs>
+            <Tab closable="false" onSelectionChanged="#firstTabSelected" text="Allgemeine Informationen">
+               <content>
+                    <fx:include source="Project_Informations.fxml" />
+               </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Grund- und Dachfläche">
+                <content>
+                    <fx:include source="Project_ResultArea.fxml" />
+                </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Holzmaterial">
+                <content>
+                   <fx:include source="Project_ConstructionmaterialList.fxml" />
+                </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Montage">
+              <content>
+                   <fx:include source="Assembling.fxml" />
+               </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material für Monatge">
+                <content>
+                   <fx:include source="Project_ConstructionMaterial.fxml" />
+                </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Farbe">
+                <content>
+                   <fx:include source="Project_Colour.fxml" />
+                </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Transport">
+                <content>
+                    <fx:include source="Project_Transport.fxml" />
+                </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material- und Kostenliste">
+                <content>
+                    <fx:include source="Project_MaterialAndCost.fxml" />
+                </content>
+            </Tab>
+            <Tab closable="false" onSelectionChanged="#lastTabSelected" text="Übersicht">
+                <content>
+                    <fx:include source="Project_Overview.fxml" />
+                </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

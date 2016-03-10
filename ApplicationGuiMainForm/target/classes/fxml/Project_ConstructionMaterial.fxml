@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_ConstructionMaterialController">
+   <children>
+      <Label alignment="CENTER" layoutX="174.0" text="Material für Montage" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+         <padding>
+            <Insets top="25.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER" layoutY="66.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label text="Gesamtpreis: ">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="0.00€">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane maxWidth="1024.0">
+               <children>
+                  <TableView prefHeight="300.0">
+                    <columns>
+                      <TableColumn prefWidth="116.0" text="Produkt" />
+                      <TableColumn prefWidth="73.0" text="Anzahl" />
+                        <TableColumn prefWidth="105.0" text="Produktpreis €" />
+                        <TableColumn prefWidth="111.0" text="Bauteil" />
+                        <TableColumn prefWidth="166.0" text="Gesamtpreis des Produkts" />
+                        <TableColumn maxWidth="32.0" minWidth="0.0" prefWidth="32.0" text=" " />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="429.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ComboBox prefWidth="150.0" />
+            <TextField prefHeight="25.0" prefWidth="106.0" promptText="Anzahl" />
+            <TextField prefHeight="25.0" prefWidth="103.0" promptText="Preis in €" />
+            <ComboBox prefWidth="150.0" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

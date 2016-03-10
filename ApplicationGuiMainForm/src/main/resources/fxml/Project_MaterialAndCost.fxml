@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="473.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_MaterialAndCostController">
+   <children>
+      <HBox alignment="CENTER" layoutX="200.0" layoutY="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <TableView prefHeight="350.0">
+              <columns>
+                <TableColumn prefWidth="90.0" text="Kategorie" />
+                <TableColumn prefWidth="90.0" text="Bauteil" />
+                  <TableColumn prefWidth="90.0" text="Breite in cm" />
+                  <TableColumn prefWidth="90.0" text="Höhe in cm" />
+                  <TableColumn prefWidth="90.0" text="Länge in m" />
+                  <TableColumn prefWidth="90.0" text="Anzahl" />
+                  <TableColumn prefWidth="90.0" text="Einheit" />
+                  <TableColumn prefWidth="95.0" text="Preis/Einheit" />
+                  <TableColumn prefWidth="90.0" text="Gesamtpreis" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <Label alignment="CENTER" layoutX="182.0" text="Material- und Kostenliste" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </Label>
+   </children>
+</AnchorPane>

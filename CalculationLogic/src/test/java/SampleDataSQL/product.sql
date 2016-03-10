@@ -1,0 +1,6 @@
+INSERT INTO APP.PRODUCT
+VALUES 
+(1,1,TIMESTAMP('2016-02-07 00:00:00'),100,100,'TestProdukt01',2.5,'ProductSample',100,1),
+(2,4,TIMESTAMP('2016-02-07 00:00:00'),10,1010,'TestProdukt02',3.99,'ProductSample',1000,2),
+(3,9,TIMESTAMP('2016-02-07 00:00:00'),1,10,'TestProdukt03',12.01,'ProductSample',91,3),
+(4,16,TIMESTAMP('2016-02-07 00:00:00'),2.98,23.4,'TestProdukt04',97.89,'ProductSample',240,1);

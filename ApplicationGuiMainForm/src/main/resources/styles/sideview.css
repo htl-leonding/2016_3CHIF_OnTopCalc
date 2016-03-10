@@ -1,0 +1,32 @@
+.sideview {
+    -fx-background-color: 
+        linear-gradient(from 00% 00% to 100% 0%, #BDBDBD 0%, white 100%);
+}
+.label:hover{
+    -fx-font-weight:bold;
+}
+.label{
+    -fx-font-size:18px;
+}
+
+#showProjects{
+    -fx-graphic: url("../images/showAll.png");
+}
+#newProject{
+    -fx-graphic: url("../images/new.png");
+}
+#printProject{
+    -fx-graphic: url("../images/printer.png");
+}
+#productList{
+    -fx-graphic: url("../images/box.png");
+}
+#parameter{
+    -fx-graphic: url("../images/parameter.png");
+}
+#clients{
+    -fx-graphic: url("../images/client.png");
+}
+#options{
+    -fx-graphic: url("../images/option.png");
+}

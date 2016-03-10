@@ -1,0 +1,6 @@
+INSERT INTO APP.UNIT
+VALUES 
+(1,TIMESTAMP('2016-02-07 00:00:00'),'Meter','m'),
+(2,TIMESTAMP('2016-02-07 00:00:00'),'Grad','°'),
+(3,TIMESTAMP('2016-02-07 00:00:00'),'Millimeter','mm'),
+(4,TIMESTAMP('2016-02-07 00:00:00'),'Euro','€');
