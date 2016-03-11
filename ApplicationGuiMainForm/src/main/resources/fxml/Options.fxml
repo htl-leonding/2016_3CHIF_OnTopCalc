@@ -8,19 +8,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OptionsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
    <center>
       <AnchorPane style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="30.0" layoutY="41.0" text="Optionen" textFill="#3c84ff" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+            <Label id="subHeadlineProjectPages" layoutX="30.0" layoutY="41.0" text="Optionen" textFill="#3c84ff" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Berlin Sans FB" size="25.0" />
                </font>
             </Label>
-            <Label layoutX="15.0" layoutY="73.0" text="Papierkorb" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="60.0">
+            <Label id="boldLettering" layoutX="15.0" layoutY="73.0" text="Papierkorb" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="60.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -37,12 +37,12 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Label layoutX="17.0" layoutY="323.0" text="Sicherung" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0">
+            <Label id="boldLettering" layoutX="17.0" layoutY="323.0" text="Sicherung" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="15.0" layoutY="350.0" mnemonicParsing="false" text="Sicherung erstellen" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="15.0" />
+            <Button id="smallBtnLettering" layoutX="15.0" layoutY="350.0" mnemonicParsing="false" text="Sicherung erstellen" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="15.0" />
          </children>
       </AnchorPane>
    </center>

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -14,9 +19,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_ConstructionmaterialListController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_ConstructionmaterialListController">
    <children>
-      <Label alignment="CENTER" layoutX="118.0" text="Holzmaterial für Konstruktion (m³)" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label id="headlineProjectPages" alignment="CENTER" layoutX="118.0" text="Holzmaterial für Konstruktion (m³)" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
@@ -69,27 +74,27 @@
                         <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label minHeight="0.0" minWidth="0.0" text="Summe: ">
+                        <Label id="smallBoldText" minHeight="0.0" minWidth="0.0" text="Summe: ">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="0.000 m³" GridPane.columnIndex="1">
+                        <Label id="smallBoldText" text="0.000 m³" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="0.00 €" GridPane.columnIndex="3">
+                        <Label id="smallBoldText" text="0.00 €" GridPane.columnIndex="3">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="0.00 h" GridPane.columnIndex="4">
+                        <Label id="smallBoldText" text="0.00 h" GridPane.columnIndex="4">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label text="0.00 €" GridPane.columnIndex="6">
+                        <Label id="smallBoldText" text="0.00 €" GridPane.columnIndex="6">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -102,7 +107,7 @@
       </HBox>
       <HBox alignment="CENTER" layoutY="337.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label text="Gesamtpreis:" HBox.hgrow="ALWAYS">
+            <Label id="bigBoldHeadline" text="Gesamtpreis:" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="12.0" />
                </HBox.margin>
@@ -110,7 +115,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label text="0.00 €">
+            <Label id="bigBoldHeadline" text="0.00 €">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -129,7 +134,7 @@
                <children>
                   <HBox alignment="CENTER" layoutY="1.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                      <children>
-                        <Label text="Neues Material hinzufügen:">
+                        <Label id="boldLettering" text="Neues Material hinzufügen:">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -149,7 +154,7 @@
                               <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" text="OK">
+                        <Button id="smallBtnLettering" mnemonicParsing="false" text="OK">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>

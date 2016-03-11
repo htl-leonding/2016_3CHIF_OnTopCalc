@@ -1,0 +1,85 @@
+/*	HTL Leonding	*//* 
+    Created on : 26.02.2016, 09:41:26
+    Author     : daniel
+*/
+
+/*	HTL Leonding	*//* 
+    Created on : 21.02.2016, 09:48:59
+    Author     : User
+*/
+#headlineFrontPage{
+    -fx-text-fill: #3c84ff;
+    -fx-text-alignment: center;
+    -fx-font-size: 48px;  
+}
+#headlineProjectPages{
+    -fx-text-fill: #3c84ff;
+    -fx-text-alignment: center;
+    -fx-font-size: 36px;  
+}
+#boldLettering{
+    -fx-padding:3px 0px 0px -5px;
+  -fx-font-size: 17px;   
+  -fx-text-fill: #000000; 
+  -fx-font-weight:bold;
+}
+#boldHeadline{
+        -fx-padding:0px 3px 0px 0px;
+
+   -fx-font-size: 20px;   
+  -fx-text-fill: #000000; 
+  -fx-font-weight:bold;   
+}
+#bigBoldHeadline{
+   -fx-font-size: 24px;   
+  -fx-text-fill: #000000; 
+  -fx-font-weight:bold; 
+}
+#smallBoldText{
+   -fx-font-size: 12px;   
+  -fx-text-fill: #000000; 
+  -fx-font-weight:bold;  
+}
+#normalLettering{
+        -fx-padding:3px 23px 0px -5px;
+
+   -fx-font-size: 18px;   
+  -fx-text-fill: #000000;   
+}
+#btnLettering{
+     -fx-font-size:18px;
+  -fx-text-fill: #000000;   
+}
+#smallUnitsLettering{
+        -fx-padding:0px 0px 0px 25px;
+
+     -fx-font-size:14px;
+  -fx-text-fill: #000000;
+}
+#smallBtnLettering{
+  -fx-font-size:12px;
+  -fx-text-fill: #000000;    
+}
+#subHeadlineProjectPages{
+     -fx-text-fill: #3c84ff;
+    -fx-font-size: 24px; 
+}
+#specialLettering{
+       -fx-font-size: 18px;   
+  -fx-text-fill: red;
+}
+#smallNormalLettering{
+  -fx-font-size: 14px;   
+  -fx-text-fill: #000000;  
+}
+#productlistheadline{
+    -fx-font-size: 14px;   
+  -fx-text-fill: #000000;  
+  -fx-padding:0px 0px 0px -15px;
+}
+#UnitNotInText{
+            -fx-padding:3px 23px 0px 5px;
+
+   -fx-font-size: 18px;   
+  -fx-text-fill: #000000; 
+}

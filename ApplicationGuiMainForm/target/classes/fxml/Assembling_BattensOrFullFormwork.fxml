@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -7,18 +13,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Assembling_BattensOrFullFormworkController">
+<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Assembling_BattensOrFullFormworkController">
    <children>
-      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="32.0" minHeight="-Infinity" minWidth="-Infinity" text="Lattung/Vollschalung" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label id="headlineProjectPages" fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="32.0" minHeight="-Infinity" minWidth="-Infinity" text="Lattung/Vollschalung" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
-            <Font name="Berlin Sans FB" size="36.0" />
+            <Font size="36.0" />
          </font>
       </Label>
       <HBox alignment="CENTER" layoutX="332.0" layoutY="73.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label text="Dachart: ">
+            <Label id="boldLettering" text="Dachart: ">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Label>
             <ChoiceBox fx:id="cb_roofType" prefWidth="150.0" />

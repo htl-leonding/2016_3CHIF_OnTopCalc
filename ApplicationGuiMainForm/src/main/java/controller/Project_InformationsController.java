@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -142,7 +141,6 @@ public class Project_InformationsController implements Initializable, Observer {
      * @param project 
      */
     public void openProject(Project project) {
-        lb_Id.setTextFill(Color.BLACK);
         lb_Id.setText(String.valueOf(project.getId()));
         tf_ProjectName.setText(project.getProjectName());
         tf_City.setText(project.getClient().getCity());

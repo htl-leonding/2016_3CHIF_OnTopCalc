@@ -14,9 +14,9 @@
    <center>
       <AnchorPane style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="30.0" layoutY="41.0" text="Auftraggeber" textFill="#3c84ff" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+            <Label id="subHeadlineProjectPages" layoutX="30.0" layoutY="41.0" text="Auftraggeber" textFill="#3c84ff" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
                <font>
-                  <Font name="Berlin Sans FB" size="25.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <TableView fx:id="tv_Clients" layoutX="15.0" layoutY="44.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0">

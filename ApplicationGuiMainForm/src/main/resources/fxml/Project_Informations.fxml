@@ -19,7 +19,7 @@
    <children>
       <AnchorPane id="AnchorPane" HBox.hgrow="NEVER">
          <children>
-            <Label alignment="CENTER" layoutY="25.0" text="Allgemeine Informationen zum Projekt" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label id="headlineProjectPages" alignment="CENTER" layoutY="25.0" text="Allgemeine Informationen zum Projekt" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
@@ -28,33 +28,33 @@
                <children>
                   <AnchorPane layoutX="76.0" layoutY="55.0" prefHeight="245.0" prefWidth="350.0">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="127.0" layoutY="16.0" text="ID:" AnchorPane.leftAnchor="127.0">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="16.0" text="ID:" AnchorPane.leftAnchor="127.0">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="41.0" text="Art der Kalkulation:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="41.0" text="Art der Kalkulation:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="45.0" layoutY="64.0" text="Projektname:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="45.0" layoutY="64.0" text="Projektname:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="36.0" layoutY="91.0" text="Rechnungsnr.:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="36.0" layoutY="91.0" text="Rechnungsnr.:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label fx:id="lb_Id" layoutX="167.0" layoutY="16.0" text="-1" textFill="RED">
+                        <Label id="specialLettering" fx:id="lb_Id" layoutX="167.0" layoutY="16.0" text="-1">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label layoutX="167.0" layoutY="41.0" text="--------------------" textFill="RED">
+                        <Label id="specialLettering" layoutX="167.0" layoutY="41.0" text="--------------------">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
                         <TextField fx:id="tf_ProjectName" layoutX="167.0" layoutY="65.0" prefHeight="25.0" prefWidth="149.0" promptText="Projektname" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="25.0" />
                         <TextField fx:id="tf_InvoiceNumber" layoutX="167.0" layoutY="92.0" promptText="Rechnungsnummer" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="25.0" />
-                        <Label layoutX="20.0" layoutY="131.0" text="Notiz:">
+                        <Label id="normalLettering" layoutX="20.0" layoutY="131.0" text="Notiz:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
@@ -63,27 +63,27 @@
                   </AnchorPane>
                   <AnchorPane layoutX="491.0" layoutY="55.0" prefHeight="245.0" prefWidth="345.0" style="-fx-background-color: whitesmoke;">
                      <children>
-                        <Label alignment="CENTER" layoutX="53.0" layoutY="26.0" text="Angaben zum Auftraggeber" textFill="#3c84ff" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <Label id="subHeadlineProjectPages" alignment="CENTER" layoutX="53.0" layoutY="26.0" text="Angaben zum Auftraggeber" textFill="#3c84ff" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="123.0" layoutY="70.0" text="Name:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="123.0" layoutY="70.0" text="Name:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="120.0" layoutY="97.0" text="Straße:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="120.0" layoutY="97.0" text="Straße:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="80.0" layoutY="124.0" text="Postleitzahl:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="80.0" layoutY="124.0" text="Postleitzahl:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="94.0" layoutY="151.0" text="Stadt/Ort:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="94.0" layoutY="151.0" text="Stadt/Ort:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Label alignment="CENTER_RIGHT" layoutX="43.0" layoutY="178.0" text="Telefonnummer:">
+                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="43.0" layoutY="178.0" text="Telefonnummer:">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
@@ -92,7 +92,7 @@
                         <TextField fx:id="tf_ZipCode" layoutX="188.0" layoutY="125.0" promptText="Postleitzahl" AnchorPane.leftAnchor="188.0" />
                         <TextField fx:id="tf_City" layoutX="188.0" layoutY="152.0" promptText="Stadt/Ort" AnchorPane.leftAnchor="188.0" />
                         <TextField fx:id="tf_PhoneNumber" layoutX="188.0" layoutY="179.0" promptText="Telefonnummer" AnchorPane.leftAnchor="188.0" />
-                        <Button layoutX="188.0" layoutY="206.0" mnemonicParsing="false" onAction="#openClientView" prefHeight="25.0" prefWidth="149.0" text="Auftraggeber suchen" />
+                        <Button id="smallBtnLettering" layoutX="188.0" layoutY="206.0" mnemonicParsing="false" onAction="#openClientView" prefHeight="25.0" prefWidth="149.0" text="Auftraggeber suchen" />
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -107,7 +107,7 @@
                <children>
                   <AnchorPane layoutX="24.0" layoutY="337.0" prefHeight="181.0" prefWidth="390.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" text="Konstruktion festlegen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                        <Label id="normalLettering" alignment="CENTER" layoutX="14.0" layoutY="14.0" text="Konstruktion festlegen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
@@ -136,7 +136,7 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </GridPane.margin>
                               </ListView>
-                              <Label text="Konstruktionstyp:">
+                              <Label id="normalLettering" text="Konstruktionstyp:">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
@@ -144,7 +144,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Label text="Dachform:" GridPane.columnIndex="1">
+                              <Label id="normalLettering" text="Dachform:" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>

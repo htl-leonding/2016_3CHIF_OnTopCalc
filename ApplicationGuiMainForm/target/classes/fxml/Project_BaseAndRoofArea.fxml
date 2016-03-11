@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_BaseAndRoofAreaController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" text="Grund- und Dachflächenermittlung" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label id="headlineProjectPages" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" text="Grund- und Dachflächenermittlung" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
@@ -20,74 +20,74 @@
             <AnchorPane layoutX="71.0" layoutY="84.0">
                <children>
                   <TextField layoutX="67.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" promptText="Breite in m" />
-                  <Label layoutY="174.0" text="Dachfläche: ">
+                  <Label id="boldHeadline" layoutY="174.0" text="Dachfläche: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="54.0" text="Breite: ">
+                  <Label id="normalLettering" layoutY="54.0" text="Breite: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="67.0" layoutY="28.0" prefHeight="25.0" prefWidth="150.0" promptText="Länge in m" />
-                  <Label layoutX="221.0" layoutY="27.0" text="m">
+                  <Label id="UnitNotInText" layoutX="221.0" layoutY="27.0" text="m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="27.0" text="Länge: ">
+                  <Label id="normalLettering" layoutY="27.0" text="Länge: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="221.0" layoutY="54.0" text="m">
+                  <Label id="UnitNotInText" layoutX="221.0" layoutY="54.0" text="m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutY="88.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="219.0" text="Grundfläche berechnen">
+                  <Button id="btnLettering" layoutY="88.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="219.0" text="Grundfläche berechnen">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Label layoutY="134.0" text="Grundfläche: ">
+                  <Label id="boldLettering" layoutY="134.0" text="Grundfläche: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Grundfläche: ">
+                  <Label id="boldHeadline" text="Grundfläche: ">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="116.0" layoutY="135.0" text="0.00 m²">
+                  <Label id="normalLettering" layoutX="123.0" layoutY="134.0" text="0.00 m²">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="202.0" text="Neigung: ">
+                  <Label id="normalLettering" layoutY="202.0" text="Neigung: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="220.0" layoutY="202.0" text="°">
+                  <Label id="UnitNotInText" layoutX="220.0" layoutY="202.0" text="°">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="77.0" layoutY="203.0" prefHeight="25.0" prefWidth="142.0" promptText="Neigung in °" />
-                  <Button layoutY="235.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="219.0" text="Dachfläche berechnen">
+                  <Button id="btnLettering" layoutY="235.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="219.0" text="Dachfläche berechnen">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Label layoutX="112.0" layoutY="279.0" text="0.00 m²">
+                  <Label id="normalLettering" layoutX="112.0" layoutY="279.0" text="0.00 m²">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="279.0" text="Dachfläche: ">
+                  <Label id="boldLettering" layoutY="279.0" text="Dachfläche: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -100,75 +100,75 @@
             <AnchorPane>
                <children>
                   <TextField layoutX="134.0" layoutY="55.0" prefHeight="25.0" prefWidth="114.0" promptText="Frist/Traufe in m" />
-                  <Label layoutY="54.0" text="First/Traufe: ">
+                  <Label id="normalLettering" layoutY="54.0" text="First/Traufe: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="134.0" layoutY="28.0" prefHeight="25.0" prefWidth="114.0" promptText="Traufe in m" />
-                  <Label layoutY="27.0" text="Traufe: ">
+                  <Label id="normalLettering" layoutY="27.0" text="Traufe: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Dachvorsprung: ">
+                  <Label id="boldHeadline" text="Dachvorsprung: ">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Button layoutY="143.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="249.0" text="Dachvorsprung berechnen">
+                  <Button id="btnLettering" layoutY="143.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="249.0" text="Dachvorsprung berechnen">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Label layoutX="140.0" layoutY="205.0" text="0.00 m²">
+                  <Label id="normalLettering" layoutX="157.0" layoutY="205.0" text="0.00 m²">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="205.0" text="Dachvorsprung: ">
+                  <Label id="boldLettering" layoutY="205.0" text="Dachvorsprung: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="250.0" layoutY="27.0" text="m">
+                  <Label id="UnitNotInText" layoutX="250.0" layoutY="27.0" text="m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="250.0" layoutY="54.0" text="m">
+                  <Label id="UnitNotInText" layoutX="250.0" layoutY="54.0" text="m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="250.0" layoutY="81.0" text="m">
+                  <Label id="UnitNotInText" layoutX="250.0" layoutY="81.0" text="m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="81.0" text="Rechts Ortgang: ">
+                  <Label id="normalLettering" layoutY="81.0" text="Rechts Ortgang: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="134.0" layoutY="82.0" prefHeight="25.0" prefWidth="114.0" promptText="r. Ortgang in m" />
-                  <Label layoutX="250.0" layoutY="108.0" text="m">
+                  <Label id="UnitNotInText" layoutX="250.0" layoutY="108.0" text="m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="108.0" text="Links Ortgang: ">
+                  <Label id="normalLettering" layoutY="108.0" text="Links Ortgang: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="134.0" layoutY="109.0" prefHeight="25.0" prefWidth="114.0" promptText="l. Ortgang in m" />
-                  <Label layoutY="232.0" text="Dachfläche mit Dachvorsprung: ">
+                  <Label id="boldLettering" layoutY="232.0" text="Dachfläche mit Dachvorsprung: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="272.0" layoutY="232.0" text="0.00 m²">
+                  <Label id="normalLettering" layoutX="292.0" layoutY="232.0" text="0.00 m²">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -184,29 +184,29 @@
          <children>
             <AnchorPane prefHeight="53.0" prefWidth="547.0">
                <children>
-                  <Label layoutY="-32.0" text="Gesamtfläche: " AnchorPane.leftAnchor="0.0">
+                  <Label id="boldHeadline" layoutY="-32.0" text="Gesamtfläche: " AnchorPane.leftAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <AnchorPane AnchorPane.leftAnchor="0.0">
                      <children>
-                        <Label layoutY="1.0" text="Grundfläche: ">
+                        <Label id="boldLettering" layoutY="1.0" text="Grundfläche: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutY="26.0" text="Dachfläche: ">
+                        <Label id="boldLettering" layoutY="26.0" text="Dachfläche: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="114.0" layoutY="1.0" text="0.00 m²">
+                        <Label id="normalLettering" layoutX="123.0" layoutY="1.0" text="0.00 m²">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="114.0" layoutY="26.0" text="0.00 m²">
+                        <Label id="normalLettering" layoutX="123.0" layoutY="26.0" text="0.00 m²">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -215,22 +215,22 @@
                   </AnchorPane>
                   <AnchorPane layoutX="230.0">
                      <children>
-                        <Label text="Dachvorsprung: ">
+                        <Label id="boldLettering" text="Dachvorsprung: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutY="26.0" text="Dachfläche mit Dachvorsprung: ">
+                        <Label id="boldLettering" layoutY="26.0" text="Dachfläche mit Dachvorsprung: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="272.0" layoutY="26.0" text="0.00 m²">
+                        <Label id="normalLettering" layoutX="292.0" layoutY="26.0" text="0.00 m²">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="272.0" text="0.00 m²">
+                        <Label id="normalLettering" layoutX="292.0" layoutY="3.0" text="0.00 m²">
                            <font>
                               <Font size="18.0" />
                            </font>

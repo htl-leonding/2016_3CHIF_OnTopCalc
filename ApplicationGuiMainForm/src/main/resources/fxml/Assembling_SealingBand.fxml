@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Assembling_SealingBandController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Assembling_SealingBandController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="32.0" minHeight="-Infinity" minWidth="-Infinity" text="Nageldichtband" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label id="headlineProjectPages" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="32.0" minHeight="-Infinity" minWidth="-Infinity" text="Nageldichtband" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
@@ -20,54 +20,54 @@
             <AnchorPane layoutX="71.0" layoutY="84.0" prefHeight="215.0" prefWidth="259.0">
                <children>
                   <TextField layoutX="97.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
-                  <Label layoutY="166.0" text="Nageldichtband: ">
+                  <Label id="boldLettering" layoutY="166.0" text="Nageldichtband: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
                   <ChoiceBox layoutX="97.0" layoutY="1.0" prefWidth="150.0" />
-                  <Label layoutY="54.0" text="Verschnitt:">
+                  <Label id="normalLettering" layoutY="54.0" text="Verschnitt:">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="97.0" layoutY="28.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
-                  <Label layoutX="254.0" layoutY="27.0" text="€">
+                  <Label id="normalLettering" layoutX="254.0" layoutY="27.0" text="€">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="27.0" text="Preis/Lfm: ">
+                  <Label id="normalLettering" layoutY="27.0" text="Preis/Lfm: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="252.0" layoutY="54.0" text="\%">
+                  <Label id="normalLettering" layoutX="252.0" layoutY="54.0" text="\%">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutY="90.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="246.0" text="Nageldichtband berechnen">
+                  <Button id="btnLettering" layoutY="90.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="246.0" text="Nageldichtband berechnen">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Label layoutY="139.0" text="Verschnitt: ">
+                  <Label id="boldLettering" layoutY="139.0" text="Verschnitt: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Produkt: ">
+                  <Label id="normalLettering" text="Produkt: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="146.0" layoutY="139.0" prefHeight="27.0" prefWidth="120.0" text="0.00 €">
+                  <Label id="normalLettering" layoutX="146.0" layoutY="139.0" prefHeight="27.0" prefWidth="120.0" text="0.00 €">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="146.0" layoutY="166.0" prefHeight="27.0" prefWidth="120.0" text="0.00 €">
+                  <Label id="normalLettering" layoutX="146.0" layoutY="166.0" prefHeight="27.0" prefWidth="120.0" text="0.00 €">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -76,59 +76,59 @@
             </AnchorPane>
             <AnchorPane layoutX="391.0" layoutY="88.0" prefHeight="207.0" prefWidth="328.0">
                <children>
-                  <Label text="Facharbeiter Stunde: ">
+                  <Label id="normalLettering" text="Facharbeiter Stunde: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="27.0" text="Gesamte Montage Zeit: ">
+                  <Label id="normalLettering" layoutY="27.0" text="Gesamte Montage Zeit: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="196.0" layoutY="28.0" prefHeight="25.0" prefWidth="102.0" promptText="Zeit in h" />
-                  <Label layoutX="301.0" text="€/h">
+                  <Label id="normalLettering" layoutX="301.0" text="€/h">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField layoutX="196.0" layoutY="1.0" prefHeight="25.0" prefWidth="102.0" promptText="Kosten in €/h" />
-                  <Label layoutX="303.0" layoutY="27.0" text="h">
+                  <Label id="normalLettering" layoutX="303.0" layoutY="27.0" text="h">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutY="60.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="296.0" text="Gesamtkosten berechnen">
+                  <Button id="btnLettering" layoutY="60.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="296.0" text="Gesamtkosten berechnen">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Label layoutY="134.0" text="Kosten Produkt: ">
+                  <Label id="boldLettering" layoutY="134.0" text="Kosten Produkt: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="161.0" text="Kosten Montage: ">
+                  <Label id="boldLettering" layoutY="161.0" text="Kosten Montage: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutY="188.0" text="Gesamtkosten: ">
+                  <Label id="boldLettering" layoutY="188.0" text="Gesamtkosten: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="156.0" layoutY="134.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
+                  <Label id="normalLettering" layoutX="156.0" layoutY="134.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="156.0" layoutY="161.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
+                  <Label id="normalLettering" layoutX="156.0" layoutY="161.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="156.0" layoutY="188.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
+                  <Label id="normalLettering" layoutX="156.0" layoutY="188.0" prefHeight="27.0" prefWidth="142.0" text="0.00 €">
                      <font>
                         <Font size="18.0" />
                      </font>

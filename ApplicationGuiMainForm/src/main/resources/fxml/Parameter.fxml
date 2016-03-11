@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -9,13 +13,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ParameterViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ParameterController">
    <center>
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane style="-fx-background-color: white;" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
                <children>
-                  <Label layoutX="29.0" layoutY="29.0" text="Parameter Übersicht" textFill="#3c84ff" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="15.0">
+                  <Label id="subHeadlineProjectPages" layoutX="29.0" layoutY="29.0" text="Parameter Übersicht" textFill="#3c84ff" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="15.0">
                      <font>
                         <Font name="Berlin Sans FB" size="25.0" />
                      </font>

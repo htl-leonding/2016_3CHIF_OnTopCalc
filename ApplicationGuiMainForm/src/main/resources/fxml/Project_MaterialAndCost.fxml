@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="473.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_MaterialAndCostController">
+<AnchorPane id="AnchorPane" prefHeight="473.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_MaterialAndCostController">
    <children>
       <HBox alignment="CENTER" layoutX="200.0" layoutY="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
@@ -27,7 +27,7 @@
             </TableView>
          </children>
       </HBox>
-      <Label alignment="CENTER" layoutX="182.0" text="Material- und Kostenliste" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label id="headLineProjectPages" alignment="CENTER" layoutX="182.0" text="Material- und Kostenliste" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>

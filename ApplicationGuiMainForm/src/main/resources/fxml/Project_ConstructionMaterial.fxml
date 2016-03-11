@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_ConstructionMaterialController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_ConstructionMaterialController">
    <children>
-      <Label alignment="CENTER" layoutX="174.0" text="Material für Montage" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label id="headlineProjectPages" alignment="CENTER" layoutX="174.0" text="Material für Montage" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
@@ -20,12 +20,12 @@
       </Label>
       <HBox alignment="CENTER" layoutY="66.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label text="Gesamtpreis: ">
+            <Label id="boldLettering" text="Gesamtpreis: ">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label text="0.00€">
+            <Label id="boldLettering" text="0.00€">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

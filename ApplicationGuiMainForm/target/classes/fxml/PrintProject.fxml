@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrintProjectController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" text="Projekt drucken" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label id="headlineProjectPages" alignment="CENTER" text="Projekt drucken" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
@@ -22,14 +22,22 @@
       </Label>
       <ComboBox fx:id="cb_projects" layoutX="125.0" layoutY="51.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0" />
       <TextField layoutX="126.0" layoutY="95.0" promptText="Ort- und Datumsangabe" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="105.0" />
-      <Label layoutX="20.0" layoutY="135.0" text="Gewählte Ansichten werden gedruckt" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="145.0">
+      <Label id="boldLettering" layoutX="20.0" layoutY="135.0" text="Gewählte Ansichten werden gedruckt" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="145.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <VBox layoutX="20.0" layoutY="172.0">
          <children>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Allgemeine Informationen">
+            <CheckBox id="chbLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Allgemeine Informationen">
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </CheckBox>
+            <CheckBox id="smallBtnLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
                <font>
                   <Font size="14.0" />
                </font>
@@ -37,7 +45,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Holzmaterial für Konstruktion">
                <font>
                   <Font size="14.0" />
                </font>
@@ -45,7 +53,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Holzmaterial für Konstruktion">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Schalung">
                <font>
                   <Font size="14.0" />
                </font>
@@ -53,7 +61,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Schalung">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Sichtbare Schalung">
                <font>
                   <Font size="14.0" />
                </font>
@@ -61,7 +69,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Sichtbare Schalung">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Folie">
                <font>
                   <Font size="14.0" />
                </font>
@@ -69,7 +77,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Folie">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Nageldichtband">
                <font>
                   <Font size="14.0" />
                </font>
@@ -77,7 +85,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Nageldichtband">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Konterlattung">
                <font>
                   <Font size="14.0" />
                </font>
@@ -85,7 +93,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Konterlattung">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Lattung oder Vollschalung">
                <font>
                   <Font size="14.0" />
                </font>
@@ -93,7 +101,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Lattung oder Vollschalung">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material für Montage">
                <font>
                   <Font size="14.0" />
                </font>
@@ -101,7 +109,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Material für Montage">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Farbe">
                <font>
                   <Font size="14.0" />
                </font>
@@ -109,7 +117,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Farbe">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Transport">
                <font>
                   <Font size="14.0" />
                </font>
@@ -117,7 +125,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Transport">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
                <font>
                   <Font size="14.0" />
                </font>
@@ -125,15 +133,7 @@
                   <Insets bottom="5.0" />
                </padding>
             </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox alignment="CENTER" mnemonicParsing="false" selected="true" text="Kosten Übersicht">
+            <CheckBox id="smallNormalLettering" alignment="CENTER" mnemonicParsing="false" selected="true" text="Kosten Übersicht">
                <font>
                   <Font size="14.0" />
                </font>
@@ -143,12 +143,12 @@
             </CheckBox>
          </children>
       </VBox>
-      <Button layoutX="20.0" layoutY="529.0" mnemonicParsing="false" text="Auswahl löschen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="210.0">
+      <Button id="btnLettering" layoutX="20.0" layoutY="529.0" mnemonicParsing="false" text="Auswahl löschen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="210.0">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="227.0" layoutY="529.0" mnemonicParsing="false" text="Drucken" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="20.0">
+      <Button id="btnLettering" layoutX="227.0" layoutY="529.0" mnemonicParsing="false" text="Drucken" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font size="18.0" />
          </font>

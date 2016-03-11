@@ -34,6 +34,13 @@ public class MainApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
 
         Scene scene = new Scene(root);
+
+        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+            scene.getStylesheets().add("/styles/Style_Windows.css");
+        } else {
+            scene.getStylesheets().add("/styles/Style_MacOS.css");
+        }
+
         scene.getStylesheets().add("/styles/main.css");
 
         stage.setTitle("Kalkulations-Assistent");
