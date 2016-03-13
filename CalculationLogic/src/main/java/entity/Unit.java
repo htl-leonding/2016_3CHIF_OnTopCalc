@@ -39,7 +39,7 @@ public class Unit implements Serializable {
         creationDate = new Date();
     }
 
-    public Unit(String shortTerm, String longTerm) {
+    public Unit(String longTerm, String shortTerm) {
         this();
         this.shortTerm = shortTerm;
         this.longTerm = longTerm;
@@ -79,7 +79,7 @@ public class Unit implements Serializable {
     
     @Override
     public String toString() {
-        return "Unit{" + "id=" + id + ", shortTerm=" + shortTerm + ", longTerm=" + longTerm + '}';
+        return shortTerm;
     }
 }
 

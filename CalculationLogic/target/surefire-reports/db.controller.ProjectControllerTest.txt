@@ -1,14 +1,14 @@
 -------------------------------------------------------------------------------
 Test set: db.controller.ProjectControllerTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.173 sec <<< FAILURE!
-testEdit(db.controller.ProjectControllerTest)  Time elapsed: 0.094 sec  <<< FAILURE!
+Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 4.713 sec <<< FAILURE!
+testEdit(db.controller.ProjectControllerTest)  Time elapsed: 0.082 sec  <<< FAILURE!
 java.lang.AssertionError: Projekt wurde nicht geupdatet!
 Expected: is "Notiz"
      but: was "Einfaches Kommentar!"
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 	at org.junit.Assert.assertThat(Assert.java:956)
-	at db.controller.ProjectControllerTest.testEdit(ProjectControllerTest.java:83)
+	at db.controller.ProjectControllerTest.testEdit(ProjectControllerTest.java:84)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

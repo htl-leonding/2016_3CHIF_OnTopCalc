@@ -34,6 +34,7 @@ public class AllProjectsController implements Initializable {
     private TableColumn<Project, String> tc_RoofForm;
     @FXML
     private TableColumn<Project, Client> tc_Client;
+    
     private ObservableList<Project> projects;
 
     /**

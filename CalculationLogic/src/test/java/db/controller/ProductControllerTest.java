@@ -2,6 +2,7 @@
 package db.controller;
 
 import entity.Product;
+import eunmeration.ProductType;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
@@ -42,7 +43,7 @@ public class ProductControllerTest {
     @Test
     public void testCreate() {
         System.out.println("create Product");
-        Product product = new Product("Test", 10.0, 100.0, 50.0, 5.1,null);
+        Product product = new Product("Test", 10.0, 100.0, 50.0, 5.1, null, ProductType.WOOD);
         ProductController instance = new ProductController();
         instance.create(product);
         List<Product> products = instance.findAll();

@@ -2,7 +2,6 @@
 package db.controller;
 
 import entity.Category;
-import entity.Client;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;

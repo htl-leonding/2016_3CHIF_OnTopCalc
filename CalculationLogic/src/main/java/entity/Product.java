@@ -46,7 +46,7 @@ public class Product implements Serializable {
         creationDate = new Date();
     }
 
-    public Product(String name, Double widthProduct, Double heightProduct, Double lengthProduct, Double priceUnit, Unit unit) {
+    public Product(String name, Double widthProduct, Double heightProduct, Double lengthProduct, Double priceUnit, Unit unit, ProductType productType) {
         this();
         this.name = name;
         this.widthProduct = widthProduct;
@@ -54,6 +54,16 @@ public class Product implements Serializable {
         this.lengthProduct = lengthProduct;
         this.priceUnit = priceUnit;
         this.unit = unit;
+        this.productType = productType;
+    }
+
+    public Product(String name,  Double colorFactor, Double priceUnit, Unit unit, ProductType productType) {
+        this();
+        this.name = name;
+        this.priceUnit = priceUnit;
+        this.colorFactor = colorFactor;
+        this.unit = unit;
+        this.productType = productType;
     }
 
     public Double getHeightProduct() {

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -24,10 +23,6 @@ public class ProductController {
     public ProductController() {
         em = JpaUtils.getEntityManager();
     }
-    
-//    private EntityManager getEntityManager(){
-//        return JpaUtils.getEntityManager();
-//    }
 
     public void create(Product product) {
         try {
