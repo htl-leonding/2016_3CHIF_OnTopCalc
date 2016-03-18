@@ -21,8 +21,25 @@ public enum ProductType {
         this.type = type;
     }
 
+    public String getType() {
+        return type;
+    }
+    
     @Override
     public String toString() {
         return type;
-    }    
+    }
+
+    private ProductType() {
+        this.type = null;
+    }
+
+    public static ProductType getProductType(String type){
+        for (ProductType productType : ProductType.values()) {
+            if (productType.getType().toLowerCase().equals(type.toLowerCase())) {
+                return productType;
+            }
+        }
+        return null;
+    }
 }

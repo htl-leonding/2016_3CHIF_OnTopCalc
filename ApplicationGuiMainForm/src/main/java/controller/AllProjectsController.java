@@ -63,5 +63,4 @@ public class AllProjectsController implements Initializable {
             }
         });
     }    
-    
 }

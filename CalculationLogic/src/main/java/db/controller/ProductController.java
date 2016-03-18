@@ -115,7 +115,7 @@ public class ProductController {
         }
     }
     
-    public List<Product> findByProductTypeOrderByName(String productType) {
+    public List<Product> findByProductTypeOrderByName(ProductType productType) {
         try {
             //Noch von Pilz Elisabeth
             /*
@@ -131,7 +131,7 @@ public class ProductController {
             }
             return em
                     .createQuery("select p from Product p where p.productType = ?1 order by p.name", Product.class)
-                    .setParameter(1, ProductType.valueOf(productType))
+                    .setParameter(1, productType)
                     .getResultList();
         } finally {
             em.close();
