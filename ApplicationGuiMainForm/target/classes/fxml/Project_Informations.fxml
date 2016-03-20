@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <HBox alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_InformationsController">
@@ -63,36 +64,59 @@
                   </AnchorPane>
                   <AnchorPane layoutX="491.0" layoutY="55.0" prefHeight="245.0" prefWidth="345.0" style="-fx-background-color: whitesmoke;">
                      <children>
-                        <Label id="subHeadlineProjectPages" alignment="CENTER" layoutX="53.0" layoutY="26.0" text="Angaben zum Auftraggeber" textFill="#3c84ff" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <Label id="subHeadlineProjectPages" alignment="CENTER" layoutX="53.0" layoutY="26.0" text="Angaben zum Auftraggeber" textFill="#3c84ff" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font></Label>
-                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="123.0" layoutY="70.0" text="Name:">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="120.0" layoutY="97.0" text="Straße:">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="80.0" layoutY="124.0" text="Postleitzahl:">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="94.0" layoutY="151.0" text="Stadt/Ort:">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <Label id="normalLettering" alignment="CENTER_RIGHT" layoutX="43.0" layoutY="178.0" text="Telefonnummer:">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                        <TextField fx:id="tf_ClientName" layoutX="188.0" layoutY="71.0" promptText="Name" AnchorPane.leftAnchor="188.0" />
-                        <TextField fx:id="tf_Street" layoutX="188.0" layoutY="98.0" promptText="Straße" AnchorPane.leftAnchor="188.0" />
-                        <TextField fx:id="tf_ZipCode" layoutX="188.0" layoutY="125.0" promptText="Postleitzahl" AnchorPane.leftAnchor="188.0" />
-                        <TextField fx:id="tf_City" layoutX="188.0" layoutY="152.0" promptText="Stadt/Ort" AnchorPane.leftAnchor="188.0" />
-                        <TextField fx:id="tf_PhoneNumber" layoutX="188.0" layoutY="179.0" promptText="Telefonnummer" AnchorPane.leftAnchor="188.0" />
-                        <Button id="smallBtnLettering" layoutX="188.0" layoutY="206.0" mnemonicParsing="false" onAction="#openClientView" prefHeight="25.0" prefWidth="149.0" text="Auftraggeber suchen" />
+                        <VBox alignment="CENTER_RIGHT" layoutX="30.0" layoutY="57.0">
+                           <children>
+                              <Label id="normalLettering" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" text="Name:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label id="normalLettering" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" text="Straße:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label id="normalLettering" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" text="Postleitzahl:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label id="normalLettering" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" text="Stadt/Ort:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label id="normalLettering" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" text="Telefonnummer:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label id="normalLettering" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" text="E-Mail:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="167.0" layoutY="57.0" spacing="2.0">
+                           <children>
+                              <TextField fx:id="tf_ClientName" prefHeight="25.0" promptText="Name" />
+                              <TextField fx:id="tf_Street" prefHeight="25.0" promptText="Straße" />
+                              <TextField fx:id="tf_ZipCode" prefHeight="25.0" promptText="Postleitzahl" />
+                              <TextField fx:id="tf_City" prefHeight="25.0" promptText="Stadt/Ort" />
+                              <TextField fx:id="tf_PhoneNumber" prefHeight="25.0" promptText="Telefonnummer" />
+                              <TextField fx:id="tf_Email" prefHeight="25.0" promptText="E-Mail" />
+                              <Button id="smallBtnLettering" mnemonicParsing="false" onAction="#openClientView" prefHeight="25.0" prefWidth="149.0" text="Auftraggeber suchen">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                      <opaqueInsets>
                         <Insets />

@@ -44,7 +44,7 @@ public class ClientControllerTest {
         System.out.println("create");
         Client client = new Client(
                 "Tester", "Teststraße",
-                "Testing", "0815", "0664555555");
+                "Testing", "0815", "0664555555", "test@mail.com");
         ClientController instance = new ClientController();
         instance.create(client);
         List<Client> result = instance.findAll();

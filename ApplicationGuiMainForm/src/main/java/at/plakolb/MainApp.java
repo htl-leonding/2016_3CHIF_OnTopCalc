@@ -39,8 +39,8 @@ public class MainApp extends Application {
         }
 
         scene.getStylesheets().add("/styles/main.css");
-
-        stage.setTitle("Kalkulations-Assistent");
+        
+        stage.setTitle("OnTopCalc");
         stage.setScene(scene);
         stage.show();
     }
@@ -54,8 +54,8 @@ public class MainApp extends Application {
 
     private void insertTestData() {
         db.controller.ClientController clientController = new ClientController();
-        Client client1 = new Client("Musterman", "Feldstraße", "Linz", "4020", "123456789");
-        Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321");
+        Client client1 = new Client("Mustermann", "Feldstraße", "Linz", "4020", "123456789", "max.m@mail.com");
+        Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321", "erika.m@mail.com");
         clientController.create(client1);
         clientController.create(client2);
 

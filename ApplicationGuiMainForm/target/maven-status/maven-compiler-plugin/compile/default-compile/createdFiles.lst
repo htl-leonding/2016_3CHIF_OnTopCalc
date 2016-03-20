@@ -1,5 +1,4 @@
 controller\ProductListController.class
-controller\ParameterViewController.class
 controller\Assembling_CounterBattenController.class
 controller\Assembling_TiledRoofController.class
 controller\ProjectViewController.class
@@ -23,7 +22,10 @@ controller\Assembling_FormworkController.class
 controller\Project_ResultAreaController.class
 controller\OptionsController.class
 controller\Assembling_BattensOrFullFormworkController.class
+controller\ProductModifierController.class
 controller\MainFormController.class
 controller\Project_MaterialAndCostController.class
 controller\AllProjectsController.class
+controller\ParameterController.class
+controller\ClientModifierController.class
 controller\Assembling_SheetRoofController.class

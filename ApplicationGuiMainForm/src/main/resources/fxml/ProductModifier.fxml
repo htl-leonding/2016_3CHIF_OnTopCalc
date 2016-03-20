@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="437.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductModifierController">
+   <children>
+      <Label id="subHeadlineProjectPages" alignment="CENTER" layoutX="218.0" layoutY="14.0" text="Produkt ändern" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" layoutX="100.0" layoutY="50.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER_RIGHT">
+               <children>
+                  <Label prefHeight="30.0" text="ID: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Bezeichnung: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Breite: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Höhe: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Länge: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Farbfaktor: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Preis/Einheit: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Einheit: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="30.0" text="Produkttyp: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox spacing="5.0">
+               <children>
+                  <Label fx:id="lb_Id" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="148.0" text="0" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_Name" prefHeight="25.0" />
+                  <TextField fx:id="tf_Width" prefHeight="25.0" />
+                  <TextField fx:id="tf_Height" prefHeight="25.0" />
+                  <TextField fx:id="tf_Length" prefHeight="25.0" />
+                  <TextField fx:id="tf_ColorFactor" prefHeight="25.0" />
+                  <TextField fx:id="tf_PriceUnit" prefHeight="25.0" />
+                  <ComboBox fx:id="cb_Unit" maxWidth="1.7976931348623157E308" prefHeight="25.0" />
+                  <ComboBox fx:id="cb_ProductType" maxWidth="1.7976931348623157E308" onAction="#productTypeChanged" prefHeight="25.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="165.0" layoutY="318.0" spacing="10.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="30.0" prefWidth="290.0" text="Produkt löschen">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="155.0" layoutY="308.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="140.0" text="Speichern">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="140.0" text="Abbrechen">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

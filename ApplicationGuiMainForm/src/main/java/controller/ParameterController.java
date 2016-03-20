@@ -9,7 +9,7 @@ import javafx.fxml.Initializable;
  *
  * @author Andreas
  */
-public class ParameterViewController implements Initializable {
+public class ParameterController implements Initializable {
 
     /**
      * Initializes the controller class.

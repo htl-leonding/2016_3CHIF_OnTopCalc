@@ -5,13 +5,17 @@ import db.controller.UnitController;
 import entity.Product;
 import entity.Unit;
 import eunmeration.ProductType;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -19,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -27,6 +32,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class ProductListController implements Initializable {
 
+    private static  ProductListController instance;
+    
     @FXML
     private TableView<Product> tv_Products;
     @FXML
@@ -55,11 +62,10 @@ public class ProductListController implements Initializable {
     private TextField tf_PriceUnit;
     @FXML
     private MenuButton mb_Units;
-
-    private ObservableList<Product> products;
     @FXML
     private MenuButton mb_ProductTypesFilter;
 
+    private ObservableList<Product> products;
     /**
      * Initializes the controller class.
      *
@@ -68,9 +74,10 @@ public class ProductListController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        instance = this;
         ProductController productController = new ProductController();
         products = FXCollections.observableArrayList(productController.findAll());
-
+        
         tc_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
         tc_Width.setCellValueFactory(new PropertyValueFactory<>("widthProduct"));
         tc_Height.setCellValueFactory(new PropertyValueFactory<>("heightProduct"));
@@ -79,9 +86,30 @@ public class ProductListController implements Initializable {
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tv_Products.setItems(products);
 
+        tv_Products.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tv_Products.getSelectionModel().getSelectedItem() != null) {
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/fxml/ProductModifier.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("OnTopCalc");
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ex) {
+                }
+                
+                ProductModifierController.getInstance().loadProductIntoModifier(tv_Products.getSelectionModel().getSelectedItem());
+            }
+        });
+
         addProductTypes(mb_ProductTypes);
         addProductTypesWithFilter(mb_ProductTypesFilter);
         addUnits();
+    }
+    
+    public static ProductListController getInstance(){
+        return instance;
     }
 
     @FXML
@@ -90,7 +118,7 @@ public class ProductListController implements Initializable {
         if (product != null) {
             ProductController productController = new ProductController();
             productController.create(createNewProduct());
-            filterList(ProductType.getProductType(mb_ProductTypesFilter.getText()));
+            refreshTable();
         }
     }
 
@@ -117,8 +145,8 @@ public class ProductListController implements Initializable {
         for (ProductType productType : ProductType.values()) {
             MenuItem menuItem = new MenuItem(productType.toString());
             menuItem.setOnAction(eventHandler -> {
-                filterList(ProductType.getProductType(menuItem.getText()));
                 menuButton.setText(menuItem.getText());
+                refreshTable();
             });
             menuButton.getItems().add(menuItem);
         }
@@ -189,25 +217,34 @@ public class ProductListController implements Initializable {
                     tryParseDouble(tf_PriceUnit.getText()),
                     unitController.findUnitByShortTerm(mb_Units.getText()),
                     ProductType.getProductType(mb_ProductTypes.getText()));
-        }
-        else{
+        } else {
             alert.setContentText(errorMessage);
             alert.showAndWait();
         }
         return null;
     }
-    
+
     /**
      * Parses String to Double if possible.
+     *
      * @param numberString
-     * @return 
+     * @return
      */
-    private Double tryParseDouble(String numberString){
+    private Double tryParseDouble(String numberString) {
         try {
             double number = Double.parseDouble(numberString);
             return number;
         } catch (NumberFormatException e) {
             return null;
         }
+    }
+    
+    /**
+     * Refreshes the Table View.
+     */
+    public void refreshTable(){
+        filterList(ProductType.getProductType(mb_ProductTypesFilter.getText()));
+        tv_Products.getColumns().get(0).setVisible(false);
+        tv_Products.getColumns().get(0).setVisible(true);
     }
 }

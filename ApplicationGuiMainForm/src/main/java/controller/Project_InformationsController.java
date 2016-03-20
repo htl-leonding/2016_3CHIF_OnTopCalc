@@ -44,6 +44,8 @@ public class Project_InformationsController implements Initializable, Observer {
     @FXML
     public TextField tf_PhoneNumber;
     @FXML
+    public TextField tf_Email;
+    @FXML
     public ListView<String> lv_ConstructionType;
     @FXML
     public ListView<String> lv_RoofForm;
@@ -97,6 +99,10 @@ public class Project_InformationsController implements Initializable, Observer {
         return tf_PhoneNumber.getText();
     }
 
+    public String getEmail() {
+        return tf_Email.getText();
+    }
+
     public String getConstructionType() {
         return lv_ConstructionType.getSelectionModel().getSelectedItem();
     }
@@ -134,21 +140,28 @@ public class Project_InformationsController implements Initializable, Observer {
         tf_Street.setText(client.getStreet());
         tf_ZipCode.setText(client.getZipCode());
         tf_PhoneNumber.setText(client.getTelephoneNumber());
+        tf_Email.setText(client.getEmail());
     }
 
     /**
      * Opens the passed project.
-     * @param project 
+     *
+     * @param project
      */
     public void openProject(Project project) {
         lb_Id.setText(String.valueOf(project.getId()));
         tf_ProjectName.setText(project.getProjectName());
-        tf_City.setText(project.getClient().getCity());
-        tf_ClientName.setText(project.getClient().getName());
         tf_Description.setText(project.getDescription());
         tf_InvoiceNumber.setText(project.getInvoiceNumber());
-        tf_Street.setText(project.getClient().getStreet());
-        tf_PhoneNumber.setText(project.getClient().getTelephoneNumber());
-        tf_ZipCode.setText(project.getClient().getZipCode());
+
+        if (project.getClient() != null) {
+            tf_City.setText(project.getClient().getCity());
+            tf_ClientName.setText(project.getClient().getName());
+            tf_Street.setText(project.getClient().getStreet());
+            tf_PhoneNumber.setText(project.getClient().getTelephoneNumber());
+            tf_ZipCode.setText(project.getClient().getZipCode());
+            tf_Email.setText(project.getClient().getEmail());
+        }
+
     }
 }

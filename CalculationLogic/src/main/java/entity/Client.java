@@ -35,6 +35,7 @@ public class Client implements Serializable {
     String city;
     String zipCode;
     String telephoneNumber;
+    String eMail;
     @OneToMany(mappedBy = "client")
     private List<Project> projects = new ArrayList<>();
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -45,13 +46,14 @@ public class Client implements Serializable {
         this.creationDate = new Date();
     }
 
-    public Client(String name, String street, String city, String zipCode, String telephoneNumber) {
+    public Client(String name, String street, String city, String zipCode, String telephoneNumber, String eMail) {
         this();
         this.name = name;
         this.street = street;
         this.city = city;
         this.zipCode = zipCode;
         this.telephoneNumber = telephoneNumber;
+        this.eMail = eMail;
     }
     
     public Long getId() {
@@ -118,6 +120,14 @@ public class Client implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public String getEmail() {
+        return eMail;
+    }
+
+    public void setEmail(String eMail) {
+        this.eMail = eMail;
+    }
+    
     public String getProjectNumbers() {
         projectNumbers = "";
         for (int i = 0; i < projects.size(); i++) {
@@ -132,7 +142,6 @@ public class Client implements Serializable {
     @Override
     public String toString() {
         return name;
-        //return "Client{" + "id=" + id + ", name=" + name + ", street=" + street + ", city=" + city + ", zipCode=" + zipCode + ", telephoneNumber=" + telephoneNumber + ", projects=" + projects + '}';
     }
 }
 

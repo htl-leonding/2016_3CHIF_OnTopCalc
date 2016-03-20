@@ -45,7 +45,7 @@ public class ProjectControllerTest {
     @Test
     public void testCreate() {
         System.out.println("create");
-        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231");
+        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231", "test@mail.com");
         new ClientController().create(client);
 
         Project project1 = new Project("TestprojektCreate", "047583", "Notiz", "Haus", "Walmdach", client);
@@ -90,7 +90,7 @@ public class ProjectControllerTest {
     @Test
     public void testLastFiveProjects() {
         System.out.println("last five Projects Test");
-        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231");
+        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231", "test@mail.com");
         new ClientController().create(client);
 
         List<Project> pros = new ArrayList<>();
@@ -128,7 +128,7 @@ public class ProjectControllerTest {
     @Test
     public void testFindProject() {
         System.out.println("findProject Test");
-        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231");
+        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231", "test@mail.com");
         new ClientController().create(client);
 
         List<Project> pros = new ArrayList<>();

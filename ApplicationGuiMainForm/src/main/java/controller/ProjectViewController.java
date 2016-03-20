@@ -183,7 +183,8 @@ public class ProjectViewController implements Initializable {
                 informations.getStreet(),
                 informations.getCity(),
                 informations.getZipCode(),
-                informations.getPhoneNumber());
+                informations.getPhoneNumber(),
+                informations.getEmail());
         clientController.create(client);
         return client;
     }
