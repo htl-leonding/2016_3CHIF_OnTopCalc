@@ -111,6 +111,10 @@ public class Project_InformationsController implements Initializable, Observer {
         return lv_RoofForm.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Opens a new View, where an aleready existing client can be selected.
+     * @param event 
+     */
     @FXML
     private void openClientView(ActionEvent event) {
         try {
@@ -144,7 +148,7 @@ public class Project_InformationsController implements Initializable, Observer {
     }
 
     /**
-     * Opens the passed project.
+     * Opens the passed project and loads all informations into the TextFields.
      *
      * @param project
      */

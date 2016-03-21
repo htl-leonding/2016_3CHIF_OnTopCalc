@@ -31,8 +31,11 @@ public class AssemblingController implements Initializable {
         return instance;
     }
     
+    /**
+     * Returns the TabPane for the ProjectViewController
+     * @return 
+     */
     public TabPane getTb_AssemblingPane() {
         return tb_AssemblingPane;
     }
-    
 }

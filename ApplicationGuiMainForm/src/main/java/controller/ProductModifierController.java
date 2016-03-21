@@ -126,16 +126,12 @@ public class ProductModifierController implements Initializable {
         }
 
         ProductListController.getInstance().refreshTable();
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
     }
 
     @FXML
     private void cancel(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
     }
 
     /**
@@ -192,7 +188,7 @@ public class ProductModifierController implements Initializable {
     }
 
     /**
-     * Deletes current opened product.
+     * Deletes current opened product permanentley.
      *
      * @param event
      * @throws NonexistentEntityException
@@ -205,9 +201,7 @@ public class ProductModifierController implements Initializable {
         if (alert.getResult() == ButtonType.YES) {
             new ProductController().destroy(openedProduct.getId());
             ProductListController.getInstance().refreshTable();
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+            ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
         }
     }
 }

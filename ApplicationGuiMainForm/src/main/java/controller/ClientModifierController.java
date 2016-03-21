@@ -2,7 +2,6 @@
 package controller;
 
 import db.controller.ClientController;
-import db.controller.ProductController;
 import db.exceptions.NonexistentEntityException;
 import entity.Client;
 import java.net.URL;
@@ -58,6 +57,11 @@ public class ClientModifierController implements Initializable {
         return instance;
     }
 
+    /**
+     * Loads a client into the modifier.
+     *
+     * @param client
+     */
     public void loadClientIntoModifier(Client client) {
         openedClient = client;
         lb_Id.setText(String.valueOf(openedClient.getId()));
@@ -69,6 +73,12 @@ public class ClientModifierController implements Initializable {
         tf_Email.setText(openedClient.getEmail());
     }
 
+    /**
+     * Deletes the opened client permanentley.
+     *
+     * @param event
+     * @throws NonexistentEntityException
+     */
     @FXML
     private void deleteClient(ActionEvent event) throws NonexistentEntityException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Auftraggeber wirklich endgültig löschen. Vorsicht, dieser Vorang kann nicht mehr rückgangig gemacht werden.",
@@ -83,6 +93,11 @@ public class ClientModifierController implements Initializable {
         }
     }
 
+    /**
+     * Saves all the changes that were made.
+     *
+     * @param event
+     */
     @FXML
     private void save(ActionEvent event) {
         try {
@@ -97,16 +112,17 @@ public class ClientModifierController implements Initializable {
         }
 
         ClientsController.getInstance().refreshTable();
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
 
+    /**
+     * Nothing gets saved and the window gets closed.
+     *
+     * @param event
+     */
     @FXML
     private void cancel(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
 
 }

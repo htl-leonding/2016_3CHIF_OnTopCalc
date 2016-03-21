@@ -15,8 +15,11 @@ controller\Project_ConstructionmaterialListController.class
 controller\Project_ColourController.class
 at\plakolb\MainApp.class
 controller\PrintProjectController.class
+controller\ParameterModifierController.class
+controller\AllProjectsController$1$1.class
 controller\Project_BaseAndRoofAreaController.class
 controller\ClientsController.class
+controller\AllProjectsController$1.class
 controller\Project_ConstructionMaterialController.class
 controller\Project_InformationsController.class
 controller\Assembling_FormworkController.class

@@ -6,6 +6,7 @@ import entity.Client;
 import entity.Project;
 import entity.Worth;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -82,6 +83,7 @@ public class ProjectController {
             }
             worthsNew = attachedWorthsNew;
             project.setWorths(worthsNew);
+            project.setLastUpdate(new Date());
             project = em.merge(project);
             if (clientOld != null && !clientOld.equals(clientNew)) {
                 clientOld.getProjects().remove(project);

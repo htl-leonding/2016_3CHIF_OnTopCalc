@@ -32,8 +32,8 @@ import javafx.stage.Stage;
  */
 public class ProductListController implements Initializable {
 
-    private static  ProductListController instance;
-    
+    private static ProductListController instance;
+
     @FXML
     private TableView<Product> tv_Products;
     @FXML
@@ -66,6 +66,7 @@ public class ProductListController implements Initializable {
     private MenuButton mb_ProductTypesFilter;
 
     private ObservableList<Product> products;
+
     /**
      * Initializes the controller class.
      *
@@ -75,16 +76,14 @@ public class ProductListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        ProductController productController = new ProductController();
-        products = FXCollections.observableArrayList(productController.findAll());
-        
+
         tc_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
         tc_Width.setCellValueFactory(new PropertyValueFactory<>("widthProduct"));
         tc_Height.setCellValueFactory(new PropertyValueFactory<>("heightProduct"));
         tc_Length.setCellValueFactory(new PropertyValueFactory<>("lengthProduct"));
         tc_PriceUnit.setCellValueFactory(new PropertyValueFactory<>("priceUnit"));
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
-        tv_Products.setItems(products);
+        tv_Products.setItems(FXCollections.observableArrayList(new ProductController().findAll()));
 
         tv_Products.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tv_Products.getSelectionModel().getSelectedItem() != null) {
@@ -93,12 +92,12 @@ public class ProductListController implements Initializable {
                     root = FXMLLoader.load(getClass().getResource("/fxml/ProductModifier.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
-                    stage.setTitle("OnTopCalc");
+                    stage.setTitle("Product");
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException ex) {
                 }
-                
+
                 ProductModifierController.getInstance().loadProductIntoModifier(tv_Products.getSelectionModel().getSelectedItem());
             }
         });
@@ -107,11 +106,16 @@ public class ProductListController implements Initializable {
         addProductTypesWithFilter(mb_ProductTypesFilter);
         addUnits();
     }
-    
-    public static ProductListController getInstance(){
+
+    public static ProductListController getInstance() {
         return instance;
     }
 
+    /**
+     * Adds a new product to the database.
+     *
+     * @param event
+     */
     @FXML
     private void addProduct(ActionEvent event) {
         Product product = createNewProduct();
@@ -238,11 +242,11 @@ public class ProductListController implements Initializable {
             return null;
         }
     }
-    
+
     /**
      * Refreshes the Table View.
      */
-    public void refreshTable(){
+    public void refreshTable() {
         filterList(ProductType.getProductType(mb_ProductTypesFilter.getText()));
         tv_Products.getColumns().get(0).setVisible(false);
         tv_Products.getColumns().get(0).setVisible(true);

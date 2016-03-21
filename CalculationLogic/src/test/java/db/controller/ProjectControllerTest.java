@@ -59,30 +59,30 @@ public class ProjectControllerTest {
      *
      * @throws db.exceptions.NonexistentEntityException
      */
-//    @Test
-//    public void testEdit() throws NonexistentEntityException {
-//        System.out.println("edit Project Test");
-//        ClientController clientController = new ClientController();
-//        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231", "test@mail.com");
-//        Client client1 = new Client("Musterman", "Feldstraße", "Linz", "4020", "123456789", "test@mail.com");
-//        Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321", "test@mail.com");
-//        clientController.create(client1);
-//        clientController.create(client2);
-//        clientController.create(client);
-//
-//        Project project1 = new Project("TestprojektEdit", "047583", "Notiz", "Haus", "Walmdach", client);
-//        ProjectController instance = new ProjectController();
-//        instance.create(new Project("Testprojekt1", "8467389", "Notiz", "Haus", "Pultdach", client1));
-//        instance.create(new Project("Testprojekt2", "9827245", "Notiz", "Haus", "Pultdach", client2));
-//        instance.create(project1);
-//        project1.setDescription("Einfaches Kommentar!");
-//        int oldCount = instance.getCount();
-//        instance.edit(project1);
-//
-//        assertThat("Projekt wurde nich editiert sondern neu erstellt!", instance.getCount(), is(oldCount));
-//        System.out.println(instance.findLastProject().getDescription());
-//        assertThat("Projekt wurde nicht geupdatet!", project1.getDescription(), is(instance.findLastProject().getDescription()));
-//    }
+    @Test
+    public void testEdit() throws NonexistentEntityException {
+        System.out.println("edit Project Test");
+        ClientController clientController = new ClientController();
+        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231", "test@mail.com");
+        Client client1 = new Client("Musterman", "Feldstraße", "Linz", "4020", "123456789", "test@mail.com");
+        Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321", "test@mail.com");
+        clientController.create(client1);
+        clientController.create(client2);
+        clientController.create(client);
+
+        Project project1 = new Project("TestprojektEdit", "047583", "Notiz", "Haus", "Walmdach", client);
+        ProjectController instance = new ProjectController();
+        instance.create(new Project("Testprojekt1", "8467389", "Notiz", "Haus", "Pultdach", client1));
+        instance.create(new Project("Testprojekt2", "9827245", "Notiz", "Haus", "Pultdach", client2));
+        instance.create(project1);
+        project1.setDescription("Einfaches Kommentar!");
+        int oldCount = instance.getCount();
+        instance.edit(project1);
+
+        assertThat("Projekt wurde nich editiert sondern neu erstellt!", instance.getCount(), is(oldCount));
+        System.out.println(instance.findLastProject().getDescription());
+        assertThat("Projekt wurde nicht geupdatet!", project1.getDescription(), is(instance.findLastProject().getDescription()));
+    }
 
     /**
      * Test of create method, of class ProjectController.

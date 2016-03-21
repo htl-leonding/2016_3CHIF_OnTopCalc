@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 public class ClientsController implements Initializable {
 
     private static ClientsController instance;
-    
+
     @FXML
     private TableView<Client> tv_Clients;
     @FXML
@@ -51,7 +51,7 @@ public class ClientsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        
+
         tc_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
         tc_City.setCellValueFactory(new PropertyValueFactory<>("city"));
         tc_Street.setCellValueFactory(new PropertyValueFactory<>("street"));
@@ -67,7 +67,7 @@ public class ClientsController implements Initializable {
                     root = FXMLLoader.load(getClass().getResource("/fxml/ClientModifier.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
-                    stage.setTitle("OnTopCalc");
+                    stage.setTitle("Client");
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException ex) {
@@ -77,10 +77,10 @@ public class ClientsController implements Initializable {
         });
     }
 
-    public static ClientsController getInstance(){
+    public static ClientsController getInstance() {
         return instance;
     }
-    
+
     /**
      * Refreshes the Table View.
      */
