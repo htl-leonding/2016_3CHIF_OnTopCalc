@@ -63,9 +63,9 @@ public class ProjectControllerTest {
 //    public void testEdit() throws NonexistentEntityException {
 //        System.out.println("edit Project Test");
 //        ClientController clientController = new ClientController();
-//        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231");
-//        Client client1 = new Client("Musterman", "Feldstraße", "Linz", "4020", "123456789");
-//        Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321");
+//        Client client = new Client("Hans Berger", "Oberhauserweg 3", "Linz", "5020", "+4366098484231", "test@mail.com");
+//        Client client1 = new Client("Musterman", "Feldstraße", "Linz", "4020", "123456789", "test@mail.com");
+//        Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321", "test@mail.com");
 //        clientController.create(client1);
 //        clientController.create(client2);
 //        clientController.create(client);

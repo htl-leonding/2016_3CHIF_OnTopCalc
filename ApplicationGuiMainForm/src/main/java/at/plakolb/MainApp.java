@@ -1,10 +1,12 @@
 package at.plakolb;
 
 import db.controller.ClientController;
+import db.controller.ParameterController;
 import db.controller.ProductController;
 import db.controller.ProjectController;
 import db.controller.UnitController;
 import entity.Client;
+import entity.ParameterP;
 import entity.Product;
 import entity.Project;
 import entity.Unit;
@@ -39,7 +41,7 @@ public class MainApp extends Application {
         }
 
         scene.getStylesheets().add("/styles/main.css");
-        
+
         stage.setTitle("OnTopCalc");
         stage.setScene(scene);
         stage.show();
@@ -109,5 +111,105 @@ public class MainApp extends Application {
         productController.create(new Product("Grün", 325.0, 23.0, unitController.findUnitByShortTerm("l"), ProductType.COLOR));
         productController.create(new Product("Braun", 43.0, 28.0, unitController.findUnitByShortTerm("l"), ProductType.COLOR));
 
+        ParameterController parameterController = new ParameterController();
+        parameterController.create(new ParameterP("Länge", "l", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Breite", "b", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Grundfläche", "A", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Volumen", "V", unitController.findUnit(3l), false));
+        parameterController.create(new ParameterP("Preis pro m³ Holz", "PM3H", unitController.findUnit(7l), true, 250.0));
+        parameterController.create(new ParameterP("Kubikmeter Zuschnitt Dauer", "KZG", unitController.findUnit(16l), true, 0.5));
+        parameterController.create(new ParameterP("Kubikmeter Preis/Stunde Zuschnitt", "KPSZ", unitController.findUnit(7l), true, 40.0));
+        parameterController.create(new ParameterP("Kubikmeter Gesamtdauer", "KG", unitController.findUnit(6l), false));
+        parameterController.create(new ParameterP("Kumbikmeter Zuschnitt Gesamtpreis", "KZPG", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtpreis Volumen", "GP", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten Material+Zuschnitt Volumen", "GKV", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Neigung", "N", unitController.findUnit(8l), false));
+        parameterController.create(new ParameterP("Dachfläche inkl. Dachvorsprung", "DF", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Dachfläche ohne Dachvorsprung", "D", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Dachvorsprung", "DV", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Dachvorsprung vorne", "dv", unitController.findUnit(1l), true, 1.0));
+        parameterController.create(new ParameterP("Dachvorsprung hinten", "dh", unitController.findUnit(1l), true, 1.0));
+        parameterController.create(new ParameterP("Dachvorsprung rechts", "dr", unitController.findUnit(1l), true, 0.8));
+        parameterController.create(new ParameterP("Dachvorsprung links", "dl", unitController.findUnit(1l), true, 0.8));
+
+        parameterController.create(new ParameterP("Verschnitt Schalung Prozent", "VSP", unitController.findUnit(9l), true, 15.0));
+        parameterController.create(new ParameterP("Verschnitt Schalung", "VS", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Schalung", "S", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Schalung Produkt Kosten", "SPROK", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Parameter Schalung", "KPS", unitController.findUnit(15l), true, 20.0));
+        parameterController.create(new ParameterP("Zeit Parameter Schalung", "ZPS", unitController.findUnit(6l), true, 0.5));
+        parameterController.create(new ParameterP("Kosten Montage Schalung", "KMS", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten Schalung", "GKS", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Verschnitt sichbare Schalung Prozent", "VSSP", unitController.findUnit(9l), true, 15.0));
+        parameterController.create(new ParameterP("Verschnitt sichtbare Schalung", "VSS", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("sichtbare Schalung", "SS", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("sichtbare Schalung Produkt Kosten", "SSPROK", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Parameter sichtbare Schalung", "KPSS", unitController.findUnit(7l), true, 25.0));
+        parameterController.create(new ParameterP("Zeit Parameter sichtbare Schalung", "ZPSS", unitController.findUnit(6l), true, 0.5));
+        parameterController.create(new ParameterP("Kosten Montage sichtbare Schalung", "KMSS", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten sichtbare Schalung", "GKSS", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Folie Überlappung Prozent", "FUEP", unitController.findUnit(9l), true, 15.0));
+        parameterController.create(new ParameterP("Folie Überlappung", "FUE", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Folie", "F", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Kosten Parameter Folie", "KPF", unitController.findUnit(7l), true, 40.0));
+        parameterController.create(new ParameterP("Zeit Parameter Folie", "ZPF", unitController.findUnit(6l), true, 0.3));
+        parameterController.create(new ParameterP("Kosten Product Folie", "KProF", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Montage Folie", "KMF", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten Folie", "GKF", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Länger der Dachsparren", "LD", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Verschnitt Nageldichtband Prozent", "VDP", unitController.findUnit(9l), true, 16.0));
+        parameterController.create(new ParameterP("Verschnitt Nageldichtband", "DP", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Nageldichtband", "ND", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Kosten Parameter Nageldichtband", "KPD", unitController.findUnit(7l), true, 5.0));
+        parameterController.create(new ParameterP("Zeit Parameter Nageldichtband", "ZPD", unitController.findUnit(6l), true, 0.2));
+        parameterController.create(new ParameterP("Kosten Produkt Nageldichtband", "KProD", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Montage Nageldichtband", "KMonD", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten Nageldichtband", "GKND", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Verschnitt Konterlattung Prozent", "VKLP", unitController.findUnit(9l), true, 17.0));
+        parameterController.create(new ParameterP("Verschnitt Konterlattung", "VKL", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Konterlattung", "KL", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Kosten Parameter Konterlattung", "KPKL", unitController.findUnit(7l), true, 7.0));
+        parameterController.create(new ParameterP("Zeit Parameter Konterlattung", "ZPKL", unitController.findUnit(6l), true, 0.1));
+        parameterController.create(new ParameterP("Kosten Produkt Konterlattung", "KProKL", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Montage Konterlattung", "KMonKL", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten Konterlattung", "GKKL", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Lattenabstand", "LA", unitController.findUnit(13l), false));
+        parameterController.create(new ParameterP("Länge der Dachlatten ohne Verschnitt", "LDOV", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Verschnitt Lattung oder Vollschalung in Prozent", "VLVP", unitController.findUnit(9l), true, 16.0));
+        parameterController.create(new ParameterP("Verschnitt Lattung", "VL", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Länge Lattung", "LL", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Verschnitt Vollschalung", "VVS", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Vollschalung", "VollS", unitController.findUnit(2l), false));
+
+        parameterController.create(new ParameterP("Kosten Parameter Lattung oder Vollschalung", "KPLV", unitController.findUnit(7l), true, 6.0));
+        parameterController.create(new ParameterP("Zeit Parameter Lattung oder Vollschalung", "ZPLV", unitController.findUnit(6l), true, 0.03));
+        parameterController.create(new ParameterP("Kosten Produkt Lattung oder Vollschalung", "KPLatVoll", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Montage Lattung oder Vollschalung", "KMLatVoll", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten Lattung oder Vollschalung", "GKLatVoll", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Gesamtpreis Material für Montage", "GMFM", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Farbfaktor", "FK", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Farbmenge in m²", "FMM", unitController.findUnit(2l), false));
+        parameterController.create(new ParameterP("Farbmenge in l", "FML", unitController.findUnit(10l), false));
+        parameterController.create(new ParameterP("Zeit Montage Farbe Paramter", "ZPFA", unitController.findUnit(6l), true, 1.5));
+        parameterController.create(new ParameterP("Preis Montage Farbe Paramter", "PMFP", unitController.findUnit(7l), true, 40.0));
+        parameterController.create(new ParameterP("Kosten Produkt Farbe", "KPFarbe", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Montage Farbe", "KMFarbe", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtkosten Farbe", "GKFarbe", unitController.findUnit(7l), false));
+
+        parameterController.create(new ParameterP("Tage Aufenthalt", "TA", unitController.findUnit(14l), false));
+        parameterController.create(new ParameterP("Kilometergeld", "KMG", unitController.findUnit(7l), true, 2.5));
+        parameterController.create(new ParameterP("Preis LKW/Stunde", "PLS", unitController.findUnit(7l), true, 50.0));
+        parameterController.create(new ParameterP("Entfernung Transport", "ET", unitController.findUnit(11l), false));
+        parameterController.create(new ParameterP("Dauer Transport", "DT", unitController.findUnit(6l), false));
+        parameterController.create(new ParameterP("Kosten Transport", "KT", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Aufenthalt", "KA", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Gesamtpreis Transport", "GPT", unitController.findUnit(7l), false));
     }
 }

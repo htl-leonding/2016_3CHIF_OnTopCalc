@@ -153,6 +153,8 @@ public class Project_InformationsController implements Initializable, Observer {
         tf_ProjectName.setText(project.getProjectName());
         tf_Description.setText(project.getDescription());
         tf_InvoiceNumber.setText(project.getInvoiceNumber());
+        lv_ConstructionType.getSelectionModel().select(project.getConstructionType());
+        lv_RoofForm.getSelectionModel().select(project.getRoofForm());
 
         if (project.getClient() != null) {
             tf_City.setText(project.getClient().getCity());

@@ -34,12 +34,23 @@ public class ParameterP implements Serializable {
         creationDate = new Date();
     }
 
-    public ParameterP(String shortTerm, String longTerm, Unit unit) {
+    public ParameterP(String longTerm, String shortTerm, Unit unit, boolean editable) {
+        this();
         this.shortTerm = shortTerm;
         this.longTerm = longTerm;
         this.unit = unit;
+        this.editable = editable;
     }
 
+    public ParameterP(String longTerm, String shortTerm, Unit unit, boolean editable,  Double defaultValue) {
+        this();
+        this.shortTerm = shortTerm;
+        this.longTerm = longTerm;
+        this.unit = unit;
+        this.defaultValue = defaultValue;
+        this.editable = editable;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -74,7 +85,7 @@ public class ParameterP implements Serializable {
     
     public String getFormatDefaultValue() {
         //return UtilityFormat.formatValueWithShortTerm(defaultValue, unit.getShortTerm());
-        return "Beidl";
+        return "";
     }
 
     public Double getDefaultValue() {
