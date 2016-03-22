@@ -2,7 +2,9 @@ package db.controller;
 
 import db.JpaUtils;
 import db.exceptions.NonexistentEntityException;
+import entity.Assembly;
 import entity.Client;
+import entity.Component;
 import entity.Project;
 import entity.Worth;
 import java.util.ArrayList;
@@ -23,7 +25,6 @@ public class ProjectController {
     EntityManager em;
 
     public ProjectController() {
-        em = JpaUtils.getEntityManager();
     }
 
 //    private EntityManager getEntityManager(){
@@ -50,7 +51,59 @@ public class ProjectController {
             }
         }
     }
+    
+    //TODO
+    //Auf Korrektheit überprüfen
+    public void createCosting(Project project, long originalProjectId) {
+        try {
+            create(project);
+            
+            em = JpaUtils.getEntityManager();
+            em.getTransaction().begin();
+            
+            if (project.getWorths().size() > 0) {
+                List<Worth> worths = project.getWorths();
+                project.setWorths(new ArrayList<Worth>());
+                for (Worth worth : worths) {
+                    em.persist(new Worth(project, worth.getParameter(), worth.getWorth()));
+                }
+            }
+            ComponentController componentJpaController = new ComponentController();
+            List<Component> listComponents = componentJpaController.findComponentsByProjectId(originalProjectId);
+            if (listComponents.size() > 0) {
+                for (Component component : listComponents) {
+                    Component componentNew = new Component(component.getDescription(), component.getWidthComponent(),
+                            component.getHeightComponent(), component.getLengthComponent(), component.getPriceComponent(),
+                            component.getNumberOfProducts(), component.getTailoringHours(), component.getTailoringPricePerHour(),
+                            component.getComponentType(), component.getCategory(), component.getUnit(), component.getProduct(),
+                            project, component.isColor());
+                    em.persist(componentNew);
+                    for (Assembly assembly : component.getAssemblys()) {
+                        Assembly assemblyNew = new Assembly(assembly.getProduct(),
+                                componentNew, project, assembly.getNumberOfComponents(), assembly.getPrice());
+                        em.persist(assemblyNew);
+                    }
 
+                }
+            }
+            em.merge(project);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    /**
+     * Copy a project
+     * @param p
+     * @param originalProjectId
+     */
+    public void copy(Project p,long originalProjectId){
+        createCosting(p, originalProjectId);
+    }
+    
+    
     public List<Project> findAll() {
         try {
             em = JpaUtils.getEntityManager();
@@ -59,7 +112,8 @@ public class ProjectController {
             System.out.println(projects);
             return projects;
         } finally {
-            em.close();
+            if(em != null)
+                em.close();
         }
     }
 
@@ -121,6 +175,10 @@ public class ProjectController {
             }
             throw ex;
         }
+        finally {
+            if(em != null)
+                em.close();
+        }
     }
 
     public void sendToRecyclebin(long projectId) throws NonexistentEntityException {
@@ -129,21 +187,21 @@ public class ProjectController {
         edit(p);
     }
 
-        public boolean delete(long projectId) {
-            EntityManager em = JpaUtils.getEntityManager();
-            try {
-                em.getTransaction().begin();
-               int i = em.createNativeQuery("delete from Project p where p.id = ?").
-                        setParameter(1, projectId).executeUpdate();
-                em.getTransaction().commit();
-               return true;
-            } catch (Exception ex) {
-                return false;
-            } finally {
+    public boolean delete(long projectId) {
+        try {
+            em = JpaUtils.getEntityManager();
+            em.getTransaction().begin();
+            int i = em.createNativeQuery("delete from Project p where p.id = ?").
+                    setParameter(1, projectId).executeUpdate();
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        } finally {
+            if(em != null)
                 em.close();
-            }
         }
-
+    }
 
     public List<Project> findProjects() {
         return findProjects(true, -1, -1);
@@ -165,7 +223,8 @@ public class ProjectController {
             }
             return q.getResultList();
         } finally {
-            em.close();
+            if(em != null)
+                em.close();
         }
     }
 
@@ -174,7 +233,8 @@ public class ProjectController {
         try {
             return em.find(Project.class, id);
         } finally {
-            em.close();
+            if(em != null)
+                em.close();
         }
     }
 
@@ -184,7 +244,8 @@ public class ProjectController {
             return em.createNativeQuery("select * from Project where deletion = ? order by lastUpdate desc", Project.class).
                     setParameter(1, deletion).getResultList();
         } finally {
-            em.close();
+            if(em != null)
+                em.close();
         }
     }
 
@@ -194,7 +255,8 @@ public class ProjectController {
             return em.createNativeQuery("select * from Project p where deletion = 0 order by p.lastUpdate desc", Project.class).
                     setFirstResult(0).setMaxResults(5).getResultList();
         } finally {
-            em.close();
+            if(em != null)
+                em.close();
         }
     }
 
@@ -205,7 +267,8 @@ public class ProjectController {
                     Project.class).
                     getSingleResult();
         } finally {
-            em.close();
+            if(em != null)
+                em.close();
         }
     }
 
@@ -219,7 +282,8 @@ public class ProjectController {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
-            em.close();
+            if(em != null)
+                em.close();
         }
     }
 }
