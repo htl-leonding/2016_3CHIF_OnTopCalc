@@ -1,9 +1,9 @@
 /*
     Author     : Kepplinger
 */
-#bt_Next{
+.bt_Next{
 	-fx-graphic: url("../images/next2.png");
 }
-#bt_Prev{
+.bt_Prev{
 	-fx-graphic: url("../images/back.png");
 }

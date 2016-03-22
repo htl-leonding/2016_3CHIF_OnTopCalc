@@ -51,6 +51,8 @@ public class Project_InformationsController implements Initializable, Observer {
     public ListView<String> lv_RoofForm;
     @FXML
     public Label lb_Id;
+    @FXML
+    private Label lb_typeOfCalculation;
 
     /**
      * Initializes the controller class.
@@ -154,6 +156,7 @@ public class Project_InformationsController implements Initializable, Observer {
      */
     public void openProject(Project project) {
         lb_Id.setText(String.valueOf(project.getId()));
+        lb_typeOfCalculation.setText(project.getModeOfCalculation());
         tf_ProjectName.setText(project.getProjectName());
         tf_Description.setText(project.getDescription());
         tf_InvoiceNumber.setText(project.getInvoiceNumber());
