@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -25,13 +25,13 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView layoutX="51.0" layoutY="115.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
+            <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="ID" />
-                <TableColumn prefWidth="110.0" text="Projektname" />
-                  <TableColumn prefWidth="90.0" text="Art" />
-                  <TableColumn prefWidth="100.0" text="Dachform" />
-                  <TableColumn minWidth="0.0" prefWidth="140.0" text="Auftraggeber" />
+                <TableColumn fx:id="cl_id" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="cl_pname" prefWidth="110.0" text="Projektname" />
+                  <TableColumn fx:id="cl_type" prefWidth="90.0" text="Art" />
+                  <TableColumn fx:id="cl_roofType" prefWidth="100.0" text="Dachform" />
+                  <TableColumn fx:id="cl_client" minWidth="0.0" prefWidth="140.0" text="Auftraggeber" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

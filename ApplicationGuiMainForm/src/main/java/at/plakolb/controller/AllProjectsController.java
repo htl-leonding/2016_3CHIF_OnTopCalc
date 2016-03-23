@@ -79,7 +79,7 @@ public class AllProjectsController implements Initializable {
             }
         });
 
-        tc_action.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
+        tc_action.setCellValueFactory(new PropertyValueFactory<>("Buttons"));
 
         Callback<TableColumn<Project, String>, TableCell<Project, String>> cellFactory
                 = new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {

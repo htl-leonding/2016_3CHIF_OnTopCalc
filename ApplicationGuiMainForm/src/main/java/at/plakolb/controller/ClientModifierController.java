@@ -87,9 +87,7 @@ public class ClientModifierController implements Initializable {
         if (alert.getResult() == ButtonType.YES) {
             new ClientController().delete(openedClient.getId());
             ClientsController.getInstance().refreshTable();
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
         }
     }
 

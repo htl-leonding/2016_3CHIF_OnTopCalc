@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
             query = "select p from Project p")
 })
 @Table(name = "PROJECT")
-public class Project implements Serializable { 
+public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +61,7 @@ public class Project implements Serializable {
     public Project(
             String projectName,
             String invoiceNumber,
-            String description, 
+            String description,
             String constructionType,
             String roofForm,
             Client client) {
@@ -72,6 +72,7 @@ public class Project implements Serializable {
         this.constructionType = constructionType;
         this.invoiceNumber = invoiceNumber;
         this.roofForm = roofForm;
+        this.modeOfCalculation = "Vorkalkulation";
     }
 
     public Client getClient() {

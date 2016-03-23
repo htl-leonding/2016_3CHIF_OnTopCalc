@@ -21,18 +21,19 @@ import javafx.scene.control.TabPane;
  */
 public class ProjectViewController implements Initializable {
 
+    private static ProjectViewController instance;
+
     @FXML
     private TabPane tb_MainPane;
     @FXML
     private Button bt_Prev;
     @FXML
     private Button bt_Next;
-    private TabPane tb_Assebmling;
-    private static ProjectViewController instance;
     @FXML
     private Button bt_Dismiss;
     @FXML
     private Button bt_Save;
+    private TabPane tb_Assebmling;
     private boolean projectOpened;
     private Project openedProject;
 
@@ -220,5 +221,9 @@ public class ProjectViewController implements Initializable {
     private void normalTabSelected(Event event) {
         bt_Prev.setDisable(false);
         bt_Next.setDisable(false);
+    }
+    
+    public Project getOpenedProject(){
+        return openedProject;
     }
 }

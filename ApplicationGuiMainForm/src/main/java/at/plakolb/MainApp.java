@@ -86,32 +86,32 @@ public class MainApp extends Application {
         unitController.create(new Unit("Euro pro Kubikmeter", "€/m³"));
 
         ProductController productController = new ProductController();
-        productController.create(new Product("Leimholz", 24.0, 16.0, 4.0, 25.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Leimholz", 24.0, 16.0, 4.0, 25.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Vollholz", 8.0, 10.0, 12.0, 15.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Vollholz", 8.0, 12.0, 14.0, 16.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Vollholz", 8.0, 16.0, 3.0, 13.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Vollholz", 3.0, 8.0, 5.0, 20.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Vollholz", 5.0, 8.0, 5.0, 20.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Nägel 100", null, null, null, 20.0, unitController.findUnitByShortTerm("Stk"), ProductType.MISCELLANEOUS));
-        productController.create(new Product("Dachfolie", 150.0, null, null, 25.0, unitController.findUnitByShortTerm("m³"), ProductType.FOIL));
-        productController.create(new Product("Maschinenstunde", null, null, null, 10.0, unitController.findUnitByShortTerm("h"), ProductType.MISCELLANEOUS));
-        productController.create(new Product("Pfette", 16.0, 24.0, 29.0, 15.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Pfette", 16.0, 24.0, 14.5, 15.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Mauerbank", 16.0, 16.0, 14.5, 15.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Säulen", 16.0, 16.0, 3.0, 15.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Sparren", 10.0, 16.0, 7.5, 15.0, unitController.findUnitByShortTerm("m³"), ProductType.WOOD));
-        productController.create(new Product("Schalung", 0.4, null, null, 9.0, unitController.findUnitByShortTerm("m²"), ProductType.FORMWORK));
-        productController.create(new Product("Schalung", 0.2, null, null, 5.0, unitController.findUnitByShortTerm("m²"), ProductType.FORMWORK));
-        productController.create(new Product("Nageldichtband", null, null, 20.0, 14.0, unitController.findUnitByShortTerm("m"), ProductType.SEALINGBAND));
-        productController.create(new Product("Nageldichtband", null, null, 10.0, 12.0, unitController.findUnitByShortTerm("m"), ProductType.SEALINGBAND));
-        productController.create(new Product("Lattung", null, null, 10.0, 17.0, unitController.findUnitByShortTerm("m"), ProductType.BATTEN));
-        productController.create(new Product("Konterlattung", null, null, 10.0, 17.0, unitController.findUnitByShortTerm("m"), ProductType.COUNTERBATTEN));
+        productController.create(new Product("Leimholz", 24.0, 16.0, 4.0, 25.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Leimholz", 24.0, 16.0, 4.0, 25.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Vollholz", 8.0, 10.0, 12.0, 15.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Vollholz", 8.0, 12.0, 14.0, 16.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Vollholz", 8.0, 16.0, 3.0, 13.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Vollholz", 3.0, 8.0, 5.0, 20.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Vollholz", 5.0, 8.0, 5.0, 20.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Nägel 100", null, null, null, 20.0, unitController.findUnit(5l), ProductType.MISCELLANEOUS));
+        productController.create(new Product("Dachfolie", 150.0, null, null, 25.0, unitController.findUnit(4l), ProductType.FOIL));
+        productController.create(new Product("Maschinenstunde", null, null, null, 10.0, unitController.findUnit(6l), ProductType.MISCELLANEOUS));
+        productController.create(new Product("Pfette", 16.0, 24.0, 29.0, 15.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Pfette", 16.0, 24.0, 14.5, 15.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Mauerbank", 16.0, 16.0, 14.5, 15.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Säulen", 16.0, 16.0, 3.0, 15.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Sparren", 10.0, 16.0, 7.5, 15.0, unitController.findUnit(4l), ProductType.WOOD));
+        productController.create(new Product("Schalung", 0.4, null, null, 9.0, unitController.findUnit(2l), ProductType.FORMWORK));
+        productController.create(new Product("Schalung", 0.2, null, null, 5.0, unitController.findUnit(2l), ProductType.FORMWORK));
+        productController.create(new Product("Nageldichtband", null, null, 20.0, 14.0, unitController.findUnit(1l), ProductType.SEALINGBAND));
+        productController.create(new Product("Nageldichtband", null, null, 10.0, 12.0, unitController.findUnit(1l), ProductType.SEALINGBAND));
+        productController.create(new Product("Lattung", null, null, 10.0, 17.0, unitController.findUnit(1l), ProductType.BATTEN));
+        productController.create(new Product("Konterlattung", null, null, 10.0, 17.0, unitController.findUnit(1l), ProductType.COUNTERBATTEN));
 
-        productController.create(new Product("Rot", 100.0, 25.0, unitController.findUnitByShortTerm("l"), ProductType.COLOR));
-        productController.create(new Product("Blau", 215.0, 35.0, unitController.findUnitByShortTerm("l"), ProductType.COLOR));
-        productController.create(new Product("Grün", 325.0, 23.0, unitController.findUnitByShortTerm("l"), ProductType.COLOR));
-        productController.create(new Product("Braun", 43.0, 28.0, unitController.findUnitByShortTerm("l"), ProductType.COLOR));
+        productController.create(new Product("Rot", 100.0, 25.0, unitController.findUnit(10l), ProductType.COLOR));
+        productController.create(new Product("Blau", 215.0, 35.0, unitController.findUnit(10l), ProductType.COLOR));
+        productController.create(new Product("Grün", 325.0, 23.0, unitController.findUnit(10l), ProductType.COLOR));
+        productController.create(new Product("Braun", 43.0, 28.0, unitController.findUnit(10l), ProductType.COLOR));
 
         ParameterController parameterController = new ParameterController();
         parameterController.create(new ParameterP("Länge", "l", unitController.findUnit(1l), false));
@@ -182,7 +182,7 @@ public class MainApp extends Application {
 
         parameterController.create(new ParameterP("Lattenabstand", "LA", unitController.findUnit(13l), false));
         parameterController.create(new ParameterP("Länge der Dachlatten ohne Verschnitt", "LDOV", unitController.findUnit(1l), false));
-        parameterController.create(new ParameterP("Verschnitt Lattung oder Vollschalung in Prozent", "VLVP", unitController.findUnit(9l), true, 16.0));
+        parameterController.create(new ParameterP("Verschnitt Lattung oder Vollschalung %", "VLVP", unitController.findUnit(9l), true, 16.0));
         parameterController.create(new ParameterP("Verschnitt Lattung", "VL", unitController.findUnit(1l), false));
         parameterController.create(new ParameterP("Länge Lattung", "LL", unitController.findUnit(1l), false));
         parameterController.create(new ParameterP("Verschnitt Vollschalung", "VVS", unitController.findUnit(2l), false));
@@ -224,6 +224,6 @@ public class MainApp extends Application {
         categoryController.create(new Category("Lattung", "L"));
         categoryController.create(new Category("Vollschalung", "VS"));
         categoryController.create(new Category("Folie", "F"));
-        categoryController.create(new Category("Divers", "X"));
+        categoryController.create(new Category("Diverses", "X"));
     }
 }

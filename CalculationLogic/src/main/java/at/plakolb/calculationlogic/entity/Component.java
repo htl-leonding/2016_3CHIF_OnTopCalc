@@ -34,7 +34,7 @@ public class Component implements Serializable {
     private Double heightComponent;
     private Double lengthComponent;
     private Double priceComponent;
-    private Double numberOfProducts;
+    private int numberOfProducts;
     private Double tailoringHours;
     private Double tailoringPricePerHour;
     private String componentType;
@@ -48,7 +48,6 @@ public class Component implements Serializable {
     private Project project;
     @OneToMany(mappedBy = "component")
     private List<Assembly> assemblys = new ArrayList<>();
-    private boolean color;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date creationDate;
 
@@ -56,7 +55,7 @@ public class Component implements Serializable {
         creationDate = new Date();
     }
 
-    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, Double numberOfProducts, Category category, Unit unit, Product product, Project project) {
+    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, int numberOfProducts, Category category, Unit unit, Product product, Project project) {
         this();
         this.description = description;
         this.widthComponent = widthComponent;
@@ -70,7 +69,7 @@ public class Component implements Serializable {
         setProject(project);
     }
 
-    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, Double numberOfProducts, Double tailoringHours, Double tailoringPricePerHour, String componentType, Category category, Unit unit, Product product, Project project, boolean color) {
+    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, int numberOfProducts, Double tailoringHours, Double tailoringPricePerHour, String componentType, Category category, Unit unit, Product product, Project project) {
         this();
         this.description = description;
         this.widthComponent = widthComponent;
@@ -84,11 +83,10 @@ public class Component implements Serializable {
         this.category = category;
         this.unit = unit;
         this.product = product;
-        this.color = color;
         setProject(project);
     }
 
-    public Component(String description, Double priceComponent, Double numberOfProducts, Category category, Unit unit, Product product, Project project) {
+    public Component(String description, Double priceComponent, int numberOfProducts, Category category, Unit unit, Product product, Project project) {
         this();
         this.description = description;
         this.priceComponent = priceComponent;
@@ -147,11 +145,11 @@ public class Component implements Serializable {
         this.lengthComponent = lengthComponent;
     }
 
-    public Double getNumberOfProducts() {
+    public int getNumberOfProducts() {
         return numberOfProducts;
     }
 
-    public void setNumberOfProducts(Double numberOfProducts) {
+    public void setNumberOfProducts(int numberOfProducts) {
         this.numberOfProducts = numberOfProducts;
     }
 
@@ -193,14 +191,6 @@ public class Component implements Serializable {
 
     public void setWidthComponent(Double widthComponent) {
         this.widthComponent = widthComponent;
-    }
-
-    public boolean isColor() {
-        return color;
-    }
-
-    public void setColor(boolean color) {
-        this.color = color;
     }
 
     public String getComponentType() {

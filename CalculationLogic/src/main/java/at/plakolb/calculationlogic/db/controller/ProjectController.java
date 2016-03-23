@@ -76,7 +76,7 @@ public class ProjectController {
                             component.getHeightComponent(), component.getLengthComponent(), component.getPriceComponent(),
                             component.getNumberOfProducts(), component.getTailoringHours(), component.getTailoringPricePerHour(),
                             component.getComponentType(), component.getCategory(), component.getUnit(), component.getProduct(),
-                            project, component.isColor());
+                            project);
                     em.persist(componentNew);
                     for (Assembly assembly : component.getAssemblys()) {
                         Assembly assemblyNew = new Assembly(assembly.getProduct(),

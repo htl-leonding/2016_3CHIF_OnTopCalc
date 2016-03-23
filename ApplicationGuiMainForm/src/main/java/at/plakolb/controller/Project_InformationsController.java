@@ -21,7 +21,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import sun.java2d.pipe.hw.AccelDeviceEventNotifier;
 
 /**
  * FXML Controller class
