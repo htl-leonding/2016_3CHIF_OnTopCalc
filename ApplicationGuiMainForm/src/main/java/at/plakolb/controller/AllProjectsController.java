@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -68,8 +69,9 @@ public class AllProjectsController implements Initializable {
         tc_RoofForm.setCellValueFactory(new PropertyValueFactory<>("roofForm"));
         tc_Client.setCellValueFactory(new PropertyValueFactory<>("client"));
         tc_Type.setCellValueFactory(new PropertyValueFactory<>("modeOfCalculation"));
-        tv_ProjectList.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
-
+        
+        updateData();
+        
         tv_ProjectList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tv_ProjectList.getSelectionModel().getSelectedItem() != null) {
                 MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
@@ -105,6 +107,12 @@ public class AllProjectsController implements Initializable {
                                     copyP.setId("copy");
                                     deleteP.setId("delete");
                                     box.setId("box");
+                                    
+                                    openP.setTooltip(new Tooltip("Projekt editieren"));
+                                    printP.setTooltip(new Tooltip("Projekt drucken"));
+                                    costingP.setTooltip(new Tooltip("Nachkalkulation erstellen"));
+                                    copyP.setTooltip(new Tooltip("Projekt kopieren"));
+                                    deleteP.setTooltip(new Tooltip("Projekt in den Mülleimer verschieben"));
 
                                     openP.setOnMouseClicked((MouseEvent event) -> {
                                         Project p = getTableView().getItems().get(getIndex());
