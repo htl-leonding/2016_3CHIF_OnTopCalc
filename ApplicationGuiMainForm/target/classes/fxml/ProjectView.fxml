@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="872.0" style="-fx-background-color: White;" stylesheets="@../styles/projectButtons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProjectViewController">
+<AnchorPane prefWidth="872.0" style="-fx-background-color: White;" stylesheets="@../styles/projectButtons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProjectViewController">
    <children>
       <GridPane layoutY="568.0" style="-fx-background-color: linear-gradient(#ffffff  0%, lightgrey  20%, lightgrey 80%, lightgrey 100%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <columnConstraints>
@@ -31,7 +31,7 @@
                   <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button id="btnLettering" fx:id="bt_Prev" disable="true" mnemonicParsing="false" onAction="#selectPreviousTab" text="Zurück" GridPane.columnIndex="1">
+            <Button id="btnLettering" fx:id="bt_Prev" disable="true" mnemonicParsing="false" onAction="#selectPreviousTab" styleClass="bt_Prev" text="Zurück" GridPane.columnIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
@@ -39,7 +39,7 @@
                   <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button id="btnLettering" fx:id="bt_Next" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#selectNextTab" text="Weiter" GridPane.columnIndex="2">
+            <Button id="btnLettering" fx:id="bt_Next" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#selectNextTab" styleClass="bt_Next" text="Weiter" GridPane.columnIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
@@ -82,7 +82,7 @@
                    <fx:include source="Assembling.fxml" />
                </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material für Monatge">
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material für Montage">
                 <content>
                    <fx:include source="Project_ConstructionMaterial.fxml" />
                 </content>

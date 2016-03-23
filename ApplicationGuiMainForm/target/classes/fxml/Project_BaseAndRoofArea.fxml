@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Project_BaseAndRoofAreaController">
+<AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_BaseAndRoofAreaController">
    <children>
       <Label id="headlineProjectPages" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" text="Grund- und Dachflächenermittlung" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
@@ -19,7 +19,7 @@
          <children>
             <AnchorPane layoutX="71.0" layoutY="84.0">
                <children>
-                  <TextField layoutX="67.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" promptText="Breite in m" />
+                  <TextField fx:id="tf_Width" layoutX="67.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" promptText="Breite in m" />
                   <Label id="boldHeadline" layoutY="174.0" text="Dachfläche: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -30,7 +30,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="67.0" layoutY="28.0" prefHeight="25.0" prefWidth="150.0" promptText="Länge in m" />
+                  <TextField fx:id="tf_Length" layoutX="67.0" layoutY="28.0" prefHeight="25.0" prefWidth="150.0" promptText="Länge in m" />
                   <Label id="UnitNotInText" layoutX="221.0" layoutY="27.0" text="m">
                      <font>
                         <Font size="18.0" />
@@ -46,7 +46,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Button id="btnLettering" layoutY="88.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="219.0" text="Grundfläche berechnen">
+                  <Button id="btnLettering" layoutY="88.0" mnemonicParsing="false" onAction="#calcBaseArea" prefHeight="39.0" prefWidth="219.0" text="Grundfläche berechnen">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -76,8 +76,8 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="77.0" layoutY="203.0" prefHeight="25.0" prefWidth="142.0" promptText="Neigung in °" />
-                  <Button id="btnLettering" layoutY="235.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="219.0" text="Dachfläche berechnen">
+                  <TextField fx:id="tf_Angle" layoutX="77.0" layoutY="203.0" prefHeight="25.0" prefWidth="142.0" promptText="Neigung in °" />
+                  <Button id="btnLettering" layoutY="235.0" mnemonicParsing="false" onAction="#calcRoofArea" prefHeight="39.0" prefWidth="219.0" text="Dachfläche berechnen">
                      <font>
                         <Font size="18.0" />
                      </font>

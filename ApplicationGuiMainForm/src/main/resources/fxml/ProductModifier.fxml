@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="437.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductModifierController">
+<AnchorPane id="AnchorPane" prefHeight="437.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProductModifierController">
    <children>
       <Label id="subHeadlineProjectPages" alignment="CENTER" layoutX="218.0" layoutY="14.0" text="Produkt ändern" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
          <font>

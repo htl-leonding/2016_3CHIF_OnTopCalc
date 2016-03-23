@@ -1,16 +1,18 @@
 package at.plakolb;
 
-import db.controller.ClientController;
-import db.controller.ParameterController;
-import db.controller.ProductController;
-import db.controller.ProjectController;
-import db.controller.UnitController;
-import entity.Client;
-import entity.ParameterP;
-import entity.Product;
-import entity.Project;
-import entity.Unit;
-import eunmeration.ProductType;
+import at.plakolb.calculationlogic.db.controller.CategoryController;
+import at.plakolb.calculationlogic.db.controller.ClientController;
+import at.plakolb.calculationlogic.db.controller.ParameterController;
+import at.plakolb.calculationlogic.db.controller.ProductController;
+import at.plakolb.calculationlogic.db.controller.ProjectController;
+import at.plakolb.calculationlogic.db.controller.UnitController;
+import at.plakolb.calculationlogic.entity.Category;
+import at.plakolb.calculationlogic.entity.Client;
+import at.plakolb.calculationlogic.entity.ParameterP;
+import at.plakolb.calculationlogic.entity.Product;
+import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.eunmeration.ProductType;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -55,7 +57,7 @@ public class MainApp extends Application {
     }
 
     private void insertTestData() {
-        db.controller.ClientController clientController = new ClientController();
+        at.plakolb.calculationlogic.db.controller.ClientController clientController = new ClientController();
         Client client1 = new Client("Mustermann", "Feldstraße", "Linz", "4020", "123456789", "max.m@mail.com");
         Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321", "erika.m@mail.com");
         clientController.create(client1);
@@ -211,5 +213,17 @@ public class MainApp extends Application {
         parameterController.create(new ParameterP("Kosten Transport", "KT", unitController.findUnit(7l), false));
         parameterController.create(new ParameterP("Kosten Aufenthalt", "KA", unitController.findUnit(7l), false));
         parameterController.create(new ParameterP("Gesamtpreis Transport", "GPT", unitController.findUnit(7l), false));
+
+        CategoryController categoryController = new CategoryController();
+        categoryController.create(new Category("Konstruktion", "K"));
+        categoryController.create(new Category("Konstruktion Dach", "KD"));
+        categoryController.create(new Category("Schalung", "S"));
+        categoryController.create(new Category("sichtbare Schalung", "SS"));
+        categoryController.create(new Category("Nageldichtband", "ND"));
+        categoryController.create(new Category("Konterlattung", "KL"));
+        categoryController.create(new Category("Lattung", "L"));
+        categoryController.create(new Category("Vollschalung", "VS"));
+        categoryController.create(new Category("Folie", "F"));
+        categoryController.create(new Category("Divers", "X"));
     }
 }

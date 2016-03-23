@@ -1,8 +1,9 @@
 /*	HTL Leonding	*/
 package db.controller;
 
-import entity.Product;
-import eunmeration.ProductType;
+import at.plakolb.calculationlogic.db.controller.ProductController;
+import at.plakolb.calculationlogic.entity.Product;
+import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;

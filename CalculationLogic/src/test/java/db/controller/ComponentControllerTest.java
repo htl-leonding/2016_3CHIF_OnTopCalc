@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package db.controller;
 
-import entity.Component;
+import at.plakolb.calculationlogic.entity.Component;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;

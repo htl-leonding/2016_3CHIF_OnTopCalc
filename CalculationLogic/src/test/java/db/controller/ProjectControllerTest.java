@@ -1,9 +1,11 @@
 /*	HTL Leonding	*/
 package db.controller;
 
-import db.exceptions.NonexistentEntityException;
-import entity.Client;
-import entity.Project;
+import at.plakolb.calculationlogic.db.controller.ProjectController;
+import at.plakolb.calculationlogic.db.controller.ClientController;
+import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
+import at.plakolb.calculationlogic.entity.Client;
+import at.plakolb.calculationlogic.entity.Project;
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
@@ -57,7 +59,7 @@ public class ProjectControllerTest {
     /**
      * Test of create method, of class ProjectController.
      *
-     * @throws db.exceptions.NonexistentEntityException
+     * @throws at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException
      */
     @Test
     public void testEdit() throws NonexistentEntityException {

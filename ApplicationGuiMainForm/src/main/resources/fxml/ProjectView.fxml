@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
@@ -15,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="872.0" style="-fx-background-color: White;" stylesheets="@../styles/projectButtons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProjectViewController">
+<AnchorPane prefWidth="872.0" style="-fx-background-color: White;" stylesheets="@../styles/projectButtons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProjectViewController">
    <children>
       <GridPane layoutY="568.0" style="-fx-background-color: linear-gradient(#ffffff  0%, lightgrey  20%, lightgrey 80%, lightgrey 100%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <columnConstraints>
@@ -87,7 +82,7 @@
                    <fx:include source="Assembling.fxml" />
                </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material für Monatge">
+            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material für Montage">
                 <content>
                    <fx:include source="Project_ConstructionMaterial.fxml" />
                 </content>
