@@ -1,9 +1,11 @@
 package at.plakolb.controller;
 
+import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -17,7 +19,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import sun.java2d.pipe.hw.AccelDeviceEventNotifier;
 
 /**
  * FXML Controller class
@@ -63,6 +67,22 @@ public class Project_InformationsController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        tf_ClientName.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                ClientController c = new ClientController();
+                List<Client> clients = c.findAll();
+                for (Client client : clients) {
+                    if (client.getName().toLowerCase().contains(tf_ClientName.getText().toLowerCase())) {
+                        tf_ClientName.setText(client.getName());
+                        tf_City.setText(client.getCity());
+                        tf_Street.setText(client.getStreet());
+                        tf_ZipCode.setText(client.getZipCode());
+                        tf_PhoneNumber.setText(client.getTelephoneNumber());
+                        tf_Email.setText(client.getEmail());
+                    }
+                }
+            }
+        });
     }
 
     public static Project_InformationsController getInstance() {
@@ -115,7 +135,8 @@ public class Project_InformationsController implements Initializable, Observer {
 
     /**
      * Opens a new View, where an aleready existing client can be selected.
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void openClientView(ActionEvent event) {
