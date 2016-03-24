@@ -74,8 +74,8 @@ public class AllProjectsController implements Initializable {
         
         tv_ProjectList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tv_ProjectList.getSelectionModel().getSelectedItem() != null) {
-                MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
                 ProjectViewController.getInstance().openProject(tv_ProjectList.getSelectionModel().getSelectedItem());
+                MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
             }
         });
 
