@@ -59,7 +59,6 @@ public class ProjectViewController implements Initializable {
         } else {
             openedProject = new Project();
         }
-
     }
 
     public static ProjectViewController getInstance() {
@@ -141,7 +140,10 @@ public class ProjectViewController implements Initializable {
             openedProject.setRoofForm(informations.getRoofForm());
             projectController.create(openedProject);
         }
+        
+        Project_ResultAreaController.getInstance().persistArea();
         Project_ConstructionMaterialListController.getInstance().persistComponents();
+
         MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
         projectOpened = false;
         openedProject = null;

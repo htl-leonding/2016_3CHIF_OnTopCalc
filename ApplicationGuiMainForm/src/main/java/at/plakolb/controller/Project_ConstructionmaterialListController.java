@@ -1,6 +1,6 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-/*	HTL Leonding	*/
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -9,8 +9,7 @@ import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import at.plakolb.math.utils.MathUtils;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -105,13 +104,13 @@ public class Project_ConstructionMaterialListController implements Initializable
 
         tc_Volume.setCellValueFactory((CellDataFeatures<Component, Double> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<Double>(round(component.getWidthComponent() / 100 * component.getLengthComponent() * component.getHeightComponent() / 100 * component.getNumberOfProducts(), 4)) {
+            return new ReadOnlyObjectWrapper<Double>(MathUtils.round(component.getWidthComponent() / 100 * component.getLengthComponent() * component.getHeightComponent() / 100 * component.getNumberOfProducts(), 4)) {
             };
         });
 
         tc_PricePerCubic.setCellValueFactory((CellDataFeatures<Component, Double> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<Double>(round(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0)), 2)) {
+            return new ReadOnlyObjectWrapper<Double>(MathUtils.round(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0)), 2)) {
             };
         });
 
@@ -243,25 +242,7 @@ public class Project_ConstructionMaterialListController implements Initializable
         for (Component component : tv_Materials.getItems()) {
             sum += column.getCellData(component);
         }
-        return round(sum, 4);
-    }
-
-    /**
-     * Rounds a double.
-     *
-     * @param value
-     * @param places
-     * @return
-     */
-    public static double round(double value, int places) {
-
-        if (places < 0) {
-            throw new IllegalArgumentException();
-        }
-
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+        return MathUtils.round(sum, 4);
     }
 
     /**
