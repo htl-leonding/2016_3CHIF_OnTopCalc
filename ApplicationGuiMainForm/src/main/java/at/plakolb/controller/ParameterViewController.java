@@ -5,7 +5,11 @@ import at.plakolb.calculationlogic.entity.ParameterP;
 import at.plakolb.calculationlogic.entity.Unit;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +35,7 @@ public class ParameterViewController implements Initializable {
     @FXML
     private TableColumn<ParameterP, String> tc_LongTerm;
     @FXML
-    private TableColumn<ParameterP, Double> tc_DefaultValue;
+    private TableColumn<ParameterP, String> tc_DefaultValue;
     @FXML
     private TableColumn<ParameterP, Unit> tc_Unit;
 
@@ -44,8 +48,20 @@ public class ParameterViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        DecimalFormat decimalFormat = new DecimalFormat("#.####");
+        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+        
         tc_LongTerm.setCellValueFactory(new PropertyValueFactory<>("longTerm"));
-        tc_DefaultValue.setCellValueFactory(new PropertyValueFactory<>("defaultValue"));
+        
+        tc_DefaultValue.setCellValueFactory((TableColumn.CellDataFeatures<ParameterP, String> param) -> {
+            if (param.getValue().getDefaultValue() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getDefaultValue()));
+            }
+            else{
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+        
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tv_Prameter.setItems(FXCollections.observableArrayList(new ParameterController().findAll()));
 

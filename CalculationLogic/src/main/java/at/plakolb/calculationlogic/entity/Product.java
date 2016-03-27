@@ -2,6 +2,7 @@ package at.plakolb.calculationlogic.entity;
 
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -151,10 +152,10 @@ public class Product implements Serializable {
             return name;
         } else {
             String nameFull = name + " ";
-
-            nameFull += (lengthProduct == null ? "0" : lengthProduct) + "x";
-            nameFull += (widthProduct == null ? "0" : widthProduct) + "x";
-            nameFull += (heightProduct == null ? "0" : heightProduct) + "x";
+            DecimalFormat decimalFormat=new DecimalFormat("#.#");
+            nameFull += (widthProduct == null ? "0" : decimalFormat.format(widthProduct)) + "/";
+            nameFull += (heightProduct == null ? "0" : decimalFormat.format(heightProduct)) + "/";
+            nameFull += (lengthProduct == null ? "0" : decimalFormat.format(lengthProduct)) + "/";
 
             return nameFull.substring(0, nameFull.length() - 1);
         }

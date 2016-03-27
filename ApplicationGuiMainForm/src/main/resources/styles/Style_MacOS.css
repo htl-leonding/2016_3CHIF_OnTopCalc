@@ -7,16 +7,6 @@
     Created on : 21.02.2016, 09:48:59
     Author     : User
 */
-#headlineFrontPage{
-    -fx-text-fill: #3c84ff;
-    -fx-text-alignment: center;
-    -fx-font-size: 48px;  
-}
-#headlineProjectPages{
-    -fx-text-fill: #3c84ff;
-    -fx-text-alignment: center;
-    -fx-font-size: 36px;  
-}
 #boldLettering{
     -fx-padding:3px 0px 0px -5px;
     -fx-font-size: 17px;   
@@ -59,10 +49,6 @@
 #smallBtnLettering{
     -fx-font-size:12px;
     -fx-text-fill: #000000;    
-}
-#subHeadlineProjectPages{
-    -fx-text-fill: #3c84ff;
-    -fx-font-size: 24px; 
 }
 #smallNormalLettering{
     -fx-font-size: 14px;   

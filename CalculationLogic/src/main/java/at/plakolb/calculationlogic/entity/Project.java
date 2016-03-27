@@ -14,8 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -35,11 +33,8 @@ public class Project implements Serializable {
     private Long preCalculation;
     private boolean deletion;
     private String description;
-    @Size(min = 2, message = "Der Projektname muss aus mindestens 2 Zeichen bestehen")
     private String projectName;
-    @NotNull(message = "Bitte geben Sie die Dachform an")
     private String roofForm;
-    @NotNull(message = "Bitte geben Sie den Konstrukionstyp an")
     private String constructionType;
     private String modeOfCalculation;
     private String invoiceNumber;

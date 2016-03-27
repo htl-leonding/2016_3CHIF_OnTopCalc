@@ -27,26 +27,32 @@ public class Worth implements Serializable {
         creationDate = new Date();
     }
 
-    public Worth(Project project, ParameterP parameter, double worth) {
+    public Worth(ParameterP parameter) {
         this();
         this.parameter = parameter;
-        this.worth = worth;
-        setProject(project);
         this.shortTerm = parameter.getShortTerm();
     }
-    
+
+    public Worth(Project project, ParameterP parameter, double worth) {
+        this(parameter);
+        this.worth = worth;
+        setProject(project);
+
+    }
+
     /**
-     * 
+     *
      * @param project
      * @param parameter
      * @param worth
-     * @param shortTerm Falls ein Index verwendet wird, ändert sich der shortTerm zB von N zu N1
+     * @param shortTerm Falls ein Index verwendet wird, ändert sich der
+     * shortTerm zB von N zu N1
      */
-     public Worth(Project project, ParameterP parameter, double worth, String shortTerm) {
+    public Worth(Project project, ParameterP parameter, double worth, String shortTerm) {
         this();
         this.parameter = parameter;
         this.worth = worth;
-        this.shortTerm = (shortTerm == null ? parameter.getShortTerm() : shortTerm); 
+        this.shortTerm = (shortTerm == null ? parameter.getShortTerm() : shortTerm);
         setProject(project);
     }
 
@@ -71,7 +77,7 @@ public class Worth implements Serializable {
     }
 
     public final void setProject(Project project) {
-        if(project != null) {
+        if (project != null) {
             project.getWorths().add(this);
         }
         this.project = project;
@@ -84,7 +90,7 @@ public class Worth implements Serializable {
     public void setWorth(double worth) {
         this.worth = worth;
     }
-    
+
 //    public String worthFormat() {
 //        return UtilityFormat.formatWorth(this);
 //    }
@@ -92,7 +98,6 @@ public class Worth implements Serializable {
 //    public String worthFormatWithUnit() {
 //        return UtilityFormat.worthWithUnit(this);
 //    }
-
     public Date getCreationDate() {
         return creationDate;
     }
@@ -108,7 +113,7 @@ public class Worth implements Serializable {
     public void setShortTerm(String shortTerm) {
         this.shortTerm = shortTerm;
     }
-    
+
     @Override
     public String toString() {
         return "Worth{" + "id=" + id + ", project=" + project + ", parameter=" + parameter + ", worth=" + worth + '}';

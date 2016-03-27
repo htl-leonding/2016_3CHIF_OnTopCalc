@@ -3,6 +3,7 @@ at\plakolb\controller\Assembling_SheetRoofController.class
 at\plakolb\controller\AssemblingController.class
 at\plakolb\controller\ProductListController.class
 at\plakolb\controller\SideViewController.class
+at\plakolb\controller\Project_ConstructionMaterialListController$1$1.class
 at\plakolb\controller\Project_InformationsController.class
 at\plakolb\controller\Project_ConstructionMaterialController.class
 at\plakolb\controller\Assembling_SealingBandController.class
@@ -12,7 +13,7 @@ at\plakolb\controller\AllProjectsController$1.class
 at\plakolb\controller\Assembling_CounterBattenController.class
 at\plakolb\controller\PrintProjectController.class
 at\plakolb\controller\Project_MaterialAndCostController.class
-at\plakolb\controller\Project_ConstructionmaterialListController.class
+at\plakolb\controller\Project_ConstructionMaterialListController.class
 at\plakolb\controller\MainFormController.class
 at\plakolb\controller\Assembling_TiledRoofController.class
 at\plakolb\controller\OptionsController.class
@@ -23,6 +24,7 @@ at\plakolb\controller\ParameterViewController.class
 at\plakolb\controller\ClientsController.class
 at\plakolb\controller\ParameterModifierController.class
 at\plakolb\controller\ClientModifierController.class
+at\plakolb\controller\Project_ConstructionMaterialListController$1.class
 at\plakolb\controller\Project_BaseAndRoofAreaController.class
 at\plakolb\controller\ProjectViewController.class
 at\plakolb\controller\ClientsSmallController.class

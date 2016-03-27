@@ -1,5 +1,5 @@
 /*	HTL Leonding	*/
-package at.plakolb.math.utils;
+package at.plakolb.calculationlogic.math.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -21,7 +21,7 @@
    <center>
       <AnchorPane style="-fx-background-color: White;" BorderPane.alignment="CENTER">
          <children>
-            <Label id="subHeadlineProjectPages" layoutX="60.0" layoutY="61.0" text="Produktliste" textFill="#3c84ff" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+            <Label layoutX="60.0" layoutY="61.0" text="Produktliste" textFill="#3c84ff" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Berlin Sans FB" size="25.0" />
                </font>
@@ -29,11 +29,11 @@
             <TableView fx:id="tv_Products" layoutX="13.0" layoutY="96.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
               <columns>
                 <TableColumn fx:id="tc_Name" prefWidth="200.0" text="Bezeichnung" />
-                <TableColumn fx:id="tc_Width" prefWidth="102.0" text="Breite in cm" />
-                  <TableColumn fx:id="tc_Height" prefWidth="96.0" text="Höhe in cm" />
-                  <TableColumn fx:id="tc_Length" prefWidth="91.0" text="Länge in m" />
-                  <TableColumn fx:id="tc_PriceUnit" prefWidth="66.0" text="Preis/Einheit" />
-                  <TableColumn fx:id="tc_Unit" prefWidth="94.0" text="Einheit" />
+                <TableColumn fx:id="tc_Width" prefWidth="102.0" style="-fx-alignment: center;" text="Breite in cm" />
+                  <TableColumn fx:id="tc_Height" prefWidth="96.0" style="-fx-alignment: center;" text="Höhe in cm" />
+                  <TableColumn fx:id="tc_Length" prefWidth="91.0" style="-fx-alignment: center;" text="Länge in m" />
+                  <TableColumn fx:id="tc_PriceUnit" prefWidth="66.0" style="-fx-alignment: center;" text="Preis/Einheit" />
+                  <TableColumn fx:id="tc_Unit" prefWidth="94.0" style="-fx-alignment: center;" text="Einheit" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

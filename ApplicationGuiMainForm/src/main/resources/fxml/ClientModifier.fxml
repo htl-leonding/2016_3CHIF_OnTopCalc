@@ -10,9 +10,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="372.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientModifierController">
    <children>
-      <Label id="subHeadlineProjectPages" alignment="CENTER" layoutX="218.0" layoutY="14.0" text="Auftraggeber verändern" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+      <Label alignment="CENTER" layoutX="218.0" layoutY="14.0" text="Auftraggeber verändern" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
          <font>
-            <Font size="24.0" />
+            <Font name="Berlin Sans FB" size="28.0" />
          </font>
       </Label>
       <HBox alignment="CENTER" layoutX="100.0" layoutY="50.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

@@ -1,6 +1,8 @@
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.math.utils.MathUtils;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +24,7 @@ import javax.persistence.Temporal;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Component.findAll",
-                query = "select c from Component c")
+            query = "select c from Component c")
 })
 public class Component implements Serializable {
 
@@ -228,16 +230,11 @@ public class Component implements Serializable {
     public String getFullNameProduct() {
         String name = "";
         if (product != null) {
-            name += product.getName() + " ";
-            if (lengthComponent != null) {
-                name += lengthComponent + "/";
-            }
-            if (widthComponent != null) {
-                name += widthComponent + "/";
-            }
-            if (heightComponent != null) {
-                name += heightComponent + "/";
-            }
+            String nameFull = name + " ";
+            DecimalFormat decimalFormat = new DecimalFormat("#.#");
+            nameFull += (widthComponent == null ? "0" : decimalFormat.format(widthComponent)) + "/";
+            nameFull += (heightComponent == null ? "0" : decimalFormat.format(heightComponent)) + "/";
+            nameFull += (lengthComponent == null ? "0" : decimalFormat.format(lengthComponent)) + "/";
         }
         return name.substring(0, name.length() - 1);
     }

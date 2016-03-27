@@ -7,8 +7,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +14,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sun.java2d.pipe.hw.AccelDeviceEventNotifier;
 
 /**
  * FXML Controller class
@@ -50,9 +47,9 @@ public class OptionsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         cl_pname.setCellValueFactory(new PropertyValueFactory<>("projectName"));
-        cl_client.setCellValueFactory(new PropertyValueFactory<>("id"));
+        cl_client.setCellValueFactory(new PropertyValueFactory<>("client"));
         cl_type.setCellValueFactory(new PropertyValueFactory<>("constructionType"));
-        cl_roofType.setCellValueFactory(new PropertyValueFactory<>("roofform"));
+        cl_roofType.setCellValueFactory(new PropertyValueFactory<>("roofForm"));
         tooltip = new Tooltip("Drücken Sie zwei Mal auf ein Projekt um es wiederherzustellen");
         updateData();
 

@@ -16,7 +16,7 @@
 
 <AnchorPane id="AnchorPane" stylesheets="@../styles/CompnentButton.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialListController">
    <children>
-      <Label id="headlineProjectPages" alignment="CENTER" layoutX="118.0" text="Holzmaterial für Konstruktion (m³)" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" layoutX="118.0" text="Holzmaterial für Konstruktion (m³)" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font name="Berlin Sans FB" size="36.0" />
          </font>
@@ -100,7 +100,7 @@
             </AnchorPane>
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutY="337.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox alignment="CENTER" layoutX="-14.0" layoutY="337.0" AnchorPane.leftAnchor="-14.0" AnchorPane.rightAnchor="14.0">
          <children>
             <Label id="bigBoldHeadline" text="Gesamtpreis:" HBox.hgrow="ALWAYS">
                <HBox.margin>
@@ -144,7 +144,7 @@
                               <Insets left="5.0" />
                            </HBox.margin>
                         </ComboBox>
-                        <TextField fx:id="tf_Amount" prefHeight="25.0" prefWidth="108.0">
+                        <TextField fx:id="tf_Amount" prefHeight="25.0" prefWidth="108.0" promptText="Anzahl">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>

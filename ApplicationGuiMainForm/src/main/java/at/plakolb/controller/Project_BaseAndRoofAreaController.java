@@ -4,14 +4,18 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Worth;
-import at.plakolb.math.utils.MathUtils;
+import at.plakolb.calculationlogic.math.utils.MathUtils;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -295,7 +299,9 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         } else if (worth.getWorth() == 0) {
             return "";
         } else {
-            return String.valueOf(MathUtils.round(worth.getWorth(), 2));
+            DecimalFormat decimalFormat = new DecimalFormat("#.#######");
+            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+            return String.valueOf(decimalFormat.format(worth.getWorth()));
         }
     }
 
@@ -309,22 +315,28 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         if (worth == null) {
             return "0.00";
         } else {
-            return String.valueOf(MathUtils.round(worth.getWorth(), 2));
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+            return String.valueOf(decimalFormat.format(worth.getWorth()));
         }
     }
-    
+
     /**
      * Parses string to double.
+     *
      * @param text
-     * @return 
+     * @return
      */
-    private double parseDouble(String text){
+    private double parseDouble(String text) {
         if (text.isEmpty()) {
             return 0;
+        } else {
+            try {
+                return Double.parseDouble(text);
+            } catch (NumberFormatException e) {
+                new Alert(Alert.AlertType.ERROR,"Das Format der eingegebene Zahlen ist nicht korrekt. Bitte überprüfen Sie ihre Eingabe noch einmal.").showAndWait();
+                return 0;
+            }
         }
-        else{
-            return Double.parseDouble(text);
-        }
-        
     }
 }

@@ -9,12 +9,16 @@ import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
-import at.plakolb.math.utils.MathUtils;
+import at.plakolb.calculationlogic.math.utils.MathUtils;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,21 +51,21 @@ public class Project_ConstructionMaterialListController implements Initializable
     @FXML
     private TableColumn<Component, String> tc_ProductName;
     @FXML
-    private TableColumn<Component, Double> tc_Length;
+    private TableColumn<Component, String> tc_Length;
     @FXML
     private TableColumn<Component, Integer> tc_Amount;
     @FXML
-    private TableColumn<Component, Double> tc_Volume;
+    private TableColumn<Component, String> tc_Volume;
     @FXML
-    private TableColumn<Component, Double> tc_PricePerCubic;
+    private TableColumn<Component, String> tc_PricePerCubic;
     @FXML
-    private TableColumn<Component, Double> tc_Price;
+    private TableColumn<Component, String> tc_Price;
     @FXML
-    private TableColumn<Component, Double> tc_CuttingHours;
+    private TableColumn<Component, String> tc_CuttingHours;
     @FXML
-    private TableColumn<Component, Double> tc_CuttingPricePerHours;
+    private TableColumn<Component, String> tc_CuttingPricePerHours;
     @FXML
-    private TableColumn<Component, Double> tc_CuttingPrice;
+    private TableColumn<Component, String> tc_CuttingPrice;
     @FXML
     private TableColumn tc_Deletion;
     @FXML
@@ -93,35 +97,65 @@ public class Project_ConstructionMaterialListController implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         components = new LinkedList<>();
+        DecimalFormat decimalFormatTwo = new DecimalFormat("#.##");
+        decimalFormatTwo.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+        DecimalFormat decimalFormatFour = new DecimalFormat("#.####");
+        decimalFormatFour.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
             components = new ComponentController().findComponentsByProjectId(ProjectViewController.getOpenedProject().getId());
         }
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
         tc_ProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
-        tc_Length.setCellValueFactory(new PropertyValueFactory<>("lengthComponent"));
+        
+        tc_Length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            if (param.getValue().getLengthComponent() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getLengthComponent()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+        
         tc_Amount.setCellValueFactory(new PropertyValueFactory<>("numberOfProducts"));
 
-        tc_Volume.setCellValueFactory((CellDataFeatures<Component, Double> param) -> {
+        tc_Volume.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<Double>(MathUtils.round(component.getWidthComponent() / 100 * component.getLengthComponent() * component.getHeightComponent() / 100 * component.getNumberOfProducts(), 4)) {
-            };
+            return new ReadOnlyObjectWrapper<>(decimalFormatFour.format(component.getWidthComponent() / 100 * component.getLengthComponent() * component.getHeightComponent() / 100 * component.getNumberOfProducts()));
         });
 
-        tc_PricePerCubic.setCellValueFactory((CellDataFeatures<Component, Double> param) -> {
+        tc_PricePerCubic.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<Double>(MathUtils.round(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0)), 2)) {
-            };
+            return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0))));
         });
 
-        tc_Price.setCellValueFactory(new PropertyValueFactory<>("priceComponent"));
-        tc_CuttingHours.setCellValueFactory(new PropertyValueFactory<>("tailoringHours"));
-        tc_CuttingPricePerHours.setCellValueFactory(new PropertyValueFactory<>("tailoringPricePerHour"));
+        tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            if (param.getValue().getPriceComponent() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getPriceComponent()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+        
+        tc_CuttingHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            if (param.getValue().getTailoringHours()!= null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getTailoringHours()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+        
+        tc_CuttingPricePerHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            if (param.getValue().getTailoringPricePerHour()!= null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getTailoringPricePerHour()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
 
-        tc_CuttingPrice.setCellValueFactory((CellDataFeatures<Component, Double> param) -> {
+        tc_CuttingPrice.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<Double>(component.getTailoringHours() * component.getTailoringPricePerHour()) {
-            };
+            return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(component.getTailoringHours() * component.getTailoringPricePerHour()));
         });
 
         /**
@@ -152,18 +186,18 @@ public class Project_ConstructionMaterialListController implements Initializable
                                 if (alert.getResult() == ButtonType.YES) {
                                     try {
                                         components.remove(tv_Materials.getSelectionModel().getSelectedItem());
-                                        new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
-                                        refreshTable();
+                                        if (tv_Materials.getSelectionModel().getSelectedItem().getId() != null) {
+                                            new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
+                                        }
                                     } catch (Exception e) {
+                                    } finally {
+                                        refreshTable();
                                     }
                                 }
-
                             });
                             setGraphic(deletionLabel);
                         }
-
                     }
-
                 };
                 return cell;
             }
@@ -192,21 +226,26 @@ public class Project_ConstructionMaterialListController implements Initializable
         Product product = cb_Product.getValue();
         Category category = cb_Category.getValue();
 
-        Component component = new Component("",
-                product.getWidthProduct(),
-                product.getHeightProduct(),
-                product.getLengthProduct(),
-                product.getPriceUnit() * Integer.parseInt(tf_Amount.getText()),
-                Integer.parseInt(tf_Amount.getText()),
-                category,
-                product.getUnit(),
-                product,
-                ProjectViewController.getOpenedProject());
+        try {
+            Component component = new Component("",
+                    product.getWidthProduct(),
+                    product.getHeightProduct(),
+                    product.getLengthProduct(),
+                    product.getPriceUnit() * Integer.parseInt(tf_Amount.getText()),
+                    Integer.parseInt(tf_Amount.getText()),
+                    category,
+                    product.getUnit(),
+                    product,
+                    ProjectViewController.getOpenedProject());
 
-        component.setTailoringHours(parameterController.findParameterPByShortTerm("KZG").getDefaultValue());
-        component.setTailoringPricePerHour(parameterController.findParameterPByShortTerm("KPSZ").getDefaultValue());
+            component.setTailoringHours(parameterController.findParameterPByShortTerm("KZG").getDefaultValue());
+            component.setTailoringPricePerHour(parameterController.findParameterPByShortTerm("KPSZ").getDefaultValue());
 
-        components.add(component);
+            components.add(component);
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Bitte geben Sie eine korrekte Anzahl an.").showAndWait();
+        }
+
         refreshTable();
     }
 
@@ -237,10 +276,10 @@ public class Project_ConstructionMaterialListController implements Initializable
      * @param column
      * @return
      */
-    private double getColmunSum(TableColumn<Component, Double> column) {
+    private double getColmunSum(TableColumn<Component, String> column) {
         double sum = 0;
         for (Component component : tv_Materials.getItems()) {
-            sum += column.getCellData(component);
+            sum += Double.parseDouble(column.getCellData(component));
         }
         return MathUtils.round(sum, 4);
     }

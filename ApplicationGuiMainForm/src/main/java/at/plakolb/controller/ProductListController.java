@@ -7,7 +7,11 @@ import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,13 +43,13 @@ public class ProductListController implements Initializable {
     @FXML
     private TableColumn<Product, String> tc_Name;
     @FXML
-    private TableColumn<Product, Double> tc_Width;
+    private TableColumn<Product, String> tc_Width;
     @FXML
-    private TableColumn<Product, Double> tc_Height;
+    private TableColumn<Product, String> tc_Height;
     @FXML
-    private TableColumn<Product, Double> tc_Length;
+    private TableColumn<Product, String> tc_Length;
     @FXML
-    private TableColumn<Product, Double> tc_PriceUnit;
+    private TableColumn<Product, String> tc_PriceUnit;
     @FXML
     private TableColumn<Product, Unit> tc_Unit;
     @FXML
@@ -76,12 +80,43 @@ public class ProductListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        DecimalFormat decimalFormat = new DecimalFormat("#.####");
+        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         tc_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        tc_Width.setCellValueFactory(new PropertyValueFactory<>("widthProduct"));
-        tc_Height.setCellValueFactory(new PropertyValueFactory<>("heightProduct"));
-        tc_Length.setCellValueFactory(new PropertyValueFactory<>("lengthProduct"));
-        tc_PriceUnit.setCellValueFactory(new PropertyValueFactory<>("priceUnit"));
+
+        tc_Width.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
+            if (param.getValue().getWidthProduct() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getWidthProduct()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+
+        tc_Height.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
+            if (param.getValue().getHeightProduct() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getHeightProduct()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+
+        tc_Length.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
+            if (param.getValue().getLengthProduct() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getLengthProduct()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+
+        tc_PriceUnit.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
+            if (param.getValue().getPriceUnit() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPriceUnit()) + " €");
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tv_Products.setItems(FXCollections.observableArrayList(new ProductController().findAll()));
 
@@ -105,6 +140,7 @@ public class ProductListController implements Initializable {
         addProductTypes(mb_ProductTypes);
         addProductTypesWithFilter(mb_ProductTypesFilter);
         addUnits();
+        refreshTable();
     }
 
     public static ProductListController getInstance() {
@@ -204,8 +240,11 @@ public class ProductListController implements Initializable {
         UnitController unitController = new UnitController();
         String errorMessage = "";
 
-        if (tf_Name.getText().equals("")) {
+        if (tf_Name.getText().isEmpty()) {
             errorMessage += "Bitte geben Sie eine Bezeichnung ein.\n";
+        }
+        if (tf_PriceUnit.getText().isEmpty()) {
+            errorMessage += "Bitte geben Sie den Preis ein.\n";
         }
         if (mb_Units.getText().equals("Einheit")) {
             errorMessage += "Bitte wählen Sie eine Einheit aus.\n";
@@ -214,13 +253,17 @@ public class ProductListController implements Initializable {
             errorMessage += "Bitte wählen Sie einen Produkt Typ aus.\n";
         }
         if (errorMessage.equals("")) {
-            return new Product(tf_Name.getText(),
-                    tryParseDouble(tf_Width.getText()),
-                    tryParseDouble(tf_Height.getText()),
-                    tryParseDouble(tf_Length.getText()),
-                    tryParseDouble(tf_PriceUnit.getText()),
-                    unitController.findUnitByShortTerm(mb_Units.getText()),
-                    ProductType.getProductType(mb_ProductTypes.getText()));
+            try {
+                return new Product(tf_Name.getText(),
+                        tryParseDouble(tf_Width.getText()),
+                        tryParseDouble(tf_Height.getText()),
+                        tryParseDouble(tf_Length.getText()),
+                        Double.parseDouble(tf_PriceUnit.getText()),
+                        unitController.findUnitByShortTerm(mb_Units.getText()),
+                        ProductType.getProductType(mb_ProductTypes.getText()));
+            } catch (NumberFormatException e) {
+                new Alert(Alert.AlertType.ERROR,"Der angegeben Preis ist leider nicht gültig.").showAndWait();
+            }
         } else {
             alert.setContentText(errorMessage);
             alert.showAndWait();

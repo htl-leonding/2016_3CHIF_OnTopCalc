@@ -13,19 +13,19 @@
    <children>
       <VBox alignment="CENTER" layoutY="32.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label id="headlineProjectPages" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Schalung" textFill="#3c84ff">
+            <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Schalung" textFill="#3c84ff">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
             <HBox alignment="CENTER">
                <children>
-                  <Label id="headlineProjectPages" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Dachfläche: ">
+                  <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Dachfläche: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="headlineProjectPages" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="0.00 m²">
+                  <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="0.00 m²">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

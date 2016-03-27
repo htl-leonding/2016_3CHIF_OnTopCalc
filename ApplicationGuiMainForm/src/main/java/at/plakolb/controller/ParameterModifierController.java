@@ -4,6 +4,9 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.entity.ParameterP;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,10 +55,13 @@ public class ParameterModifierController implements Initializable {
      * @param parameter
      */
     public void loadParameterIntoModifier(ParameterP parameter) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.########");
+        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+        
         openedParameter = parameter;
         lb_Parametername.setText(parameter.getLongTerm());
         lb_Unit.setText(parameter.getUnit().getShortTerm());
-        tf_DefaultValue.setText(String.valueOf(parameter.getDefaultValue()));
+        tf_DefaultValue.setText(decimalFormat.format(parameter.getDefaultValue()));
     }
 
     /**

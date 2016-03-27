@@ -8,6 +8,9 @@ import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -126,12 +129,12 @@ public class ProductModifierController implements Initializable {
         }
 
         ProductListController.getInstance().refreshTable();
-        ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
 
     @FXML
     private void cancel(ActionEvent event) {
-        ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
 
     /**
@@ -141,12 +144,12 @@ public class ProductModifierController implements Initializable {
      * @return
      */
     private String parseString(Double number) {
-        String parsedString = String.valueOf(number);
-
-        if (parsedString.equals("null")) {
-            parsedString = "";
+        if (number == null) {
+            return "";
         }
-        return parsedString;
+        DecimalFormat decimalFormat = new DecimalFormat("#.########");
+        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+        return decimalFormat.format(number);
     }
 
     /**
@@ -201,7 +204,7 @@ public class ProductModifierController implements Initializable {
         if (alert.getResult() == ButtonType.YES) {
             new ProductController().destroy(openedProduct.getId());
             ProductListController.getInstance().refreshTable();
-            ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
+            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
         }
     }
 }
