@@ -49,10 +49,10 @@ public class AllProjectsController implements Initializable {
     private TableColumn<Project, String> tc_RoofForm;
     @FXML
     private TableColumn<Project, Client> tc_Client;
-
-    private ObservableList<Project> projects;
     @FXML
     private TableColumn tc_action;
+
+    private ObservableList<Project> projects;
 
     /**
      * Initializes the controller class. Adds all projects from the database to
@@ -69,9 +69,9 @@ public class AllProjectsController implements Initializable {
         tc_RoofForm.setCellValueFactory(new PropertyValueFactory<>("roofForm"));
         tc_Client.setCellValueFactory(new PropertyValueFactory<>("client"));
         tc_Type.setCellValueFactory(new PropertyValueFactory<>("modeOfCalculation"));
-        
+
         updateData();
-        
+
         tv_ProjectList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tv_ProjectList.getSelectionModel().getSelectedItem() != null) {
                 ProjectViewController.getInstance().openProject(tv_ProjectList.getSelectionModel().getSelectedItem());
@@ -83,99 +83,99 @@ public class AllProjectsController implements Initializable {
 
         Callback<TableColumn<Project, String>, TableCell<Project, String>> cellFactory
                 = new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {
+            @Override
+            public TableCell call(final TableColumn<Project, String> param) {
+                final TableCell<Project, String> cell = new TableCell<Project, String>() {
+
+                    final Label openP = new Label();
+                    final Label printP = new Label();
+                    final Label costingP = new Label();
+                    final Label copyP = new Label();
+                    final Label deleteP = new Label();
+                    final HBox box = new HBox(openP, printP, costingP, copyP, deleteP);
+
                     @Override
-                    public TableCell call(final TableColumn<Project, String> param) {
-                        final TableCell<Project, String> cell = new TableCell<Project, String>() {
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            openP.setId("edit");
+                            printP.setId("print");
+                            costingP.setId("costing");
+                            copyP.setId("copy");
+                            deleteP.setId("delete");
+                            box.setId("box");
 
-                            final Label openP = new Label();
-                            final Label printP = new Label();
-                            final Label costingP = new Label();
-                            final Label copyP = new Label();
-                            final Label deleteP = new Label();
-                            final HBox box = new HBox(openP, printP, costingP, copyP, deleteP);
+                            openP.setTooltip(new Tooltip("Projekt editieren"));
+                            printP.setTooltip(new Tooltip("Projekt drucken"));
+                            costingP.setTooltip(new Tooltip("Nachkalkulation erstellen"));
+                            copyP.setTooltip(new Tooltip("Projekt kopieren"));
+                            deleteP.setTooltip(new Tooltip("Projekt in den Mülleimer verschieben"));
 
-                            @Override
-                            public void updateItem(String item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
-                                } else {
-                                    openP.setId("edit");
-                                    printP.setId("print");
-                                    costingP.setId("costing");
-                                    copyP.setId("copy");
-                                    deleteP.setId("delete");
-                                    box.setId("box");
-                                    
-                                    openP.setTooltip(new Tooltip("Projekt editieren"));
-                                    printP.setTooltip(new Tooltip("Projekt drucken"));
-                                    costingP.setTooltip(new Tooltip("Nachkalkulation erstellen"));
-                                    copyP.setTooltip(new Tooltip("Projekt kopieren"));
-                                    deleteP.setTooltip(new Tooltip("Projekt in den Mülleimer verschieben"));
-
-                                    openP.setOnMouseClicked((MouseEvent event) -> {
-                                        Project p = getTableView().getItems().get(getIndex());
-                                        MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
-                                        ProjectViewController.getInstance().openProject(p);
-                                    });
-                                    printP.setOnMouseClicked((MouseEvent event) -> {
-                                        Project p = getTableView().getItems().get(getIndex());
-                                        try {
-                                            Parent root = FXMLLoader.load(getClass().getResource("/fxml/PrintProject.fxml"));
-                                            Scene scene = new Scene(root);
-                                            Stage stage = new Stage();
-                                            stage.setTitle("Projekt drucken");
-                                            stage.setResizable(false);
-                                            stage.setScene(scene);
-                                            stage.show();
-                                        } catch (IOException e) {
-                                        } catch (Exception e) {
-                                        }
-                                    });
-                                    costingP.setOnMouseClicked((MouseEvent event) -> {
-                                        Project project = getTableView().getItems().get(getIndex());
-                                        Long orginalProjectId = project.getId();
-                                        project.setId(null);
-                                        project.setPreCalculation(orginalProjectId);
-                                        project.setModeOfCalculation("Nachkalkulation");    //TODO - Property File
-                                        project.setLastUpdate(new Date());
-                                        project.setCreationDate(new Date());
-                                        ProjectController projectController = new ProjectController();
-                                        projectController.createCosting(project, orginalProjectId);
-                                        updateData();
-
-                                    });
-                                    copyP.setOnMouseClicked((MouseEvent event) -> {
-                                        Project project = getTableView().getItems().get(getIndex());
-                                        long orginalProjectId = project.getId();
-                                        project.setId(null);
-                                        project.setPreCalculation(null);
-                                        project.setModeOfCalculation("Vorkalkulation"); //TODO - Property Files
-                                        project.setLastUpdate(new Date());
-                                        project.setCreationDate(new Date());
-                                        ProjectController projectController = new ProjectController();
-                                        projectController.copy(project, orginalProjectId);
-                                        updateData();
-                                    });
-                                    deleteP.setOnMouseClicked((MouseEvent event) -> {
-                                        Project p = getTableView().getItems().get(getIndex());
-                                        ProjectController c = new ProjectController();
-                                        try {
-                                            c.sendToRecyclebin(p.getId());
-                                            tv_ProjectList.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
-                                        } catch (NonexistentEntityException ex) {
-                                            Logger.getLogger(AllProjectsController.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                                    });
-                                    setGraphic(box);
-                                    setText(null);
+                            openP.setOnMouseClicked((MouseEvent event) -> {
+                                Project p = getTableView().getItems().get(getIndex());
+                                MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
+                                ProjectViewController.getInstance().openProject(p);
+                            });
+                            printP.setOnMouseClicked((MouseEvent event) -> {
+                                Project p = getTableView().getItems().get(getIndex());
+                                try {
+                                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/PrintProject.fxml"));
+                                    Scene scene = new Scene(root);
+                                    Stage stage = new Stage();
+                                    stage.setTitle("Projekt drucken");
+                                    stage.setResizable(false);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                } catch (IOException e) {
+                                } catch (Exception e) {
                                 }
-                            }
-                        };
-                        return cell;
+                            });
+                            costingP.setOnMouseClicked((MouseEvent event) -> {
+                                Project project = getTableView().getItems().get(getIndex());
+                                Long orginalProjectId = project.getId();
+                                project.setId(null);
+                                project.setPreCalculation(orginalProjectId);
+                                project.setModeOfCalculation("Nachkalkulation");    //TODO - Property File
+                                project.setLastUpdate(new Date());
+                                project.setCreationDate(new Date());
+                                ProjectController projectController = new ProjectController();
+                                projectController.createCosting(project, orginalProjectId);
+                                updateData();
+
+                            });
+                            copyP.setOnMouseClicked((MouseEvent event) -> {
+                                Project project = getTableView().getItems().get(getIndex());
+                                long orginalProjectId = project.getId();
+                                project.setId(null);
+                                project.setPreCalculation(null);
+                                project.setModeOfCalculation("Vorkalkulation"); //TODO - Property Files
+                                project.setLastUpdate(new Date());
+                                project.setCreationDate(new Date());
+                                ProjectController projectController = new ProjectController();
+                                projectController.copy(project, orginalProjectId);
+                                updateData();
+                            });
+                            deleteP.setOnMouseClicked((MouseEvent event) -> {
+                                Project p = getTableView().getItems().get(getIndex());
+                                ProjectController c = new ProjectController();
+                                try {
+                                    c.sendToRecyclebin(p.getId());
+                                    tv_ProjectList.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
+                                } catch (NonexistentEntityException ex) {
+                                    Logger.getLogger(AllProjectsController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            });
+                            setGraphic(box);
+                            setText(null);
+                        }
                     }
                 };
+                return cell;
+            }
+        };
 
         tc_action.setCellFactory(cellFactory);
 

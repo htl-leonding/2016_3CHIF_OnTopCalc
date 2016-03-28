@@ -10,6 +10,7 @@ import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.math.utils.MathUtils;
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -18,11 +19,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -34,12 +37,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
  * FXML Controller class
  *
- * @author in130079
+ * @author Kepplinger
  */
 public class Project_ConstructionMaterialListController implements Initializable {
 
@@ -108,7 +112,7 @@ public class Project_ConstructionMaterialListController implements Initializable
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
         tc_ProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
-        
+
         tc_Length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getLengthComponent() != null) {
                 return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getLengthComponent()));
@@ -116,7 +120,7 @@ public class Project_ConstructionMaterialListController implements Initializable
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
-        
+
         tc_Amount.setCellValueFactory(new PropertyValueFactory<>("numberOfProducts"));
 
         tc_Volume.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
@@ -136,17 +140,17 @@ public class Project_ConstructionMaterialListController implements Initializable
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
-        
+
         tc_CuttingHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            if (param.getValue().getTailoringHours()!= null) {
+            if (param.getValue().getTailoringHours() != null) {
                 return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getTailoringHours()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
-        
+
         tc_CuttingPricePerHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            if (param.getValue().getTailoringPricePerHour()!= null) {
+            if (param.getValue().getTailoringPricePerHour() != null) {
                 return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getTailoringPricePerHour()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
@@ -209,6 +213,22 @@ public class Project_ConstructionMaterialListController implements Initializable
         cb_Product.getSelectionModel().select(0);
 
         refreshTable();
+
+        tv_Materials.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tv_Materials.getSelectionModel().getSelectedItem() != null) {
+                Parent root;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/fxml/MaterialModifier.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = new Stage();
+                    stage.setTitle("Material");
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ex) {
+                }
+                MaterialModifierController.getInstance().loadProductIntoModifier(tv_Materials.getSelectionModel().getSelectedItem());
+            }
+        });
     }
 
     public static Project_ConstructionMaterialListController getInstance() {
@@ -227,23 +247,27 @@ public class Project_ConstructionMaterialListController implements Initializable
         Category category = cb_Category.getValue();
 
         try {
-            Component component = new Component("",
-                    product.getWidthProduct(),
-                    product.getHeightProduct(),
-                    product.getLengthProduct(),
-                    product.getPriceUnit() * Integer.parseInt(tf_Amount.getText()),
-                    Integer.parseInt(tf_Amount.getText()),
-                    category,
-                    product.getUnit(),
-                    product,
-                    ProjectViewController.getOpenedProject());
+            if (tf_Amount.getText().isEmpty() || tf_Amount.getText().equals("0") || tf_Amount.getText().contains("-")) {
+                new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine Anzahl an die größer als null ist.").showAndWait();
+            } else {
+                Component component = new Component("",
+                        product.getWidthProduct(),
+                        product.getHeightProduct(),
+                        product.getLengthProduct(),
+                        product.getPriceUnit() * Integer.parseInt(tf_Amount.getText()),
+                        Integer.parseInt(tf_Amount.getText()),
+                        category,
+                        product.getUnit(),
+                        product,
+                        ProjectViewController.getOpenedProject());
 
-            component.setTailoringHours(parameterController.findParameterPByShortTerm("KZG").getDefaultValue());
-            component.setTailoringPricePerHour(parameterController.findParameterPByShortTerm("KPSZ").getDefaultValue());
+                component.setTailoringHours(parameterController.findParameterPByShortTerm("KZG").getDefaultValue());
+                component.setTailoringPricePerHour(parameterController.findParameterPByShortTerm("KPSZ").getDefaultValue());
 
-            components.add(component);
+                components.add(component);
+            }
         } catch (NumberFormatException e) {
-            new Alert(Alert.AlertType.ERROR, "Bitte geben Sie eine korrekte Anzahl an.").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur ganze Zahlen enthalten").showAndWait();
         }
 
         refreshTable();

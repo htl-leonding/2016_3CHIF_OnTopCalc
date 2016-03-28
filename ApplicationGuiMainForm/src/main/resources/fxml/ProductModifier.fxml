@@ -74,12 +74,12 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_Name" prefHeight="25.0" />
-                  <TextField fx:id="tf_Width" prefHeight="25.0" />
-                  <TextField fx:id="tf_Height" prefHeight="25.0" />
-                  <TextField fx:id="tf_Length" prefHeight="25.0" />
-                  <TextField fx:id="tf_ColorFactor" prefHeight="25.0" />
-                  <TextField fx:id="tf_PriceUnit" prefHeight="25.0" />
+                  <TextField fx:id="tf_Name" prefHeight="25.0" promptText="Name des Produkts" />
+                  <TextField fx:id="tf_Width" prefHeight="25.0" promptText="Breite in cm" />
+                  <TextField fx:id="tf_Height" prefHeight="25.0" promptText="Höhe in cm" />
+                  <TextField fx:id="tf_Length" prefHeight="25.0" promptText="Länge in m" />
+                  <TextField fx:id="tf_ColorFactor" prefHeight="25.0" promptText="Farbfaktor" />
+                  <TextField fx:id="tf_PriceUnit" prefHeight="25.0" promptText="Preis pro Einheit in €" />
                   <ComboBox fx:id="cb_Unit" maxWidth="1.7976931348623157E308" prefHeight="25.0" />
                   <ComboBox fx:id="cb_ProductType" maxWidth="1.7976931348623157E308" onAction="#productTypeChanged" prefHeight="25.0" />
                </children>

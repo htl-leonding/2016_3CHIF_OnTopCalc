@@ -63,12 +63,12 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_Name" prefHeight="25.0" />
-                  <TextField fx:id="tf_Street" prefHeight="25.0" />
-                  <TextField fx:id="tf_Zipcode" prefHeight="25.0" />
-                  <TextField fx:id="tf_City" prefHeight="25.0" />
-                  <TextField fx:id="tf_Phonenumber" prefHeight="25.0" />
-                  <TextField fx:id="tf_Email" prefHeight="25.0" />
+                  <TextField fx:id="tf_Name" prefHeight="25.0" promptText="Name" />
+                  <TextField fx:id="tf_Street" prefHeight="25.0" promptText="Straße" />
+                  <TextField fx:id="tf_Zipcode" prefHeight="25.0" promptText="Postleitzahl" />
+                  <TextField fx:id="tf_City" prefHeight="25.0" promptText="Wohnort" />
+                  <TextField fx:id="tf_Phonenumber" prefHeight="25.0" promptText="Telefonnummer" />
+                  <TextField fx:id="tf_Email" prefHeight="25.0" promptText="E-Mail Adresse" />
                </children>
             </VBox>
          </children>

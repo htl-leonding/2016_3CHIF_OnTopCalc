@@ -183,8 +183,7 @@ public class ProductModifierController implements Initializable {
      */
     private Double tryParseDouble(String numberString) {
         try {
-            double number = Double.parseDouble(numberString);
-            return number;
+            return Double.parseDouble(numberString);
         } catch (NumberFormatException e) {
             return null;
         }

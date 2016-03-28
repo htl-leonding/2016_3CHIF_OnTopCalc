@@ -170,26 +170,40 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
      */
     @FXML
     private void calcArea(ActionEvent event) {
-        length.setWorth(parseDouble(tf_Length.getText()));
-        width.setWorth(parseDouble(tf_Width.getText()));
-        angle.setWorth(parseDouble(tf_Angle.getText()));
-        ridge.setWorth(parseDouble(tf_Ridge.getText()));
-        eaves.setWorth(parseDouble(tf_Eaves.getText()));
-        gableRight.setWorth(parseDouble(tf_GableRight.getText()));
-        gableLeft.setWorth(parseDouble(tf_GableLeft.getText()));
+        try {
+            if (tf_Length.getText().contains("-")
+                    || tf_Width.getText().contains("-")
+                    || tf_Angle.getText().contains("-")
+                    || tf_Ridge.getText().contains("-")
+                    || tf_Eaves.getText().contains("-")
+                    || tf_GableRight.getText().contains("-")
+                    || tf_GableLeft.getText().contains("-")) {
+                new Alert(Alert.AlertType.ERROR, "Negative Zahlen sind bei der Berechnung nicht erlaubt.").showAndWait();
+            } else {
+                length.setWorth(parseDouble(tf_Length.getText()));
+                width.setWorth(parseDouble(tf_Width.getText()));
+                angle.setWorth(parseDouble(tf_Angle.getText()));
+                ridge.setWorth(parseDouble(tf_Ridge.getText()));
+                eaves.setWorth(parseDouble(tf_Eaves.getText()));
+                gableRight.setWorth(parseDouble(tf_GableRight.getText()));
+                gableLeft.setWorth(parseDouble(tf_GableLeft.getText()));
 
-        baseArea.setWorth(length.getWorth() * width.getWorth());
-        roofArea.setWorth(baseArea.getWorth() / Math.cos(angle.getWorth() * Math.PI / 180));
-        ledgeAndRoofArea.setWorth(((length.getWorth() + gableLeft.getWorth() + gableRight.getWorth()) * (width.getWorth() + ridge.getWorth() + eaves.getWorth()))
-                / Math.cos(angle.getWorth() * Math.PI / 180));
-        ledge.setWorth(ledgeAndRoofArea.getWorth() - roofArea.getWorth());
+                baseArea.setWorth(length.getWorth() * width.getWorth());
+                roofArea.setWorth(baseArea.getWorth() / Math.cos(angle.getWorth() * Math.PI / 180));
+                ledgeAndRoofArea.setWorth(((length.getWorth() + gableLeft.getWorth() + gableRight.getWorth()) * (width.getWorth() + ridge.getWorth() + eaves.getWorth()))
+                        / Math.cos(angle.getWorth() * Math.PI / 180));
+                ledge.setWorth(ledgeAndRoofArea.getWorth() - roofArea.getWorth());
 
-        lb_RoofArea.setText(String.valueOf(MathUtils.round(roofArea.getWorth(), 2)) + " m²");
-        lb_BaseArea.setText(String.valueOf(MathUtils.round(baseArea.getWorth(), 2)) + " m²");
-        lb_Ledge.setText(String.valueOf(MathUtils.round(ledge.getWorth(), 2)) + " m²");
-        lb_LedgeAndRoofArea.setText(String.valueOf(MathUtils.round(ledgeAndRoofArea.getWorth(), 2)) + " m²");
+                lb_RoofArea.setText(String.valueOf(MathUtils.round(roofArea.getWorth(), 2)) + " m²");
+                lb_BaseArea.setText(String.valueOf(MathUtils.round(baseArea.getWorth(), 2)) + " m²");
+                lb_Ledge.setText(String.valueOf(MathUtils.round(ledge.getWorth(), 2)) + " m²");
+                lb_LedgeAndRoofArea.setText(String.valueOf(MathUtils.round(ledgeAndRoofArea.getWorth(), 2)) + " m²");
 
-        Project_ResultAreaController.getInstance().calcArea();
+                Project_ResultAreaController.getInstance().calcArea();
+            }
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Das Format der eingegebene Zahlen ist nicht korrekt. Bitte überprüfen Sie ihre Eingabe noch einmal.").showAndWait();
+        }
     }
 
     /**
@@ -331,12 +345,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         if (text.isEmpty()) {
             return 0;
         } else {
-            try {
-                return Double.parseDouble(text);
-            } catch (NumberFormatException e) {
-                new Alert(Alert.AlertType.ERROR,"Das Format der eingegebene Zahlen ist nicht korrekt. Bitte überprüfen Sie ihre Eingabe noch einmal.").showAndWait();
-                return 0;
-            }
+            return Double.parseDouble(text);
         }
     }
 }

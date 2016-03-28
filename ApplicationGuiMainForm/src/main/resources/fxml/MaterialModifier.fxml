@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="328.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.MaterialModifierController">
+    <children>
+        <Label alignment="CENTER" layoutX="218.0" layoutY="14.0" text="Material ändern" textAlignment="CENTER" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+            <font>
+                <Font name="Berlin Sans FB" size="28.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER" layoutX="100.0" layoutY="50.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <VBox alignment="CENTER_RIGHT">
+                    <children>
+                        <Label prefHeight="30.0" text="Kategorie">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="30.0" text="Produkt: ">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="30.0" text="Anzahl: ">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="30.0" text="Preis pro Stück: ">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="30.0" text="Gesamtpreis: ">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="30.0" text="Zuschnittsdauer: ">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label prefHeight="30.0" text="Kosten pro Stunde: ">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox>
+                    <children>
+                        <Label fx:id="lb_Category" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="148.0" textAlignment="CENTER">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                        </Label>
+                  <Label fx:id="lb_Product" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="148.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                        <TextField fx:id="tf_Count" prefHeight="25.0" promptText="Anzahl der Produkte">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></TextField>
+                        <TextField fx:id="tf_PriceUnit" prefHeight="25.0" promptText="Preis pro Stück in €">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></TextField>
+                        <TextField fx:id="tf_TotalPrice" prefHeight="25.0" promptText="Gesamtpreis in €">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></TextField>
+                        <TextField fx:id="tf_CuttingTime" prefHeight="25.0" promptText="Zuschnittsdauer in h">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></TextField>
+                        <TextField fx:id="tf_CuttingPricePerHour" prefHeight="25.0" promptText="Kosten in €/h">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></TextField>
+                    </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+                </VBox>
+            <VBox>
+               <children>
+                  <Label fx:id="lb_Category1" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lb_Product1" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="lb_Product11" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_Product12" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" text="€" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_Product13" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" text="€" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_Product14" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" text="h" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_Product15" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" text="€/h" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutX="155.0" layoutY="308.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="140.0" text="Speichern">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="140.0" text="Abbrechen">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
