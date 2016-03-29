@@ -89,6 +89,7 @@ public class ProductModifierController implements Initializable {
         tf_Width.setText(parseString(openedProduct.getWidthProduct()));
         tf_Height.setText(parseString(openedProduct.getHeightProduct()));
         tf_Length.setText(parseString(openedProduct.getLengthProduct()));
+        tf_ColorFactor.setText(parseString(openedProduct.getColorFactor()));
         tf_PriceUnit.setText(parseString(openedProduct.getPriceUnit()));
         cb_Unit.setValue(openedProduct.getUnit());
         cb_ProductType.setValue(openedProduct.getProductType());
@@ -102,34 +103,58 @@ public class ProductModifierController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
 
-        try {
-            if (cb_ProductType.getSelectionModel().getSelectedItem() == ProductType.COLOR) {
-                openedProduct.setName(tf_Name.getText());
-                openedProduct.setWidthProduct(null);
-                openedProduct.setHeightProduct(null);
-                openedProduct.setLengthProduct(null);
-                openedProduct.setColorFactor(tryParseDouble(tf_ColorFactor.getText()));
-                openedProduct.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
-                openedProduct.setUnit(cb_Unit.getValue());
-                openedProduct.setProductType(cb_ProductType.getValue());
-            } else {
-                openedProduct.setName(tf_Name.getText());
-                openedProduct.setWidthProduct(tryParseDouble(tf_Width.getText()));
-                openedProduct.setHeightProduct(tryParseDouble(tf_Height.getText()));
-                openedProduct.setLengthProduct(tryParseDouble(tf_Length.getText()));
-                openedProduct.setColorFactor(null);
-                openedProduct.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
-                openedProduct.setUnit(cb_Unit.getValue());
-                openedProduct.setProductType(cb_ProductType.getValue());
+        String errorMessage = "";
+        
+        if (tf_Name.getText().isEmpty()) {
+            errorMessage += "Geben Sie bitte einen Namen ein.\n";
+        }
+        if (tf_PriceUnit.getText().isEmpty()) {
+            errorMessage += "Geben Sie bitte einen Preis ein.\n";
+        }
+        else if (tf_PriceUnit.getText().contains("-")) {
+            errorMessage += "Der Preis darf nicht negativ sein.";
+        }
+        else{
+            try {
+                Double.parseDouble(tf_PriceUnit.getText());
+            } catch (NumberFormatException e) {
+                errorMessage += "Der Preis hat ein ungültiges Format.\n";
             }
-
-            new ProductController().edit(openedProduct);
-
-        } catch (Exception ex) {
         }
 
-        ProductListController.getInstance().refreshTable();
-        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
+        if (errorMessage.isEmpty()) {
+            try {
+                if (cb_ProductType.getSelectionModel().getSelectedItem() == ProductType.COLOR) {
+                    openedProduct.setName(tf_Name.getText());
+                    openedProduct.setWidthProduct(null);
+                    openedProduct.setHeightProduct(null);
+                    openedProduct.setLengthProduct(null);
+                    openedProduct.setColorFactor(tryParseDouble(tf_ColorFactor.getText()));
+                    openedProduct.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
+                    openedProduct.setUnit(cb_Unit.getValue());
+                    openedProduct.setProductType(cb_ProductType.getValue());
+                } else {
+                    openedProduct.setName(tf_Name.getText());
+                    openedProduct.setWidthProduct(tryParseDouble(tf_Width.getText()));
+                    openedProduct.setHeightProduct(tryParseDouble(tf_Height.getText()));
+                    openedProduct.setLengthProduct(tryParseDouble(tf_Length.getText()));
+                    openedProduct.setColorFactor(null);
+                    openedProduct.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
+                    openedProduct.setUnit(cb_Unit.getValue());
+                    openedProduct.setProductType(cb_ProductType.getValue());
+                }
+
+                new ProductController().edit(openedProduct);
+
+            } catch (Exception ex) {
+            }
+
+            ProductListController.getInstance().refreshTable();
+            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
+        }
+        else{
+            new Alert(AlertType.ERROR, errorMessage).showAndWait();
+        }
     }
 
     @FXML
@@ -197,7 +222,7 @@ public class ProductModifierController implements Initializable {
      */
     @FXML
     private void deleteProduct(ActionEvent event) throws NonexistentEntityException {
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Möchten Sie das Produkt wirklich endgültig löschen. Vorsicht, dieser Vorang kann nicht mehr rückgangig gemacht werden.",
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Möchten Sie das Produkt wirklich endgültig löschen. Vorsicht, dieser Vorang kann nicht mehr rückgängig gemacht werden.",
                 ButtonType.YES, ButtonType.CANCEL);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {

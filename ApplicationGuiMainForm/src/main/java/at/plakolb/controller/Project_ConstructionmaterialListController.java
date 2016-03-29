@@ -130,7 +130,7 @@ public class Project_ConstructionMaterialListController implements Initializable
 
         tc_PricePerCubic.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0))));
+            return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts())));
         });
 
         tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {

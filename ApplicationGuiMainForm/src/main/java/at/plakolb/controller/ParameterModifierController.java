@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -57,7 +58,7 @@ public class ParameterModifierController implements Initializable {
     public void loadParameterIntoModifier(ParameterP parameter) {
         DecimalFormat decimalFormat = new DecimalFormat("#.########");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-        
+
         openedParameter = parameter;
         lb_Parametername.setText(parameter.getLongTerm());
         lb_Unit.setText(parameter.getUnit().getShortTerm());
@@ -72,8 +73,14 @@ public class ParameterModifierController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         try {
+            if (tf_DefaultValue.getText().contains("-")) {
+                throw new NumberFormatException();
+            }
             openedParameter.setDefaultValue(Double.parseDouble(tf_DefaultValue.getText()));
             new ParameterController().edit(openedParameter);
+        } catch (NumberFormatException e) {
+            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
+            new Alert(Alert.AlertType.ERROR, "Die Zahl ist ungültig.").showAndWait();
         } catch (Exception e) {
         }
         ParameterViewController.getInstance().refreshTable();

@@ -27,7 +27,13 @@ public class PrintProjectController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cb_projects.setItems(FXCollections.observableArrayList(new ProjectController().findAll()));
+        cb_projects.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
+        
+        if (cb_projects.getItems().isEmpty()) {
+            cb_projects.setPromptText("Es sind keine Projekte zum Drucken vorhanden.");
+        }else{
+            cb_projects.getSelectionModel().select(0);
+        }
     }    
     
 }

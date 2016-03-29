@@ -116,37 +116,53 @@ public class ProjectViewController implements Initializable {
     @FXML
     private void saveProject(ActionEvent event) {
         Project_InformationsController informations = Project_InformationsController.getInstance();
-        Client client = findClient(informations);
+        Client client = null;
 
-        ProjectController projectController = new ProjectController();
+        if (informations.getProjectName().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Projektnamen ein.").showAndWait();
+        } else {
 
-        if (projectOpened) {
-            try {
+            if (informations.getClientName().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keinen Auftragsgebernamen eingegeben. Deshalb kann kein neuer Auftragsgeber erstellt werden. Möchten Sie fortfahren?",
+                        ButtonType.YES, ButtonType.CANCEL);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.CANCEL) {
+                    return;
+                }
+            } else {
+                client = findClient(informations);
+            }
+
+            ProjectController projectController = new ProjectController();
+
+            if (projectOpened) {
+                try {
+                    openedProject.setClient(client);
+                    openedProject.setProjectName(informations.getProjectName());
+                    openedProject.setDescription(informations.getDescription());
+                    openedProject.setInvoiceNumber(informations.getInvoiceNumber());
+                    openedProject.setConstructionType(informations.getConstructionType());
+                    openedProject.setRoofForm(informations.getRoofForm());
+                    projectController.edit(openedProject);
+                } catch (NonexistentEntityException ex) {
+                }
+            } else {
                 openedProject.setClient(client);
                 openedProject.setProjectName(informations.getProjectName());
                 openedProject.setDescription(informations.getDescription());
                 openedProject.setInvoiceNumber(informations.getInvoiceNumber());
                 openedProject.setConstructionType(informations.getConstructionType());
                 openedProject.setRoofForm(informations.getRoofForm());
-                projectController.edit(openedProject);
-            } catch (NonexistentEntityException ex) {
+                projectController.create(openedProject);
             }
-        } else {
-            openedProject.setClient(client);
-            openedProject.setProjectName(informations.getProjectName());
-            openedProject.setDescription(informations.getDescription());
-            openedProject.setInvoiceNumber(informations.getInvoiceNumber());
-            openedProject.setConstructionType(informations.getConstructionType());
-            openedProject.setRoofForm(informations.getRoofForm());
-            projectController.create(openedProject);
-        }
-        
-        Project_ResultAreaController.getInstance().persistArea();
-        Project_ConstructionMaterialListController.getInstance().persistComponents();
 
-        MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
-        projectOpened = false;
-        openedProject = null;
+            Project_ResultAreaController.getInstance().persistArea();
+            Project_ConstructionMaterialListController.getInstance().persistComponents();
+
+            MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
+            projectOpened = false;
+            openedProject = null;
+        }
     }
 
     /**
@@ -243,7 +259,8 @@ public class ProjectViewController implements Initializable {
 
     /**
      * Returns the current opened project.
-     * @return 
+     *
+     * @return
      */
     public static Project getOpenedProject() {
         return openedProject;

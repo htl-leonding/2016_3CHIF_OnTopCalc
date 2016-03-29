@@ -81,7 +81,7 @@ public class ClientModifierController implements Initializable {
      */
     @FXML
     private void deleteClient(ActionEvent event) throws NonexistentEntityException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Auftraggeber wirklich endgültig löschen. Vorsicht, dieser Vorang kann nicht mehr rückgangig gemacht werden.",
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Auftraggeber wirklich endgültig löschen. Vorsicht, dieser Vorang kann nicht mehr rückgängig gemacht werden.",
                 ButtonType.YES, ButtonType.CANCEL);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
@@ -98,19 +98,23 @@ public class ClientModifierController implements Initializable {
      */
     @FXML
     private void save(ActionEvent event) {
-        try {
-            openedClient.setName(tf_Name.getText());
-            openedClient.setStreet(tf_Street.getText());
-            openedClient.setZipCode(tf_Zipcode.getText());
-            openedClient.setCity(tf_City.getText());
-            openedClient.setTelephoneNumber(tf_Phonenumber.getText());
-            openedClient.setEmail(tf_Email.getText());
-            new ClientController().edit(openedClient);
-        } catch (Exception e) {
-        }
+        if (tf_Name.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Namen ein.").showAndWait();
+        } else {
+            try {
+                openedClient.setName(tf_Name.getText());
+                openedClient.setStreet(tf_Street.getText());
+                openedClient.setZipCode(tf_Zipcode.getText());
+                openedClient.setCity(tf_City.getText());
+                openedClient.setTelephoneNumber(tf_Phonenumber.getText());
+                openedClient.setEmail(tf_Email.getText());
+                new ClientController().edit(openedClient);
+            } catch (Exception e) {
+            }
 
-        ClientsController.getInstance().refreshTable();
-        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
+            ClientsController.getInstance().refreshTable();
+            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
+        }
     }
 
     /**

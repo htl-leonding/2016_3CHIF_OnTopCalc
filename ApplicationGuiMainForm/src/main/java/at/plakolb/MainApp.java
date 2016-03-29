@@ -64,8 +64,8 @@ public class MainApp extends Application {
         clientController.create(client2);
 
         ProjectController projectController = new ProjectController();
-        projectController.create(new Project("Testprojekt1", "8467389", "Notiz", "Haus", "Pultdach", client1));
         projectController.create(new Project("Testprojekt2", "9827245", "Notiz", "Haus", "Pultdach", client2));
+        projectController.create(new Project("Testprojekt1", "8467389", "Notiz", "Haus", "Pultdach", client1));
 
         UnitController unitController = new UnitController();
         unitController.create(new Unit("Meter", "m"));
