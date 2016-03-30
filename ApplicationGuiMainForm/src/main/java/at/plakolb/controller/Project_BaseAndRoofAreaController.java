@@ -4,7 +4,6 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Worth;
-import at.plakolb.calculationlogic.math.utils.MathUtils;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -68,6 +67,9 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     private Worth gableLeft;
     private Worth ledge;
     private Worth ledgeAndRoofArea;
+    
+    DecimalFormat decimalFormat;
+    
 
     /**
      * Initializes the controller class.
@@ -89,6 +91,8 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         gableLeft = new Worth(parameterController.findParameterPByShortTerm("dl"));
         ledge = new Worth(parameterController.findParameterPByShortTerm("DV"));
         ledgeAndRoofArea = new Worth(parameterController.findParameterPByShortTerm("DF"));
+        decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
     }
 
     public double getBaseAreaValue() {
@@ -194,10 +198,10 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                         / Math.cos(angle.getWorth() * Math.PI / 180));
                 ledge.setWorth(ledgeAndRoofArea.getWorth() - roofArea.getWorth());
 
-                lb_RoofArea.setText(String.valueOf(MathUtils.round(roofArea.getWorth(), 2)) + " m²");
-                lb_BaseArea.setText(String.valueOf(MathUtils.round(baseArea.getWorth(), 2)) + " m²");
-                lb_Ledge.setText(String.valueOf(MathUtils.round(ledge.getWorth(), 2)) + " m²");
-                lb_LedgeAndRoofArea.setText(String.valueOf(MathUtils.round(ledgeAndRoofArea.getWorth(), 2)) + " m²");
+                lb_RoofArea.setText(decimalFormat.format(roofArea.getWorth()) + " m²");
+                lb_BaseArea.setText(decimalFormat.format(baseArea.getWorth()) + " m²");
+                lb_Ledge.setText(decimalFormat.format(ledge.getWorth()) + " m²");
+                lb_LedgeAndRoofArea.setText(decimalFormat.format(ledgeAndRoofArea.getWorth()) + " m²");
 
                 Project_ResultAreaController.getInstance().calcArea();
             }
@@ -214,14 +218,14 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
      */
     @Override
     public void update(Observable o, Object arg) {
-        lb_TotalBaseArea.setText(String.valueOf(MathUtils.round(Project_ResultAreaController.getInstance().getBaseArea(), 2)) + " m²");
-        lb_TotalRoofArea.setText(String.valueOf(MathUtils.round(Project_ResultAreaController.getInstance().getRoofArea(), 2)) + " m²");
-        lb_TotalLegde.setText(String.valueOf(MathUtils.round(Project_ResultAreaController.getInstance().getLedge(), 2)) + " m²");
-        lb_TotalLedgeAndRoofArea.setText(String.valueOf(MathUtils.round(Project_ResultAreaController.getInstance().getLedgeAndRoofArea(), 2)) + " m²");
+        lb_TotalBaseArea.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getBaseArea()) + " m²");
+        lb_TotalRoofArea.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
+        lb_TotalLegde.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getLedge()) + " m²");
+        lb_TotalLedgeAndRoofArea.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getLedgeAndRoofArea()) + " m²");
     }
 
     public void loadValuesFromDataBase() {
-        long projectId = ProjectViewController.getInstance().getOpenedProject().getId();
+        long projectId = ProjectViewController.getOpenedProject().getId();
         WorthController worthController = new WorthController();
 
         length = (worthController.findWorthByShortTermAndProjectId("l", projectId) != null) ? worthController.findWorthByShortTermAndProjectId("l", projectId) : length;
@@ -258,18 +262,18 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         calcArea(null);
 
         WorthController worthController = new WorthController();
-        if (ProjectViewController.getInstance().getOpenedProject().getWorths().isEmpty()) {
-            length.setProject(ProjectViewController.getInstance().getOpenedProject());
-            width.setProject(ProjectViewController.getInstance().getOpenedProject());
-            baseArea.setProject(ProjectViewController.getInstance().getOpenedProject());
-            angle.setProject(ProjectViewController.getInstance().getOpenedProject());
-            roofArea.setProject(ProjectViewController.getInstance().getOpenedProject());
-            eaves.setProject(ProjectViewController.getInstance().getOpenedProject());
-            ridge.setProject(ProjectViewController.getInstance().getOpenedProject());
-            gableRight.setProject(ProjectViewController.getInstance().getOpenedProject());
-            gableLeft.setProject(ProjectViewController.getInstance().getOpenedProject());
-            ledge.setProject(ProjectViewController.getInstance().getOpenedProject());
-            ledgeAndRoofArea.setProject(ProjectViewController.getInstance().getOpenedProject());
+        if (ProjectViewController.getOpenedProject().getWorths().isEmpty()) {
+            length.setProject(ProjectViewController.getOpenedProject());
+            width.setProject(ProjectViewController.getOpenedProject());
+            baseArea.setProject(ProjectViewController.getOpenedProject());
+            angle.setProject(ProjectViewController.getOpenedProject());
+            roofArea.setProject(ProjectViewController.getOpenedProject());
+            eaves.setProject(ProjectViewController.getOpenedProject());
+            ridge.setProject(ProjectViewController.getOpenedProject());
+            gableRight.setProject(ProjectViewController.getOpenedProject());
+            gableLeft.setProject(ProjectViewController.getOpenedProject());
+            ledge.setProject(ProjectViewController.getOpenedProject());
+            ledgeAndRoofArea.setProject(ProjectViewController.getOpenedProject());
 
             worthController.create(length);
             worthController.create(width);
@@ -313,9 +317,9 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         } else if (worth.getWorth() == 0) {
             return "";
         } else {
-            DecimalFormat decimalFormat = new DecimalFormat("#.#######");
-            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-            return String.valueOf(decimalFormat.format(worth.getWorth()));
+            DecimalFormat decimalFormatFour = new DecimalFormat("#.#######");
+            decimalFormatFour.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+            return String.valueOf(decimalFormatFour.format(worth.getWorth()));
         }
     }
 
@@ -329,8 +333,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         if (worth == null) {
             return "0.00";
         } else {
-            DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
             return String.valueOf(decimalFormat.format(worth.getWorth()));
         }
     }

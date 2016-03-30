@@ -1,6 +1,5 @@
 package at.plakolb.calculationlogic.entity;
 
-import at.plakolb.calculationlogic.math.utils.MathUtils;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;

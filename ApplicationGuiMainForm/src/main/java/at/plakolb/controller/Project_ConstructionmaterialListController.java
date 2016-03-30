@@ -9,7 +9,6 @@ import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
-import at.plakolb.calculationlogic.math.utils.MathUtils;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -287,11 +286,13 @@ public class Project_ConstructionMaterialListController implements Initializable
      * Calulates the sums of certain TableColumns
      */
     private void calculateCosts() {
-        lb_CubicSum.setText(String.valueOf(getColmunSum(tc_Volume)) + " m³");
-        lb_MaterialCostSum.setText(String.valueOf(getColmunSum(tc_Price)) + " €");
-        lb_CuttingTimeSum.setText(String.valueOf(getColmunSum(tc_CuttingHours)) + " h");
-        lb_CuttingCostSum.setText(String.valueOf(getColmunSum(tc_CuttingPrice)) + " €");
-        lb_TotalCosts.setText(String.valueOf(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)) + " €");
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+        lb_CubicSum.setText(decimalFormat.format(getColmunSum(tc_Volume)) + " m³");
+        lb_MaterialCostSum.setText(decimalFormat.format(getColmunSum(tc_Price)) + " €");
+        lb_CuttingTimeSum.setText(decimalFormat.format(getColmunSum(tc_CuttingHours)) + " h");
+        lb_CuttingCostSum.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice)) + " €");
+        lb_TotalCosts.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)) + " €");
     }
 
     /**
@@ -305,7 +306,7 @@ public class Project_ConstructionMaterialListController implements Initializable
         for (Component component : tv_Materials.getItems()) {
             sum += Double.parseDouble(column.getCellData(component));
         }
-        return MathUtils.round(sum, 4);
+        return sum;
     }
 
     /**
