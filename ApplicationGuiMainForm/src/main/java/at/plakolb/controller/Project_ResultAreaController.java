@@ -50,7 +50,8 @@ public class Project_ResultAreaController extends Observable implements Initiali
         tabs.get(1).setClosable(false);
         instance = this;
         
-        if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
+        if (ProjectViewController.getInstance().getOpenedProject() != null 
+                && ProjectViewController.getInstance().getOpenedProject().getId() != null) {
             areaController.get(0).loadValuesFromDataBase();
         }
     }

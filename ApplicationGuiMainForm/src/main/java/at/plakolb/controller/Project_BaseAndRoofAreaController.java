@@ -221,7 +221,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     }
 
     public void loadValuesFromDataBase() {
-        long projectId = ProjectViewController.getOpenedProject().getId();
+        long projectId = ProjectViewController.getInstance().getOpenedProject().getId();
         WorthController worthController = new WorthController();
 
         length = (worthController.findWorthByShortTermAndProjectId("l", projectId) != null) ? worthController.findWorthByShortTermAndProjectId("l", projectId) : length;
@@ -258,18 +258,18 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         calcArea(null);
 
         WorthController worthController = new WorthController();
-        if (ProjectViewController.getOpenedProject().getWorths().isEmpty()) {
-            length.setProject(ProjectViewController.getOpenedProject());
-            width.setProject(ProjectViewController.getOpenedProject());
-            baseArea.setProject(ProjectViewController.getOpenedProject());
-            angle.setProject(ProjectViewController.getOpenedProject());
-            roofArea.setProject(ProjectViewController.getOpenedProject());
-            eaves.setProject(ProjectViewController.getOpenedProject());
-            ridge.setProject(ProjectViewController.getOpenedProject());
-            gableRight.setProject(ProjectViewController.getOpenedProject());
-            gableLeft.setProject(ProjectViewController.getOpenedProject());
-            ledge.setProject(ProjectViewController.getOpenedProject());
-            ledgeAndRoofArea.setProject(ProjectViewController.getOpenedProject());
+        if (ProjectViewController.getInstance().getOpenedProject().getWorths().isEmpty()) {
+            length.setProject(ProjectViewController.getInstance().getOpenedProject());
+            width.setProject(ProjectViewController.getInstance().getOpenedProject());
+            baseArea.setProject(ProjectViewController.getInstance().getOpenedProject());
+            angle.setProject(ProjectViewController.getInstance().getOpenedProject());
+            roofArea.setProject(ProjectViewController.getInstance().getOpenedProject());
+            eaves.setProject(ProjectViewController.getInstance().getOpenedProject());
+            ridge.setProject(ProjectViewController.getInstance().getOpenedProject());
+            gableRight.setProject(ProjectViewController.getInstance().getOpenedProject());
+            gableLeft.setProject(ProjectViewController.getInstance().getOpenedProject());
+            ledge.setProject(ProjectViewController.getInstance().getOpenedProject());
+            ledgeAndRoofArea.setProject(ProjectViewController.getInstance().getOpenedProject());
 
             worthController.create(length);
             worthController.create(width);

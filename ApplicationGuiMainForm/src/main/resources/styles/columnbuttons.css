@@ -3,6 +3,8 @@
     Author     : Andreas
 */
 
+
+//AllProjects.fxml
 #edit{
     -fx-graphic: url("/images/edit.png");
 }
@@ -18,6 +20,17 @@
 #delete{
     -fx-graphic: url("/images/delete.png");
 }
+//Options.fxml - Paperbin
+#restore{
+    -fx-graphic: url("/images/interact.png")
+}
+#deleteFinal{
+    -fx-graphic: url("/images/delete.png")
+}
+//box for buttons
 #box{
     -fx-spacing:5;
 }
+
+
+

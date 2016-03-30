@@ -4,16 +4,21 @@ import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Project;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -36,6 +41,8 @@ public class OptionsController implements Initializable {
     private TableView<Project> tv_paperbin;
 
     private Tooltip tooltip;
+    @FXML
+    private TableColumn cl_options;
 
     /**
      * Initializes the controller class.
@@ -50,30 +57,61 @@ public class OptionsController implements Initializable {
         cl_client.setCellValueFactory(new PropertyValueFactory<>("client"));
         cl_type.setCellValueFactory(new PropertyValueFactory<>("constructionType"));
         cl_roofType.setCellValueFactory(new PropertyValueFactory<>("roofForm"));
-        tooltip = new Tooltip("Drücken Sie zwei Mal auf ein Projekt um es wiederherzustellen");
         updateData();
 
-        tv_paperbin.setOnMouseEntered(event -> {
-            double x = tv_paperbin.localToScreen(tv_paperbin.getLayoutBounds()).getMinX()+tv_paperbin.getWidth()/2-tooltip.getWidth()/2;
-            double y = tv_paperbin.localToScreen(tv_paperbin.getLayoutBounds()).getMinY()+tv_paperbin.getHeight()+10;
-            tooltip.show(tv_paperbin, x, y);
-        });
-        tv_paperbin.setOnMouseExited(event->{
-            tooltip.hide();
-        });
-        tv_paperbin.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2
-                    && tv_paperbin.getSelectionModel().getSelectedItem() != null) {
-                Project p = tv_paperbin.getSelectionModel().getSelectedItem();
-                p.setDeletion(false);
-                try {
-                    new ProjectController().edit(p);
-                    updateData();
-                } catch (NonexistentEntityException ex) {
-                    Logger.getLogger(OptionsController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
+        cl_options.setCellValueFactory(new PropertyValueFactory<>("Buttons"));
+
+        Callback<TableColumn<Project, String>, TableCell<Project, String>> cellFactory
+                = new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Project, String> param) {
+                        final TableCell<Project, String> cell = new TableCell<Project, String>() {
+
+                            final Label l_restore = new Label();
+                            final Label l_delFinal = new Label();
+                            final HBox box = new HBox(l_restore, l_delFinal);
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    l_restore.setId("restore");
+                                    l_delFinal.setId("deleteFinal");
+                                    box.setId("box");
+
+                                    l_restore.setTooltip(new Tooltip("Projekt wiederherstellen"));
+                                    l_delFinal.setTooltip(new Tooltip("Projekt entgültig löschen"));
+
+                                    l_restore.setOnMouseClicked(event -> {
+                                        Project project = getTableView().getItems().get(getIndex());
+                                        project.setDeletion(false);
+                                        try {
+                                            new ProjectController().edit(project);
+                                            updateData();
+                                        } catch (NonexistentEntityException ex) {
+                                            Logger.getLogger(OptionsController.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                        updateData();
+                                    });
+                                    l_delFinal.setOnMouseClicked(event -> {
+                                        Project p = getTableView().getItems().get(getIndex());
+                                        ProjectController c = new ProjectController();
+                                        c.delete(p.getId());
+                                        updateData();
+                                    });
+                                    setGraphic(box);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        cl_options.setCellFactory(cellFactory);
     }
 
     public void updateData() {
