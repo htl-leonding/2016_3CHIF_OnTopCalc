@@ -1,5 +1,7 @@
 package at.plakolb.controller;
 
+import SavestateListener.SaveChangedListener;
+import SavestateListener.Utilredo;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
@@ -9,12 +11,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -24,8 +27,6 @@ import javafx.scene.control.TabPane;
 public class ProjectViewController implements Initializable {
 
     private static ProjectViewController instance;
-    private static Project openedProject;
-    private static boolean projectOpened;
 
     @FXML
     private TabPane tb_MainPane;
@@ -38,6 +39,8 @@ public class ProjectViewController implements Initializable {
     @FXML
     private Button bt_Save;
     private TabPane tb_Assebmling;
+    private boolean projectOpened;
+    private Project openedProject;
 
     public ProjectViewController() {
     }
@@ -51,14 +54,7 @@ public class ProjectViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-
-        if (projectOpened) {
-            Project_InformationsController.getInstance().openProject(openedProject);
-            bt_Dismiss.setText("Änderungen verwerfen");
-            bt_Save.setText("Änderungen speichern");
-        } else {
-            openedProject = new Project();
-        }
+        tb_MainPane.addEventFilter(MouseEvent.MOUSE_PRESSED,new SaveChangedListener());
     }
 
     public static ProjectViewController getInstance() {
@@ -116,53 +112,32 @@ public class ProjectViewController implements Initializable {
     @FXML
     private void saveProject(ActionEvent event) {
         Project_InformationsController informations = Project_InformationsController.getInstance();
-        Client client = null;
+        Client client = findClient(informations);
 
-        if (informations.getProjectName().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Projektnamen ein.").showAndWait();
-        } else {
+        ProjectController projectController = new ProjectController();
 
-            if (informations.getClientName().isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keinen Auftragsgebernamen eingegeben. Deshalb kann kein neuer Auftragsgeber erstellt werden. Möchten Sie fortfahren?",
-                        ButtonType.YES, ButtonType.CANCEL);
-                alert.showAndWait();
-                if (alert.getResult() == ButtonType.CANCEL) {
-                    return;
-                }
-            } else {
-                client = findClient(informations);
-            }
-
-            ProjectController projectController = new ProjectController();
-
-            if (projectOpened) {
-                try {
-                    openedProject.setClient(client);
-                    openedProject.setProjectName(informations.getProjectName());
-                    openedProject.setDescription(informations.getDescription());
-                    openedProject.setInvoiceNumber(informations.getInvoiceNumber());
-                    openedProject.setConstructionType(informations.getConstructionType());
-                    openedProject.setRoofForm(informations.getRoofForm());
-                    projectController.edit(openedProject);
-                } catch (NonexistentEntityException ex) {
-                }
-            } else {
+        if (projectOpened) {
+            try {
                 openedProject.setClient(client);
                 openedProject.setProjectName(informations.getProjectName());
                 openedProject.setDescription(informations.getDescription());
                 openedProject.setInvoiceNumber(informations.getInvoiceNumber());
                 openedProject.setConstructionType(informations.getConstructionType());
                 openedProject.setRoofForm(informations.getRoofForm());
-                projectController.create(openedProject);
+                projectController.edit(openedProject);
+            } catch (NonexistentEntityException ex) {
             }
-
-            Project_ResultAreaController.getInstance().persistArea();
-            Project_ConstructionMaterialListController.getInstance().persistComponents();
-
-            MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
-            projectOpened = false;
-            openedProject = null;
+        } else {
+            Project project = new Project(informations.getProjectName(),
+                    informations.getInvoiceNumber(),
+                    informations.getDescription(),
+                    informations.getConstructionType(),
+                    informations.getRoofForm(),
+                    client);
+            projectController.create(project);
         }
+        MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
+        projectOpened = false;
     }
 
     /**
@@ -172,14 +147,9 @@ public class ProjectViewController implements Initializable {
      */
     @FXML
     private void dismiss(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind die sicher? Alle nichtgespeicherten Änderungen gehen verloren.",
-                ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
-            projectOpened = false;
-            openedProject = null;
-        }
+        MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
+        projectOpened = false;
+        Utilredo.undo();
     }
 
     /**
@@ -187,9 +157,12 @@ public class ProjectViewController implements Initializable {
      *
      * @param project
      */
-    public static void openProject(Project project) {
+    public void openProject(Project project) {
         projectOpened = true;
         openedProject = project;
+        Project_InformationsController.getInstance().openProject(project);
+        bt_Dismiss.setText("Änderungen verwerfen");
+        bt_Save.setText("Änderungen speichern");
     }
 
     /**
@@ -256,13 +229,14 @@ public class ProjectViewController implements Initializable {
         bt_Prev.setDisable(false);
         bt_Next.setDisable(false);
     }
-
-    /**
-     * Returns the current opened project.
-     *
-     * @return
-     */
-    public static Project getOpenedProject() {
+    
+    public Project getOpenedProject(){
         return openedProject;
     }
+
+    public TabPane getTb_MainPane() {
+        return tb_MainPane;
+    }
+    
+    
 }
