@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -67,9 +67,9 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     private Worth gableLeft;
     private Worth ledge;
     private Worth ledgeAndRoofArea;
-    
-    DecimalFormat decimalFormat;
-    
+
+    private boolean isCalculating;
+    private DecimalFormat decimalFormat;
 
     /**
      * Initializes the controller class.
@@ -91,8 +91,38 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         gableLeft = new Worth(parameterController.findParameterPByShortTerm("dl"));
         ledge = new Worth(parameterController.findParameterPByShortTerm("DV"));
         ledgeAndRoofArea = new Worth(parameterController.findParameterPByShortTerm("DF"));
+
         decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+
+        tf_Length.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calcArea(tf_Length, length);
+        });
+
+        tf_Width.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calcArea(tf_Width, width);
+        });
+
+        tf_Angle.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calcArea(tf_Angle, angle);
+        });
+
+        tf_Ridge.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calcArea(tf_Ridge, ridge);
+        });
+
+        tf_Eaves.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calcArea(tf_Eaves, eaves);
+        });
+
+        tf_GableRight.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calcArea(tf_GableRight, gableRight);
+        });
+
+        tf_GableLeft.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            calcArea(tf_GableLeft, gableLeft);
+        });
+
     }
 
     public double getBaseAreaValue() {
@@ -127,70 +157,25 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         }
     }
 
-    public Worth getLength() {
-        return length;
-    }
-
-    public Worth getWidth() {
-        return width;
-    }
-
-    public Worth getBaseArea() {
-        return baseArea;
-    }
-
-    public Worth getAngle() {
-        return angle;
-    }
-
-    public Worth getEaves() {
-        return eaves;
-    }
-
-    public Worth getRidge() {
-        return ridge;
-    }
-
-    public Worth getGableRight() {
-        return gableRight;
-    }
-
-    public Worth getGableLeft() {
-        return gableLeft;
-    }
-
-    public Worth getLedge() {
-        return ledge;
-    }
-
-    public Worth getLedgeAndRoofArea() {
-        return ledgeAndRoofArea;
-    }
-
     /**
      * Calcuates all roof areas.
      *
      * @param event
      */
-    @FXML
-    private void calcArea(ActionEvent event) {
-        try {
-            if (tf_Length.getText().contains("-")
-                    || tf_Width.getText().contains("-")
-                    || tf_Angle.getText().contains("-")
-                    || tf_Ridge.getText().contains("-")
-                    || tf_Eaves.getText().contains("-")
-                    || tf_GableRight.getText().contains("-")
-                    || tf_GableLeft.getText().contains("-")) {
-                new Alert(Alert.AlertType.ERROR, "Negative Zahlen sind bei der Berechnung nicht erlaubt.").showAndWait();
-            } else {
-                length.setWorth(parseDouble(tf_Length.getText()));
-                width.setWorth(parseDouble(tf_Width.getText()));
-                angle.setWorth(parseDouble(tf_Angle.getText()));
-                ridge.setWorth(parseDouble(tf_Ridge.getText()));
-                eaves.setWorth(parseDouble(tf_Eaves.getText()));
-                gableRight.setWorth(parseDouble(tf_GableRight.getText()));
-                gableLeft.setWorth(parseDouble(tf_GableLeft.getText()));
+    private void calcArea(TextField textField, Worth worth) {
+        if (!isCalculating) {
+            try {
+                isCalculating = true;
+                textField.setText(textField.getText().replaceAll(",", "."));
+
+                if (textField.equals(tf_Angle)) {
+                    if (parseDouble(textField.getText()) >= 90) {
+                        textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+                        new Alert(Alert.AlertType.ERROR, "Der Winkel darf nicht größer wie 90° sein.").showAndWait();
+                    }
+                }
+
+                worth.setWorth(parseDouble(textField.getText()));
 
                 baseArea.setWorth(length.getWorth() * width.getWorth());
                 roofArea.setWorth(baseArea.getWorth() / Math.cos(angle.getWorth() * Math.PI / 180));
@@ -204,9 +189,13 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 lb_LedgeAndRoofArea.setText(decimalFormat.format(ledgeAndRoofArea.getWorth()) + " m²");
 
                 Project_ResultAreaController.getInstance().calcArea();
+
+            } catch (NumberFormatException e) {
+                new Alert(Alert.AlertType.ERROR, "Geben Sie bitte eine Zahl ein.\n(Eingegebens Zeichen: " + textField.getText().charAt(textField.getText().length() - 1) + ")").showAndWait();
+                textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+            } finally{
+                isCalculating = false;
             }
-        } catch (NumberFormatException e) {
-            new Alert(Alert.AlertType.ERROR, "Das Format der eingegebene Zahlen ist nicht korrekt. Bitte überprüfen Sie ihre Eingabe noch einmal.").showAndWait();
         }
     }
 
@@ -258,8 +247,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
      * Persists the calculated Values to the database.
      */
     public void persistArea() {
-
-        calcArea(null);
 
         WorthController worthController = new WorthController();
         if (ProjectViewController.getOpenedProject().getWorths().isEmpty()) {

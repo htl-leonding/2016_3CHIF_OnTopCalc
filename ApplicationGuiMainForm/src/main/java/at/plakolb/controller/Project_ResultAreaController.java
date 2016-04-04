@@ -50,8 +50,8 @@ public class Project_ResultAreaController extends Observable implements Initiali
         tabs.get(1).setClosable(false);
         instance = this;
         
-        if (ProjectViewController.getInstance().getOpenedProject() != null 
-                && ProjectViewController.getInstance().getOpenedProject().getId() != null) {
+        if (ProjectViewController.getOpenedProject() != null 
+                && ProjectViewController.getOpenedProject().getId() != null) {
             areaController.get(0).loadValuesFromDataBase();
         }
     }
@@ -123,7 +123,9 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 notifyObservers();
 
             } catch (IOException exception) {
+                System.out.println("Exception Message: " + exception.getMessage());
             } catch (Exception exception) {
+                System.out.println("Exception Message: " + exception.getMessage());
             }
         }
     }

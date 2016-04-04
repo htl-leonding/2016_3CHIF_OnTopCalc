@@ -12,162 +12,167 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" stylesheets="@../styles/CompnentButton.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialListController">
    <children>
-      <Label alignment="CENTER" layoutX="118.0" text="Holzmaterial für Konstruktion (m³)" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <font>
-            <Font name="Berlin Sans FB" size="36.0" />
-         </font>
-         <padding>
-            <Insets top="25.0" />
-         </padding>
-      </Label>
-      <HBox alignment="CENTER" layoutX="7.0" layoutY="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="-14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
-            <AnchorPane maxWidth="1000.0" HBox.hgrow="NEVER">
-               <children>
-                  <TableView fx:id="tv_Materials" prefHeight="220.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" HBox.hgrow="NEVER">
-                    <columns>
-                      <TableColumn fx:id="tc_Category" maxWidth="145.0" prefWidth="145.0" style="-fx-alignment: center;" text="Kategorie" />
-                      <TableColumn fx:id="tc_ProductName" maxWidth="145.0" prefWidth="145.0" style="-fx-alignment: center;" text="Holzprodukt" />
-                        <TableColumn fx:id="tc_Length" maxWidth="80.0" style="-fx-alignment: center;" text="Länge in m" />
-                        <TableColumn fx:id="tc_Amount" maxWidth="80.0" style="-fx-alignment: center;" text="Anzahl" />
-                        <TableColumn fx:id="tc_Volume" maxWidth="80.0" style="-fx-alignment: center;" text="m³" />
-                        <TableColumn fx:id="tc_PricePerCubic" maxWidth="80.0" style="-fx-alignment: center;" text="Preis €/m³" />
-                        <TableColumn fx:id="tc_Price" maxWidth="80.0" style="-fx-alignment: center;" text="Preis €" />
-                        <TableColumn fx:id="tc_CuttingHours" maxWidth="80.0" style="-fx-alignment: center;" text="Zuschnitt h" />
-                        <TableColumn fx:id="tc_CuttingPricePerHours" maxWidth="80.0" style="-fx-alignment: center;" text="Zuschnitt €/h" />
-                        <TableColumn fx:id="tc_CuttingPrice" maxWidth="80.0" style="-fx-alignment: center;" text="Zuschnitt €" />
-                        <TableColumn fx:id="tc_Deletion" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" style="-fx-alignment: center;" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-               </children>
-            </AnchorPane>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutX="14.0" layoutY="320.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <AnchorPane maxWidth="1000.0" HBox.hgrow="NEVER">
-               <children>
-                  <GridPane alignment="CENTER" maxWidth="992.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                     <columnConstraints>
-                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="52.0" prefWidth="420.0" />
-                        <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
-                        <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
-                        <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
-                        <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
-                        <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
-                        <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" percentWidth="4.0" prefWidth="32.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Label id="smallBoldText" minHeight="0.0" minWidth="0.0" text="Summe: ">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label id="smallBoldText" fx:id="lb_CubicSum" text="0.000 m³" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label id="smallBoldText" fx:id="lb_MaterialCostSum" text="0.00 €" GridPane.columnIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label id="smallBoldText" fx:id="lb_CuttingTimeSum" text="0.00 h" GridPane.columnIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label id="smallBoldText" fx:id="lb_CuttingCostSum" text="0.00 €" GridPane.columnIndex="6">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </GridPane>
-               </children>
-            </AnchorPane>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutX="-14.0" layoutY="337.0" AnchorPane.leftAnchor="-14.0" AnchorPane.rightAnchor="14.0">
-         <children>
-            <Label id="bigBoldHeadline" text="Gesamtpreis:" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets right="12.0" />
-               </HBox.margin>
+            <Label alignment="CENTER" text="Holzmaterial für Konstruktion (m³)" textFill="#3c84ff">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="Berlin Sans FB" size="36.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </Label>
-            <Label id="bigBoldHeadline" fx:id="lb_TotalCosts" text="0.00 €">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets bottom="20.0" top="20.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER" fillHeight="false" layoutY="414.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <AnchorPane layoutY="382.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" layoutY="1.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <AnchorPane maxWidth="1000.0" HBox.hgrow="NEVER">
                      <children>
-                        <Label id="boldLettering" text="Neues Material hinzufügen:">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
+                        <TableView fx:id="tv_Materials" prefHeight="220.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" HBox.hgrow="NEVER">
+                          <columns>
+                            <TableColumn fx:id="tc_Category" maxWidth="145.0" prefWidth="145.0" style="-fx-alignment: center;" text="Kategorie" />
+                            <TableColumn fx:id="tc_ProductName" maxWidth="145.0" prefWidth="145.0" style="-fx-alignment: center;" text="Holzprodukt" />
+                              <TableColumn fx:id="tc_Length" maxWidth="80.0" style="-fx-alignment: center;" text="Länge in m" />
+                              <TableColumn fx:id="tc_Amount" maxWidth="80.0" style="-fx-alignment: center;" text="Anzahl" />
+                              <TableColumn fx:id="tc_Volume" maxWidth="80.0" style="-fx-alignment: center;" text="m³" />
+                              <TableColumn fx:id="tc_PricePerCubic" maxWidth="80.0" style="-fx-alignment: center;" text="Preis €/m³" />
+                              <TableColumn fx:id="tc_Price" maxWidth="80.0" style="-fx-alignment: center;" text="Preis €" />
+                              <TableColumn fx:id="tc_CuttingHours" maxWidth="80.0" style="-fx-alignment: center;" text="Zuschnitt h" />
+                              <TableColumn fx:id="tc_CuttingPricePerHours" maxWidth="80.0" style="-fx-alignment: center;" text="Zuschnitt €/h" />
+                              <TableColumn fx:id="tc_CuttingPrice" maxWidth="80.0" style="-fx-alignment: center;" text="Zuschnitt €" />
+                              <TableColumn fx:id="tc_Deletion" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" style="-fx-alignment: center;" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="1.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
+               <children>
+                  <AnchorPane maxWidth="1000.0" HBox.hgrow="NEVER">
                      <children>
-                        <ComboBox fx:id="cb_Category" />
-                        <ComboBox fx:id="cb_Product">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </ComboBox>
-                        <TextField fx:id="tf_Amount" prefHeight="25.0" prefWidth="108.0" promptText="Anzahl">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <Button id="smallBtnLettering" mnemonicParsing="false" onAction="#addProduct" text="Material hinzufügen">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
+                        <GridPane alignment="CENTER" maxWidth="992.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                           <columnConstraints>
+                              <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="52.0" prefWidth="420.0" />
+                              <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
+                              <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
+                              <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
+                              <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
+                              <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
+                              <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" percentWidth="4.0" prefWidth="32.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label id="smallBoldText" minHeight="0.0" minWidth="0.0" text="Summe: ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label id="smallBoldText" fx:id="lb_CubicSum" text="0.000 m³" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label id="smallBoldText" fx:id="lb_MaterialCostSum" text="0.00 €" GridPane.columnIndex="3">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label id="smallBoldText" fx:id="lb_CuttingTimeSum" text="0.00 h" GridPane.columnIndex="4">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label id="smallBoldText" fx:id="lb_CuttingCostSum" text="0.00 €" GridPane.columnIndex="6">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </GridPane>
                      </children>
-                     <opaqueInsets>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label id="bigBoldHeadline" text="Gesamtpreis:" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="12.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label id="bigBoldHeadline" fx:id="lb_TotalCosts" text="0.00 €">
+                     <HBox.margin>
                         <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                  </HBox>
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
                </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </AnchorPane>
+               <padding>
+                  <Insets bottom="20.0" top="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" fillHeight="false">
+               <children>
+                  <AnchorPane layoutY="382.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER" layoutY="1.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <Label id="boldLettering" text="Neues Material hinzufügen:">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="1.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                           <children>
+                              <ComboBox fx:id="cb_Category" />
+                              <ComboBox fx:id="cb_Product">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <TextField fx:id="tf_Amount" prefHeight="25.0" prefWidth="108.0" promptText="Anzahl">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button id="smallBtnLettering" mnemonicParsing="false" onAction="#addProduct" text="Material hinzufügen">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </AnchorPane>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>

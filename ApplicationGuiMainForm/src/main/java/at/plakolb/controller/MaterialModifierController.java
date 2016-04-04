@@ -55,6 +55,13 @@ public class MaterialModifierController implements Initializable {
 
         tf_Count.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             try {
+                if (tf_Count.getText().contains(",")) {
+                    tf_Count.setText(tf_Count.getText().substring(0, tf_Count.getText().lastIndexOf(",")));
+                }
+                if (tf_Count.getText().contains(".")) {
+                    tf_Count.setText(tf_Count.getText().substring(0, tf_Count.getText().lastIndexOf(".")));
+                }
+                
                 Integer.parseInt(tf_Count.getText());
             } catch (NumberFormatException e) {
                 tf_Count.setText("1");
@@ -65,6 +72,7 @@ public class MaterialModifierController implements Initializable {
         });
 
         tf_PriceUnit.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            tf_PriceUnit.setText(tf_PriceUnit.getText().replace(",", "."));
             try {
                 Double.parseDouble(tf_PriceUnit.getText());
             } catch (NumberFormatException e) {
@@ -76,6 +84,7 @@ public class MaterialModifierController implements Initializable {
         });
 
         tf_TotalPrice.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            tf_TotalPrice.setText(tf_TotalPrice.getText().replace(",", "."));
             try {
                 Double.parseDouble(tf_TotalPrice.getText());
             } catch (NumberFormatException e) {
@@ -87,6 +96,7 @@ public class MaterialModifierController implements Initializable {
         });
 
         tf_CuttingTime.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            tf_CuttingTime.setText(tf_CuttingTime.getText().replace(",", "."));
             try {
                 Double.parseDouble(tf_CuttingTime.getText());
             } catch (NumberFormatException e) {
@@ -98,6 +108,7 @@ public class MaterialModifierController implements Initializable {
         });
 
         tf_CuttingPricePerHour.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            tf_CuttingPricePerHour.setText(tf_CuttingPricePerHour.getText().replace(",", "."));
             try {
                 Double.parseDouble(tf_CuttingPricePerHour.getText());
             } catch (NumberFormatException e) {
@@ -119,8 +130,8 @@ public class MaterialModifierController implements Initializable {
                     tf_TotalPrice.setText("0");
                 }
             } catch (NumberFormatException e) {
+            } catch (Exception e){
             }
-
         });
 
         tf_PriceUnit.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -134,6 +145,7 @@ public class MaterialModifierController implements Initializable {
                     tf_TotalPrice.setText("0");
                 }
             } catch (NumberFormatException e) {
+            } catch (Exception e){
             }
         });
 
@@ -148,6 +160,7 @@ public class MaterialModifierController implements Initializable {
                     tf_PriceUnit.setText("0");
                 }
             } catch (NumberFormatException e) {
+            } catch (Exception e){
             }
         });
     }

@@ -22,7 +22,7 @@ import javafx.scene.control.TextField;
  *
  * @author Kepplinger
  */
-public class Project_TransportController extends java.util.Observable implements Initializable{
+public class Project_TransportController extends java.util.Observable implements Initializable {
 
     private static Project_TransportController instance;
     @FXML
@@ -43,13 +43,9 @@ public class Project_TransportController extends java.util.Observable implements
     private Label lb_PriceComplete;
 
     private double days;
-
     private double duration;
-
     private double distance;
-
     private double price;
-
     private double kilometerAllowance;
 
     /**
@@ -63,11 +59,10 @@ public class Project_TransportController extends java.util.Observable implements
 
     /**
      * Set the value of price
-     *
      */
     public void setPrice() {
         this.price = tf_lkwPrice.getText().isEmpty() || !tf_lkwPrice.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwPrice.getText().replace(',','.'));
+                ? 0 : Double.valueOf(tf_lkwPrice.getText().replace(',', '.'));
     }
 
     /**
@@ -81,11 +76,10 @@ public class Project_TransportController extends java.util.Observable implements
 
     /**
      * Set the value of kilometerAllowance
-     *
      */
     public void setKilometerAllowance() {
         this.kilometerAllowance = tf_pkwMoney.getText().isEmpty() || !tf_pkwMoney.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwMoney.getText().replace(',','.'));
+                ? 0 : Double.valueOf(tf_pkwMoney.getText().replace(',', '.'));
     }
 
     /**
@@ -99,12 +93,10 @@ public class Project_TransportController extends java.util.Observable implements
 
     /**
      * Set the value of distance
-     *
-     * @
      */
     public void setDistance() {
         this.distance = tf_pkwDistance.getText().isEmpty() || !tf_pkwDistance.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDistance.getText().replace(',','.'));
+                ? 0 : Double.valueOf(tf_pkwDistance.getText().replace(',', '.'));
     }
 
     /**
@@ -118,11 +110,10 @@ public class Project_TransportController extends java.util.Observable implements
 
     /**
      * Set the value of duration
-     *
      */
     public void setDuration() {
         this.duration = tf_lkwDuration.getText().isEmpty() || !tf_lkwDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwDuration.getText().replace(',','.'));
+                ? 0 : Double.valueOf(tf_lkwDuration.getText().replace(',', '.'));
     }
 
     /**
@@ -136,11 +127,10 @@ public class Project_TransportController extends java.util.Observable implements
 
     /**
      * Set the value of days
-     *
      */
     public void setDays() {
         this.days = tf_pkwDays.getText().isEmpty() || !tf_pkwDays.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDays.getText().replace(',','.'));
+                ? 0 : Double.valueOf(tf_pkwDays.getText().replace(',', '.'));
     }
 
     /**
@@ -149,12 +139,6 @@ public class Project_TransportController extends java.util.Observable implements
      * @return the value of costsAbidance
      */
     public double getCostsAbidance() {
-        //Formel Aufenthalt
-        //ALT:
-        //select (select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''PLS'') 
-        //* (select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''DT'')
-        //from sysibm.sysdummy1
-        // = pricePickup * duration
         return getPrice() * getDuration();
     }
 
@@ -173,13 +157,6 @@ public class Project_TransportController extends java.util.Observable implements
      * @return the value of costsTransport
      */
     public double getCostsTransport() {
-        //Formel Transport
-        //ALT:
-        //"select (select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''TA'') 
-        //* (select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KMG'') 
-        //* (select NULLIF(w.worth, 0) from Worth w 
-        //join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''ET'') * 2 from sysibm.sysdummy1"
-        // = Days * KilometerAllowance * distance * 2
         return getDays() * getKilometerAllowance() * getDistance() * 2;
     }
 
@@ -194,7 +171,7 @@ public class Project_TransportController extends java.util.Observable implements
     }
 
     private DecimalFormat decimalFormat;
-    
+
     /**
      * Initializes the controller class.
      *
@@ -207,7 +184,7 @@ public class Project_TransportController extends java.util.Observable implements
 
         decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-        
+
         tf_pkwMoney.textProperty().addListener((observable, oldValue, newValue) -> {
             setKilometerAllowance();
             valueChanged();
@@ -288,9 +265,9 @@ public class Project_TransportController extends java.util.Observable implements
         Worth ka = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
 
         if (kt != null && ka != null) {
-            lb_PriceTransport.setText(decimalFormat.format(kt.getWorth())+" €");
-            lb_PriceStay.setText(decimalFormat.format(ka.getWorth())+" €");
-            lb_PriceComplete.setText(decimalFormat.format(ka.getWorth() + kt.getWorth())+" €");
+            lb_PriceTransport.setText(decimalFormat.format(kt.getWorth()) + " €");
+            lb_PriceStay.setText(decimalFormat.format(ka.getWorth()) + " €");
+            lb_PriceComplete.setText(decimalFormat.format(ka.getWorth() + kt.getWorth()) + " €");
         }
         setValuesChanged(false);
     }
@@ -388,11 +365,11 @@ public class Project_TransportController extends java.util.Observable implements
 
     private void valueChanged() {
         try {
-            lb_PriceTransport.setText(decimalFormat.format(getCostsTransport())+" €");
+            lb_PriceTransport.setText(decimalFormat.format(getCostsTransport()) + " €");
 
-            lb_PriceStay.setText(decimalFormat.format(getCostsAbidance())+" €");
+            lb_PriceStay.setText(decimalFormat.format(getCostsAbidance()) + " €");
 
-            lb_PriceComplete.setText(decimalFormat.format(getCompleteCosts())+" €");
+            lb_PriceComplete.setText(decimalFormat.format(getCompleteCosts()) + " €");
             setValuesChanged(true);
         } catch (Exception ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
