@@ -128,6 +128,7 @@ public class AllProjectsController implements Initializable {
                                     stage.setTitle("Projekt drucken");
                                     stage.setResizable(false);
                                     stage.setScene(scene);
+                                    PrintProjectController.getInstance().SetProject(p);
                                     stage.show();
                                 } catch (IOException e) {
                                 } catch (Exception e) {

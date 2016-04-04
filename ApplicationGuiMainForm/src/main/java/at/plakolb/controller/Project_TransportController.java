@@ -6,9 +6,10 @@ import at.plakolb.calculationlogic.entity.ParameterP;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Worth;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.ResourceBundle;
-import javafx.beans.Observable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -56,7 +57,7 @@ public class Project_TransportController extends java.util.Observable implements
      *
      * @return the value of price
      */
-    public double getPrice() {
+    private double getPrice() {
         return price;
     }
 
@@ -66,7 +67,7 @@ public class Project_TransportController extends java.util.Observable implements
      */
     public void setPrice() {
         this.price = tf_lkwPrice.getText().isEmpty() || !tf_lkwPrice.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwPrice.getText());
+                ? 0 : Double.valueOf(tf_lkwPrice.getText().replace(',','.'));
     }
 
     /**
@@ -74,7 +75,7 @@ public class Project_TransportController extends java.util.Observable implements
      *
      * @return the value of kilometerAllowance
      */
-    public double getKilometerAllowance() {
+    private double getKilometerAllowance() {
         return kilometerAllowance;
     }
 
@@ -84,7 +85,7 @@ public class Project_TransportController extends java.util.Observable implements
      */
     public void setKilometerAllowance() {
         this.kilometerAllowance = tf_pkwMoney.getText().isEmpty() || !tf_pkwMoney.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwMoney.getText());
+                ? 0 : Double.valueOf(tf_pkwMoney.getText().replace(',','.'));
     }
 
     /**
@@ -92,7 +93,7 @@ public class Project_TransportController extends java.util.Observable implements
      *
      * @return the value of distance
      */
-    public double getDistance() {
+    private double getDistance() {
         return distance;
     }
 
@@ -103,7 +104,7 @@ public class Project_TransportController extends java.util.Observable implements
      */
     public void setDistance() {
         this.distance = tf_pkwDistance.getText().isEmpty() || !tf_pkwDistance.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDistance.getText());
+                ? 0 : Double.valueOf(tf_pkwDistance.getText().replace(',','.'));
     }
 
     /**
@@ -111,7 +112,7 @@ public class Project_TransportController extends java.util.Observable implements
      *
      * @return the value of duration
      */
-    public double getDuration() {
+    private double getDuration() {
         return duration;
     }
 
@@ -121,7 +122,7 @@ public class Project_TransportController extends java.util.Observable implements
      */
     public void setDuration() {
         this.duration = tf_lkwDuration.getText().isEmpty() || !tf_lkwDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwDuration.getText());
+                ? 0 : Double.valueOf(tf_lkwDuration.getText().replace(',','.'));
     }
 
     /**
@@ -129,7 +130,7 @@ public class Project_TransportController extends java.util.Observable implements
      *
      * @return the value of days
      */
-    public double getDays() {
+    private double getDays() {
         return days;
     }
 
@@ -139,7 +140,7 @@ public class Project_TransportController extends java.util.Observable implements
      */
     public void setDays() {
         this.days = tf_pkwDays.getText().isEmpty() || !tf_pkwDays.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDays.getText());
+                ? 0 : Double.valueOf(tf_pkwDays.getText().replace(',','.'));
     }
 
     /**
@@ -192,6 +193,7 @@ public class Project_TransportController extends java.util.Observable implements
         Project_TransportController.valuesChanged = valuesChanged;
     }
 
+    private DecimalFormat decimalFormat;
     
     /**
      * Initializes the controller class.
@@ -203,6 +205,9 @@ public class Project_TransportController extends java.util.Observable implements
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
 
+        decimalFormat = new DecimalFormat("#.##");
+        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+        
         tf_pkwMoney.textProperty().addListener((observable, oldValue, newValue) -> {
             setKilometerAllowance();
             valueChanged();
@@ -253,13 +258,13 @@ public class Project_TransportController extends java.util.Observable implements
         Worth days = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
 
         if (worthKilometerAllowance != null) {
-            tf_pkwMoney.setText(String.valueOf(worthKilometerAllowance.getWorth()));
+            tf_pkwMoney.setText(decimalFormat.format(worthKilometerAllowance.getWorth()));
         }
         if (distance != null) {
-            tf_pkwDistance.setText(String.valueOf(distance.getWorth()));
+            tf_pkwDistance.setText(decimalFormat.format(distance.getWorth()));
         }
         if (days != null) {
-            tf_pkwDays.setText(String.valueOf(days.getWorth()));
+            tf_pkwDays.setText(decimalFormat.format(days.getWorth()));
         }
 
         parameter = parameterController.findParameterPByShortTerm("PLS");
@@ -269,10 +274,10 @@ public class Project_TransportController extends java.util.Observable implements
         Worth pickupDuration = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
 
         if (pickupPrice != null) {
-            tf_lkwPrice.setText(String.valueOf(pickupPrice.getWorth()));
+            tf_lkwPrice.setText(decimalFormat.format(pickupPrice.getWorth()));
         }
         if (pickupDuration != null) {
-            tf_lkwDuration.setText(String.valueOf(pickupDuration.getWorth()));
+            tf_lkwDuration.setText(decimalFormat.format(pickupDuration.getWorth()));
         }
 
         //Transportkosten
@@ -283,9 +288,9 @@ public class Project_TransportController extends java.util.Observable implements
         Worth ka = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
 
         if (kt != null && ka != null) {
-            lb_PriceTransport.setText(String.valueOf(kt.getWorth()));
-            lb_PriceStay.setText(String.valueOf(ka.getWorth()));
-            lb_PriceComplete.setText(String.valueOf(ka.getWorth() + kt.getWorth()));
+            lb_PriceTransport.setText(decimalFormat.format(kt.getWorth())+" €");
+            lb_PriceStay.setText(decimalFormat.format(ka.getWorth())+" €");
+            lb_PriceComplete.setText(decimalFormat.format(ka.getWorth() + kt.getWorth())+" €");
         }
         setValuesChanged(false);
     }
@@ -383,11 +388,11 @@ public class Project_TransportController extends java.util.Observable implements
 
     private void valueChanged() {
         try {
-            lb_PriceTransport.setText(String.valueOf(getCostsTransport()));
+            lb_PriceTransport.setText(decimalFormat.format(getCostsTransport())+" €");
 
-            lb_PriceStay.setText(String.valueOf(getCostsAbidance()));
+            lb_PriceStay.setText(decimalFormat.format(getCostsAbidance())+" €");
 
-            lb_PriceComplete.setText(String.valueOf(getCompleteCosts()));
+            lb_PriceComplete.setText(decimalFormat.format(getCompleteCosts())+" €");
             setValuesChanged(true);
         } catch (Exception ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
