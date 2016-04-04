@@ -1,5 +1,6 @@
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
@@ -117,5 +118,9 @@ public class Worth implements Serializable {
     @Override
     public String toString() {
         return "Worth{" + "id=" + id + ", project=" + project + ", parameter=" + parameter + ", worth=" + worth + '}';
+    }
+
+    public String worthFormatWithUnit() {
+        return UtilityFormat.worthWithUnit(this);
     }
 }
