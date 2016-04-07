@@ -48,12 +48,11 @@ public class ClientsSmallController extends Observable implements Initializable 
         tb_City.setCellValueFactory(new PropertyValueFactory<>("city"));
         tv_ClientTable.setItems(clients);
 
-        //Double mousclick event
         tv_ClientTable.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == 2 && tv_ClientTable.getSelectionModel().getSelectedItem() != null) {
                 setChanged();
                 notifyObservers(tv_ClientTable.getSelectionModel().getSelectedItem());
-                ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();    //Current window gets closed
+                ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
             }
         });
     }
@@ -72,7 +71,7 @@ public class ClientsSmallController extends Observable implements Initializable 
         if (tv_ClientTable.getSelectionModel().getSelectedItem() != null) {
             setChanged();
             notifyObservers(tv_ClientTable.getSelectionModel().getSelectedItem());
-            ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();    //Current window gets closed
+            ((Stage)(((Node)event.getSource()).getScene().getWindow())).close();
         }
     }
 }

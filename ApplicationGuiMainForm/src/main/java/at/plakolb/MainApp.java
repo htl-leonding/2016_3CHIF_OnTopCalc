@@ -118,9 +118,9 @@ public class MainApp extends Application {
         parameterController.create(new ParameterP("Breite", "b", unitController.findUnit(1l), false));
         parameterController.create(new ParameterP("Grundfläche", "A", unitController.findUnit(2l), false));
         parameterController.create(new ParameterP("Volumen", "V", unitController.findUnit(3l), false));
-        parameterController.create(new ParameterP("Preis pro m³ Holz", "PM3H", unitController.findUnit(7l), true, 250.0));
-        parameterController.create(new ParameterP("Kubikmeter Zuschnitt Dauer", "KZG", unitController.findUnit(16l), true, 0.5));
-        parameterController.create(new ParameterP("Kubikmeter Preis/Stunde Zuschnitt", "KPSZ", unitController.findUnit(7l), true, 40.0));
+        parameterController.create(new ParameterP("Preis pro m³ Holz", "PM3H", unitController.findUnit(16l), true, 250.0));
+        parameterController.create(new ParameterP("Kubikmeter Zuschnitt Dauer", "KZG", unitController.findUnit(6l), true, 0.5));
+        parameterController.create(new ParameterP("Kubikmeter Preis/Stunde Zuschnitt", "KPSZ", unitController.findUnit(15l), true, 40.0));
         parameterController.create(new ParameterP("Kubikmeter Gesamtdauer", "KG", unitController.findUnit(6l), false));
         parameterController.create(new ParameterP("Kumbikmeter Zuschnitt Gesamtpreis", "KZPG", unitController.findUnit(7l), false));
         parameterController.create(new ParameterP("Gesamtpreis Volumen", "GP", unitController.findUnit(7l), false));
@@ -157,11 +157,11 @@ public class MainApp extends Application {
         parameterController.create(new ParameterP("Folie", "F", unitController.findUnit(2l), false));
         parameterController.create(new ParameterP("Kosten Parameter Folie", "KPF", unitController.findUnit(7l), true, 40.0));
         parameterController.create(new ParameterP("Zeit Parameter Folie", "ZPF", unitController.findUnit(6l), true, 0.3));
-        parameterController.create(new ParameterP("Kosten Product Folie", "KProF", unitController.findUnit(7l), false));
+        parameterController.create(new ParameterP("Kosten Produkt Folie", "KProF", unitController.findUnit(7l), false));
         parameterController.create(new ParameterP("Kosten Montage Folie", "KMF", unitController.findUnit(7l), false));
         parameterController.create(new ParameterP("Gesamtkosten Folie", "GKF", unitController.findUnit(7l), false));
 
-        parameterController.create(new ParameterP("Länger der Dachsparren", "LD", unitController.findUnit(1l), false));
+        parameterController.create(new ParameterP("Länge der Dachsparren", "LD", unitController.findUnit(1l), false));
         parameterController.create(new ParameterP("Verschnitt Nageldichtband Prozent", "VDP", unitController.findUnit(9l), true, 16.0));
         parameterController.create(new ParameterP("Verschnitt Nageldichtband", "DP", unitController.findUnit(1l), false));
         parameterController.create(new ParameterP("Nageldichtband", "ND", unitController.findUnit(1l), false));
@@ -182,7 +182,7 @@ public class MainApp extends Application {
 
         parameterController.create(new ParameterP("Lattenabstand", "LA", unitController.findUnit(13l), false));
         parameterController.create(new ParameterP("Länge der Dachlatten ohne Verschnitt", "LDOV", unitController.findUnit(1l), false));
-        parameterController.create(new ParameterP("Verschnitt Lattung oder Vollschalung %", "VLVP", unitController.findUnit(9l), true, 16.0));
+        parameterController.create(new ParameterP("Verschnitt Lattung oder Vollschalung in Prozent", "VLVP", unitController.findUnit(9l), true, 16.0));
         parameterController.create(new ParameterP("Verschnitt Lattung", "VL", unitController.findUnit(1l), false));
         parameterController.create(new ParameterP("Länge Lattung", "LL", unitController.findUnit(1l), false));
         parameterController.create(new ParameterP("Verschnitt Vollschalung", "VVS", unitController.findUnit(2l), false));
@@ -207,7 +207,7 @@ public class MainApp extends Application {
 
         parameterController.create(new ParameterP("Tage Aufenthalt", "TA", unitController.findUnit(14l), false));
         parameterController.create(new ParameterP("Kilometergeld", "KMG", unitController.findUnit(7l), true, 2.5));
-        parameterController.create(new ParameterP("Preis LKW/Stunde", "PLS", unitController.findUnit(7l), true, 50.0));
+        parameterController.create(new ParameterP("Preis LKW/Stunde", "PLS", unitController.findUnit(15l), true, 50.0));
         parameterController.create(new ParameterP("Entfernung Transport", "ET", unitController.findUnit(11l), false));
         parameterController.create(new ParameterP("Dauer Transport", "DT", unitController.findUnit(6l), false));
         parameterController.create(new ParameterP("Kosten Transport", "KT", unitController.findUnit(7l), false));

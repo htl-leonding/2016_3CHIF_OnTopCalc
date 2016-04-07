@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
@@ -51,16 +52,16 @@ public class ProjectController {
             }
         }
     }
-    
+
     //TODO
     //Auf Korrektheit überprüfen
     public void createCosting(Project project, long originalProjectId) {
         try {
             create(project);
-            
+
             em = JpaUtils.getEntityManager();
             em.getTransaction().begin();
-            
+
             if (project.getWorths().size() > 0) {
                 List<Worth> worths = project.getWorths();
                 project.setWorths(new ArrayList<Worth>());
@@ -94,16 +95,17 @@ public class ProjectController {
             }
         }
     }
+
     /**
      * Copy a project
+     *
      * @param p
      * @param originalProjectId
      */
-    public void copy(Project p,long originalProjectId){
+    public void copy(Project p, long originalProjectId) {
         createCosting(p, originalProjectId);
     }
-    
-    
+
     public List<Project> findAll() {
         try {
             em = JpaUtils.getEntityManager();
@@ -112,8 +114,9 @@ public class ProjectController {
             System.out.println(projects);
             return projects;
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -174,10 +177,10 @@ public class ProjectController {
                 }
             }
             throw ex;
-        }
-        finally {
-            if(em != null)
+        } finally {
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -198,8 +201,9 @@ public class ProjectController {
         } catch (Exception ex) {
             return false;
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -223,8 +227,9 @@ public class ProjectController {
             }
             return q.getResultList();
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -233,8 +238,9 @@ public class ProjectController {
         try {
             return em.find(Project.class, id);
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -244,8 +250,9 @@ public class ProjectController {
             return em.createNativeQuery("select * from Project where deletion = ? order by lastUpdate desc", Project.class).
                     setParameter(1, deletion).getResultList();
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -255,8 +262,9 @@ public class ProjectController {
             return em.createNativeQuery("select * from Project p where deletion = 0 order by p.lastUpdate desc", Project.class).
                     setFirstResult(0).setMaxResults(5).getResultList();
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -267,8 +275,9 @@ public class ProjectController {
                     Project.class).
                     getSingleResult();
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 
@@ -282,8 +291,9 @@ public class ProjectController {
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
         } finally {
-            if(em != null)
+            if (em != null) {
                 em.close();
+            }
         }
     }
 }

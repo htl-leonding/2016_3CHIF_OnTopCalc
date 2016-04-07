@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -56,6 +57,8 @@ public class Project_InformationsController implements Initializable, Observer {
     public Label lb_Id;
     @FXML
     private Label lb_typeOfCalculation;
+    @FXML
+    private Button bt_NewClient;
 
     /**
      * Initializes the controller class.
@@ -133,6 +136,62 @@ public class Project_InformationsController implements Initializable, Observer {
     }
 
     /**
+     * Adds all informations from the given client to the text fields.
+     *
+     * @param o
+     * @param arg
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        Client client = (Client) arg;
+        tf_ClientName.setText(client.getName());
+        tf_City.setText(client.getCity());
+        tf_Street.setText(client.getStreet());
+        tf_ZipCode.setText(client.getZipCode());
+        tf_PhoneNumber.setText(client.getTelephoneNumber());
+        tf_Email.setText(client.getEmail());
+        tf_City.setDisable(true);
+        tf_ClientName.setDisable(true);
+        tf_Street.setDisable(true);
+        tf_PhoneNumber.setDisable(true);
+        tf_ZipCode.setDisable(true);
+        tf_Email.setDisable(true);
+        bt_NewClient.setDisable(false);
+    }
+
+    /**
+     * Opens the passed project and loads all informations into the TextFields.
+     *
+     * @param project
+     */
+    public void openProject(Project project) {
+        lb_Id.setText(String.valueOf(project.getId()));
+        lb_typeOfCalculation.setText(project.getModeOfCalculation());
+        tf_ProjectName.setText(project.getProjectName());
+        tf_Description.setText(project.getDescription());
+        tf_InvoiceNumber.setText(project.getInvoiceNumber());
+        lv_ConstructionType.getSelectionModel().select(project.getConstructionType());
+        lv_RoofForm.getSelectionModel().select(project.getRoofForm());
+
+        if (project.getClient() != null) {
+            bt_NewClient.setDisable(false);
+            tf_City.setText(project.getClient().getCity());
+            tf_ClientName.setText(project.getClient().getName());
+            tf_Street.setText(project.getClient().getStreet());
+            tf_PhoneNumber.setText(project.getClient().getTelephoneNumber());
+            tf_ZipCode.setText(project.getClient().getZipCode());
+            tf_Email.setText(project.getClient().getEmail());
+            tf_City.setDisable(true);
+            tf_ClientName.setDisable(true);
+            tf_Street.setDisable(true);
+            tf_PhoneNumber.setDisable(true);
+            tf_ZipCode.setDisable(true);
+            tf_Email.setDisable(true);
+
+        }
+    }
+
+    /**
      * Opens a new View, where an aleready existing client can be selected.
      *
      * @param event
@@ -153,44 +212,24 @@ public class Project_InformationsController implements Initializable, Observer {
     }
 
     /**
-     * Adds all informations from the given client to the text fields.
+     * Clears the TextFields.
      *
-     * @param o
-     * @param arg
+     * @param event
      */
-    @Override
-    public void update(Observable o, Object arg) {
-        Client client = (Client) arg;
-        tf_ClientName.setText(client.getName());
-        tf_City.setText(client.getCity());
-        tf_Street.setText(client.getStreet());
-        tf_ZipCode.setText(client.getZipCode());
-        tf_PhoneNumber.setText(client.getTelephoneNumber());
-        tf_Email.setText(client.getEmail());
-    }
-
-    /**
-     * Opens the passed project and loads all informations into the TextFields.
-     *
-     * @param project
-     */
-    public void openProject(Project project) {
-        lb_Id.setText(String.valueOf(project.getId()));
-        lb_typeOfCalculation.setText(project.getModeOfCalculation());
-        tf_ProjectName.setText(project.getProjectName());
-        tf_Description.setText(project.getDescription());
-        tf_InvoiceNumber.setText(project.getInvoiceNumber());
-        lv_ConstructionType.getSelectionModel().select(project.getConstructionType());
-        lv_RoofForm.getSelectionModel().select(project.getRoofForm());
-
-        if (project.getClient() != null) {
-            tf_City.setText(project.getClient().getCity());
-            tf_ClientName.setText(project.getClient().getName());
-            tf_Street.setText(project.getClient().getStreet());
-            tf_PhoneNumber.setText(project.getClient().getTelephoneNumber());
-            tf_ZipCode.setText(project.getClient().getZipCode());
-            tf_Email.setText(project.getClient().getEmail());
-        }
-
+    @FXML
+    private void newClient(ActionEvent event) {
+        bt_NewClient.setDisable(true);
+        tf_City.setText("");
+        tf_ClientName.setText("");
+        tf_Street.setText("");
+        tf_PhoneNumber.setText("");
+        tf_ZipCode.setText("");
+        tf_Email.setText("");
+        tf_City.setDisable(false);
+        tf_ClientName.setDisable(false);
+        tf_Street.setDisable(false);
+        tf_PhoneNumber.setDisable(false);
+        tf_ZipCode.setDisable(false);
+        tf_Email.setDisable(false);
     }
 }

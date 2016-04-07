@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -133,27 +134,32 @@ public class AllProjectsController implements Initializable {
                             });
                             costingP.setOnMouseClicked((MouseEvent event) -> {
                                 Project project = getTableView().getItems().get(getIndex());
-                                Long orginalProjectId = project.getId();
-                                project.setId(null);
-                                project.setPreCalculation(orginalProjectId);
-                                project.setModeOfCalculation("Nachkalkulation");    //TODO - Property File
-                                project.setLastUpdate(new Date());
-                                project.setCreationDate(new Date());
-                                ProjectController projectController = new ProjectController();
-                                projectController.createCosting(project, orginalProjectId);
-                                updateData();
-
+                                if (project.getPreCalculation() == null) {
+                                    long projectId = project.getId();
+                                    project.setId(null);
+                                    project.setPreCalculation(projectId);
+                                    project.setModeOfCalculation("Nachkalkulation");
+                                    project.setLastUpdate(new Date());
+                                    project.setCreationDate(new Date());
+                                    ProjectController projectController = new ProjectController();
+                                    projectController.createCosting(project, projectId);
+                                    updateData();
+                                }else{
+                                    new Alert(Alert.AlertType.ERROR,"Nachkalkulationen können nur von Vorkalkulationen erstellt werden.").showAndWait();
+                                }
                             });
                             copyP.setOnMouseClicked((MouseEvent event) -> {
                                 Project project = getTableView().getItems().get(getIndex());
-                                long orginalProjectId = project.getId();
+                                long projectId = project.getId();
                                 project.setId(null);
-                                project.setPreCalculation(null);
-                                project.setModeOfCalculation("Vorkalkulation"); //TODO - Property Files
+//                                project.setPreCalculation(null);
+//                                project.setModeOfCalculation("Vorkalkulation");
+                                project.setPreCalculation(project.getPreCalculation());
+                                project.setModeOfCalculation(project.getModeOfCalculation());
                                 project.setLastUpdate(new Date());
                                 project.setCreationDate(new Date());
                                 ProjectController projectController = new ProjectController();
-                                projectController.copy(project, orginalProjectId);
+                                projectController.copy(project, projectId);
                                 updateData();
                             });
                             deleteP.setOnMouseClicked((MouseEvent event) -> {

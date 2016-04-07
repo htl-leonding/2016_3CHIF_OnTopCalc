@@ -132,6 +132,11 @@
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
+                                          <Button id="smallBtnLettering" fx:id="bt_NewClient" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newClient" text="Neuer Auftraggeber">
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </Button>
                                        </children>
                                     </VBox>
                                     <VBox spacing="2.0">

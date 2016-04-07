@@ -73,7 +73,7 @@ public class ParameterViewController implements Initializable {
         tc_Button.setCellFactory((new Callback<TableColumn<ParameterP, String>, TableCell<ParameterP, String>>() {
             @Override
             public TableCell call(final TableColumn<ParameterP, String> param) {
-                final TableCell<ParameterP, String> cell = new TableCell<ParameterP, String>() {
+                    final TableCell<ParameterP, String> cell = new TableCell<ParameterP, String>() {
 
                     final Label edit = new Label();
                     

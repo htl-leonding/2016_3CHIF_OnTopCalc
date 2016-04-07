@@ -72,6 +72,7 @@ public class ParameterModifierController implements Initializable {
      */
     @FXML
     private void save(ActionEvent event) {
+        tf_DefaultValue.setText(tf_DefaultValue.getText().replace(",", "."));
         try {
             if (tf_DefaultValue.getText().contains("-")) {
                 throw new NumberFormatException();
