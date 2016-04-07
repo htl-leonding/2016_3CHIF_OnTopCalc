@@ -3,7 +3,6 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.db.controller.UnitController;
-import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
@@ -20,7 +19,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -211,24 +209,6 @@ public class ProductModifierController implements Initializable {
             return Double.parseDouble(numberString);
         } catch (NumberFormatException e) {
             return null;
-        }
-    }
-
-    /**
-     * Deletes current opened product permanentley.
-     *
-     * @param event
-     * @throws NonexistentEntityException
-     */
-    @FXML
-    private void deleteProduct(ActionEvent event) throws NonexistentEntityException {
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Möchten Sie das Produkt wirklich endgültig löschen. Vorsicht, dieser Vorang kann nicht mehr rückgängig gemacht werden.",
-                ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            new ProductController().destroy(openedProduct.getId());
-            ProductListController.getInstance().refreshTable();
-            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
         }
     }
 }

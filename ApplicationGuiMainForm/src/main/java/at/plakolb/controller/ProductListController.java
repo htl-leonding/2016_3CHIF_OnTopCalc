@@ -18,16 +18,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -52,6 +60,8 @@ public class ProductListController implements Initializable {
     private TableColumn<Product, String> tc_PriceUnit;
     @FXML
     private TableColumn<Product, Unit> tc_Unit;
+    @FXML
+    private TableColumn tc_Buttons;
     @FXML
     private MenuButton mb_ProductTypes;
     @FXML
@@ -118,6 +128,67 @@ public class ProductListController implements Initializable {
         });
 
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
+
+        tc_Buttons.setCellFactory((new Callback<TableColumn<Product, String>, TableCell<Product, String>>() {
+            @Override
+            public TableCell call(final TableColumn<Product, String> param) {
+                final TableCell<Product, String> cell = new TableCell<Product, String>() {
+
+                    final Label edit = new Label();
+                    final Label delete = new Label();
+                    final HBox box = new HBox(edit, delete);
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            edit.setId("edit");
+                            delete.setId("delete");
+                            box.setId("box");
+                            box.setSpacing(2);
+                            box.setAlignment(Pos.CENTER);
+
+                            edit.setTooltip(new Tooltip("Produkt editieren"));
+                            delete.setTooltip(new Tooltip("Produkt löschen"));
+
+                            edit.setOnMouseClicked((MouseEvent event) -> {
+                                Parent root;
+                                try {
+                                    root = FXMLLoader.load(getClass().getResource("/fxml/ProductModifier.fxml"));
+                                    Scene scene = new Scene(root);
+                                    Stage stage = new Stage();
+                                    stage.setTitle("Produkt editieren");
+                                    stage.setScene(scene);
+                                    stage.show();
+                                } catch (IOException ex) {
+                                }
+
+                                ProductModifierController.getInstance().loadProductIntoModifier(tv_Products.getSelectionModel().getSelectedItem());
+                            });
+                            delete.setOnMouseClicked((MouseEvent event) -> {
+                                try {
+                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie das Produkt wirklich endgültig löschen. Vorsicht, dieser Vorgang kann nicht mehr rückgängig gemacht werden.",
+                                            ButtonType.YES, ButtonType.CANCEL);
+                                    alert.showAndWait();
+                                    if (alert.getResult() == ButtonType.YES) {
+                                        new ProductController().destroy(tv_Products.getSelectionModel().getSelectedItem().getId());
+                                        refreshTable();
+                                    }
+                                } catch (Exception exception) {
+                                }
+                            });
+                            setGraphic(box);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        }));
+
         tv_Products.setItems(FXCollections.observableArrayList(new ProductController().findAll()));
 
         tv_Products.setOnMouseClicked(event -> {
@@ -127,7 +198,7 @@ public class ProductListController implements Initializable {
                     root = FXMLLoader.load(getClass().getResource("/fxml/ProductModifier.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = new Stage();
-                    stage.setTitle("Product");
+                    stage.setTitle("Produkt editieren");
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException ex) {
@@ -262,7 +333,7 @@ public class ProductListController implements Initializable {
                         unitController.findUnitByShortTerm(mb_Units.getText()),
                         ProductType.getProductType(mb_ProductTypes.getText()));
             } catch (NumberFormatException e) {
-                new Alert(Alert.AlertType.ERROR,"Der angegeben Preis ist leider nicht gültig.").showAndWait();
+                new Alert(Alert.AlertType.ERROR, "Der angegeben Preis ist leider nicht gültig.").showAndWait();
             }
         } else {
             alert.setContentText(errorMessage);

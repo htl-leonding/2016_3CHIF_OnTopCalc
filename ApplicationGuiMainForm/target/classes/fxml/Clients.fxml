@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -21,12 +21,13 @@
             </Label>
             <TableView fx:id="tv_Clients" layoutX="15.0" layoutY="44.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0">
               <columns>
-                <TableColumn fx:id="tc_Name" minWidth="0.0" prefWidth="100.0" text="Name" />
-                <TableColumn fx:id="tc_Street" minWidth="0.0" prefWidth="100.0" text="Straße" />
-                  <TableColumn fx:id="tc_City" minWidth="0.0" prefWidth="100.0" text="Stadt" />
-                  <TableColumn fx:id="tc_ZipCode" minWidth="0.0" prefWidth="100.0" text="Postleitzahl" />
-                  <TableColumn fx:id="tc_PhoneNumber" minWidth="0.0" prefWidth="100.0" text="Telefonnummer" />
-                  <TableColumn fx:id="tc_Projects" minWidth="0.0" prefWidth="100.0" text="Pojekte" />
+                <TableColumn fx:id="tc_Name" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Name" />
+                <TableColumn fx:id="tc_Street" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Straße" />
+                  <TableColumn fx:id="tc_City" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Stadt" />
+                  <TableColumn fx:id="tc_ZipCode" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Postleitzahl" />
+                  <TableColumn fx:id="tc_PhoneNumber" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Telefonnummer" />
+                  <TableColumn fx:id="tc_Projects" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Pojekte" />
+                  <TableColumn fx:id="tc_Buttons" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-alignment: center;" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

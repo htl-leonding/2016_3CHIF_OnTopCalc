@@ -79,10 +79,7 @@ public class AllProjectsController implements Initializable {
             }
         });
 
-        tc_action.setCellValueFactory(new PropertyValueFactory<>("Buttons"));
-
-        Callback<TableColumn<Project, String>, TableCell<Project, String>> cellFactory
-                = new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {
+        tc_action.setCellFactory(new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {
             @Override
             public TableCell call(final TableColumn<Project, String> param) {
                 final TableCell<Project, String> cell = new TableCell<Project, String>() {
@@ -176,10 +173,7 @@ public class AllProjectsController implements Initializable {
                 };
                 return cell;
             }
-        };
-
-        tc_action.setCellFactory(cellFactory);
-
+        });
     }
 
     public void updateData() {

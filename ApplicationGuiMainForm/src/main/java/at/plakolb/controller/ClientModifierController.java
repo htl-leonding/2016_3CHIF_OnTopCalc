@@ -81,7 +81,7 @@ public class ClientModifierController implements Initializable {
      */
     @FXML
     private void deleteClient(ActionEvent event) throws NonexistentEntityException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Auftraggeber wirklich endgültig löschen. Vorsicht, dieser Vorang kann nicht mehr rückgängig gemacht werden.",
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Auftraggeber wirklich endgültig löschen. Vorsicht, dieser Vorgang kann nicht mehr rückgängig gemacht werden.",
                 ButtonType.YES, ButtonType.CANCEL);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.YES) {
