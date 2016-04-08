@@ -250,7 +250,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     public void persistArea() {
 
         WorthController worthController = new WorthController();
-        if (ProjectViewController.getOpenedProject().getWorths().isEmpty()) {
+        if (!ProjectViewController.isProjectOpened()) {
             length.setProject(ProjectViewController.getOpenedProject());
             width.setProject(ProjectViewController.getOpenedProject());
             baseArea.setProject(ProjectViewController.getOpenedProject());

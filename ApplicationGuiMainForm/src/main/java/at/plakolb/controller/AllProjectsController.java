@@ -152,8 +152,6 @@ public class AllProjectsController implements Initializable {
                                 Project project = getTableView().getItems().get(getIndex());
                                 long projectId = project.getId();
                                 project.setId(null);
-//                                project.setPreCalculation(null);
-//                                project.setModeOfCalculation("Vorkalkulation");
                                 project.setPreCalculation(project.getPreCalculation());
                                 project.setModeOfCalculation(project.getModeOfCalculation());
                                 project.setLastUpdate(new Date());

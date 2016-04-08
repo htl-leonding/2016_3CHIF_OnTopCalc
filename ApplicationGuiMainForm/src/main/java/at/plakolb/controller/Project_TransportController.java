@@ -171,7 +171,7 @@ public class Project_TransportController extends java.util.Observable implements
     public void persistTransportCosts() {
         WorthController worthController = new WorthController();
 
-        if (ProjectViewController.getOpenedProject().getWorths().isEmpty()) {
+        if (!ProjectViewController.isProjectOpened()) {
             kilometerAllowance.setProject(ProjectViewController.getOpenedProject());
             distance.setProject(ProjectViewController.getOpenedProject());
             days.setProject(ProjectViewController.getOpenedProject());

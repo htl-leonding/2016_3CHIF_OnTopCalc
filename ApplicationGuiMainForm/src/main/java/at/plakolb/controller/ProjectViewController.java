@@ -167,6 +167,10 @@ public class ProjectViewController implements Initializable {
                 projectController.create(openedProject);
             }
 
+            if (openedProject.getWorths().isEmpty()) {
+                projectOpened = false;
+            }
+            
             Project_ResultAreaController.getInstance().persistArea();
             Project_ConstructionMaterialListController.getInstance().persistComponents();
             Project_TransportController.getInstance().persistTransportCosts();
@@ -278,6 +282,10 @@ public class ProjectViewController implements Initializable {
      */
     public static Project getOpenedProject() {
         return openedProject;
+    }
+
+    public static boolean isProjectOpened() {
+        return projectOpened;
     }
 
     public TabPane getTb_MainPane() {
