@@ -174,7 +174,8 @@ public class ProjectViewController implements Initializable {
             Project_ResultAreaController.getInstance().persistArea();
             Project_ConstructionMaterialListController.getInstance().persistComponents();
             Project_TransportController.getInstance().persistTransportCosts();
-
+            Assembling_VisibleFormworkController.getInstance().persistVisibleFormwork();
+            
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
             openedProject = null;

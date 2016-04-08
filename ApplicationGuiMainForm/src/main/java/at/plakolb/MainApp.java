@@ -147,7 +147,7 @@ public class MainApp extends Application {
         parameterController.create(new ParameterP("Verschnitt sichtbare Schalung", "VSS", unitController.findUnit(2l), false));
         parameterController.create(new ParameterP("sichtbare Schalung", "SS", unitController.findUnit(2l), false));
         parameterController.create(new ParameterP("sichtbare Schalung Produkt Kosten", "SSPROK", unitController.findUnit(7l), false));
-        parameterController.create(new ParameterP("Kosten Parameter sichtbare Schalung", "KPSS", unitController.findUnit(7l), true, 25.0));
+        parameterController.create(new ParameterP("Kosten Parameter sichtbare Schalung", "KPSS", unitController.findUnit(15l), true, 25.0));
         parameterController.create(new ParameterP("Zeit Parameter sichtbare Schalung", "ZPSS", unitController.findUnit(6l), true, 0.5));
         parameterController.create(new ParameterP("Kosten Montage sichtbare Schalung", "KMSS", unitController.findUnit(7l), false));
         parameterController.create(new ParameterP("Gesamtkosten sichtbare Schalung", "GKSS", unitController.findUnit(7l), false));
