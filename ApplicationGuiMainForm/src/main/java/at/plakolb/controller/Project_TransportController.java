@@ -2,9 +2,9 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
-import at.plakolb.calculationlogic.entity.ParameterP;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Worth;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -25,6 +25,8 @@ import javafx.scene.control.TextField;
 public class Project_TransportController extends java.util.Observable implements Initializable {
 
     private static Project_TransportController instance;
+    private static boolean valuesChanged;
+
     @FXML
     private TextField tf_pkwDays;
     @FXML
@@ -42,135 +44,16 @@ public class Project_TransportController extends java.util.Observable implements
     @FXML
     private Label lb_PriceComplete;
 
-    private double days;
-    private double duration;
-    private double distance;
-    private double price;
-    private double kilometerAllowance;
-
-    /**
-     * Get the value of price
-     *
-     * @return the value of price
-     */
-    private double getPrice() {
-        return price;
-    }
-
-    /**
-     * Set the value of price
-     */
-    public void setPrice() {
-        this.price = tf_lkwPrice.getText().isEmpty() || !tf_lkwPrice.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwPrice.getText().replace(',', '.'));
-    }
-
-    /**
-     * Get the value of kilometerAllowance
-     *
-     * @return the value of kilometerAllowance
-     */
-    private double getKilometerAllowance() {
-        return kilometerAllowance;
-    }
-
-    /**
-     * Set the value of kilometerAllowance
-     */
-    public void setKilometerAllowance() {
-        this.kilometerAllowance = tf_pkwMoney.getText().isEmpty() || !tf_pkwMoney.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwMoney.getText().replace(',', '.'));
-    }
-
-    /**
-     * Get the value of distance
-     *
-     * @return the value of distance
-     */
-    private double getDistance() {
-        return distance;
-    }
-
-    /**
-     * Set the value of distance
-     */
-    public void setDistance() {
-        this.distance = tf_pkwDistance.getText().isEmpty() || !tf_pkwDistance.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDistance.getText().replace(',', '.'));
-    }
-
-    /**
-     * Get the value of duration
-     *
-     * @return the value of duration
-     */
-    private double getDuration() {
-        return duration;
-    }
-
-    /**
-     * Set the value of duration
-     */
-    public void setDuration() {
-        this.duration = tf_lkwDuration.getText().isEmpty() || !tf_lkwDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwDuration.getText().replace(',', '.'));
-    }
-
-    /**
-     * Get the value of days
-     *
-     * @return the value of days
-     */
-    private double getDays() {
-        return days;
-    }
-
-    /**
-     * Set the value of days
-     */
-    public void setDays() {
-        this.days = tf_pkwDays.getText().isEmpty() || !tf_pkwDays.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDays.getText().replace(',', '.'));
-    }
-
-    /**
-     * Get the value of costsAbidance
-     *
-     * @return the value of costsAbidance
-     */
-    public double getCostsAbidance() {
-        return getPrice() * getDuration();
-    }
-
-    /**
-     * Returns the complete transport costs
-     *
-     * @return
-     */
-    public double getCompleteCosts() {
-        return getCostsTransport() + getCostsAbidance();
-    }
-
-    /**
-     * Get the value of costsTransport
-     *
-     * @return the value of costsTransport
-     */
-    public double getCostsTransport() {
-        return getDays() * getKilometerAllowance() * getDistance() * 2;
-    }
-
-    private static boolean valuesChanged;
-
-    public static boolean isValuesChanged() {
-        return valuesChanged;
-    }
-
-    public static void setValuesChanged(boolean valuesChanged) {
-        Project_TransportController.valuesChanged = valuesChanged;
-    }
-
     private DecimalFormat decimalFormat;
+
+    private Worth kilometerAllowance;
+    private Worth distance;
+    private Worth days;
+    private Worth pricePerHour;
+    private Worth duration;
+    private Worth transportCosts;
+    private Worth abidanceCosts;
+    private Worth totalCosts;
 
     /**
      * Initializes the controller class.
@@ -185,191 +68,154 @@ public class Project_TransportController extends java.util.Observable implements
         decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
+        ParameterController parameterController = new ParameterController();
+        kilometerAllowance = new Worth(parameterController.findParameterPByShortTerm("KMG"));
+        distance = new Worth(parameterController.findParameterPByShortTerm("ET"));
+        days = new Worth(parameterController.findParameterPByShortTerm("TA"));
+        pricePerHour = new Worth(parameterController.findParameterPByShortTerm("PLS"));
+        duration = new Worth(parameterController.findParameterPByShortTerm("DT"));
+        transportCosts = new Worth(parameterController.findParameterPByShortTerm("KT"));
+        abidanceCosts = new Worth(parameterController.findParameterPByShortTerm("KA"));
+        totalCosts = new Worth(parameterController.findParameterPByShortTerm("GPT"));
+
         tf_pkwMoney.textProperty().addListener((observable, oldValue, newValue) -> {
             setKilometerAllowance();
-            valueChanged();
+            calcTransportCosts();
         });
         tf_pkwDistance.textProperty().addListener((observable, oldValue, newValue) -> {
             setDistance();
-            valueChanged();
+            calcTransportCosts();
         });
         tf_pkwDays.textProperty().addListener((observable, oldValue, newValue) -> {
             setDays();
-            valueChanged();
+            calcTransportCosts();
         });
         tf_lkwDuration.textProperty().addListener((observable, oldValue, newValue) -> {
             setDuration();
-            valueChanged();
+            calcTransportCosts();
         });
         tf_lkwPrice.textProperty().addListener((observable, oldValue, newValue) -> {
             setPrice();
-            valueChanged();
+            calcTransportCosts();
         });
 
-        loadTransportCosts();
+        if (ProjectViewController.getOpenedProject() != null) {
+            loadTransportCosts();
+        }
+
     }
 
     public static Project_TransportController getInstance() {
         return instance;
     }
 
+    public static boolean isValuesChanged() {
+        return valuesChanged;
+    }
+
+    public static void setValuesChanged(boolean valuesChanged) {
+        Project_TransportController.valuesChanged = valuesChanged;
+    }
+
+    public void setPrice() {
+        pricePerHour.setWorth(tf_lkwPrice.getText().isEmpty() || !tf_lkwPrice.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_lkwPrice.getText().replace(',', '.')));
+    }
+
+    public void setKilometerAllowance() {
+        kilometerAllowance.setWorth(tf_pkwMoney.getText().isEmpty() || !tf_pkwMoney.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_pkwMoney.getText().replace(',', '.')));
+    }
+
+    public void setDistance() {
+        distance.setWorth(tf_pkwDistance.getText().isEmpty() || !tf_pkwDistance.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_pkwDistance.getText().replace(',', '.')));
+    }
+
+    public void setDuration() {
+        duration.setWorth(tf_lkwDuration.getText().isEmpty() || !tf_lkwDuration.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_lkwDuration.getText().replace(',', '.')));
+    }
+
+    public void setDays() {
+        days.setWorth(tf_pkwDays.getText().isEmpty() || !tf_pkwDays.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_pkwDays.getText().replace(',', '.')));
+    }
+
     public void loadTransportCosts() {
         ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
+        Project openedProject = ProjectViewController.getOpenedProject();
 
-        Project op = ProjectViewController.getOpenedProject();
+        kilometerAllowance = (worthController.findWorthByShortTermAndProjectId("KMG", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KMG", openedProject.getId()) : kilometerAllowance;
+        distance = (worthController.findWorthByShortTermAndProjectId("ET", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("ET", openedProject.getId()) : distance;
+        days = (worthController.findWorthByShortTermAndProjectId("TA", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("TA", openedProject.getId()) : days;
+        pricePerHour = (worthController.findWorthByShortTermAndProjectId("PLS", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("PLS", openedProject.getId()) : pricePerHour;
+        duration = (worthController.findWorthByShortTermAndProjectId("DT", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("DT", openedProject.getId()) : duration;
+        transportCosts = (worthController.findWorthByShortTermAndProjectId("KT", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KT", openedProject.getId()) : transportCosts;
+        abidanceCosts = (worthController.findWorthByShortTermAndProjectId("KA", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KA", openedProject.getId()) : abidanceCosts;
+        totalCosts = (worthController.findWorthByShortTermAndProjectId("GPT", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("GPT", openedProject.getId()) : totalCosts;
 
-        System.out.println(op);
-        if (op == null) {
-            return;
-        }
-        ParameterP parameter
-                = parameterController.findParameterPByShortTerm("KMG");
-        Worth worthKilometerAllowance
-                = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
+        tf_pkwMoney.setText(UtilityFormat.getStringForTextField(kilometerAllowance));
+        tf_pkwDistance.setText(UtilityFormat.getStringForTextField(distance));
+        tf_pkwDays.setText(UtilityFormat.getStringForTextField(days));
+        tf_lkwPrice.setText(UtilityFormat.getStringForTextField(pricePerHour));
+        tf_lkwDuration.setText(UtilityFormat.getStringForTextField(duration));
+        lb_PriceTransport.setText(UtilityFormat.getStringForLabel(transportCosts));
+        lb_PriceStay.setText(UtilityFormat.getStringForLabel(abidanceCosts));
+        lb_PriceComplete.setText(UtilityFormat.getStringForLabel(totalCosts));
 
-        parameter = parameterController.findParameterPByShortTerm("ET");
-        Worth distance = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
-
-        parameter = parameterController.findParameterPByShortTerm("TA");
-        Worth days = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
-
-        if (worthKilometerAllowance != null) {
-            tf_pkwMoney.setText(decimalFormat.format(worthKilometerAllowance.getWorth()));
-        }
-        if (distance != null) {
-            tf_pkwDistance.setText(decimalFormat.format(distance.getWorth()));
-        }
-        if (days != null) {
-            tf_pkwDays.setText(decimalFormat.format(days.getWorth()));
-        }
-
-        parameter = parameterController.findParameterPByShortTerm("PLS");
-        Worth pickupPrice = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
-
-        parameter = parameterController.findParameterPByShortTerm("DT");
-        Worth pickupDuration = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
-
-        if (pickupPrice != null) {
-            tf_lkwPrice.setText(decimalFormat.format(pickupPrice.getWorth()));
-        }
-        if (pickupDuration != null) {
-            tf_lkwDuration.setText(decimalFormat.format(pickupDuration.getWorth()));
-        }
-
-        //Transportkosten
-        parameter = parameterController.findParameterPByShortTerm("KT");
-        Worth kt = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
-        //Aufenthaltskosten
-        parameter = parameterController.findParameterPByShortTerm("KA");
-        Worth ka = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), op.getId());
-
-        if (kt != null && ka != null) {
-            lb_PriceTransport.setText(decimalFormat.format(kt.getWorth()) + " €");
-            lb_PriceStay.setText(decimalFormat.format(ka.getWorth()) + " €");
-            lb_PriceComplete.setText(decimalFormat.format(ka.getWorth() + kt.getWorth()) + " €");
-        }
         setValuesChanged(false);
     }
 
-    public void persist() throws Exception {
-        Project project = ProjectViewController.getOpenedProject();
-
-        ParameterController parameterController = new ParameterController();
+    public void persistTransportCosts() {
         WorthController worthController = new WorthController();
 
-        ParameterP parameterKilometerAllowance
-                = parameterController.findParameterPByShortTerm("KMG");
-        Worth worthKilometerAllowance
-                = worthController.findWorthByParameterIdAndProjectId(parameterKilometerAllowance.getId(), project.getId());
-        if (worthKilometerAllowance == null) {
-            worthKilometerAllowance = new Worth(project, parameterKilometerAllowance, getKilometerAllowance());
-            worthController.create(worthKilometerAllowance);
+        if (ProjectViewController.getOpenedProject().getWorths().isEmpty()) {
+            kilometerAllowance.setProject(ProjectViewController.getOpenedProject());
+            distance.setProject(ProjectViewController.getOpenedProject());
+            days.setProject(ProjectViewController.getOpenedProject());
+            pricePerHour.setProject(ProjectViewController.getOpenedProject());
+            duration.setProject(ProjectViewController.getOpenedProject());
+            transportCosts.setProject(ProjectViewController.getOpenedProject());
+            abidanceCosts.setProject(ProjectViewController.getOpenedProject());
+            totalCosts.setProject(ProjectViewController.getOpenedProject());
+
+            worthController.create(kilometerAllowance);
+            worthController.create(distance);
+            worthController.create(days);
+            worthController.create(pricePerHour);
+            worthController.create(duration);
+            worthController.create(transportCosts);
+            worthController.create(abidanceCosts);
+            worthController.create(totalCosts);
         } else {
-            worthKilometerAllowance.setWorth(getKilometerAllowance());
-            worthController.edit(worthKilometerAllowance);
+            try {
+                worthController.edit(kilometerAllowance);
+                worthController.edit(distance);
+                worthController.edit(days);
+                worthController.edit(pricePerHour);
+                worthController.edit(duration);
+                worthController.edit(transportCosts);
+                worthController.edit(abidanceCosts);
+                worthController.edit(totalCosts);
+            } catch (Exception e) {
+            }
         }
 
-        ParameterP parameterDistance = parameterController.findParameterPByShortTerm("ET");
-        Worth worthDistance = worthController.findWorthByParameterIdAndProjectId(parameterDistance.getId(), project.getId());
-        if (worthDistance == null) {
-            worthDistance = new Worth(project, parameterDistance, getDistance());
-            worthController.create(worthDistance);
-        } else {
-            worthDistance.setWorth(getDistance());
-            worthController.edit(worthDistance);
-        }
-
-        ParameterP parameterDays = parameterController.findParameterPByShortTerm("TA");
-        Worth worthDays = worthController.findWorthByParameterIdAndProjectId(parameterDays.getId(), project.getId());
-        if (worthDays == null) {
-            worthDays = new Worth(project, parameterDays, getDays());
-            worthController.create(worthDays);
-        } else {
-            worthDays.setWorth(getDays());
-            worthController.edit(worthDays);
-        }
-
-        ParameterP parameterPricePickup = parameterController.findParameterPByShortTerm("PLS");
-        Worth worthPricePickup = worthController.findWorthByParameterIdAndProjectId(parameterPricePickup.getId(), project.getId());
-        if (worthPricePickup == null) {
-            worthPricePickup = new Worth(project, parameterPricePickup, getPrice());
-            worthController.create(worthPricePickup);
-        } else {
-            worthPricePickup.setWorth(getPrice());
-            worthController.edit(worthPricePickup);
-        }
-
-        ParameterP parameterDuration = parameterController.findParameterPByShortTerm("DT");
-        Worth worthDuration = worthController.findWorthByParameterIdAndProjectId(parameterDuration.getId(), project.getId());
-        if (worthDuration == null) {
-            worthDuration = new Worth(project, parameterDuration, getDuration());
-            worthController.create(worthDuration);
-        } else {
-            worthDuration.setWorth(getDuration());
-            worthController.edit(worthDuration);
-        }
-
-        //Transportkosten
-        ParameterP parameter = parameterController.findParameterPByShortTerm("KT");
-        Worth worthCosts = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), project.getId());
-        if (worthCosts == null) {
-            worthCosts = new Worth(project, parameter, getCostsTransport());
-            worthController.create(worthCosts);
-        } else {
-            worthCosts.setWorth(getCostsTransport());
-            worthController.edit(worthCosts);
-        }
-        //Aufenthaltskosten
-        parameter = parameterController.findParameterPByShortTerm("KA");
-        worthCosts = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), project.getId());
-        if (worthCosts == null) {
-            worthCosts = new Worth(project, parameter, getCostsAbidance());
-            worthController.create(worthCosts);
-        } else {
-            worthCosts.setWorth(getCostsAbidance());
-            worthController.edit(worthCosts);
-        }
-        //Gesamtkosten
-        parameter = parameterController.findParameterPByShortTerm("GPT");
-        worthCosts = worthController.findWorthByParameterIdAndProjectId(parameter.getId(), project.getId());
-        if (worthCosts == null) {
-            worthCosts = new Worth(project, parameter, getCompleteCosts());
-            worthController.create(worthCosts);
-        } else {
-            worthCosts.setWorth(getCompleteCosts());
-            worthController.edit(worthCosts);
-        }
         setValuesChanged(false);
     }
 
-    private void valueChanged() {
+    private void calcTransportCosts() {
+
+        transportCosts.setWorth(days.getWorth() * kilometerAllowance.getWorth() * distance.getWorth() * 2);
+        abidanceCosts.setWorth(pricePerHour.getWorth() * duration.getWorth());
+        totalCosts.setWorth(transportCosts.getWorth() + abidanceCosts.getWorth());
+
         try {
-            lb_PriceTransport.setText(decimalFormat.format(getCostsTransport()) + " €");
-
-            lb_PriceStay.setText(decimalFormat.format(getCostsAbidance()) + " €");
-
-            lb_PriceComplete.setText(decimalFormat.format(getCompleteCosts()) + " €");
+            lb_PriceTransport.setText(decimalFormat.format(transportCosts.getWorth()) + " €");
+            lb_PriceStay.setText(decimalFormat.format(abidanceCosts.getWorth()) + " €");
+            lb_PriceComplete.setText(decimalFormat.format(totalCosts.getWorth()) + " €");
             setValuesChanged(true);
         } catch (Exception ex) {
             new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();

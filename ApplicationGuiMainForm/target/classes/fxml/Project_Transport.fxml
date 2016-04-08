@@ -155,17 +155,17 @@
                   </VBox>
                   <VBox>
                      <children>
-                        <Label id="normalLettering" fx:id="lb_PriceTransport" minHeight="27.0" text="0.00€">
+                        <Label id="normalLettering" fx:id="lb_PriceTransport" minHeight="27.0" text="0 €">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label id="normalLettering" fx:id="lb_PriceStay" minHeight="27.0" text="0.00€">
+                        <Label id="normalLettering" fx:id="lb_PriceStay" minHeight="27.0" text="0 €">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label id="boldLettering" fx:id="lb_PriceComplete" minHeight="27.0" text="0.00€">
+                        <Label id="boldLettering" fx:id="lb_PriceComplete" minHeight="27.0" text="0 €">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

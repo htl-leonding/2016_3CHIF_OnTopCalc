@@ -8,8 +8,6 @@ import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -43,7 +41,7 @@ public class ProjectViewController implements Initializable {
     @FXML
     private Button bt_Save;
     private TabPane tb_Assebmling;
-    
+
     /**
      * Initializes the controller class.
      *
@@ -53,15 +51,16 @@ public class ProjectViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        
+
         tb_MainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
             String t = event.getTarget().toString().toLowerCase();
-            if(t.contains("tabpaneskin")
-                    || t.contains("text"))
+            if (t.contains("tabpaneskin")
+                    || t.contains("text")) {
                 return;
+            }
             Tab actTab = tb_MainPane.getSelectionModel().getSelectedItem();
             if (!actTab.getText().contains("*")) {
-                actTab.setText(actTab.getText()+" *");
+                actTab.setText(actTab.getText() + " *");
             }
         });
         if (projectOpened) {
@@ -170,12 +169,7 @@ public class ProjectViewController implements Initializable {
 
             Project_ResultAreaController.getInstance().persistArea();
             Project_ConstructionMaterialListController.getInstance().persistComponents();
-            try {
-                Project_TransportController.getInstance().persist();
-            } catch (Exception ex) {
-                Logger.getLogger(ProjectViewController.class.getName()).log(Level.SEVERE, null, ex);
-                new Alert(Alert.AlertType.ERROR,ex.getLocalizedMessage(),ButtonType.OK).showAndWait();
-            }
+            Project_TransportController.getInstance().persistTransportCosts();
 
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
@@ -289,5 +283,4 @@ public class ProjectViewController implements Initializable {
     public TabPane getTb_MainPane() {
         return tb_MainPane;
     }
-
 }

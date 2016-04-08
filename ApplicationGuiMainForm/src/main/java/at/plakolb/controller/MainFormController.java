@@ -44,7 +44,7 @@ public class MainFormController implements Initializable {
         for (int i = 0; i < Math.min(5, projects.size()); i++) {
             MenuItem menuItem = new MenuItem(projects.get(i).getProjectName());
             menuItem.setOnAction(eventHandler -> {
-                ProjectViewController.getInstance().openProject(projectController.findLastFiveProjects().get(items.indexOf(menuItem)));
+                ProjectViewController.openProject(projectController.findLastFiveProjects().get(items.indexOf(menuItem)));
                 loadFxmlIntoPane("ProjectView.fxml");
             });
             items.add(menuItem);

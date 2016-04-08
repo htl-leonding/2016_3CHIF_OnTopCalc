@@ -4,6 +4,7 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Worth;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -229,17 +230,17 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         ledge = (worthController.findWorthByShortTermAndProjectId("DV", projectId) != null) ? worthController.findWorthByShortTermAndProjectId("DV", projectId) : ledge;
         ledgeAndRoofArea = (worthController.findWorthByShortTermAndProjectId("DF", projectId) != null) ? worthController.findWorthByShortTermAndProjectId("DF", projectId) : ledgeAndRoofArea;
 
-        tf_Length.setText(getStringForTextField(length));
-        tf_Width.setText(getStringForTextField(width));
-        lb_BaseArea.setText(getStringForLabel(baseArea) + " m²");
-        tf_Angle.setText(getStringForTextField(angle));
-        lb_RoofArea.setText(getStringForLabel(roofArea) + " m²");
-        tf_Eaves.setText(getStringForTextField(eaves));
-        tf_Ridge.setText(getStringForTextField(ridge));
-        tf_GableRight.setText(getStringForTextField(gableRight));
-        tf_GableLeft.setText(getStringForTextField(gableLeft));
-        lb_Ledge.setText(getStringForLabel(ledge) + " m²");
-        lb_LedgeAndRoofArea.setText(getStringForLabel(ledgeAndRoofArea) + " m²");
+        tf_Length.setText(UtilityFormat.getStringForTextField(length));
+        tf_Width.setText(UtilityFormat.getStringForTextField(width));
+        lb_BaseArea.setText(UtilityFormat.getStringForLabel(baseArea));
+        tf_Angle.setText(UtilityFormat.getStringForTextField(angle));
+        lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea));
+        tf_Eaves.setText(UtilityFormat.getStringForTextField(eaves));
+        tf_Ridge.setText(UtilityFormat.getStringForTextField(ridge));
+        tf_GableRight.setText(UtilityFormat.getStringForTextField(gableRight));
+        tf_GableLeft.setText(UtilityFormat.getStringForTextField(gableLeft));
+        lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge));
+        lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea));
         Project_ResultAreaController.getInstance().calcArea();
     }
 
@@ -288,39 +289,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 worthController.edit(ledgeAndRoofArea);
             } catch (Exception e) {
             }
-        }
-    }
-
-    /**
-     * Parses the double of a worth obejct.
-     *
-     * @param worth
-     * @return
-     */
-    private String getStringForTextField(Worth worth) {
-
-        if (worth == null) {
-            return "";
-        } else if (worth.getWorth() == 0) {
-            return "";
-        } else {
-            DecimalFormat decimalFormatFour = new DecimalFormat("#.#######");
-            decimalFormatFour.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-            return String.valueOf(decimalFormatFour.format(worth.getWorth()));
-        }
-    }
-
-    /**
-     * Parses the double of a worth obejct.
-     *
-     * @param worth
-     * @return
-     */
-    private String getStringForLabel(Worth worth) {
-        if (worth == null) {
-            return "0.00";
-        } else {
-            return String.valueOf(decimalFormat.format(worth.getWorth()));
         }
     }
 
