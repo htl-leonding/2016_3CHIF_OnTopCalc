@@ -13,11 +13,14 @@ import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import java.util.Date;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -31,7 +34,7 @@ public class MainApp extends Application {
 
         //TEST DATA
         insertTestData();
-
+        
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
 
         Scene scene = new Scene(root);
@@ -45,6 +48,8 @@ public class MainApp extends Application {
         scene.getStylesheets().add("/styles/main.css");
 
         stage.setTitle("OnTopCalc");
+        stage.setIconified(true);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
         stage.setScene(scene);
         stage.show();
     }

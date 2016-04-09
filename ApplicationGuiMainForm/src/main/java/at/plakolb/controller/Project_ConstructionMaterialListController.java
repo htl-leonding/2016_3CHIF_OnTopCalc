@@ -180,10 +180,10 @@ public class Project_ConstructionMaterialListController implements Initializable
                             setGraphic(null);
                         } else {
                             deletionLabel.setId("delete");
-                            deletionLabel.setTooltip(new Tooltip("Material löschen"));
+                            deletionLabel.setTooltip(new Tooltip("Material lÃ¶schen"));
 
                             deletionLabel.setOnMouseClicked(event -> {
-                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten? Vorsicht, der Löschvorgang kann nicht mehr rückgängig gemacht werden.",
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgÃ¼ltig lÃ¶schen mÃ¶chten? Vorsicht, der LÃ¶schvorgang kann nicht mehr rÃ¼ckgÃ¤ngig gemacht werden.",
                                         ButtonType.YES, ButtonType.CANCEL);
                                 alert.showAndWait();
                                 if (alert.getResult() == ButtonType.YES) {
@@ -247,7 +247,7 @@ public class Project_ConstructionMaterialListController implements Initializable
 
         try {
             if (tf_Amount.getText().isEmpty() || tf_Amount.getText().equals("0") || tf_Amount.getText().contains("-")) {
-                new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine Anzahl an die größer als null ist.").showAndWait();
+                new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine Anzahl an die grÃ¶ÃŸer als null ist.").showAndWait();
             } else {
                 Component component = new Component("",
                         product.getWidthProduct(),
@@ -288,11 +288,11 @@ public class Project_ConstructionMaterialListController implements Initializable
     private void calculateCosts() {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-        lb_CubicSum.setText(decimalFormat.format(getColmunSum(tc_Volume)) + " m³");
-        lb_MaterialCostSum.setText(decimalFormat.format(getColmunSum(tc_Price)) + " €");
+        lb_CubicSum.setText(decimalFormat.format(getColmunSum(tc_Volume)) + " mÂ³");
+        lb_MaterialCostSum.setText(decimalFormat.format(getColmunSum(tc_Price)) + " â‚¬");
         lb_CuttingTimeSum.setText(decimalFormat.format(getColmunSum(tc_CuttingHours)) + " h");
-        lb_CuttingCostSum.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice)) + " €");
-        lb_TotalCosts.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)) + " €");
+        lb_CuttingCostSum.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice)) + " â‚¬");
+        lb_TotalCosts.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)) + " â‚¬");
     }
 
     /**
