@@ -19,6 +19,7 @@ public class AssemblingController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -30,12 +31,18 @@ public class AssemblingController implements Initializable {
     public static AssemblingController getInstance() {
         return instance;
     }
-    
+
     /**
      * Returns the TabPane for the ProjectViewController
-     * @return 
+     *
+     * @return
      */
     public TabPane getTb_AssemblingPane() {
         return tb_AssemblingPane;
+    }
+
+    public void persist() {
+        Assembling_FormworkController.getInstance().persist();
+        Assembling_VisibleFormworkController.getInstance().persistVisibleFormwork();
     }
 }

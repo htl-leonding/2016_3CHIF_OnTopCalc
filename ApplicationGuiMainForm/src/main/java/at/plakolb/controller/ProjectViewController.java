@@ -6,6 +6,7 @@ import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.entity.Worth;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -145,7 +146,6 @@ public class ProjectViewController implements Initializable {
             }
 
             ProjectController projectController = new ProjectController();
-
             if (projectOpened) {
                 try {
                     openedProject.setClient(client);
@@ -174,7 +174,7 @@ public class ProjectViewController implements Initializable {
             Project_ResultAreaController.getInstance().persistArea();
             Project_ConstructionMaterialListController.getInstance().persistComponents();
             Project_TransportController.getInstance().persistTransportCosts();
-            Assembling_VisibleFormworkController.getInstance().persistVisibleFormwork();
+            AssemblingController.getInstance().persist();
             
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;

@@ -123,7 +123,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         tf_GableLeft.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             calcArea(tf_GableLeft, gableLeft);
         });
-
     }
 
     public double getBaseAreaValue() {
