@@ -209,6 +209,7 @@ public class ProjectViewController implements Initializable {
     public static void openProject(Project project) {
         projectOpened = true;
         openedProject = project;
+        System.out.println("----------------------------------------------------------------------------------");
     }
 
     /**

@@ -1,12 +1,19 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.calculationlogic.db.controller.ParameterController;
+import at.plakolb.calculationlogic.db.controller.WorthController;
+import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.entity.Worth;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -14,8 +21,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -31,10 +42,18 @@ public class Project_ResultAreaController extends Observable implements Initiali
     private ObservableList<Tab> tabs;
     private List<Project_BaseAndRoofAreaController> areaController;
 
-    private double baseArea;
-    private double roofArea;
-    private double ledge;
-    private double ledgeAndRoofArea;
+    Worth worthArea;
+    Worth worthRoofArea;
+    Worth worthRoofOverhang;
+    Worth worthRoofAreaWhitRoofOverhang;
+
+    private int next_ID;
+
+    private int getNextID() {
+        next_ID++;
+
+        return next_ID - 1;
+    }
 
     /**
      * Initializes the controller class.
@@ -46,14 +65,36 @@ public class Project_ResultAreaController extends Observable implements Initiali
     public void initialize(URL url, ResourceBundle rb) {
         areaController = new LinkedList<>();
         tabs = tb_Roofarea.getTabs();
-        addTab(null);
-        tabs.get(1).setClosable(false);
         instance = this;
-        
-        if (ProjectViewController.getOpenedProject() != null 
-                && ProjectViewController.getOpenedProject().getId() != null) {
-            areaController.get(0).loadValuesFromDataBase();
+        ParameterController parameterController = new ParameterController();
+
+        worthArea = new Worth(parameterController.findParameterPByShortTerm("A"));
+        worthRoofArea = new Worth(parameterController.findParameterPByShortTerm("D"));
+        worthRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DV"));
+        worthRoofAreaWhitRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DF"));
+
+        tabs.get(0).setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/addTab.png"))));
+
+        if (ProjectViewController.isProjectOpened()) {
+            WorthController worthController = new WorthController();
+            int max_index = worthController.BaseAndRoofAreaCountTabs(ProjectViewController.getOpenedProject().getId());
+            if (max_index > 0) {
+                System.out.println(max_index + " werden wiederhergestellt!");
+                for (int i = 0; i < max_index; i++) {
+                    addTab(null);
+                }
+                for (Project_BaseAndRoofAreaController ctrl : areaController) {
+                    ctrl.loadValuesFromDataBase();
+                }
+                calcArea();
+                System.out.println("Loaded Tabs");
+            } else {
+                addTab(null);
+            }
+        } else {
+            addTab(null);
         }
+
     }
 
     public static Project_ResultAreaController getInstance() {
@@ -61,19 +102,19 @@ public class Project_ResultAreaController extends Observable implements Initiali
     }
 
     public double getBaseArea() {
-        return baseArea;
+        return worthArea.getWorth();
     }
 
     public double getRoofArea() {
-        return roofArea;
+        return worthRoofArea.getWorth();
     }
 
     public double getLedge() {
-        return ledge;
+        return worthRoofOverhang.getWorth();
     }
 
     public double getLedgeAndRoofArea() {
-        return ledgeAndRoofArea;
+        return worthRoofAreaWhitRoofOverhang.getWorth();
     }
 
     /**
@@ -81,10 +122,10 @@ public class Project_ResultAreaController extends Observable implements Initiali
      */
     public void calcArea() {
 
-        baseArea = 0;
-        roofArea = 0;
-        ledge = 0;
-        ledgeAndRoofArea = 0;
+        double baseArea = 0;
+        double roofArea = 0;
+        double ledge = 0;
+        double ledgeAndRoofArea = 0;
 
         for (Project_BaseAndRoofAreaController controller : areaController) {
             baseArea += controller.getBaseAreaValue();
@@ -92,6 +133,12 @@ public class Project_ResultAreaController extends Observable implements Initiali
             ledge += controller.getLedgeValue();
             ledgeAndRoofArea += controller.getLedgeAndRoofAreaValue();
         }
+
+        worthArea.setWorth(baseArea);
+        worthRoofArea.setWorth(roofArea);
+        worthRoofOverhang.setWorth(ledge);
+        worthRoofAreaWhitRoofOverhang.setWorth(ledgeAndRoofArea);
+
         setChanged();
         notifyObservers();
     }
@@ -103,37 +150,134 @@ public class Project_ResultAreaController extends Observable implements Initiali
      */
     @FXML
     private void addTab(Event event) {
-        if (tb_Roofarea.getSelectionModel().isSelected(0)) {
-            try {
-                URL location = getClass().getResource("/fxml/Project_BaseAndRoofArea.fxml");
+        try {
+            URL location = getClass().getResource("/fxml/Project_BaseAndRoofArea.fxml");
 
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(location);
-                fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
-                Parent fxmlNode = (Parent) fxmlLoader.load(location.openStream());
-                Project_BaseAndRoofAreaController controller = (Project_BaseAndRoofAreaController) fxmlLoader.getController();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(location);
+            fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+            Parent fxmlNode = (Parent) fxmlLoader.load(location.openStream());
+            Project_BaseAndRoofAreaController controller = (Project_BaseAndRoofAreaController) fxmlLoader.getController();
+            controller.setID(getNextID());
 
-                addObserver(controller);
-                fxmlNode.setUserData(controller);
-                areaController.add(controller);
-                tabs.add(new Tab("Grund- und Dachfläche", fxmlNode));
-                tb_Roofarea.getSelectionModel().selectLast();
+            System.out.println("BaseAndRoofArea - Tab " + controller.getID() + " wurde erstellt!");
 
-                setChanged();
-                notifyObservers();
+            addObserver(controller);
+            fxmlNode.setUserData(controller);
+            areaController.add(controller);
+            Tab newTab = new Tab("Grund- und Dachfläche", fxmlNode);
 
-            } catch (IOException exception) {
-                System.out.println("Exception Message: " + exception.getMessage());
-            } catch (Exception exception) {
-                System.out.println("Exception Message: " + exception.getMessage());
+            newTab.setOnCloseRequest(value -> {
+
+                Tab actTab = (Tab) value.getSource();
+                Object o = actTab.getContent().getUserData();
+                if (o != null) {
+                    Project_BaseAndRoofAreaController ctrl = (Project_BaseAndRoofAreaController) o;
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Grund- und Dachflächenberechnung");
+                    alert.setHeaderText("Wollen Sie diesen Reiter wirklich löschen?");
+                    alert.getButtonTypes().clear();
+                    alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.YES) {
+                        Project project = ProjectViewController.getOpenedProject();
+                        if (project != null) {
+                                //new WorthJpaController().deletePreCutIndexFromProject(project.getId(), index);
+                            //EditProject.deletePreCut(project);
+                            //updateSummary();
+                            areaController.remove(o);
+                            calcArea();
+                            System.out.println("----------------------------------------------------------------------\nDach und Grundflächenberechnung: Tab ID:" + ctrl.getID() + " wurde gelöscht!\n----------------------------------------------------------------------");
+                        }
+                        //set closable for tabs
+                        if (tabs.size() > 3) {
+                            for (Tab tab : tabs) {
+                                tab.setClosable(true);
+                            }
+                            tabs.get(0).setClosable(false);
+                        } else {
+                            for (Tab tab : tabs) {
+                                tab.setClosable(false);
+                            }
+                        }
+                    } else {
+                        value.consume();
+                    }
+                }
+            });
+            tabs.add(newTab);
+            tb_Roofarea.getSelectionModel().selectLast();
+
+            //set closable for tabs
+            if (tabs.size() >= 2) {
+                for (Tab tab : tabs) {
+                    tab.setClosable(true);
+                }
+                tabs.get(0).setClosable(false);
+            } else if (tabs.size() == 1) {
+                tabs.get(0).setClosable(false);
             }
+
+            setChanged();
+            notifyObservers();
+
+        } catch (IOException exception) {
+            System.out.println("Exception Message: " + exception.getMessage());
+        } catch (Exception exception) {
+            System.out.println("Exception Message: " + exception.getMessage());
         }
+
     }
-    
+
     /**
      * Persists the calculated Values to the database.
      */
-    public void persistArea(){
-        areaController.get(0).persistArea();
+    public void persistArea() {
+        Project project = ProjectViewController.getOpenedProject();
+        if (project != null) {
+            WorthController worthController = new WorthController();
+
+            if (!ProjectViewController.isProjectOpened()) {
+                worthArea.setProject(project);
+                worthRoofArea.setProject(project);
+                worthRoofOverhang.setProject(project);
+                worthRoofAreaWhitRoofOverhang.setProject(project);
+
+                worthController.create(worthArea);
+                worthController.create(worthRoofArea);
+                worthController.create(worthRoofOverhang);
+                worthController.create(worthRoofAreaWhitRoofOverhang);
+            } else {
+                try {
+                    worthController.edit(worthArea);
+                    worthController.edit(worthRoofArea);
+                    worthController.edit(worthRoofOverhang);
+                    worthController.edit(worthRoofAreaWhitRoofOverhang);
+                } catch (Exception ex) {
+                    Logger.getLogger(Project_ResultAreaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        for (Project_BaseAndRoofAreaController c : areaController) {
+            c.persistArea();
+        }
+    }
+
+    /**
+     * Index des Tabs in der Liste
+     *
+     * @param id ID des Tabs
+     * @return Aktueller Index in der Liste
+     */
+    public int getIndex(int id) {
+        for (int i = 0; i < areaController.size(); i++) {
+            if (areaController.get(i).getID() == id) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

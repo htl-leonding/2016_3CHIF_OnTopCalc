@@ -164,12 +164,12 @@ public class WorthController {
         return w;
     }
 
-    public int countWorthCountLengthByProject(long projectId) {
+    public int BaseAndRoofAreaCountTabs(long projectId) {
         try {
-            Object object = em.createNativeQuery("select count(*) from Worth w where w.shortterm like 'l%' and w.project_id = ?").
+            Object object = em.createNativeQuery("select count(*) from Worth w where w.shortterm LIKE 'l%' and w.project_id = ?").
                     setParameter(1, projectId).
                     getSingleResult();
-            return ((BigDecimal) object).intValue();
+            return Integer.valueOf(object.toString());
         } catch (Exception ex) {
             //logger.debug(ex.getMessage());    TODO
             return 0;

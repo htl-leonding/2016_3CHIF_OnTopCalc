@@ -104,9 +104,8 @@ public class Project_ConstructionMaterialListController implements Initializable
         decimalFormatTwo.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
         DecimalFormat decimalFormatFour = new DecimalFormat("#.####");
         decimalFormatFour.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
-            components = new ComponentController().findComponentsByProjectId(ProjectViewController.getOpenedProject().getId());
+            components = new ComponentController().findComponentsByProjectIdAndComponentType(ProjectViewController.getOpenedProject().getId(),"Kubikmeter");
         }
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
