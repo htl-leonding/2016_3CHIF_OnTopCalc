@@ -77,7 +77,7 @@
                    <fx:include source="Project_ConstructionmaterialList.fxml" />
                 </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Montage">
+            <Tab fx:id="tab_Montage" closable="false" onSelectionChanged="#normalTabSelected" text="Montage">
               <content>
                    <fx:include source="Assembling.fxml" />
                </content>

@@ -75,7 +75,7 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <Label id="normalLettering" fx:id="lb_BaseArea" minHeight="27.0" text="0.00 m²">
+                                          <Label id="normalLettering" fx:id="lb_BaseArea" minHeight="27.0" text="0 m²">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -113,7 +113,7 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <Label id="normalLettering" fx:id="lb_RoofArea" minHeight="27.0" text="0.00 m²">
+                                          <Label id="normalLettering" fx:id="lb_RoofArea" minHeight="27.0" text="0 m²">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -166,10 +166,10 @@
                                     </VBox>
                                     <VBox spacing="2.0">
                                        <children>
-                                          <TextField fx:id="tf_Eaves" minHeight="25.0" prefHeight="25.0" prefWidth="114.0" promptText="Traufe in m" />
-                                          <TextField fx:id="tf_Ridge" minHeight="25.0" prefHeight="25.0" prefWidth="114.0" promptText="Frist/Traufe in m" />
-                                          <TextField fx:id="tf_GableRight" minHeight="25.0" prefHeight="25.0" prefWidth="114.0" promptText="r. Ortgang in m" />
-                                          <TextField fx:id="tf_GableLeft" minHeight="25.0" prefHeight="25.0" prefWidth="114.0" promptText="l. Ortgang in m" />
+                                          <TextField fx:id="tf_Eaves" minHeight="25.0" prefHeight="25.0" prefWidth="140.0" promptText="Traufe in m" />
+                                          <TextField fx:id="tf_Ridge" minHeight="25.0" prefHeight="25.0" prefWidth="140.0" promptText="Frist/Traufe in m" />
+                                          <TextField fx:id="tf_GableRight" minHeight="25.0" prefHeight="25.0" prefWidth="140.0" promptText="r. Ortgang in m" />
+                                          <TextField fx:id="tf_GableLeft" minHeight="25.0" prefHeight="25.0" prefWidth="140.0" promptText="l. Ortgang in m" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -218,12 +218,12 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Label id="normalLettering" fx:id="lb_Ledge" minHeight="27.0" text="0.00 m²">
+                                    <Label id="normalLettering" fx:id="lb_Ledge" minHeight="27.0" text="0 m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" fx:id="lb_LedgeAndRoofArea" minHeight="27.0" text="0.00 m²">
+                                    <Label id="normalLettering" fx:id="lb_LedgeAndRoofArea" minHeight="27.0" text="0 m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -271,12 +271,12 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <Label id="normalLettering" fx:id="lb_TotalBaseArea" minHeight="27.0" text="0.00 m²">
+                                          <Label id="normalLettering" fx:id="lb_TotalBaseArea" minHeight="27.0" text="0 m²">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
-                                          <Label id="normalLettering" fx:id="lb_TotalRoofArea" minHeight="27.0" text="0.00 m²">
+                                          <Label id="normalLettering" fx:id="lb_TotalRoofArea" minHeight="27.0" text="0 m²">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -309,12 +309,12 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Label id="normalLettering" fx:id="lb_TotalLegde" minHeight="27.0" text="0.00 m²">
+                                    <Label id="normalLettering" fx:id="lb_TotalLegde" minHeight="27.0" text="0 m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" fx:id="lb_TotalLedgeAndRoofArea" minHeight="27.0" text="0.00 m²">
+                                    <Label id="normalLettering" fx:id="lb_TotalLedgeAndRoofArea" minHeight="27.0" text="0 m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

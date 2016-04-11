@@ -15,6 +15,8 @@ import at.plakolb.calculationlogic.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +35,7 @@ import javafx.scene.control.TextField;
  *
  * @author Kepplinger
  */
-public class Assembling_FormworkController implements Initializable {
+public class Assembling_FormworkController implements Initializable, Observer {
 
     @FXML
     private ChoiceBox<Product> cb_Formwork;
@@ -61,6 +63,7 @@ public class Assembling_FormworkController implements Initializable {
     private static Assembling_FormworkController instance;
 
     private double price;
+    private double roofArea;
 
     private Worth blend;
     private Worth time;
@@ -105,6 +108,7 @@ public class Assembling_FormworkController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+
         ParameterController parameterController = new ParameterController();
         waste = new Worth(parameterController.findParameterPByShortTerm("VS"));
         formwork = new Worth(parameterController.findParameterPByShortTerm("S"));
@@ -116,7 +120,7 @@ public class Assembling_FormworkController implements Initializable {
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKS"));
 
         cb_Formwork.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
-            tf_Price.setText(String.valueOf(newValue.getPriceUnit()));
+            tf_Price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
         });
         tf_Price.textProperty().addListener((observable, oldValue, newValue) -> {
             setPrice(newValue);
@@ -138,7 +142,6 @@ public class Assembling_FormworkController implements Initializable {
     }
 
     public void refresh() {
-        System.out.println("Refresh");
         ProductController productController = new ProductController();
 
         ObservableList<Product> list = FXCollections.observableArrayList(productController.findByProductTypeOrderByName(ProductType.FORMWORK));
@@ -158,7 +161,7 @@ public class Assembling_FormworkController implements Initializable {
 
             if (component != null) {
                 cb_Formwork.getSelectionModel().select(component.getProduct());
-                tf_Price.setText(UtilityFormat.worthWithTwoDecimalPlaces(component.getPriceComponent()));
+                tf_Price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
             }
 
             waste = (worthController.findWorthByShortTermAndProjectId("VS", project.getId()) != null)
@@ -182,23 +185,19 @@ public class Assembling_FormworkController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Werte für die Schalung!").showAndWait();
             } else {
                 lb_RoofArea.setText(UtilityFormat.worthWithTwoDecimalPlaces(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
-                lb_Waste.setText(waste.worthFormatWithUnit());
-                lb_Formwork.setText(formwork.worthFormatWithUnit());
-                lb_ProductCosts.setText(productCosts.worthFormatWithUnit());
-                lb_AssebmlyCosts.setText(costsMontage.worthFormatWithUnit());
-                lb_TotalCosts.setText(totalCosts.worthFormatWithUnit());
-                tf_Blend.setText(UtilityFormat.worthWithTwoDecimalPlaces(blend.getWorth()));
-                tf_Wage.setText(UtilityFormat.worthWithTwoDecimalPlaces(wage.getWorth()));
-                tf_Time.setText(UtilityFormat.worthWithTwoDecimalPlaces(time.getWorth()));
+                lb_Waste.setText(UtilityFormat.getStringForLabel(waste));
+                lb_Formwork.setText(UtilityFormat.getStringForLabel(formwork));
+                lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+                lb_AssebmlyCosts.setText(UtilityFormat.getStringForLabel(costsMontage));
+                lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+                tf_Blend.setText(UtilityFormat.getStringForTextField(blend));
+                tf_Wage.setText(UtilityFormat.getStringForTextField(wage));
+                tf_Time.setText(UtilityFormat.getStringForTextField(time));
             }
         }
     }
 
     public void calculate() {
-        System.out.println("Calculate Formwork");
-
-        double roofArea = Project_ResultAreaController.getInstance().getRoofArea();
-        lb_RoofArea.setText(UtilityFormat.worthWithTwoDecimalPlaces(roofArea) + " m²");
 
         try {
             //Verschnittberechnung
@@ -211,7 +210,7 @@ public class Assembling_FormworkController implements Initializable {
             //w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''VSP'')
             //from sysibm.sysdummy1
             waste.setWorth(blend.getWorth() / 100 * roofArea);
-            lb_Waste.setText(UtilityFormat.worthWithUnit(waste));
+            lb_Waste.setText(UtilityFormat.getStringForLabel(waste));
 
             //Schalung-Berechnung
             //-------------------------------------------
@@ -222,7 +221,7 @@ public class Assembling_FormworkController implements Initializable {
             //join ParameterP p on w.parameter_id = p.id where w.project_id = ? 
             //and p.shortterm = ''VS'') from sysibm.sysdummy1
             formwork.setWorth(roofArea + waste.getWorth());
-            lb_Formwork.setText(UtilityFormat.worthWithUnit(formwork));
+            lb_Formwork.setText(UtilityFormat.getStringForLabel(formwork));
 
             //Produktkosten
             //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +230,7 @@ public class Assembling_FormworkController implements Initializable {
             //(select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id 
             //where w.project_id = ? and p.shortterm = ''S'') from sysibm.sysdummy1
             productCosts.setWorth(price * formwork.getWorth());
-            lb_ProductCosts.setText(UtilityFormat.worthWithUnit(productCosts));
+            lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
 
             //Montagekosten
             //´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´
@@ -241,12 +240,12 @@ public class Assembling_FormworkController implements Initializable {
             //on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''ZPS'')
             //from sysibm.sysdummy1
             costsMontage.setWorth(wage.getWorth() * time.getWorth());
-            lb_AssebmlyCosts.setText(costsMontage.worthFormatWithUnit());
+            lb_AssebmlyCosts.setText(UtilityFormat.getStringForLabel(costsMontage));
 
             //Gesamtkosten
             //°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
             totalCosts.setWorth(costsMontage.getWorth() + productCosts.getWorth());
-            lb_TotalCosts.setText(totalCosts.worthFormatWithUnit());
+            lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
@@ -274,13 +273,21 @@ public class Assembling_FormworkController implements Initializable {
             if (component == null) {
                 component = new Component();
             }
-            component.setDescription(product.getName());
+            if (product != null) {
+                component.setDescription(product.getName());
+                component.setLengthComponent(product.getLengthProduct());
+                component.setWidthComponent(product.getWidthProduct());
+                component.setHeightComponent(product.getHeightProduct());
+                component.setProduct(product);
+            } else {
+                component.setDescription("");
+                component.setLengthComponent(null);
+                component.setWidthComponent(null);
+                component.setHeightComponent(null);
+                component.setProduct(null);
+            }
             component.setCategory(category);
             component.setComponentType("Produkt");
-            component.setLengthComponent(product.getLengthProduct());
-            component.setWidthComponent(product.getWidthProduct());
-            component.setHeightComponent(product.getHeightProduct());
-            component.setProduct(product);
             component.setProject(project);
             component.setNumberOfProducts((int) formwork.getWorth());
             component.setUnit(unit);
@@ -326,5 +333,12 @@ public class Assembling_FormworkController implements Initializable {
 
     public static Assembling_FormworkController getInstance() {
         return instance;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        roofArea = Project_ResultAreaController.getInstance().getRoofArea();
+        lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea) + " m²");
+        calculate();
     }
 }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package at.plakolb.calculationlogic.util;
 
 import at.plakolb.calculationlogic.entity.Worth;
@@ -55,37 +51,62 @@ public class UtilityFormat {
     }
 
     /**
-     * Parses the double of a worth obejct.
+     * Parses a double into a formatted String.
+     *
+     * @param number
+     * @return
+     */
+    public static String getStringForTextField(Double number) {
+        if (number == null) {
+            return "";
+        } else if (number == 0) {
+            return "";
+        } else {
+            DecimalFormat decimalFormat = new DecimalFormat("#.#######");
+            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+            return String.valueOf(decimalFormat.format(number));
+        }
+    }
+
+    /**
+     * Parses a worth into a formatted String.
      *
      * @param worth
      * @return
      */
     public static String getStringForTextField(Worth worth) {
-
         if (worth == null) {
-            return "";
-        } else if (worth.getWorth() == 0) {
-            return "";
+            return "0";
+        }
+        return getStringForTextField(worth.getWorth());
+    }
+
+    /**
+     * Parses a double into a formatted String.
+     *
+     * @param number
+     * @return
+     */
+    public static String getStringForLabel(Double number) {
+        if (number == null) {
+            return "0";
         } else {
-            DecimalFormat decimalFormat = new DecimalFormat("#.#######");
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
             decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-            return String.valueOf(decimalFormat.format(worth.getWorth()));
+            return String.valueOf(decimalFormat.format(number));
         }
     }
 
     /**
-     * Parses the double of a worth obejct.
+     * Parses a worth into a formatted String.
      *
      * @param worth
      * @return
      */
     public static String getStringForLabel(Worth worth) {
         if (worth == null) {
-            return "0.00";
-        } else {
-            DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-            return String.valueOf(decimalFormat.format(worth.getWorth()) + " " + worth.getParameter().getUnit().getShortTerm());
+            return "0";
         }
+        return getStringForLabel(worth.getWorth())+" " + worth.getParameter().getUnit().getShortTerm();
     }
 }

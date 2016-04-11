@@ -77,22 +77,22 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label id="smallBoldText" fx:id="lb_CubicSum" text="0.000 m³" GridPane.columnIndex="1">
+                              <Label id="smallBoldText" fx:id="lb_CubicSum" text="0 m³" GridPane.columnIndex="1">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label id="smallBoldText" fx:id="lb_MaterialCostSum" text="0.00 €" GridPane.columnIndex="3">
+                              <Label id="smallBoldText" fx:id="lb_MaterialCostSum" text="0 €" GridPane.columnIndex="3">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label id="smallBoldText" fx:id="lb_CuttingTimeSum" text="0.00 h" GridPane.columnIndex="4">
+                              <Label id="smallBoldText" fx:id="lb_CuttingTimeSum" text="0 h" GridPane.columnIndex="4">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label id="smallBoldText" fx:id="lb_CuttingCostSum" text="0.00 €" GridPane.columnIndex="6">
+                              <Label id="smallBoldText" fx:id="lb_CuttingCostSum" text="0 €" GridPane.columnIndex="6">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -113,7 +113,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label id="bigBoldHeadline" fx:id="lb_TotalCosts" text="0.00 €">
+                  <Label id="bigBoldHeadline" fx:id="lb_TotalCosts" text="0 €">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

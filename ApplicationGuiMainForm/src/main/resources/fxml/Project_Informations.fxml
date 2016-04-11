@@ -132,7 +132,7 @@
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
-                                          <Button id="smallBtnLettering" fx:id="bt_NewClient" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newClient" text="Neuer Auftraggeber">
+                                          <Button id="smallBtnLettering" fx:id="bt_NewClient" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="25.0" mnemonicParsing="false" onAction="#newClient" text="Neuer Auftraggeber">
                                              <VBox.margin>
                                                 <Insets top="5.0" />
                                              </VBox.margin>
@@ -147,7 +147,7 @@
                                           <TextField fx:id="tf_City" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="25.0" promptText="Stadt/Ort" />
                                           <TextField fx:id="tf_PhoneNumber" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="25.0" promptText="Telefonnummer" />
                                           <TextField fx:id="tf_Email" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="25.0" promptText="E-Mail" />
-                                          <Button id="smallBtnLettering" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openClientView" text="Auftraggeber suchen">
+                                          <Button id="smallBtnLettering" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="25.0" mnemonicParsing="false" onAction="#openClientView" text="Auftraggeber suchen">
                                              <VBox.margin>
                                                 <Insets top="5.0" />
                                              </VBox.margin>

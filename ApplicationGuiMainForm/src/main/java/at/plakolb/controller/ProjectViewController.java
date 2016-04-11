@@ -6,9 +6,11 @@ import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
-import at.plakolb.calculationlogic.entity.Worth;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -25,7 +27,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Andreas
  */
-public class ProjectViewController implements Initializable {
+public class ProjectViewController extends Observable implements Initializable {
 
     private static ProjectViewController instance;
     private static Project openedProject;
@@ -41,6 +43,9 @@ public class ProjectViewController implements Initializable {
     private Button bt_Dismiss;
     @FXML
     private Button bt_Save;
+    @FXML
+    private Tab tab_Montage;
+
     private TabPane tb_Assebmling;
 
     /**
@@ -52,6 +57,9 @@ public class ProjectViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        addObserver(Assembling_FormworkController.getInstance());
+        addObserver(Assembling_VisibleFormworkController.getInstance());
+        addObserver(Assembling_FoilController.getInstance());
 
         tb_MainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
             String t = event.getTarget().toString().toLowerCase();
@@ -64,6 +72,7 @@ public class ProjectViewController implements Initializable {
                 actTab.setText(actTab.getText() + " *");
             }
         });
+
         if (projectOpened) {
             Project_InformationsController.getInstance().openProject(openedProject);
             bt_Dismiss.setText("Änderungen verwerfen");
@@ -71,6 +80,11 @@ public class ProjectViewController implements Initializable {
         } else {
             openedProject = new Project();
         }
+
+        tab_Montage.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            setChanged();
+            notifyObservers();
+        });
     }
 
     public static ProjectViewController getInstance() {
@@ -170,12 +184,12 @@ public class ProjectViewController implements Initializable {
             if (openedProject.getWorths().isEmpty()) {
                 projectOpened = false;
             }
-            
+
             Project_ResultAreaController.getInstance().persistArea();
             Project_ConstructionMaterialListController.getInstance().persistComponents();
             Project_TransportController.getInstance().persistTransportCosts();
             AssemblingController.getInstance().persist();
-            
+
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
             openedProject = null;

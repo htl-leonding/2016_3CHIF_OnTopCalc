@@ -9,8 +9,9 @@ import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Worth;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -18,14 +19,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import sun.security.jca.GetInstance;
 
 /**
  * FXML Controller class
  *
  * @author Kepplinger
  */
-public class Assembling_VisibleFormworkController implements Initializable {
+public class Assembling_VisibleFormworkController implements Initializable, Observer {
 
     public static Assembling_VisibleFormworkController instance;
 
@@ -49,6 +49,8 @@ public class Assembling_VisibleFormworkController implements Initializable {
     private Label lb_AssemblingCosts;
     @FXML
     private Label lb_TotalCosts;
+    @FXML
+    private Label lb_RoofArea;
 
     private Worth pricePerSquare;
     private Worth abatementPercent;
@@ -199,5 +201,11 @@ public class Assembling_VisibleFormworkController implements Initializable {
 
     private void calculateFormwork() {
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        double roofArea = Project_ResultAreaController.getInstance().getRoofArea();
+        lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea) + " m²");
     }
 }
