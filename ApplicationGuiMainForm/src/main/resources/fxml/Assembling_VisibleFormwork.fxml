@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -58,7 +58,7 @@
                               </VBox>
                               <VBox alignment="CENTER" spacing="2.0">
                                  <children>
-                                    <ChoiceBox fx:id="cb_Product" minHeight="25.0" prefWidth="150.0" />
+                                    <ComboBox fx:id="cb_Product" prefWidth="150.0" promptText="Produkt auswählen" />
                                     <TextField fx:id="tf_PricePerSquare" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
                                     <TextField fx:id="tf_AbatementPercent" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
                                  </children>

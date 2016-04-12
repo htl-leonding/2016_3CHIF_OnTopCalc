@@ -16,7 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -30,7 +30,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     public static Assembling_VisibleFormworkController instance;
 
     @FXML
-    private ChoiceBox<Product> cb_Product;
+    private ComboBox<Product> cb_Product;
     @FXML
     private TextField tf_PricePerSquare;
     @FXML

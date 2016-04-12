@@ -27,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -38,7 +39,7 @@ import javafx.scene.control.TextField;
 public class Assembling_FormworkController implements Initializable, Observer {
 
     @FXML
-    private ChoiceBox<Product> cb_Formwork;
+    private ComboBox<Product> cb_Formwork;
     @FXML
     private TextField tf_Price;
     @FXML
