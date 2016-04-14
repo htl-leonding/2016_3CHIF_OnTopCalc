@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -8,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_FoilController">
+<AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_FoilController">
    <children>
       <VBox alignment="CENTER" layoutY="10.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -58,9 +62,9 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox minHeight="25.0" prefWidth="150.0" promptText="Produkt auswählen" />
-                                    <TextField minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
-                                    <TextField minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
+                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefWidth="150.0" promptText="Produkt auswählen" />
+                                    <TextField fx:id="tf_price" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
+                                    <TextField fx:id="tf_blend" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_CENTER">
@@ -97,12 +101,12 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Label id="normalLettering" minHeight="27.0" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_blend" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" minHeight="27.0" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_foil" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -133,8 +137,8 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <TextField minHeight="25.0" prefHeight="25.0" prefWidth="102.0" promptText="Kosten in €/h" />
-                                    <TextField minHeight="25.0" prefHeight="25.0" prefWidth="102.0" promptText="Zeit in h" />
+                                    <TextField fx:id="tf_workerCosts" minHeight="25.0" prefHeight="25.0" prefWidth="102.0" promptText="Kosten in €/h" />
+                                    <TextField fx:id="tf_time" minHeight="25.0" prefHeight="25.0" prefWidth="102.0" promptText="Zeit in h" />
                                  </children>
                               </VBox>
                               <VBox>
@@ -176,17 +180,17 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Label id="normalLettering" minHeight="27.0" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_productCosts" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" minHeight="27.0" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_montageCosts" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" minHeight="27.0" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_totalCosts" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

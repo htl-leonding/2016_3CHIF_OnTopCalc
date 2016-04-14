@@ -44,5 +44,11 @@ public class AssemblingController implements Initializable {
     public void persist() {
         Assembling_FormworkController.getInstance().persist();
         Assembling_VisibleFormworkController.getInstance().persistVisibleFormwork();
+        Assembling_FoilController.getInstance().persist();
+        Assembling_SealingBandController.getInstance().persist();
+        Assembling_SheetRoofController.getInstance().persist();
+        Assembling_TiledRoofController.getInstance().persist();
+        Assembling_CounterBattenController.getInstance().persist();
+        Assembling_BattensOrFullFormworkController.getInstance().persist();
     }
 }

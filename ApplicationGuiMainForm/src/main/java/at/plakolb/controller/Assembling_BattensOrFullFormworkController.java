@@ -19,6 +19,8 @@ import javafx.scene.layout.Pane;
  */
 public class Assembling_BattensOrFullFormworkController implements Initializable {
 
+    private static Assembling_BattensOrFullFormworkController instance;
+    
     @FXML
     private ChoiceBox<String> cb_roofType;
     @FXML
@@ -33,7 +35,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        instance = this;
         cb_roofType.getItems().addAll("Ziegeldach","Blechdach");
         
         //Add change listener to change the fxml file of the content pane if the selection has changed.
@@ -53,5 +55,17 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             }
         });
     }    
+    public void persist(){
+        
+    }
+    public void load() {
+        
+    }
+    public void calculate(){
+        
+    }
     
+    public static Assembling_BattensOrFullFormworkController getInstance(){
+        return instance;
+    }
 }
