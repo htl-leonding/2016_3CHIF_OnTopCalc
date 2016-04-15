@@ -4,8 +4,11 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
+import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -98,8 +101,11 @@ public class ClientModifierController implements Initializable {
      */
     @FXML
     private void save(ActionEvent event) {
+
         if (tf_Name.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Namen ein.").showAndWait();
+        } else if (!tf_Email.getText().isEmpty() && !tf_Email.getText().contains("@")) {
+            new Alert(Alert.AlertType.ERROR, "Die E-Mail Adresse benötigt ein @-Zeichen.").showAndWait();
         } else {
             try {
                 openedClient.setName(tf_Name.getText());

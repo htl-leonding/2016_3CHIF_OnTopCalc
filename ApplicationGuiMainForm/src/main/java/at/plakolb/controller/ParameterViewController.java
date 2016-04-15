@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -23,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -73,10 +75,10 @@ public class ParameterViewController implements Initializable {
         tc_Button.setCellFactory((new Callback<TableColumn<ParameterP, String>, TableCell<ParameterP, String>>() {
             @Override
             public TableCell call(final TableColumn<ParameterP, String> param) {
-                    final TableCell<ParameterP, String> cell = new TableCell<ParameterP, String>() {
+                final TableCell<ParameterP, String> cell = new TableCell<ParameterP, String>() {
 
                     final Label edit = new Label();
-                    
+
                     @Override
                     public void updateItem(String item, boolean empty) {
 
@@ -95,13 +97,15 @@ public class ParameterViewController implements Initializable {
                                     Stage stage = new Stage();
                                     stage.setTitle("Parameter editieren");
                                     stage.setScene(scene);
+                                    stage.initModality(Modality.WINDOW_MODAL);
+                                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                                     stage.show();
                                 } catch (IOException ex) {
                                 }
 
                                 ParameterModifierController.getInstance().loadParameterIntoModifier(tv_Prameter.getSelectionModel().getSelectedItem());
                             });
-                            
+
                             setGraphic(edit);
                             setText(null);
                         }
@@ -122,6 +126,8 @@ public class ParameterViewController implements Initializable {
                     Stage stage = new Stage();
                     stage.setTitle("Parameter editieren");
                     stage.setScene(scene);
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                     stage.show();
                 } catch (IOException ex) {
                 }

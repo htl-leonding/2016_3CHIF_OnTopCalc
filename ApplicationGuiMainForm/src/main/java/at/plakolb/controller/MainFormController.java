@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -39,7 +40,7 @@ public class MainFormController implements Initializable {
         ProjectController projectController = new ProjectController();
         List<Project> projects = projectController.findLastFiveProjects();
         List<MenuItem> items = new LinkedList<>();
-        
+
         //Adds the five most recent used projects.
         for (int i = 0; i < Math.min(5, projects.size()); i++) {
             MenuItem menuItem = new MenuItem(projects.get(i).getProjectName());
@@ -49,7 +50,7 @@ public class MainFormController implements Initializable {
             });
             items.add(menuItem);
         }
-        
+
         //Adds an item for all other projects if there are more than 5 projects.        
         if (projectController.getCount() > 5) {
             MenuItem menuItem = new MenuItem("Weitere Projekte");
@@ -58,7 +59,7 @@ public class MainFormController implements Initializable {
             });
             items.add(menuItem);
         }
-        
+
         mb_openProjects.getItems().addAll(items);
     }
 
@@ -93,6 +94,8 @@ public class MainFormController implements Initializable {
             stage.setTitle("Projekt drucken");
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
         } catch (IOException e) {
         } catch (Exception e) {

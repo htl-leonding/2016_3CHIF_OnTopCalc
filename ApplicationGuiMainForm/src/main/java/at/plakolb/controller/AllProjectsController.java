@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,6 +27,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -75,7 +77,7 @@ public class AllProjectsController implements Initializable {
 
         tv_ProjectList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tv_ProjectList.getSelectionModel().getSelectedItem() != null) {
-                ProjectViewController.getInstance().openProject(tv_ProjectList.getSelectionModel().getSelectedItem());
+                ProjectViewController.openProject(tv_ProjectList.getSelectionModel().getSelectedItem());
                 MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
             }
         });
@@ -126,6 +128,8 @@ public class AllProjectsController implements Initializable {
                                     stage.setTitle("Projekt drucken");
                                     stage.setResizable(false);
                                     stage.setScene(scene);
+                                    stage.initModality(Modality.WINDOW_MODAL);
+                                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                                     PrintProjectController.getInstance().SetProject(p);
                                     stage.show();
                                 } catch (IOException e) {
@@ -144,8 +148,8 @@ public class AllProjectsController implements Initializable {
                                     ProjectController projectController = new ProjectController();
                                     projectController.createCosting(project, projectId);
                                     updateData();
-                                }else{
-                                    new Alert(Alert.AlertType.ERROR,"Nachkalkulationen können nur von Vorkalkulationen erstellt werden.").showAndWait();
+                                } else {
+                                    new Alert(Alert.AlertType.ERROR, "Nachkalkulationen können nur von Vorkalkulationen erstellt werden.").showAndWait();
                                 }
                             });
                             copyP.setOnMouseClicked((MouseEvent event) -> {

@@ -79,7 +79,6 @@ public class Project_ResultAreaController extends Observable implements Initiali
             WorthController worthController = new WorthController();
             int max_index = worthController.BaseAndRoofAreaCountTabs(ProjectViewController.getOpenedProject().getId());
             if (max_index > 0) {
-                System.out.println(max_index + " werden wiederhergestellt!");
                 for (int i = 0; i < max_index; i++) {
                     addTab(null);
                 }
@@ -90,6 +89,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 System.out.println("Loaded Tabs");
             } else {
                 addTab(null);
+                
             }
         } else {
             addTab(null);
@@ -160,7 +160,6 @@ public class Project_ResultAreaController extends Observable implements Initiali
             Project_BaseAndRoofAreaController controller = (Project_BaseAndRoofAreaController) fxmlLoader.getController();
             controller.setID(getNextID());
 
-            System.out.println("BaseAndRoofArea - Tab " + controller.getID() + " wurde erstellt!");
 
             addObserver(controller);
             fxmlNode.setUserData(controller);
@@ -184,12 +183,8 @@ public class Project_ResultAreaController extends Observable implements Initiali
                     if (result.get() == ButtonType.YES) {
                         Project project = ProjectViewController.getOpenedProject();
                         if (project != null) {
-                                //new WorthJpaController().deletePreCutIndexFromProject(project.getId(), index);
-                            //EditProject.deletePreCut(project);
-                            //updateSummary();
                             areaController.remove(o);
                             calcArea();
-                            System.out.println("----------------------------------------------------------------------\nDach und Grundflächenberechnung: Tab ID:" + ctrl.getID() + " wurde gelöscht!\n----------------------------------------------------------------------");
                         }
                         //set closable for tabs
                         if (tabs.size() > 3) {
@@ -211,13 +206,14 @@ public class Project_ResultAreaController extends Observable implements Initiali
             tb_Roofarea.getSelectionModel().selectLast();
 
             //set closable for tabs
-            if (tabs.size() >= 2) {
+            if (tabs.size() >= 3) {
                 for (Tab tab : tabs) {
                     tab.setClosable(true);
                 }
                 tabs.get(0).setClosable(false);
-            } else if (tabs.size() == 1) {
+            } else if (tabs.size() == 2) {
                 tabs.get(0).setClosable(false);
+                tabs.get(1).setClosable(false);
             }
 
             setChanged();

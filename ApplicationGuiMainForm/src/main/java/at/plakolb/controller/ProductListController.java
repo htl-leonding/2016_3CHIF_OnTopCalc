@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -34,6 +35,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -162,6 +164,8 @@ public class ProductListController implements Initializable {
                                     Stage stage = new Stage();
                                     stage.setTitle("Produkt editieren");
                                     stage.setScene(scene);
+                                    stage.initModality(Modality.WINDOW_MODAL);
+                                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                                     stage.show();
                                 } catch (IOException ex) {
                                 }
@@ -200,6 +204,8 @@ public class ProductListController implements Initializable {
                     Stage stage = new Stage();
                     stage.setTitle("Produkt editieren");
                     stage.setScene(scene);
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                     stage.show();
                 } catch (IOException ex) {
                 }
