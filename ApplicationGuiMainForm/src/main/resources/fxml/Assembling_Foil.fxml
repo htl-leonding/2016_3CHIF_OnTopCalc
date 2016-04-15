@@ -101,7 +101,7 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Label id="normalLettering" fx:id="lb_blend" minHeight="27.0" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_blend" minHeight="27.0" text="0 m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

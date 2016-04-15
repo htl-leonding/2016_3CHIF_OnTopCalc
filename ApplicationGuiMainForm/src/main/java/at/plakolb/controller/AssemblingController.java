@@ -45,10 +45,15 @@ public class AssemblingController implements Initializable {
         Assembling_FormworkController.getInstance().persist();
         Assembling_VisibleFormworkController.getInstance().persistVisibleFormwork();
         Assembling_FoilController.getInstance().persist();
+        if(Assembling_SealingBandController.getInstance() != null)
         Assembling_SealingBandController.getInstance().persist();
+        if(Assembling_SheetRoofController.getInstance() != null)
         Assembling_SheetRoofController.getInstance().persist();
+        if(Assembling_TiledRoofController.getInstance() != null)
         Assembling_TiledRoofController.getInstance().persist();
+        if(Assembling_CounterBattenController.getInstance() != null)
         Assembling_CounterBattenController.getInstance().persist();
+        if(Assembling_BattensOrFullFormworkController.getInstance() != null)
         Assembling_BattensOrFullFormworkController.getInstance().persist();
     }
 }
