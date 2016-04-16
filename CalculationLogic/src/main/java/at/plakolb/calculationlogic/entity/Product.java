@@ -148,16 +148,25 @@ public class Product implements Serializable {
     }
 
     public String getFullName() {
+
+        String nameFull = name + " ";
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+
         if (ProductType.COLOR == productType) {
-            return name;
-        } else {
-            String nameFull = name + " ";
-            DecimalFormat decimalFormat=new DecimalFormat("#.#");
+            return nameFull.substring(0, nameFull.length() - 1);
+        } else if (unit.getShortTerm().equals("m")) {
+            return nameFull += (lengthProduct == null ? "0" : decimalFormat.format(lengthProduct)) + " " + unit.getShortTerm();
+        } else if (productType.equals(ProductType.FORMWORK)) {
+            return nameFull + " " + decimalFormat.format(widthProduct * 100) + " mm";
+        } else if (productType.equals(ProductType.WOOD)) {
+
             nameFull += (widthProduct == null ? "0" : decimalFormat.format(widthProduct)) + "/";
             nameFull += (heightProduct == null ? "0" : decimalFormat.format(heightProduct)) + "/";
-            nameFull += (lengthProduct == null ? "0" : decimalFormat.format(lengthProduct)) + "/";
+            nameFull += (lengthProduct == null ? "0" : decimalFormat.format(lengthProduct));
 
-            return nameFull.substring(0, nameFull.length() - 1);
+            return nameFull;
+        } else {
+            return nameFull + " [" + unit.getShortTerm() + "]";
         }
     }
 
