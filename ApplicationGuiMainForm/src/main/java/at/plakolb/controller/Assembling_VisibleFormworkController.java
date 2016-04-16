@@ -123,6 +123,10 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     public static Assembling_VisibleFormworkController getInstance() {
         return instance;
     }
+    
+    public double getVisibleFormwork(){
+        return visibleFormwork.getWorth();
+    }
 
     public void setPricePerSquare() {
         pricePerSquare = tf_PricePerSquare.getText().isEmpty() || !tf_PricePerSquare.getText().matches("[0-9]*.[0-9]*")

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -9,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ColourController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ColourController">
    <children>
       <Label alignment="CENTER" text="Farbe" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
@@ -26,7 +31,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label id="boldLettering" prefHeight="17.0" prefWidth="76.0" text="0.00 m²">
+            <Label id="boldLettering" fx:id="lb_VisibleFormwork" prefHeight="17.0" prefWidth="76.0" text="0.00 m²">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -50,15 +55,15 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox layoutX="193.0" layoutY="1.0" prefHeight="25.0" prefWidth="88.0" />
-                  <TextField layoutX="193.0" layoutY="88.0" prefHeight="25.0" prefWidth="88.0" promptText="Kosten in €/h" />
-                  <TextField layoutX="193.0" layoutY="30.0" prefHeight="25.0" prefWidth="88.0" promptText="Faktor in m²" />
+                  <ComboBox fx:id="cb_Product" layoutX="193.0" layoutY="1.0" prefHeight="25.0" prefWidth="88.0" />
+                  <TextField fx:id="tf_ProfiHour" layoutX="193.0" layoutY="88.0" prefHeight="25.0" prefWidth="88.0" promptText="Kosten in €/h" />
+                  <TextField fx:id="tf_AdittionalColourFactor" layoutX="193.0" layoutY="30.0" prefHeight="25.0" prefWidth="88.0" promptText="Faktor in m²" />
                   <Label id="normalLettering" layoutX="-14.0" layoutY="119.0" text="Gesamtzeit für Anstrich: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="193.0" layoutY="117.0" prefHeight="25.0" prefWidth="88.0" promptText="Zeit in h" />
+                  <TextField fx:id="tf_TimeOfPainting" layoutX="193.0" layoutY="117.0" prefHeight="25.0" prefWidth="88.0" promptText="Zeit in h" />
                   <Label id="normalLettering" layoutX="-14.0" layoutY="90.0" text="Facharbeiter Stunde: ">
                      <font>
                         <Font size="18.0" />
@@ -69,17 +74,12 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="193.0" layoutY="59.0" prefHeight="25.0" prefWidth="88.0" promptText="Farbe in €/l" />
-                  <Button id="btnLettering" layoutY="148.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="281.0" text="Berechnen">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
+                  <TextField fx:id="tf_PricePerLiter" layoutX="193.0" layoutY="59.0" prefHeight="25.0" prefWidth="88.0" promptText="Farbe in €/l" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="95.0" layoutY="298.0" nodeOrientation="LEFT_TO_RIGHT">
                <children>
-                  <Label id="normalLettering" alignment="CENTER" layoutX="196.0" text="0.00 m²">
+                  <Label id="normalLettering" fx:id="lb_PaintArea" alignment="CENTER" layoutX="196.0" text="0.00 m²">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
@@ -87,7 +87,7 @@
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Label id="normalLettering" alignment="CENTER" layoutX="195.0" layoutY="57.0" text="0.00 €">
+                  <Label id="normalLettering" fx:id="lb_ProductCost" alignment="CENTER" layoutX="195.0" layoutY="57.0" text="0.00 €">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
@@ -99,15 +99,15 @@
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Label id="normalLettering" alignment="CENTER" layoutX="195.0" layoutY="85.0" text="0.00 €">
+                  <Label id="normalLettering" fx:id="lb_MontageCost" alignment="CENTER" layoutX="195.0" layoutY="85.0" text="0.00 €">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Label id="boldLettering" alignment="CENTER" layoutX="196.0" layoutY="28.0" text="0.00 l">
+                  <Label id="boldLettering" fx:id="lb_PaintLiter" alignment="CENTER" layoutX="196.0" layoutY="28.0" text="0.00 l">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
-                  <Label id="boldLettering" alignment="CENTER" layoutX="200.0" layoutY="157.0" text="0.00 €">
+                  <Label id="boldLettering" fx:id="lb_TotalCosts" alignment="CENTER" layoutX="193.0" layoutY="120.0" text="0.00 €">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
@@ -115,7 +115,7 @@
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
-                  <Label id="boldLettering" alignment="CENTER" layoutY="157.0" text="Gesamtkosten: ">
+                  <Label id="boldLettering" alignment="CENTER" layoutX="-2.0" layoutY="120.0" text="Gesamtkosten: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
