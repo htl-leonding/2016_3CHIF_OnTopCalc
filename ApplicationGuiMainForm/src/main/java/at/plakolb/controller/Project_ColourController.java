@@ -16,7 +16,6 @@ import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -83,7 +82,6 @@ public class Project_ColourController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
 
-        System.out.println("Load Colour");
         decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
@@ -98,7 +96,7 @@ public class Project_ColourController implements Initializable {
         montageCost = new Worth(parameterController.findParameterPByShortTerm("PMFP"));
         paintLiter = new Worth(parameterController.findParameterPByShortTerm("FML"));
         totalCost = new Worth(parameterController.findParameterPByShortTerm("GKFarbe"));
-        System.out.println("dog");
+        
         tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
             setHour();
             calculateValues();
@@ -177,7 +175,6 @@ public class Project_ColourController implements Initializable {
         component = new ComponentController().findColorByProjectId(ProjectViewController.getOpenedProject().getId());
 
         if (component != null) {
-            System.out.println("Hündl");
             cb_Product.getSelectionModel().select(component.getProduct());            
         }
         lb_VisibleFormwork.setText(UtilityFormat.getStringForTextField(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
@@ -193,7 +190,6 @@ public class Project_ColourController implements Initializable {
     }
 
     public void persist() {
-        System.out.println("soit i ned");
         WorthController worthController = new WorthController();
 
         Category category = new CategoryController().findCategoryByShortTerm("X");
@@ -254,9 +250,7 @@ public class Project_ColourController implements Initializable {
         }
     }
 
-    //Formeln?
     public void calculateValues() {
-        System.out.println("dur i doch");
         //Benötigte Farbe in m²
         //Alte Formel-ID: FMM
         paintArea.setWorth(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork() + additionalColourFactor.getWorth());

@@ -123,8 +123,8 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     public static Assembling_VisibleFormworkController getInstance() {
         return instance;
     }
-    
-    public double getVisibleFormwork(){
+
+    public double getVisibleFormwork() {
         return visibleFormwork.getWorth();
     }
 
@@ -184,26 +184,35 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
 
     public void persistVisibleFormwork() {
         WorthController worthController = new WorthController();
-        
+
         Category category = new CategoryController().findCategoryByShortTerm("SS");
         if (category != null) {
             try {
                 ComponentController componentController = new ComponentController();
                 Product product = cb_Product.getSelectionModel().getSelectedItem();
                 Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(ProjectViewController.getOpenedProject().getId(), "SS", category.getId());
+
                 if (component == null) {
                     component = new Component();
                 }
-                component.setDescription(product.getName());
+
+                if (product != null) {
+                    component.setDescription(product.getName());
+                    component.setLengthComponent(product.getLengthProduct());
+                    component.setWidthComponent(product.getWidthProduct());
+                    component.setHeightComponent(product.getHeightProduct());
+                    component.setProduct(product);
+                } else {
+                    component.setDescription("");
+                    component.setLengthComponent(null);
+                    component.setWidthComponent(null);
+                    component.setHeightComponent(null);
+                    component.setProduct(null);
+                }
                 component.setCategory(category);
                 component.setComponentType("Produkt");
-                component.setLengthComponent(product.getLengthProduct());
-                component.setWidthComponent(product.getWidthProduct());
-                component.setHeightComponent(product.getHeightProduct());
-                component.setProduct(product);
                 component.setProject(ProjectViewController.getOpenedProject());
-                component.setNumberOfProducts((int)visibleFormwork.getWorth());
-                component.setUnit(product.getUnit());
+                component.setNumberOfProducts((int) visibleFormwork.getWorth());
                 component.setPriceComponent(pricePerSquare);
                 componentController.edit(component);
             } catch (Exception ex) {
@@ -247,7 +256,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     private void calculateFormwork() {
         //Verschnittsfläche
         //Alte Formel-ID: VSS
-        abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedge() * abatementPercent.getWorth()/ 100);
+        abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedge() * abatementPercent.getWorth() / 100);
         lb_AbatementArea.setText(abatementArea.worthFormatWithUnit());
 
         //sicht. Schalung

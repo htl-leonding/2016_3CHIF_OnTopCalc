@@ -207,7 +207,11 @@ public class Project_ConstructionMaterialListController implements Initializable
             }
         });
 
-        cb_Category.setItems(FXCollections.observableArrayList(new CategoryController().findAll()));
+        List<Category> categoryList = new LinkedList<>();
+        categoryList.add(new CategoryController().findCategoryByShortTerm("K"));
+        categoryList.add(new CategoryController().findCategoryByShortTerm("KD"));
+        
+        cb_Category.setItems(FXCollections.observableArrayList(categoryList));
         cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.WOOD)));
         cb_Category.getSelectionModel().select(0);
         cb_Product.getSelectionModel().select(0);

@@ -1,11 +1,9 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
-import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;

@@ -4,13 +4,11 @@ import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.ProductController;
-import at.plakolb.calculationlogic.db.controller.UnitController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Project;
-import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
@@ -82,6 +80,7 @@ public class Assembling_FoilController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         Project_ResultAreaController.getInstance().addObserver(this);
+        cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.FOIL)));
 
         ParameterController parameterController = new ParameterController();
         abatementPercent = new Worth(parameterController.findParameterPByShortTerm("FUEP"));
@@ -196,11 +195,6 @@ public class Assembling_FoilController implements Initializable, Observer {
 
     public void load() {
         ProductController productController = new ProductController();
-
-        ObservableList<Product> list = FXCollections.observableArrayList(productController.findByProductTypeOrderByName(ProductType.FOIL));
-        if (list != null) {
-            cb_Product.setItems(list);
-        }
 
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
