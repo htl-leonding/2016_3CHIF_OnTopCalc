@@ -226,20 +226,8 @@ public class Component implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public String getFullNameProduct() {
-        String name = "";
-        if (product != null) {
-            String nameFull = name + " ";
-            DecimalFormat decimalFormat = new DecimalFormat("#.#");
-            nameFull += (widthComponent == null ? "0" : decimalFormat.format(widthComponent)) + "/";
-            nameFull += (heightComponent == null ? "0" : decimalFormat.format(heightComponent)) + "/";
-            nameFull += (lengthComponent == null ? "0" : decimalFormat.format(lengthComponent)) + "/";
-        }
-        return name.substring(0, name.length() - 1);
-    }
-
     @Override
     public String toString() {
-        return "Component{" + "id=" + id + ", description=" + description + ", widthComponent=" + widthComponent + ", heightComponent=" + heightComponent + ", lengthComponent=" + lengthComponent + ", priceComponent=" + priceComponent + ", numberOfProducts=" + numberOfProducts + ", category=" + category + ", unit=" + unit + ", product=" + product + ", project=" + project + '}';
+        return product.getFullName();
     }
 }

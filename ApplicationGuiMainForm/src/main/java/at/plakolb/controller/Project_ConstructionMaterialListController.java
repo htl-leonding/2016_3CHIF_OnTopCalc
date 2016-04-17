@@ -236,6 +236,10 @@ public class Project_ConstructionMaterialListController implements Initializable
             }
         });
     }
+    
+    public List<Component> getComponents(){
+        return components;
+    }
 
     public static Project_ConstructionMaterialListController getInstance() {
         return instance;
@@ -269,6 +273,7 @@ public class Project_ConstructionMaterialListController implements Initializable
 
                 component.setTailoringHours(parameterController.findParameterPByShortTerm("KZG").getDefaultValue());
                 component.setTailoringPricePerHour(parameterController.findParameterPByShortTerm("KPSZ").getDefaultValue());
+                component.setComponentType("Kubikmeter");
 
                 components.add(component);
             }
@@ -319,7 +324,7 @@ public class Project_ConstructionMaterialListController implements Initializable
     /**
      * Persist all new components to the database.
      */
-    public void persistComponents() {
+    public void persist() {
         ComponentController componentController = new ComponentController();
         for (Component component : components) {
             if (component.getId() == null) {

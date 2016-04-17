@@ -168,7 +168,7 @@ public class Project_TransportController extends java.util.Observable implements
         setValuesChanged(false);
     }
 
-    public void persistTransportCosts() {
+    public void persist() {
         WorthController worthController = new WorthController();
 
         if (!ProjectViewController.isProjectOpened()) {

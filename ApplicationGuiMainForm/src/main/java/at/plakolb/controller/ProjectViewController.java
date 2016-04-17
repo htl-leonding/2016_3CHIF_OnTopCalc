@@ -45,6 +45,8 @@ public class ProjectViewController extends Observable implements Initializable {
     private Button bt_Save;
     @FXML
     private Tab tab_Montage;
+    @FXML
+    private Tab tab_Material;
 
     private TabPane tb_Assebmling;
 
@@ -84,6 +86,10 @@ public class ProjectViewController extends Observable implements Initializable {
         tab_Montage.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             setChanged();
             notifyObservers();
+        });
+
+        tab_Material.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            Project_ConstructionMaterialController.getInstance().refreshComponents();
         });
     }
 
@@ -185,11 +191,12 @@ public class ProjectViewController extends Observable implements Initializable {
                 projectOpened = false;
             }
 
-            Project_ResultAreaController.getInstance().persistArea();
-            Project_ConstructionMaterialListController.getInstance().persistComponents();
-            Project_TransportController.getInstance().persistTransportCosts();
+            Project_ResultAreaController.getInstance().persist();
+            Project_ConstructionMaterialListController.getInstance().persist();
+            Project_TransportController.getInstance().persist();
             AssemblingController.getInstance().persist();
             Project_ColourController.getInstance().persist();
+            Project_ConstructionMaterialController.getInstance().persist();
 
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;

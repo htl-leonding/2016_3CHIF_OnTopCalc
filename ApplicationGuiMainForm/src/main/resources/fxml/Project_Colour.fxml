@@ -68,7 +68,7 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" />
+                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="143.0" promptText="Farbe auswählen" />
                                     <TextField fx:id="tf_AdittionalColourFactor" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Faktor in m²" />
                                     <TextField fx:id="tf_PricePerLiter" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Farbe in €/l" />
                                     <TextField fx:id="tf_ProfiHour" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Kosten in €/h" />

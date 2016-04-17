@@ -230,7 +230,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
     /**
      * Persists the calculated Values to the database.
      */
-    public void persistArea() {
+    public void persist() {
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
             WorthController worthController = new WorthController();
