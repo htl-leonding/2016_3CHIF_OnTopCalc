@@ -66,12 +66,21 @@ public class Project_ResultAreaController extends Observable implements Initiali
         areaController = new LinkedList<>();
         tabs = tb_Roofarea.getTabs();
         instance = this;
-        ParameterController parameterController = new ParameterController();
+        
 
-        worthArea = new Worth(parameterController.findParameterPByShortTerm("A"));
-        worthRoofArea = new Worth(parameterController.findParameterPByShortTerm("D"));
-        worthRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DV"));
-        worthRoofAreaWhitRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DF"));
+        if (ProjectViewController.isProjectOpened() && !ProjectViewController.getOpenedProject().getWorths().isEmpty()) {
+            WorthController worthController = new WorthController();
+            worthArea = worthController.findWorthByShortTermAndProjectId("A", ProjectViewController.getOpenedProject().getId());
+            worthRoofArea = worthController.findWorthByShortTermAndProjectId("D", ProjectViewController.getOpenedProject().getId());
+            worthRoofOverhang = worthController.findWorthByShortTermAndProjectId("DV", ProjectViewController.getOpenedProject().getId());
+            worthRoofAreaWhitRoofOverhang = worthController.findWorthByShortTermAndProjectId("DF", ProjectViewController.getOpenedProject().getId());
+        } else {
+            ParameterController parameterController = new ParameterController();
+            worthArea = new Worth(parameterController.findParameterPByShortTerm("A"));
+            worthRoofArea = new Worth(parameterController.findParameterPByShortTerm("D"));
+            worthRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DV"));
+            worthRoofAreaWhitRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DF"));
+        }
 
         tabs.get(0).setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/addTab.png"))));
 
@@ -89,7 +98,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 System.out.println("Loaded Tabs");
             } else {
                 addTab(null);
-                
+
             }
         } else {
             addTab(null);
@@ -159,7 +168,6 @@ public class Project_ResultAreaController extends Observable implements Initiali
             Parent fxmlNode = (Parent) fxmlLoader.load(location.openStream());
             Project_BaseAndRoofAreaController controller = (Project_BaseAndRoofAreaController) fxmlLoader.getController();
             controller.setID(getNextID());
-
 
             addObserver(controller);
             fxmlNode.setUserData(controller);

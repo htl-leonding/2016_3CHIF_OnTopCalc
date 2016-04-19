@@ -9,7 +9,6 @@ import at.plakolb.calculationlogic.entity.Project;
 import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -192,11 +191,11 @@ public class ProjectViewController extends Observable implements Initializable {
             }
 
             Project_ResultAreaController.getInstance().persist();
-            Project_ConstructionMaterialController.getInstance().persist();
             Project_ConstructionMaterialListController.getInstance().persist();
             Project_TransportController.getInstance().persist();
             AssemblingController.getInstance().persist();
             Project_ColourController.getInstance().persist();
+            Project_ConstructionMaterialController.getInstance().persist();
 
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;

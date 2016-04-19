@@ -4,13 +4,11 @@ import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.ProductController;
-import at.plakolb.calculationlogic.db.controller.UnitController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Project;
-import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
@@ -75,6 +73,8 @@ public class Assembling_FormworkController implements Initializable, Observer {
     private Worth costsMontage;
     private Worth totalCosts;
 
+    private Component component;
+
     private void setPrice(String price) {
         price = price.replace(',', '.');
         if (price.isEmpty() || !price.matches("[0-9]*.[0-9]*") || Double.valueOf(price) < 0) {
@@ -97,6 +97,10 @@ public class Assembling_FormworkController implements Initializable, Observer {
     private void setTime() {
         time.setWorth(tf_Time.getText().isEmpty() || !tf_Time.getText().matches("[0-9]*.[0-9]*")
                 ? 0 : Double.valueOf(tf_Time.getText().replace(',', '.')));
+    }
+
+    public Component getComponent() {
+        return component;
     }
 
     /**
@@ -156,12 +160,16 @@ public class Assembling_FormworkController implements Initializable, Observer {
             CategoryController categoryController = new CategoryController();
 
             Category category = categoryController.findCategoryByShortTerm("S");
-            Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
+            component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                     "Produkt", category.getId());
 
             if (component != null) {
                 cb_Formwork.getSelectionModel().select(component.getProduct());
                 tf_Price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
+            } else {
+                component = new Component();
+                component.setCategory(new CategoryController().findCategoryByShortTerm("S"));
+                component.setComponentType("Produkt");
             }
 
             waste = (worthController.findWorthByShortTermAndProjectId("VS", project.getId()) != null)
@@ -252,47 +260,34 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
             }
         }
+
+        Product product = cb_Formwork.getSelectionModel().getSelectedItem();
+
+        if (product != null) {
+            component.setDescription(product.getName());
+            component.setLengthComponent(product.getLengthProduct());
+            component.setWidthComponent(product.getWidthProduct());
+            component.setHeightComponent(product.getHeightProduct());
+            component.setProduct(product);
+            component.setUnit(product.getUnit());
+        } else {
+            component.setDescription("");
+            component.setLengthComponent(null);
+            component.setWidthComponent(null);
+            component.setHeightComponent(null);
+            component.setProduct(null);
+            component.setUnit(null);
+        }
+        component.setNumberOfProducts((int) formwork.getWorth());
+        component.setPriceComponent(price);
     }
 
     public void persist() {
         try {
             WorthController worthController = new WorthController();
-            Product product = cb_Formwork.getSelectionModel().getSelectedItem();
-            Project project = ProjectViewController.getOpenedProject();
 
             ComponentController componentController = new ComponentController();
             CategoryController categoryController = new CategoryController();
-
-            Category category = categoryController.findCategoryByShortTerm("S");
-            Unit unit = new UnitController().findUnitByShortTerm("m²");
-            Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(
-                    project.getId(),
-                    "Produkt",
-                    category.getId());
-
-            if (component == null) {
-                component = new Component();
-            }
-            if (product != null) {
-                component.setDescription(product.getName());
-                component.setLengthComponent(product.getLengthProduct());
-                component.setWidthComponent(product.getWidthProduct());
-                component.setHeightComponent(product.getHeightProduct());
-                component.setProduct(product);
-                component.setUnit(product.getUnit());
-            } else {
-                component.setDescription("");
-                component.setLengthComponent(null);
-                component.setWidthComponent(null);
-                component.setHeightComponent(null);
-                component.setProduct(null);
-                component.setUnit(null);
-            }
-            component.setCategory(category);
-            component.setComponentType("Produkt");
-            component.setProject(project);
-            component.setNumberOfProducts((int) formwork.getWorth());
-            component.setPriceComponent(price);
 
             if (!ProjectViewController.isProjectOpened()) {
                 blend.setProject(ProjectViewController.getOpenedProject());
@@ -303,6 +298,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 waste.setProject(ProjectViewController.getOpenedProject());
                 costsMontage.setProject(ProjectViewController.getOpenedProject());
                 totalCosts.setProject(ProjectViewController.getOpenedProject());
+                component.setProject(ProjectViewController.getOpenedProject());
 
                 worthController.create(blend);
                 worthController.create(time);

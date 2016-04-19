@@ -63,10 +63,11 @@ public class Project_ConstructionMaterialController implements Initializable {
     private TableColumn<Assembly, String> tc_TotalPrice;
     @FXML
     private TableColumn tc_Button;
-
-    private List<Assembly> assemblyList;
     @FXML
     private Label lb_TotalCosts;
+
+    private List<Assembly> assemblyList;
+    private List<Component> componentList;
 
     /**
      * Initializes the controller class.
@@ -78,6 +79,7 @@ public class Project_ConstructionMaterialController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         assemblyList = new LinkedList<>();
+        componentList = new LinkedList<>();
 
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
             assemblyList = new AssemblyController().findAssembliesByProjectId(ProjectViewController.getOpenedProject().getId());
@@ -158,7 +160,13 @@ public class Project_ConstructionMaterialController implements Initializable {
     }
 
     public void refreshComponents() {
-        cb_Component.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getComponents()));
+        
+        componentList.addAll(Project_ConstructionMaterialListController.getInstance().getComponents());
+        if (Assembling_FormworkController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_FormworkController.getInstance().getComponent());
+        }
+        
+        cb_Component.setItems(FXCollections.observableArrayList(componentList));
 
         if (cb_Component.getItems().isEmpty()) {
             cb_Component.setPromptText("Kein Bauteil vorhanden");
@@ -202,9 +210,8 @@ public class Project_ConstructionMaterialController implements Initializable {
                     amount,
                     price));
             refreshListView();
-        }
-        else{
-            new Alert(Alert.AlertType.ERROR,errorMessage).showAndWait();
+        } else {
+            new Alert(Alert.AlertType.ERROR, errorMessage).showAndWait();
         }
     }
 
