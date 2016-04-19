@@ -2,6 +2,7 @@ package at.plakolb.calculationlogic.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class Assembly implements Serializable {
     private Long id;
     @OneToOne
     private Product product;
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     private Component component;
     @ManyToOne
     private Project project;

@@ -1,10 +1,10 @@
 package at.plakolb.calculationlogic.entity;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,7 +47,7 @@ public class Component implements Serializable {
     private Product product;
     @ManyToOne
     private Project project;
-    @OneToMany(mappedBy = "component")
+    @OneToMany(mappedBy = "component",cascade = CascadeType.PERSIST)
     private List<Assembly> assemblys = new ArrayList<>();
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date creationDate;

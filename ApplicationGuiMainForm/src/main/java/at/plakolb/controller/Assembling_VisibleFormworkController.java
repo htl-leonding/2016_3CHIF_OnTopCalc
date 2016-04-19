@@ -202,12 +202,14 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
                     component.setWidthComponent(product.getWidthProduct());
                     component.setHeightComponent(product.getHeightProduct());
                     component.setProduct(product);
+                    component.setUnit(product.getUnit());
                 } else {
                     component.setDescription("");
                     component.setLengthComponent(null);
                     component.setWidthComponent(null);
                     component.setHeightComponent(null);
                     component.setProduct(null);
+                    component.setUnit(null);
                 }
                 component.setCategory(category);
                 component.setComponentType("Produkt");

@@ -8,6 +8,7 @@ import at.plakolb.calculationlogic.entity.Assembly;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -64,6 +65,8 @@ public class Project_ConstructionMaterialController implements Initializable {
     private TableColumn tc_Button;
 
     private List<Assembly> assemblyList;
+    @FXML
+    private Label lb_TotalCosts;
 
     /**
      * Initializes the controller class.
@@ -151,6 +154,7 @@ public class Project_ConstructionMaterialController implements Initializable {
         tv_Assembly.setItems(FXCollections.observableArrayList(assemblyList));
         tv_Assembly.getColumns().get(0).setVisible(false);
         tv_Assembly.getColumns().get(0).setVisible(true);
+        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(getTotalCosts(assemblyList)) + " €");
     }
 
     public void refreshComponents() {
@@ -165,12 +169,43 @@ public class Project_ConstructionMaterialController implements Initializable {
 
     @FXML
     private void addMaterial(ActionEvent event) {
-        assemblyList.add(new Assembly(cb_Product.getSelectionModel().getSelectedItem(),
-                cb_Component.getSelectionModel().getSelectedItem(),
-                ProjectViewController.getOpenedProject(),
-                Integer.parseInt(tf_Amount.getText()),
-                Double.parseDouble(tf_Price.getText())));
-        refreshListView();
+
+        int amount = 0;
+        double price = 0;
+        String errorMessage = "";
+
+        if (cb_Product.getSelectionModel().getSelectedItem() == null) {
+            errorMessage += "Es wurde kein Produkt ausgewählt.\n";
+        }
+        if (cb_Component.getSelectionModel().getSelectedItem() == null) {
+            errorMessage += "Es wurde kein Bauteil ausgewählt.\n";
+        }
+
+        try {
+            amount = Integer.parseInt(tf_Amount.getText());
+            price = Double.parseDouble(tf_Price.getText());
+
+            if (amount == 0) {
+                errorMessage += "Die Anzahl muss größer als 0 sein.\n";
+            }
+            if (amount < 0 || price < 0) {
+                errorMessage += "Negative Zahlen sind nicht erlaubt.\n";
+            }
+        } catch (NumberFormatException e) {
+            errorMessage += "Die eingegebenen Zahlen sind nicht gültig.\n";
+        }
+
+        if (errorMessage.equals("")) {
+            assemblyList.add(new Assembly(cb_Product.getSelectionModel().getSelectedItem(),
+                    cb_Component.getSelectionModel().getSelectedItem(),
+                    ProjectViewController.getOpenedProject(),
+                    amount,
+                    price));
+            refreshListView();
+        }
+        else{
+            new Alert(Alert.AlertType.ERROR,errorMessage).showAndWait();
+        }
     }
 
     public void persist() {
@@ -178,10 +213,20 @@ public class Project_ConstructionMaterialController implements Initializable {
         AssemblyController assemblyController = new AssemblyController();
 
         for (Assembly assembly : assemblyList) {
-            if (assembly.getId() != null) {
+            if (assembly.getId() == null) {
                 assemblyController.create(assembly);
             }
         }
     }
 
+    private double getTotalCosts(List<Assembly> assemblys) {
+
+        double totalCosts = 0;
+
+        for (Assembly assembly : assemblys) {
+            totalCosts += assembly.getPrice() * assembly.getNumberOfComponents();
+        }
+
+        return totalCosts;
+    }
 }

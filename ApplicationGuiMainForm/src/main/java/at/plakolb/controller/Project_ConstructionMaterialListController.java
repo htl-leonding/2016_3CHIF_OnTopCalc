@@ -260,7 +260,7 @@ public class Project_ConstructionMaterialListController implements Initializable
             if (tf_Amount.getText().isEmpty() || tf_Amount.getText().equals("0") || tf_Amount.getText().contains("-")) {
                 new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine Anzahl an die größer als null ist.").showAndWait();
             } else {
-                Component component = new Component("",
+                Component component = new Component("Konstruktion",
                         product.getWidthProduct(),
                         product.getHeightProduct(),
                         product.getLengthProduct(),

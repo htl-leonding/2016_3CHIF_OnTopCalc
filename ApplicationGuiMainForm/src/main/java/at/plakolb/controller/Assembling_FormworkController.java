@@ -26,7 +26,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -280,18 +279,19 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 component.setWidthComponent(product.getWidthProduct());
                 component.setHeightComponent(product.getHeightProduct());
                 component.setProduct(product);
+                component.setUnit(product.getUnit());
             } else {
                 component.setDescription("");
                 component.setLengthComponent(null);
                 component.setWidthComponent(null);
                 component.setHeightComponent(null);
                 component.setProduct(null);
+                component.setUnit(null);
             }
             component.setCategory(category);
             component.setComponentType("Produkt");
             component.setProject(project);
             component.setNumberOfProducts((int) formwork.getWorth());
-            component.setUnit(unit);
             component.setPriceComponent(price);
 
             if (!ProjectViewController.isProjectOpened()) {

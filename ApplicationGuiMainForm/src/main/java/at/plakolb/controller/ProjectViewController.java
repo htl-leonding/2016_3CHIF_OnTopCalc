@@ -192,11 +192,11 @@ public class ProjectViewController extends Observable implements Initializable {
             }
 
             Project_ResultAreaController.getInstance().persist();
+            Project_ConstructionMaterialController.getInstance().persist();
             Project_ConstructionMaterialListController.getInstance().persist();
             Project_TransportController.getInstance().persist();
             AssemblingController.getInstance().persist();
             Project_ColourController.getInstance().persist();
-            Project_ConstructionMaterialController.getInstance().persist();
 
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;

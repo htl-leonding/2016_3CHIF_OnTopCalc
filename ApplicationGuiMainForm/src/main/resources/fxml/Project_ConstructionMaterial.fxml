@@ -28,7 +28,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="boldLettering" text="0.00€">
+                  <Label id="boldLettering" fx:id="lb_TotalCosts" text="0 €">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -75,7 +75,10 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#addMaterial" text="Material hinzufügen" />
+                  <Button mnemonicParsing="false" onAction="#addMaterial" text="Material hinzufügen">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
                </children>
             </HBox>
          </children>
