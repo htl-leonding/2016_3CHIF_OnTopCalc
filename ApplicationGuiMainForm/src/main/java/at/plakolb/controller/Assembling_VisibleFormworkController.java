@@ -186,40 +186,37 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         WorthController worthController = new WorthController();
 
         Category category = new CategoryController().findCategoryByShortTerm("SS");
-        if (category != null) {
-            try {
-                ComponentController componentController = new ComponentController();
-                Product product = cb_Product.getSelectionModel().getSelectedItem();
-                Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(ProjectViewController.getOpenedProject().getId(), "SS", category.getId());
+        ComponentController componentController = new ComponentController();
+        Product product = cb_Product.getSelectionModel().getSelectedItem();
+        Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(ProjectViewController.getOpenedProject().getId(), "Produkt", category.getId());
 
-                if (component == null) {
-                    component = new Component();
-                }
-
-                if (product != null) {
-                    component.setDescription(product.getName());
-                    component.setLengthComponent(product.getLengthProduct());
-                    component.setWidthComponent(product.getWidthProduct());
-                    component.setHeightComponent(product.getHeightProduct());
-                    component.setProduct(product);
-                    component.setUnit(product.getUnit());
-                } else {
-                    component.setDescription("");
-                    component.setLengthComponent(null);
-                    component.setWidthComponent(null);
-                    component.setHeightComponent(null);
-                    component.setProduct(null);
-                    component.setUnit(null);
-                }
-                component.setCategory(category);
-                component.setComponentType("Produkt");
-                component.setProject(ProjectViewController.getOpenedProject());
-                component.setNumberOfProducts((int) visibleFormwork.getWorth());
-                component.setPriceComponent(pricePerSquare);
-                componentController.edit(component);
-            } catch (Exception ex) {
-                Logger.getLogger(Assembling_VisibleFormworkController.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if (component == null) {
+                component = new Component();
             }
+
+            if (product != null) {
+                component.setDescription(product.getName());
+                component.setLengthComponent(product.getLengthProduct());
+                component.setWidthComponent(product.getWidthProduct());
+                component.setHeightComponent(product.getHeightProduct());
+                component.setProduct(product);
+                component.setUnit(product.getUnit());
+            } else {
+                component.setDescription("SichtbareSchalung");
+                component.setLengthComponent(null);
+                component.setWidthComponent(null);
+                component.setHeightComponent(null);
+                component.setProduct(null);
+                component.setUnit(null);
+            }
+            component.setCategory(category);
+            component.setComponentType("Produkt");
+            component.setProject(ProjectViewController.getOpenedProject());
+            component.setNumberOfProducts((int) visibleFormwork.getWorth());
+            component.setPriceComponent(pricePerSquare);
+        } catch (Exception ex) {
+            Logger.getLogger(Assembling_VisibleFormworkController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (!ProjectViewController.isProjectOpened()) {
@@ -231,6 +228,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             assemblingCosts.setProject(ProjectViewController.getOpenedProject());
             totalCosts.setProject(ProjectViewController.getOpenedProject());
             workerCosts.setProject(ProjectViewController.getOpenedProject());
+            component.setProject(ProjectViewController.getOpenedProject());
 
             worthController.create(abatementPercent);
             worthController.create(workerCosts);
@@ -240,6 +238,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             worthController.create(productCosts);
             worthController.create(assemblingCosts);
             worthController.create(totalCosts);
+            componentController.create(component);
         } else {
             try {
                 worthController.edit(abatementPercent);
@@ -250,6 +249,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
                 worthController.edit(productCosts);
                 worthController.edit(assemblingCosts);
                 worthController.edit(totalCosts);
+                componentController.edit(component);
             } catch (Exception e) {
             }
         }

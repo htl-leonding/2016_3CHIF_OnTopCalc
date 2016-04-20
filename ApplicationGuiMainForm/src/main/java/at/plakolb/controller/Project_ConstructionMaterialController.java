@@ -161,6 +161,7 @@ public class Project_ConstructionMaterialController implements Initializable {
 
     public void refreshComponents() {
         
+        componentList = new LinkedList<>();
         componentList.addAll(Project_ConstructionMaterialListController.getInstance().getComponents());
         if (Assembling_FormworkController.getInstance().getComponent().getProduct() != null) {
             componentList.add(Assembling_FormworkController.getInstance().getComponent());
@@ -204,8 +205,12 @@ public class Project_ConstructionMaterialController implements Initializable {
         }
 
         if (errorMessage.equals("")) {
+            
+            Component component = cb_Component.getSelectionModel().getSelectedItem();
+            component.setProject(ProjectViewController.getOpenedProject());
+            
             assemblyList.add(new Assembly(cb_Product.getSelectionModel().getSelectedItem(),
-                    cb_Component.getSelectionModel().getSelectedItem(),
+                    component,
                     ProjectViewController.getOpenedProject(),
                     amount,
                     price));

@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -126,14 +125,13 @@ public class Assembling_FoilController implements Initializable, Observer {
         try {
             WorthController worthController = new WorthController();
             Product product = cb_Product.getSelectionModel().getSelectedItem();
-            Project project = ProjectViewController.getOpenedProject();
 
             ComponentController componentController = new ComponentController();
             CategoryController categoryController = new CategoryController();
 
             Category category = categoryController.findCategoryByShortTerm("F");
             Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(
-                    project.getId(),
+                    ProjectViewController.getOpenedProject().getId(),
                     "Produkt",
                     category.getId());
 
@@ -146,14 +144,19 @@ public class Assembling_FoilController implements Initializable, Observer {
                 component.setWidthComponent(product.getWidthProduct());
                 component.setHeightComponent(product.getHeightProduct());
                 component.setProduct(product);
-                component.setCategory(category);
-                component.setComponentType("Produkt");
-                component.setProject(project);
-                component.setNumberOfProducts((int) foil.getWorth());
                 component.setUnit(product.getUnit());
-                component.setPriceComponent(pricePerSquare);
+            } else {
+                component.setDescription("Folie");
+                component.setLengthComponent(null);
+                component.setWidthComponent(null);
+                component.setHeightComponent(null);
+                component.setProduct(null);
+                component.setUnit(null);
             }
-            
+            component.setComponentType("Produkt");
+            component.setNumberOfProducts((int) foil.getWorth());
+            component.setPriceComponent(pricePerSquare);
+            component.setCategory(category);
 
             if (!ProjectViewController.isProjectOpened()) {
                 abatementArea.setProject(ProjectViewController.getOpenedProject());
@@ -164,6 +167,7 @@ public class Assembling_FoilController implements Initializable, Observer {
                 foil.setProject(ProjectViewController.getOpenedProject());
                 workerCosts.setProject(ProjectViewController.getOpenedProject());
                 totalCosts.setProject(ProjectViewController.getOpenedProject());
+                component.setProject(ProjectViewController.getOpenedProject());
 
                 worthController.create(abatementArea);
                 worthController.create(assemblingCosts);
@@ -234,7 +238,7 @@ public class Assembling_FoilController implements Initializable, Observer {
             lb_montageCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
             lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
-            
+
             tf_blend.setText(UtilityFormat.getStringForTextField(abatementPercent));
             tf_time.setText(UtilityFormat.getStringForTextField(assemblingDuration));
             tf_workerCosts.setText(UtilityFormat.getStringForTextField(workerCosts));
@@ -254,17 +258,17 @@ public class Assembling_FoilController implements Initializable, Observer {
 
         //Produktkosten
         //Alte Formel-ID: KPF
-        productCosts.setWorth(pricePerSquare*foil.getWorth());
+        productCosts.setWorth(pricePerSquare * foil.getWorth());
         lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
-        
+
         //Montage Kosten
         //Alte Formel-ID: KMF
-        assemblingCosts.setWorth(workerCosts.getWorth()*assemblingDuration.getWorth());
+        assemblingCosts.setWorth(workerCosts.getWorth() * assemblingDuration.getWorth());
         lb_montageCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
-        
+
         //Totalcosts
         //Alte Formel-ID: GKF
-        totalCosts.setWorth(productCosts.getWorth()+assemblingCosts.getWorth());
+        totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
         lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
     }
 
