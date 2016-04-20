@@ -170,7 +170,7 @@ public class ComponentController {
 
     public Component findColorByProjectId(long projectId) {
         try {
-            return (Component) em.createNativeQuery("select * from Component c where c.project_id = ? and c.componenttype = 'Color'", Component.class).
+            return (Component) em.createNativeQuery("select * from Component c where c.project_id = ? and c.componenttype = 'Farbe'", Component.class).
                     setParameter(1, projectId).
                     getSingleResult();
         } catch (Exception ex) {
@@ -182,7 +182,7 @@ public class ComponentController {
     
     public Component findComponentColorByProjectId(long projectId) {
         try {
-            return (Component) em.createNativeQuery("select * from Component c where c.project_id = ? and c.componenttype = 'Color'", Component.class).
+            return (Component) em.createNativeQuery("select * from Component c where c.project_id = ? and c.componenttype = 'Farbe'", Component.class).
                     setParameter(1, projectId).
                     getSingleResult();
         } catch (Exception ex) {

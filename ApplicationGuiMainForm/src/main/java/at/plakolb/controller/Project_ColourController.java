@@ -87,13 +87,12 @@ public class Project_ColourController implements Initializable {
 
         cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.COLOR)));
         ParameterController parameterController = new ParameterController();
-       
         additionalColourFactor = new Worth(parameterController.findParameterPByShortTerm("FK"));
          profiHour = new Worth(parameterController.findParameterPByShortTerm("PMFP"));
         timeofPainting = new Worth(parameterController.findParameterPByShortTerm("ZPFA"));
         paintArea = new Worth(parameterController.findParameterPByShortTerm("FMM"));
         productCost = new Worth(parameterController.findParameterPByShortTerm("KPFarbe"));
-        montageCost = new Worth(parameterController.findParameterPByShortTerm("PMFP"));
+        montageCost = new Worth(parameterController.findParameterPByShortTerm("KMFarbe"));
         paintLiter = new Worth(parameterController.findParameterPByShortTerm("FML"));
         totalCost = new Worth(parameterController.findParameterPByShortTerm("GKFarbe"));
         
@@ -160,6 +159,7 @@ public class Project_ColourController implements Initializable {
         Project openedProject = ProjectViewController.getOpenedProject();
         
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
+
         timeofPainting = (worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) : timeofPainting;
         /*combobox*/
         
@@ -169,15 +169,15 @@ public class Project_ColourController implements Initializable {
         totalCost = (worthController.findWorthByShortTermAndProjectId("GKFarbe", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("GKFarbe", openedProject.getId()) : totalCost;
         paintLiter = (worthController.findWorthByShortTermAndProjectId("FML", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("FML", openedProject.getId()) : paintLiter;
         productCost = (worthController.findWorthByShortTermAndProjectId("KPFarbe", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KPFarbe", openedProject.getId()) : productCost;
-        montageCost = (worthController.findWorthByShortTermAndProjectId("PMFP", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("PMFP", openedProject.getId()) : montageCost;
-        System.out.println(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork());
+        montageCost = (worthController.findWorthByShortTermAndProjectId("KMFarbe", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KMFarbe", openedProject.getId()) : montageCost;
         Category category = new CategoryController().findCategoryByShortTerm("X");
+       
         component = new ComponentController().findColorByProjectId(ProjectViewController.getOpenedProject().getId());
-
         if (component != null) {
+            System.out.println(component.getComponentType());
             cb_Product.getSelectionModel().select(component.getProduct());            
         }
-        lb_VisibleFormwork.setText(UtilityFormat.getStringForTextField(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
+        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
         tf_ProfiHour.setText(UtilityFormat.getStringForTextField(profiHour));
         tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(additionalColourFactor));
         tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
