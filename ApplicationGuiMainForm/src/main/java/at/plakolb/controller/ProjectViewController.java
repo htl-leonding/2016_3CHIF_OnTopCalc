@@ -1,6 +1,5 @@
 package at.plakolb.controller;
 
-//import SavestateListener.Utilredo;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
@@ -9,6 +8,7 @@ import at.plakolb.calculationlogic.entity.Project;
 import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -46,6 +46,8 @@ public class ProjectViewController extends Observable implements Initializable {
     private Tab tab_Montage;
     @FXML
     private Tab tab_Material;
+    @FXML
+    private Tab tab_MaterialCosts;
 
     private TabPane tb_Assebmling;
 
@@ -89,6 +91,10 @@ public class ProjectViewController extends Observable implements Initializable {
 
         tab_Material.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             Project_ConstructionMaterialController.getInstance().refreshComponents();
+        });
+        
+        tab_MaterialCosts.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            Project_MaterialAndCostController.getInstance().refreshTableView();
         });
     }
 
@@ -217,8 +223,6 @@ public class ProjectViewController extends Observable implements Initializable {
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
             openedProject = null;
-            //TODO
-            //Utilredo.undo();
         }
     }
 

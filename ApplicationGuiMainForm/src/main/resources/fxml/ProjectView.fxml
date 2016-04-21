@@ -97,7 +97,7 @@
                     <fx:include source="Project_Transport.fxml" />
                 </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material- und Kostenliste">
+            <Tab fx:id="tab_MaterialCosts" closable="false" onSelectionChanged="#normalTabSelected" text="Material- und Kostenliste">
                 <content>
                     <fx:include source="Project_MaterialAndCost.fxml" />
                 </content>

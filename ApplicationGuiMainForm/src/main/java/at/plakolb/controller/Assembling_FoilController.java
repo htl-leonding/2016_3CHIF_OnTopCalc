@@ -124,53 +124,33 @@ public class Assembling_FoilController implements Initializable, Observer {
             component = new Component();
         }
     }
-    
-    public Component getComponent(){
+
+    public Component getComponent() {
         return component;
     }
 
-    public void persist() {
-        try {
-            WorthController worthController = new WorthController();
-            ComponentController componentController = new ComponentController();
+    public static Assembling_FoilController getInstance() {
+        return instance;
+    }
 
-            if (!ProjectViewController.isProjectOpened()) {
-                abatementArea.setProject(ProjectViewController.getOpenedProject());
-                assemblingCosts.setProject(ProjectViewController.getOpenedProject());
-                assemblingDuration.setProject(ProjectViewController.getOpenedProject());
-                productCosts.setProject(ProjectViewController.getOpenedProject());
-                abatementPercent.setProject(ProjectViewController.getOpenedProject());
-                foil.setProject(ProjectViewController.getOpenedProject());
-                workerCosts.setProject(ProjectViewController.getOpenedProject());
-                totalCosts.setProject(ProjectViewController.getOpenedProject());
-                component.setProject(ProjectViewController.getOpenedProject());
+    public void setPricePerSquare() {
+        pricePerSquare = tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.'));
+    }
 
-                worthController.create(abatementArea);
-                worthController.create(assemblingCosts);
-                worthController.create(assemblingDuration);
-                worthController.create(productCosts);
-                worthController.create(abatementPercent);
-                worthController.create(foil);
-                worthController.create(workerCosts);
-                worthController.create(totalCosts);
-                componentController.create(component);
-            } else {
-                try {
-                    worthController.edit(abatementArea);
-                    worthController.edit(assemblingCosts);
-                    worthController.edit(assemblingDuration);
-                    worthController.edit(productCosts);
-                    worthController.edit(abatementPercent);
-                    worthController.edit(foil);
-                    worthController.edit(workerCosts);
-                    worthController.edit(totalCosts);
-                    componentController.edit(component);
-                } catch (Exception e) {
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(Assembling_FormworkController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void setAbatementPercent() {
+        abatementPercent.setWorth(tf_blend.getText().isEmpty() || !tf_blend.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_blend.getText().replace(',', '.')));
+    }
+
+    public void setWorkerCosts() {
+        workerCosts.setWorth(tf_workerCosts.getText().isEmpty() || !tf_workerCosts.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_workerCosts.getText().replace(',', '.')));
+    }
+
+    public void setAssemblingDuration() {
+        assemblingDuration.setWorth(tf_time.getText().isEmpty() || !tf_time.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_time.getText().replace(',', '.')));
     }
 
     public void loadValuesFromDatabase() {
@@ -265,8 +245,52 @@ public class Assembling_FoilController implements Initializable, Observer {
             component.setUnit(null);
         }
 
-        component.setNumberOfProducts((int) foil.getWorth());
+        component.setNumberOfProducts(foil.getWorth());
         component.setPriceComponent(pricePerSquare);
+    }
+
+    public void persist() {
+        try {
+            WorthController worthController = new WorthController();
+            ComponentController componentController = new ComponentController();
+
+            if (!ProjectViewController.isProjectOpened()) {
+                abatementArea.setProject(ProjectViewController.getOpenedProject());
+                assemblingCosts.setProject(ProjectViewController.getOpenedProject());
+                assemblingDuration.setProject(ProjectViewController.getOpenedProject());
+                productCosts.setProject(ProjectViewController.getOpenedProject());
+                abatementPercent.setProject(ProjectViewController.getOpenedProject());
+                foil.setProject(ProjectViewController.getOpenedProject());
+                workerCosts.setProject(ProjectViewController.getOpenedProject());
+                totalCosts.setProject(ProjectViewController.getOpenedProject());
+                component.setProject(ProjectViewController.getOpenedProject());
+
+                worthController.create(abatementArea);
+                worthController.create(assemblingCosts);
+                worthController.create(assemblingDuration);
+                worthController.create(productCosts);
+                worthController.create(abatementPercent);
+                worthController.create(foil);
+                worthController.create(workerCosts);
+                worthController.create(totalCosts);
+                componentController.create(component);
+            } else {
+                try {
+                    worthController.edit(abatementArea);
+                    worthController.edit(assemblingCosts);
+                    worthController.edit(assemblingDuration);
+                    worthController.edit(productCosts);
+                    worthController.edit(abatementPercent);
+                    worthController.edit(foil);
+                    worthController.edit(workerCosts);
+                    worthController.edit(totalCosts);
+                    componentController.edit(component);
+                } catch (Exception e) {
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Assembling_FormworkController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -274,29 +298,5 @@ public class Assembling_FoilController implements Initializable, Observer {
         double ledgeAndRoofArea = Project_ResultAreaController.getInstance().getLedgeAndRoofArea();
         lb_RoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea) + " m²");
         calculate();
-    }
-
-    public static Assembling_FoilController getInstance() {
-        return instance;
-    }
-
-    public void setPricePerSquare() {
-        pricePerSquare = tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.'));
-    }
-
-    public void setAbatementPercent() {
-        abatementPercent.setWorth(tf_blend.getText().isEmpty() || !tf_blend.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_blend.getText().replace(',', '.')));
-    }
-
-    public void setWorkerCosts() {
-        workerCosts.setWorth(tf_workerCosts.getText().isEmpty() || !tf_workerCosts.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_workerCosts.getText().replace(',', '.')));
-    }
-
-    public void setAssemblingDuration() {
-        assemblingDuration.setWorth(tf_time.getText().isEmpty() || !tf_time.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_time.getText().replace(',', '.')));
     }
 }

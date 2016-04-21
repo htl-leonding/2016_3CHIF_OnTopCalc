@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="473.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_MaterialAndCostController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_MaterialAndCostController">
    <children>
-      <HBox alignment="CENTER" layoutX="200.0" layoutY="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <VBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
-            <TableView prefHeight="350.0">
-              <columns>
-                <TableColumn prefWidth="90.0" text="Kategorie" />
-                <TableColumn prefWidth="90.0" text="Bauteil" />
-                  <TableColumn prefWidth="90.0" text="Breite in cm" />
-                  <TableColumn prefWidth="90.0" text="Höhe in cm" />
-                  <TableColumn prefWidth="90.0" text="Länge in m" />
-                  <TableColumn prefWidth="90.0" text="Anzahl" />
-                  <TableColumn prefWidth="90.0" text="Einheit" />
-                  <TableColumn prefWidth="95.0" text="Preis/Einheit" />
-                  <TableColumn prefWidth="90.0" text="Gesamtpreis" />
-              </columns>
-            </TableView>
+            <Label alignment="CENTER" text="Material- und Kostenliste" textFill="#3c84ff">
+               <font>
+                  <Font name="Berlin Sans FB" size="36.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER">
+               <children>
+                  <TableView fx:id="tv_Materials" prefHeight="350.0">
+                    <columns>
+                      <TableColumn fx:id="tc_Category" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Kategorie" />
+                      <TableColumn fx:id="tc_Component" minWidth="160.0" prefWidth="160.0" style="-fx-alignment: center;" text="Bauteil" />
+                        <TableColumn fx:id="tc_Width" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Breite in cm" />
+                        <TableColumn fx:id="tc_Height" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Höhe in cm" />
+                        <TableColumn fx:id="tc_Length" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Länge in m" />
+                        <TableColumn fx:id="tc_Amount" minWidth="70.0" prefWidth="70.0" style="-fx-alignment: center;" text="Anzahl" />
+                        <TableColumn fx:id="tc_Unit" minWidth="70.0" prefWidth="70.0" style="-fx-alignment: center;" text="Einheit" />
+                        <TableColumn fx:id="tc_PricePerUnit" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Preis/Einheit" />
+                        <TableColumn fx:id="tc_TotalCosts" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Gesamtpreis" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
          </children>
-      </HBox>
-      <Label alignment="CENTER" layoutX="182.0" text="Material- und Kostenliste" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <font>
-            <Font name="Berlin Sans FB" size="36.0" />
-         </font>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
-      </Label>
+      </VBox>
    </children>
 </AnchorPane>

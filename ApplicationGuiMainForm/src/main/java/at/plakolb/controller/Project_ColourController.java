@@ -128,8 +128,8 @@ public class Project_ColourController implements Initializable {
             component = new Component();
         }
     }
-    
-    public Component getComponent(){
+
+    public Component getComponent() {
         return component;
     }
 
@@ -201,46 +201,6 @@ public class Project_ColourController implements Initializable {
         lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCost));
     }
 
-    public void persist() {
-        WorthController worthController = new WorthController();
-        ComponentController componentController = new ComponentController();
-
-        if (!ProjectViewController.isProjectOpened()) {
-            profiHour.setProject(ProjectViewController.getOpenedProject());
-            additionalColourFactor.setProject(ProjectViewController.getOpenedProject());
-            timeofPainting.setProject(ProjectViewController.getOpenedProject());
-            paintArea.setProject(ProjectViewController.getOpenedProject());
-            productCost.setProject(ProjectViewController.getOpenedProject());
-            montageCost.setProject(ProjectViewController.getOpenedProject());
-            paintLiter.setProject(ProjectViewController.getOpenedProject());
-            totalCost.setProject(ProjectViewController.getOpenedProject());
-            component.setProject(ProjectViewController.getOpenedProject());
-
-            worthController.create(profiHour);
-            worthController.create(additionalColourFactor);
-            worthController.create(timeofPainting);
-            worthController.create(paintArea);
-            worthController.create(productCost);
-            worthController.create(montageCost);
-            worthController.create(paintLiter);
-            worthController.create(totalCost);
-            componentController.create(component);
-        } else {
-            try {
-                worthController.edit(profiHour);
-                worthController.edit(additionalColourFactor);
-                worthController.edit(timeofPainting);
-                worthController.edit(paintArea);
-                worthController.edit(productCost);
-                worthController.edit(montageCost);
-                worthController.edit(paintLiter);
-                worthController.edit(totalCost);
-                componentController.edit(component);
-            } catch (Exception e) {
-            }
-        }
-    }
-
     public void calculateValues() {
         //Benötigte Farbe in m²
         //Alte Formel-ID: FMM
@@ -289,7 +249,47 @@ public class Project_ColourController implements Initializable {
 
         component.setPriceComponent(tf_PricePerLiter.getText().isEmpty() || !tf_PricePerLiter.getText().matches("[0-9]*.[0-9]*")
                 ? null : Double.valueOf(tf_PricePerLiter.getText()));
-        component.setNumberOfProducts((int) paintLiter.getWorth());
+        component.setNumberOfProducts(paintLiter.getWorth());
 
+    }
+
+    public void persist() {
+        WorthController worthController = new WorthController();
+        ComponentController componentController = new ComponentController();
+
+        if (!ProjectViewController.isProjectOpened()) {
+            profiHour.setProject(ProjectViewController.getOpenedProject());
+            additionalColourFactor.setProject(ProjectViewController.getOpenedProject());
+            timeofPainting.setProject(ProjectViewController.getOpenedProject());
+            paintArea.setProject(ProjectViewController.getOpenedProject());
+            productCost.setProject(ProjectViewController.getOpenedProject());
+            montageCost.setProject(ProjectViewController.getOpenedProject());
+            paintLiter.setProject(ProjectViewController.getOpenedProject());
+            totalCost.setProject(ProjectViewController.getOpenedProject());
+            component.setProject(ProjectViewController.getOpenedProject());
+
+            worthController.create(profiHour);
+            worthController.create(additionalColourFactor);
+            worthController.create(timeofPainting);
+            worthController.create(paintArea);
+            worthController.create(productCost);
+            worthController.create(montageCost);
+            worthController.create(paintLiter);
+            worthController.create(totalCost);
+            componentController.create(component);
+        } else {
+            try {
+                worthController.edit(profiHour);
+                worthController.edit(additionalColourFactor);
+                worthController.edit(timeofPainting);
+                worthController.edit(paintArea);
+                worthController.edit(productCost);
+                worthController.edit(montageCost);
+                worthController.edit(paintLiter);
+                worthController.edit(totalCost);
+                componentController.edit(component);
+            } catch (Exception e) {
+            }
+        }
     }
 }

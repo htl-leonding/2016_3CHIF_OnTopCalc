@@ -35,7 +35,7 @@ public class Component implements Serializable {
     private Double heightComponent;
     private Double lengthComponent;
     private Double priceComponent;
-    private int numberOfProducts;
+    private Double numberOfProducts;
     private Double tailoringHours;
     private Double tailoringPricePerHour;
     private String componentType;
@@ -56,7 +56,7 @@ public class Component implements Serializable {
         creationDate = new Date();
     }
 
-    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, int numberOfProducts, Category category, Unit unit, Product product, Project project) {
+    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, Double numberOfProducts, Category category, Unit unit, Product product, Project project) {
         this();
         this.description = description;
         this.widthComponent = widthComponent;
@@ -70,7 +70,7 @@ public class Component implements Serializable {
         setProject(project);
     }
 
-    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, int numberOfProducts, Double tailoringHours, Double tailoringPricePerHour, String componentType, Category category, Unit unit, Product product, Project project) {
+    public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, Double numberOfProducts, Double tailoringHours, Double tailoringPricePerHour, String componentType, Category category, Unit unit, Product product, Project project) {
         this();
         this.description = description;
         this.widthComponent = widthComponent;
@@ -87,7 +87,7 @@ public class Component implements Serializable {
         setProject(project);
     }
 
-    public Component(String description, Double priceComponent, int numberOfProducts, Category category, Unit unit, Product product, Project project) {
+    public Component(String description, Double priceComponent, Double numberOfProducts, Category category, Unit unit, Product product, Project project) {
         this();
         this.description = description;
         this.priceComponent = priceComponent;
@@ -146,11 +146,11 @@ public class Component implements Serializable {
         this.lengthComponent = lengthComponent;
     }
 
-    public int getNumberOfProducts() {
+    public Double getNumberOfProducts() {
         return numberOfProducts;
     }
 
-    public void setNumberOfProducts(int numberOfProducts) {
+    public void setNumberOfProducts(Double numberOfProducts) {
         this.numberOfProducts = numberOfProducts;
     }
 

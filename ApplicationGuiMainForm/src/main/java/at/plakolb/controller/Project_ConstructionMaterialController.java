@@ -168,7 +168,7 @@ public class Project_ConstructionMaterialController implements Initializable {
 
     public void refreshComponents() {
         
-        componentList = new LinkedList<>();
+        componentList.clear();
         componentList.addAll(Project_ConstructionMaterialListController.getInstance().getComponents());
         
         if (Assembling_FormworkController.getInstance().getComponent().getProduct() != null) {
@@ -183,7 +183,7 @@ public class Project_ConstructionMaterialController implements Initializable {
             componentList.add(Assembling_FoilController.getInstance().getComponent());
         }
 
-//      Macht keinen Sinn        
+//      würde keinen Sinn machen       
 //        if (Project_ColourController.getInstance().getComponent().getProduct() != null) {
 //            componentList.add(Project_ColourController.getInstance().getComponent());
 //        }

@@ -75,34 +75,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
 
     private Component component;
 
-    private void setPrice(String price) {
-        price = price.replace(',', '.');
-        if (price.isEmpty() || !price.matches("[0-9]*.[0-9]*") || Double.valueOf(price) < 0) {
-            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
-        } else {
-            this.price = Double.valueOf(price);
-        }
-    }
-
-    private void setBlend() {
-        blend.setWorth(tf_Blend.getText().isEmpty() || !tf_Blend.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_Blend.getText().replace(',', '.')));
-    }
-
-    private void setWage() {
-        wage.setWorth(tf_Wage.getText().isEmpty() || !tf_Wage.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_Wage.getText().replace(',', '.')));
-    }
-
-    private void setTime() {
-        time.setWorth(tf_Time.getText().isEmpty() || !tf_Time.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_Time.getText().replace(',', '.')));
-    }
-
-    public Component getComponent() {
-        return component;
-    }
-
     /**
      * Initializes the controller class.
      *
@@ -142,12 +114,39 @@ public class Assembling_FormworkController implements Initializable, Observer {
             setBlend();
             calculate();
         });
-        if (ProjectViewController.getOpenedProject()!= null) {
+        if (ProjectViewController.getOpenedProject() != null) {
             loadValuesFromDatabase();
-        }
-        else{
+        } else {
             component = new Component();
         }
+    }
+
+    private void setPrice(String price) {
+        price = price.replace(',', '.');
+        if (price.isEmpty() || !price.matches("[0-9]*.[0-9]*") || Double.valueOf(price) < 0) {
+            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
+        } else {
+            this.price = Double.valueOf(price);
+        }
+    }
+
+    private void setBlend() {
+        blend.setWorth(tf_Blend.getText().isEmpty() || !tf_Blend.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_Blend.getText().replace(',', '.')));
+    }
+
+    private void setWage() {
+        wage.setWorth(tf_Wage.getText().isEmpty() || !tf_Wage.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_Wage.getText().replace(',', '.')));
+    }
+
+    private void setTime() {
+        time.setWorth(tf_Time.getText().isEmpty() || !tf_Time.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_Time.getText().replace(',', '.')));
+    }
+
+    public Component getComponent() {
+        return component;
     }
 
     public void loadValuesFromDatabase() {
@@ -164,7 +163,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
             ComponentController componentController = new ComponentController();
             CategoryController categoryController = new CategoryController();
             Category category = categoryController.findCategoryByShortTerm("S");
-            
+
             component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                     "Produkt", category.getId());
 
@@ -282,7 +281,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
             component.setProduct(null);
             component.setUnit(null);
         }
-        component.setNumberOfProducts((int) formwork.getWorth());
+        component.setNumberOfProducts(formwork.getWorth());
         component.setPriceComponent(price);
     }
 

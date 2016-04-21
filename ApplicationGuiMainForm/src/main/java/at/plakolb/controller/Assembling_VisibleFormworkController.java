@@ -191,46 +191,6 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(visibleFormwork));
     }
 
-    public void persistVisibleFormwork() {
-        WorthController worthController = new WorthController();
-        ComponentController componentController = new ComponentController();
-
-        if (!ProjectViewController.isProjectOpened()) {
-            abatementPercent.setProject(ProjectViewController.getOpenedProject());
-            abatementArea.setProject(ProjectViewController.getOpenedProject());
-            visibleFormwork.setProject(ProjectViewController.getOpenedProject());
-            productCosts.setProject(ProjectViewController.getOpenedProject());
-            assemblingDuration.setProject(ProjectViewController.getOpenedProject());
-            assemblingCosts.setProject(ProjectViewController.getOpenedProject());
-            totalCosts.setProject(ProjectViewController.getOpenedProject());
-            workerCosts.setProject(ProjectViewController.getOpenedProject());
-            component.setProject(ProjectViewController.getOpenedProject());
-
-            worthController.create(abatementPercent);
-            worthController.create(workerCosts);
-            worthController.create(assemblingDuration);
-            worthController.create(abatementArea);
-            worthController.create(visibleFormwork);
-            worthController.create(productCosts);
-            worthController.create(assemblingCosts);
-            worthController.create(totalCosts);
-            componentController.create(component);
-        } else {
-            try {
-                worthController.edit(abatementPercent);
-                worthController.edit(workerCosts);
-                worthController.edit(assemblingDuration);
-                worthController.edit(abatementArea);
-                worthController.edit(visibleFormwork);
-                worthController.edit(productCosts);
-                worthController.edit(assemblingCosts);
-                worthController.edit(totalCosts);
-                componentController.edit(component);
-            } catch (Exception e) {
-            }
-        }
-    }
-
     private void calculateFormwork() {
         //Verschnittsfläche
         //Alte Formel-ID: VSS
@@ -274,8 +234,48 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             component.setProduct(null);
             component.setUnit(null);
         }
-        component.setNumberOfProducts((int) visibleFormwork.getWorth());
+        component.setNumberOfProducts(visibleFormwork.getWorth());
         component.setPriceComponent(pricePerSquare);
+    }
+
+    public void persistVisibleFormwork() {
+        WorthController worthController = new WorthController();
+        ComponentController componentController = new ComponentController();
+
+        if (!ProjectViewController.isProjectOpened()) {
+            abatementPercent.setProject(ProjectViewController.getOpenedProject());
+            abatementArea.setProject(ProjectViewController.getOpenedProject());
+            visibleFormwork.setProject(ProjectViewController.getOpenedProject());
+            productCosts.setProject(ProjectViewController.getOpenedProject());
+            assemblingDuration.setProject(ProjectViewController.getOpenedProject());
+            assemblingCosts.setProject(ProjectViewController.getOpenedProject());
+            totalCosts.setProject(ProjectViewController.getOpenedProject());
+            workerCosts.setProject(ProjectViewController.getOpenedProject());
+            component.setProject(ProjectViewController.getOpenedProject());
+
+            worthController.create(abatementPercent);
+            worthController.create(workerCosts);
+            worthController.create(assemblingDuration);
+            worthController.create(abatementArea);
+            worthController.create(visibleFormwork);
+            worthController.create(productCosts);
+            worthController.create(assemblingCosts);
+            worthController.create(totalCosts);
+            componentController.create(component);
+        } else {
+            try {
+                worthController.edit(abatementPercent);
+                worthController.edit(workerCosts);
+                worthController.edit(assemblingDuration);
+                worthController.edit(abatementArea);
+                worthController.edit(visibleFormwork);
+                worthController.edit(productCosts);
+                worthController.edit(assemblingCosts);
+                worthController.edit(totalCosts);
+                componentController.edit(component);
+            } catch (Exception e) {
+            }
+        }
     }
 
     @Override

@@ -264,8 +264,8 @@ public class Project_ConstructionMaterialListController implements Initializable
                         product.getWidthProduct(),
                         product.getHeightProduct(),
                         product.getLengthProduct(),
-                        product.getPriceUnit() * Integer.parseInt(tf_Amount.getText()),
-                        Integer.parseInt(tf_Amount.getText()),
+                        product.getPriceUnit() * Double.parseDouble(tf_Amount.getText()),
+                        Double.parseDouble(tf_Amount.getText()),
                         category,
                         product.getUnit(),
                         product,
@@ -278,7 +278,7 @@ public class Project_ConstructionMaterialListController implements Initializable
                 components.add(component);
             }
         } catch (NumberFormatException e) {
-            new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur ganze Zahlen enthalten").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur Zahlen enthalten").showAndWait();
         }
 
         refreshTable();

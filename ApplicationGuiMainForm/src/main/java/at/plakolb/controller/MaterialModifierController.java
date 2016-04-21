@@ -125,7 +125,7 @@ public class MaterialModifierController implements Initializable {
                 DecimalFormat decimalFormat = new DecimalFormat("#.####");
                 decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
                 if (!tf_PriceUnit.getText().isEmpty() && !tf_Count.getText().isEmpty() && !tf_Count.getText().contains("-")) {
-                    tf_TotalPrice.setText(decimalFormat.format(tryParseDouble(tf_PriceUnit.getText()) * tryParseInteger(tf_Count.getText())));
+                    tf_TotalPrice.setText(decimalFormat.format(tryParseDouble(tf_PriceUnit.getText()) * tryParseDouble(tf_Count.getText())));
                 } else {
                     tf_TotalPrice.setText("0");
                 }
@@ -140,7 +140,7 @@ public class MaterialModifierController implements Initializable {
                 DecimalFormat decimalFormat = new DecimalFormat("#.####");
                 decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
                 if (!tf_PriceUnit.getText().isEmpty() && !tf_Count.getText().isEmpty() && !tf_PriceUnit.getText().contains("-")) {
-                    tf_TotalPrice.setText(decimalFormat.format(tryParseDouble(tf_PriceUnit.getText()) * tryParseInteger(tf_Count.getText())));
+                    tf_TotalPrice.setText(decimalFormat.format(tryParseDouble(tf_PriceUnit.getText()) * tryParseDouble(tf_Count.getText())));
                 } else {
                     tf_TotalPrice.setText("0");
                 }
@@ -155,7 +155,7 @@ public class MaterialModifierController implements Initializable {
                 DecimalFormat decimalFormat = new DecimalFormat("#.####");
                 decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
                 if (!tf_TotalPrice.getText().isEmpty() && !tf_Count.getText().isEmpty() && !tf_TotalPrice.getText().contains("-")) {
-                    tf_PriceUnit.setText(decimalFormat.format(tryParseDouble(tf_TotalPrice.getText()) / tryParseInteger(tf_Count.getText())));
+                    tf_PriceUnit.setText(decimalFormat.format(tryParseDouble(tf_TotalPrice.getText()) / tryParseDouble(tf_Count.getText())));
                 } else {
                     tf_PriceUnit.setText("0");
                 }
@@ -183,7 +183,7 @@ public class MaterialModifierController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         try {
-            openedComponent.setNumberOfProducts(tryParseInteger(tf_Count.getText()));
+            openedComponent.setNumberOfProducts(tryParseDouble(tf_Count.getText()));
             openedComponent.setPriceComponent(tryParseDouble(tf_TotalPrice.getText()));
             openedComponent.setTailoringHours(tryParseDouble(tf_CuttingTime.getText()));
             openedComponent.setTailoringPricePerHour(tryParseDouble(tf_CuttingPricePerHour.getText()));
@@ -213,14 +213,6 @@ public class MaterialModifierController implements Initializable {
     private Double tryParseDouble(String numberString) {
         try {
             return Double.parseDouble(numberString);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
-    private Integer tryParseInteger(String numberString) {
-        try {
-            return Integer.parseInt(numberString);
         } catch (NumberFormatException e) {
             return null;
         }
