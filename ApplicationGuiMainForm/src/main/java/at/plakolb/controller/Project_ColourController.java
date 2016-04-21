@@ -60,8 +60,6 @@ public class Project_ColourController implements Initializable {
 
     private DecimalFormat decimalFormat;
 
-    private Component component;
-    
     private Worth additionalColourFactor;
     private Worth timeofPainting;
     private double pricePerLiter;
@@ -71,6 +69,8 @@ public class Project_ColourController implements Initializable {
     private Worth paintLiter;
     private Worth totalCost;
     private Worth profiHour;
+
+    private Component component;
 
     /**
      * Initializes the controller class.
@@ -88,14 +88,14 @@ public class Project_ColourController implements Initializable {
         cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.COLOR)));
         ParameterController parameterController = new ParameterController();
         additionalColourFactor = new Worth(parameterController.findParameterPByShortTerm("FK"));
-         profiHour = new Worth(parameterController.findParameterPByShortTerm("PMFP"));
+        profiHour = new Worth(parameterController.findParameterPByShortTerm("PMFP"));
         timeofPainting = new Worth(parameterController.findParameterPByShortTerm("ZPFA"));
         paintArea = new Worth(parameterController.findParameterPByShortTerm("FMM"));
         productCost = new Worth(parameterController.findParameterPByShortTerm("KPFarbe"));
         montageCost = new Worth(parameterController.findParameterPByShortTerm("KMFarbe"));
         paintLiter = new Worth(parameterController.findParameterPByShortTerm("FML"));
         totalCost = new Worth(parameterController.findParameterPByShortTerm("GKFarbe"));
-        
+
         tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
             setHour();
             calculateValues();
@@ -115,16 +115,22 @@ public class Project_ColourController implements Initializable {
         cb_Product.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
             @Override
             public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
-                if (newValue!=null) {
-                   pricePerLiter=newValue.getPriceUnit();
-                   tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
+                if (newValue != null) {
+                    pricePerLiter = newValue.getPriceUnit();
+                    tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
                 }
             }
         });
-        
+
         if (ProjectViewController.getOpenedProject() != null) {
             loadColourValues();
+        } else {
+            component = new Component();
         }
+    }
+    
+    public Component getComponent(){
+        return component;
     }
 
     public void setHour() {
@@ -153,16 +159,16 @@ public class Project_ColourController implements Initializable {
     }
 
     public void loadColourValues() {
-        
+
         ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
         Project openedProject = ProjectViewController.getOpenedProject();
-        
+
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
 
         timeofPainting = (worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) : timeofPainting;
         /*combobox*/
-        
+
         profiHour = (worthController.findWorthByShortTermAndProjectId("PMFP", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("PMFP", openedProject.getId()) : profiHour;
         additionalColourFactor = (worthController.findWorthByShortTermAndProjectId("FK", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("FK", openedProject.getId()) : additionalColourFactor;
         paintArea = (worthController.findWorthByShortTermAndProjectId("FMM", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("FMM", openedProject.getId()) : paintArea;
@@ -170,13 +176,19 @@ public class Project_ColourController implements Initializable {
         paintLiter = (worthController.findWorthByShortTermAndProjectId("FML", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("FML", openedProject.getId()) : paintLiter;
         productCost = (worthController.findWorthByShortTermAndProjectId("KPFarbe", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KPFarbe", openedProject.getId()) : productCost;
         montageCost = (worthController.findWorthByShortTermAndProjectId("KMFarbe", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KMFarbe", openedProject.getId()) : montageCost;
+
         Category category = new CategoryController().findCategoryByShortTerm("X");
-       
         component = new ComponentController().findColorByProjectId(ProjectViewController.getOpenedProject().getId());
+
         if (component != null) {
             System.out.println(component.getComponentType());
-            cb_Product.getSelectionModel().select(component.getProduct());            
+            cb_Product.getSelectionModel().select(component.getProduct());
+        } else {
+            component = new Component();
+            component.setComponentType(ProductType.COLOR.toString());
+            component.setCategory(category);
         }
+
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
         tf_ProfiHour.setText(UtilityFormat.getStringForTextField(profiHour));
         tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(additionalColourFactor));
@@ -191,33 +203,9 @@ public class Project_ColourController implements Initializable {
 
     public void persist() {
         WorthController worthController = new WorthController();
-
-        Category category = new CategoryController().findCategoryByShortTerm("X");
-        component = new ComponentController().findColorByProjectId(ProjectViewController.getOpenedProject().getId());
-
-        if (component == null) {
-            component = new Component();
-        }
-        try {
-            Product product = new ProductController().findProduct(cb_Product.getSelectionModel().getSelectedItem().getId());
-
-            component.setDescription(product.getName());
-            component.setCategory(category);
-            component.setComponentType("Produkt");
-            component.setPriceComponent(tf_PricePerLiter.getText().isEmpty() || !tf_PricePerLiter.getText().matches("[0-9]*.[0-9]*")
-                    ? null : Double.valueOf(tf_PricePerLiter.getText()));
-            component.setNumberOfProducts((int) paintLiter.getWorth());
-            component.setUnit(product.getUnit());
-            component.setProduct(product);
-            component.setComponentType(ProductType.COLOR.toString());
-            component.setProject(ProjectViewController.getOpenedProject());
-            new ComponentController().edit(component);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        ComponentController componentController = new ComponentController();
 
         if (!ProjectViewController.isProjectOpened()) {
-            component.setProject(ProjectViewController.getOpenedProject());
             profiHour.setProject(ProjectViewController.getOpenedProject());
             additionalColourFactor.setProject(ProjectViewController.getOpenedProject());
             timeofPainting.setProject(ProjectViewController.getOpenedProject());
@@ -226,6 +214,7 @@ public class Project_ColourController implements Initializable {
             montageCost.setProject(ProjectViewController.getOpenedProject());
             paintLiter.setProject(ProjectViewController.getOpenedProject());
             totalCost.setProject(ProjectViewController.getOpenedProject());
+            component.setProject(ProjectViewController.getOpenedProject());
 
             worthController.create(profiHour);
             worthController.create(additionalColourFactor);
@@ -235,6 +224,7 @@ public class Project_ColourController implements Initializable {
             worthController.create(montageCost);
             worthController.create(paintLiter);
             worthController.create(totalCost);
+            componentController.create(component);
         } else {
             try {
                 worthController.edit(profiHour);
@@ -245,6 +235,7 @@ public class Project_ColourController implements Initializable {
                 worthController.edit(montageCost);
                 worthController.edit(paintLiter);
                 worthController.edit(totalCost);
+                componentController.edit(component);
             } catch (Exception e) {
             }
         }
@@ -265,17 +256,40 @@ public class Project_ColourController implements Initializable {
         //Alte Formel-ID: KMFarbe
         montageCost.setWorth(profiHour.getWorth() * timeofPainting.getWorth());
         lb_MontageCost.setText(UtilityFormat.getStringForLabel(montageCost));
-        
+
         //product Kosten
         //Alte Formel KPFarbe
-        productCost.setWorth(pricePerLiter*paintLiter.getWorth());
+        productCost.setWorth(pricePerLiter * paintLiter.getWorth());
         lb_ProductCost.setText(UtilityFormat.getStringForLabel(productCost));
         //Gesamtkosten
         //Alte Formel: GK
         //INSERT INTO FORMULA (ID,LONGTERM,SELECTSTATEMENT,SHORTTERM) values (NEXT VALUE FOR FORMULA_SEQ,'Gesamtkosten Farbe',
         //'select NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KPFarbe''), 0) + 
         // NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KMFarbe''), 0) from sysibm.sysdummy1','GKFarbe');
-        totalCost.setWorth(productCost.getWorth()+montageCost.getWorth());
+        totalCost.setWorth(productCost.getWorth() + montageCost.getWorth());
         lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCost));
+
+        Product product = cb_Product.getSelectionModel().getSelectedItem();
+
+        if (product != null) {
+            component.setDescription(product.getName());
+            component.setLengthComponent(product.getLengthProduct());
+            component.setWidthComponent(product.getWidthProduct());
+            component.setHeightComponent(product.getHeightProduct());
+            component.setProduct(product);
+            component.setUnit(product.getUnit());
+        } else {
+            component.setDescription("Farbe");
+            component.setLengthComponent(null);
+            component.setWidthComponent(null);
+            component.setHeightComponent(null);
+            component.setProduct(null);
+            component.setUnit(null);
+        }
+
+        component.setPriceComponent(tf_PricePerLiter.getText().isEmpty() || !tf_PricePerLiter.getText().matches("[0-9]*.[0-9]*")
+                ? null : Double.valueOf(tf_PricePerLiter.getText()));
+        component.setNumberOfProducts((int) paintLiter.getWorth());
+
     }
 }

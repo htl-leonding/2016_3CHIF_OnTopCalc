@@ -69,6 +69,8 @@ public class Assembling_FoilController implements Initializable, Observer {
     private Worth assemblingCosts;
     private Worth totalCosts;
 
+    private Component component;
+
     /**
      * Initializes the controller class.
      *
@@ -117,46 +119,20 @@ public class Assembling_FoilController implements Initializable, Observer {
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
-            load();
+            loadValuesFromDatabase();
+        } else {
+            component = new Component();
         }
+    }
+    
+    public Component getComponent(){
+        return component;
     }
 
     public void persist() {
         try {
             WorthController worthController = new WorthController();
-            Product product = cb_Product.getSelectionModel().getSelectedItem();
-
             ComponentController componentController = new ComponentController();
-            CategoryController categoryController = new CategoryController();
-
-            Category category = categoryController.findCategoryByShortTerm("F");
-            Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(
-                    ProjectViewController.getOpenedProject().getId(),
-                    "Produkt",
-                    category.getId());
-
-            if (component == null) {
-                component = new Component();
-            }
-            if (product != null) {
-                component.setDescription(product.getName());
-                component.setLengthComponent(product.getLengthProduct());
-                component.setWidthComponent(product.getWidthProduct());
-                component.setHeightComponent(product.getHeightProduct());
-                component.setProduct(product);
-                component.setUnit(product.getUnit());
-            } else {
-                component.setDescription("Folie");
-                component.setLengthComponent(null);
-                component.setWidthComponent(null);
-                component.setHeightComponent(null);
-                component.setProduct(null);
-                component.setUnit(null);
-            }
-            component.setComponentType("Produkt");
-            component.setNumberOfProducts((int) foil.getWorth());
-            component.setPriceComponent(pricePerSquare);
-            component.setCategory(category);
 
             if (!ProjectViewController.isProjectOpened()) {
                 abatementArea.setProject(ProjectViewController.getOpenedProject());
@@ -197,9 +173,7 @@ public class Assembling_FoilController implements Initializable, Observer {
         }
     }
 
-    public void load() {
-        ProductController productController = new ProductController();
-
+    public void loadValuesFromDatabase() {
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
             WorthController worthController = new WorthController();
@@ -207,12 +181,15 @@ public class Assembling_FoilController implements Initializable, Observer {
             CategoryController categoryController = new CategoryController();
 
             Category category = categoryController.findCategoryByShortTerm("F");
-            Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
+            component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                     "Produkt", category.getId());
 
             if (component != null) {
                 cb_Product.getSelectionModel().select(component.getProduct());
-                tf_price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
+            } else {
+                component = new Component();
+                component.setComponentType("Produkt");
+                component.setCategory(category);
             }
 
             abatementPercent = (worthController.findWorthByShortTermAndProjectId("FUEP", project.getId()) != null)
@@ -270,6 +247,26 @@ public class Assembling_FoilController implements Initializable, Observer {
         //Alte Formel-ID: GKF
         totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
         lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
+        Product product = cb_Product.getSelectionModel().getSelectedItem();
+        if (product != null) {
+            component.setDescription(product.getName());
+            component.setLengthComponent(product.getLengthProduct());
+            component.setWidthComponent(product.getWidthProduct());
+            component.setHeightComponent(product.getHeightProduct());
+            component.setProduct(product);
+            component.setUnit(product.getUnit());
+        } else {
+            component.setDescription("Folie");
+            component.setLengthComponent(null);
+            component.setWidthComponent(null);
+            component.setHeightComponent(null);
+            component.setProduct(null);
+            component.setUnit(null);
+        }
+
+        component.setNumberOfProducts((int) foil.getWorth());
+        component.setPriceComponent(pricePerSquare);
     }
 
     @Override

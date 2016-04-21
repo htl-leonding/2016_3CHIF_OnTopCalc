@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -144,7 +145,13 @@ public class Project_ConstructionMaterialController implements Initializable {
 
         cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.MISCELLANEOUS)));
         cb_Component.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getComponents()));
-
+        
+        cb_Product.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Product> observable, Product oldValue, Product newValue) -> {
+            if (cb_Product.getSelectionModel().getSelectedItem() != null) {
+                tf_Price.setText(UtilityFormat.getStringForTextField(cb_Product.getSelectionModel().getSelectedItem().getPriceUnit()));
+            }
+        });
+        
         refreshListView();
     }
 
@@ -163,9 +170,23 @@ public class Project_ConstructionMaterialController implements Initializable {
         
         componentList = new LinkedList<>();
         componentList.addAll(Project_ConstructionMaterialListController.getInstance().getComponents());
+        
         if (Assembling_FormworkController.getInstance().getComponent().getProduct() != null) {
             componentList.add(Assembling_FormworkController.getInstance().getComponent());
         }
+        
+        if (Assembling_VisibleFormworkController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_VisibleFormworkController.getInstance().getComponent());
+        }
+        
+        if (Assembling_FoilController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_FoilController.getInstance().getComponent());
+        }
+
+//      Macht keinen Sinn        
+//        if (Project_ColourController.getInstance().getComponent().getProduct() != null) {
+//            componentList.add(Project_ColourController.getInstance().getComponent());
+//        }
         
         cb_Component.setItems(FXCollections.observableArrayList(componentList));
 

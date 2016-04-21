@@ -142,10 +142,15 @@ public class Assembling_FormworkController implements Initializable, Observer {
             setBlend();
             calculate();
         });
-        refresh();
+        if (ProjectViewController.getOpenedProject()!= null) {
+            loadValuesFromDatabase();
+        }
+        else{
+            component = new Component();
+        }
     }
 
-    public void refresh() {
+    public void loadValuesFromDatabase() {
         ProductController productController = new ProductController();
 
         ObservableList<Product> list = FXCollections.observableArrayList(productController.findByProductTypeOrderByName(ProductType.FORMWORK));
@@ -158,17 +163,16 @@ public class Assembling_FormworkController implements Initializable, Observer {
             WorthController worthController = new WorthController();
             ComponentController componentController = new ComponentController();
             CategoryController categoryController = new CategoryController();
-
             Category category = categoryController.findCategoryByShortTerm("S");
+            
             component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                     "Produkt", category.getId());
 
             if (component != null) {
                 cb_Formwork.getSelectionModel().select(component.getProduct());
-                tf_Price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
             } else {
                 component = new Component();
-                component.setCategory(new CategoryController().findCategoryByShortTerm("S"));
+                component.setCategory(category);
                 component.setComponentType("Produkt");
             }
 
@@ -271,7 +275,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
             component.setProduct(product);
             component.setUnit(product.getUnit());
         } else {
-            component.setDescription("");
+            component.setDescription("Schalung");
             component.setLengthComponent(null);
             component.setWidthComponent(null);
             component.setHeightComponent(null);
