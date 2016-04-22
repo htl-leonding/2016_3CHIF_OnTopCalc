@@ -102,17 +102,15 @@ public class ProductModifierController implements Initializable {
     private void save(ActionEvent event) {
 
         String errorMessage = "";
-        
+
         if (tf_Name.getText().isEmpty()) {
             errorMessage += "Geben Sie bitte einen Namen ein.\n";
         }
         if (tf_PriceUnit.getText().isEmpty()) {
             errorMessage += "Geben Sie bitte einen Preis ein.\n";
-        }
-        else if (tf_PriceUnit.getText().contains("-")) {
+        } else if (tf_PriceUnit.getText().contains("-")) {
             errorMessage += "Der Preis darf nicht negativ sein.";
-        }
-        else{
+        } else {
             try {
                 Double.parseDouble(tf_PriceUnit.getText());
             } catch (NumberFormatException e) {
@@ -149,8 +147,7 @@ public class ProductModifierController implements Initializable {
 
             ProductListController.getInstance().refreshTable();
             ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
-        }
-        else{
+        } else {
             new Alert(AlertType.ERROR, errorMessage).showAndWait();
         }
     }
@@ -206,6 +203,7 @@ public class ProductModifierController implements Initializable {
      */
     private Double tryParseDouble(String numberString) {
         try {
+            numberString = numberString.replace(",", ".");
             return Double.parseDouble(numberString);
         } catch (NumberFormatException e) {
             return null;

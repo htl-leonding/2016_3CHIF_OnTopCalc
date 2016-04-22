@@ -153,6 +153,18 @@ public class Assembling_FoilController implements Initializable, Observer {
                 ? 0 : Double.valueOf(tf_time.getText().replace(',', '.')));
     }
 
+    public Worth getWage() {
+        return assemblingCosts;
+    }
+
+    public Worth getMaterial() {
+        return productCosts;
+    }
+
+    public Worth getTotalCosts() {
+        return totalCosts;
+    }
+
     public void loadValuesFromDatabase() {
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {

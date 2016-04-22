@@ -7,6 +7,7 @@ import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.entity.Assembly;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
+import at.plakolb.calculationlogic.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
@@ -157,6 +158,10 @@ public class Project_ConstructionMaterialController implements Initializable {
 
     public static Project_ConstructionMaterialController getInstance() {
         return instance;
+    }
+    
+    public Double getMaterial(){
+        return getTotalCosts(assemblyList);
     }
 
     public void refreshListView() {

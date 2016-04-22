@@ -356,6 +356,7 @@ public class ProductListController implements Initializable {
      */
     private Double tryParseDouble(String numberString) {
         try {
+            numberString = numberString.replace(",", ".");
             double number = Double.parseDouble(numberString);
             return number;
         } catch (NumberFormatException e) {

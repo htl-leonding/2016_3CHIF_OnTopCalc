@@ -154,6 +154,18 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
                 ? 0 : Double.valueOf(tf_AssemblingDuration.getText().replace(',', '.')));
     }
 
+    public Worth getWage() {
+        return assemblingCosts;
+    }
+
+    public Worth getMaterial() {
+        return productCosts;
+    }
+
+    public Worth getTotalCosts() {
+        return totalCosts;
+    }
+
     private void loadValuesFromDataBase() {
         ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();

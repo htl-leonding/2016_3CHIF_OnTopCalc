@@ -152,10 +152,21 @@ public class Project_ColourController implements Initializable {
         timeofPainting.setWorth(tf_TimeOfPainting.getText().isEmpty() || !tf_TimeOfPainting.getText().matches("[0-9]*.[0-9]*")
                 ? 0 : Double.valueOf(tf_TimeOfPainting.getText().replace(',', '.')));
     }
-//listener adden worths initialize
 
     public static Project_ColourController getInstance() {
         return instance;
+    }
+
+    public Worth getWage() {
+        return montageCost;
+    }
+
+    public Worth getMaterial() {
+        return productCost;
+    }
+
+    public Worth getTotalCosts() {
+        return totalCost;
     }
 
     public void loadColourValues() {
@@ -163,8 +174,6 @@ public class Project_ColourController implements Initializable {
         ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
         Project openedProject = ProjectViewController.getOpenedProject();
-
-        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
 
         timeofPainting = (worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) : timeofPainting;
         /*combobox*/
@@ -189,7 +198,7 @@ public class Project_ColourController implements Initializable {
             component.setCategory(category);
         }
 
-        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()));
+        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()) + " m²");
         tf_ProfiHour.setText(UtilityFormat.getStringForTextField(profiHour));
         tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(additionalColourFactor));
         tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
@@ -291,5 +300,10 @@ public class Project_ColourController implements Initializable {
             } catch (Exception e) {
             }
         }
+    }
+
+    public void updateVisibleFormwork() {
+        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()) + " m²");
+        calculateValues();
     }
 }

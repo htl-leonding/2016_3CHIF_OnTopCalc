@@ -148,6 +148,18 @@ public class Assembling_FormworkController implements Initializable, Observer {
     public Component getComponent() {
         return component;
     }
+    
+    public Worth getWage(){
+        return costsMontage;
+    }
+    
+    public Worth getMaterial(){
+        return productCosts;
+    }
+    
+    public Worth getTotalCosts(){
+        return totalCosts;
+    }
 
     public void loadValuesFromDatabase() {
         ProductController productController = new ProductController();

@@ -8,7 +8,6 @@ import at.plakolb.calculationlogic.entity.Project;
 import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -48,8 +47,13 @@ public class ProjectViewController extends Observable implements Initializable {
     private Tab tab_Material;
     @FXML
     private Tab tab_MaterialCosts;
-
+    @FXML
+    private Tab tab_Colour;
+    @FXML
+    private Tab tab_Overview;
+    
     private TabPane tb_Assebmling;
+
 
     /**
      * Initializes the controller class.
@@ -92,9 +96,22 @@ public class ProjectViewController extends Observable implements Initializable {
         tab_Material.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             Project_ConstructionMaterialController.getInstance().refreshComponents();
         });
-        
+
         tab_MaterialCosts.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             Project_MaterialAndCostController.getInstance().refreshTableView();
+        });
+        
+        tab_Colour.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            Project_ColourController.getInstance().updateVisibleFormwork();
+        });
+        
+        tab_Overview.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            setChanged();
+            notifyObservers();
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_MaterialAndCostController.getInstance().refreshTableView();
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_OverviewController.getInstance().refreshValues();
         });
     }
 

@@ -141,6 +141,10 @@ public class Project_TransportController extends java.util.Observable implements
         days.setWorth(tf_pkwDays.getText().isEmpty() || !tf_pkwDays.getText().matches("[0-9]*.[0-9]*")
                 ? 0 : Double.valueOf(tf_pkwDays.getText().replace(',', '.')));
     }
+    
+    public Worth getTotalCosts(){
+        return totalCosts;
+    }
 
     public void loadTransportCosts() {
         ParameterController parameterController = new ParameterController();

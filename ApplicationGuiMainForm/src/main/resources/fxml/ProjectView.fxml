@@ -87,7 +87,7 @@
                    <fx:include source="Project_ConstructionMaterial.fxml" />
                 </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Farbe">
+            <Tab fx:id="tab_Colour" closable="false" onSelectionChanged="#normalTabSelected" text="Farbe">
                 <content>
                    <fx:include source="Project_Colour.fxml" />
                 </content>
@@ -102,7 +102,7 @@
                     <fx:include source="Project_MaterialAndCost.fxml" />
                 </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#lastTabSelected" text="Übersicht">
+            <Tab fx:id="tab_Overview" closable="false" onSelectionChanged="#lastTabSelected" text="Übersicht">
                 <content>
                     <fx:include source="Project_Overview.fxml" />
                 </content>
