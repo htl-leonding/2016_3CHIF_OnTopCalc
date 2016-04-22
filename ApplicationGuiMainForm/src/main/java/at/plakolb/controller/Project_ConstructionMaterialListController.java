@@ -16,7 +16,9 @@ import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -46,7 +48,7 @@ import javafx.util.Callback;
  *
  * @author Kepplinger
  */
-public class Project_ConstructionMaterialListController implements Initializable {
+public class Project_ConstructionMaterialListController extends java.util.Observable implements Initializable {
 
     private static Project_ConstructionMaterialListController instance;
     @FXML
@@ -108,6 +110,8 @@ public class Project_ConstructionMaterialListController implements Initializable
         decimalFormatFour.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
             components = new ComponentController().findComponentsByProjectIdAndComponentType(ProjectViewController.getOpenedProject().getId(), "Kubikmeter");
+            setChanged();
+            notifyObservers();
         }
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -210,7 +214,7 @@ public class Project_ConstructionMaterialListController implements Initializable
         List<Category> categoryList = new LinkedList<>();
         categoryList.add(new CategoryController().findCategoryByShortTerm("K"));
         categoryList.add(new CategoryController().findCategoryByShortTerm("KD"));
-        
+
         cb_Category.setItems(FXCollections.observableArrayList(categoryList));
         cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.WOOD)));
         cb_Category.getSelectionModel().select(0);
@@ -236,8 +240,8 @@ public class Project_ConstructionMaterialListController implements Initializable
             }
         });
     }
-    
-    public List<Component> getComponents(){
+
+    public List<Component> getComponents() {
         return components;
     }
 
@@ -260,7 +264,7 @@ public class Project_ConstructionMaterialListController implements Initializable
             if (tf_Amount.getText().isEmpty() || tf_Amount.getText().equals("0") || tf_Amount.getText().contains("-")) {
                 new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine Anzahl an die größer als null ist.").showAndWait();
             } else {
-                Component component = new Component("Konstruktion",
+                Component component = new Component(product.getFullName(),
                         product.getWidthProduct(),
                         product.getHeightProduct(),
                         product.getLengthProduct(),
@@ -276,6 +280,10 @@ public class Project_ConstructionMaterialListController implements Initializable
                 component.setComponentType("Kubikmeter");
 
                 components.add(component);
+                if (Long.compare(category.getId(), new CategoryController().findCategoryByShortTerm("KD").getId()) == 0) {
+                    setChanged();
+                    notifyObservers();
+                }
             }
         } catch (NumberFormatException e) {
             new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur Zahlen enthalten").showAndWait();
@@ -331,5 +339,25 @@ public class Project_ConstructionMaterialListController implements Initializable
                 componentController.create(component);
             }
         }
+    }
+
+    public List<Component> getRafterList() {
+        List<Component> list = new LinkedList<>();
+        Category cat = new CategoryController().findCategoryByShortTerm("KD");
+
+        for (Component c : components) {
+            if (Long.compare(c.getCategory().getId(), cat.getId()) == 0) {
+                list.add(c);
+            }
+        }
+        return list;
+    }
+    
+    public double getTotalRafterLength(){
+        double res = 0;
+        for(Component c:getRafterList()){
+            res+=c.getLengthComponent()*c.getNumberOfProducts();
+        }
+        return res;
     }
 }

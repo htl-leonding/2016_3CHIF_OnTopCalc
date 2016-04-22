@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="470.0" prefHeight="480.0" prefWidth="470.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <content>
+        <VBox>
+            <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../images/logo.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </top>
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <center>
+                  <VBox>
+                     <children>
+                        <Label alignment="CENTER" prefWidth="1000.0" text="OnTopCalc" textFill="#3c84ff" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Berlin Sans FB" size="53.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefWidth="1000.0" text="Kalkulationsassistent für Zimmerei- und Dachdeckerbetriebe">
+                           <font>
+                              <Font name="Berlin Sans FB" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefWidth="1000.0" text="Version: 2.0.0">
+                           <font>
+                              <Font name="Berlin Sans FB" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+            <BorderPane prefHeight="120.0" prefWidth="200.0" style="-fx-border-color: darkgrey transparent transparent transparent;">
+               <top>
+                  <Label text="Ein Projekt der" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Berlin Sans FB" size="19.0" />
+                     </font>
+                  </Label>
+               </top>
+               <center>
+                  <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../images/htlLeonding.png" />
+                     </image>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </ImageView>
+               </center>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="25.0" left="5.0" right="5.0" top="15.0" />
+               </padding>
+            </BorderPane>
+                <VBox spacing="15.0" style="-fx-border-color: darkgrey transparent transparent transparent;">
+                    <children>
+                  <Label alignment="CENTER" prefWidth="1000.0" text="ProjektTeam" textFill="#3c84ff">
+                     <font>
+                        <Font name="Berlin Sans FB" size="32.0" />
+                     </font>
+                  </Label>
+                        <BorderPane layoutX="25.0" layoutY="31.0" prefHeight="190.0" prefWidth="400.0">
+                            <left>
+                                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                    <image>
+                                        <Image url="@../images/kepplinger.jpg" />
+                                    </image>
+                                </ImageView>
+                            </left>
+                            <right>
+                        <VBox alignment="CENTER" prefHeight="0.0" BorderPane.alignment="CENTER">
+                           <children>
+                                      <Label text="Simon Kepplinger" BorderPane.alignment="CENTER">
+                                          <font>
+                                              <Font name="Berlin Sans FB" size="25.0" />
+                                          </font>
+                                      </Label>
+                              <Label text="(Projektleiter)">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                            </right>
+                        </BorderPane>
+                        <BorderPane layoutX="25.0" layoutY="210.0" prefHeight="190.0" prefWidth="400.0">
+                            <left>
+                                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                    <image>
+                                        <Image url="@../images/schloemicher.jpg" />
+                                    </image>
+                                </ImageView>
+                            </left>
+                            <right>
+                                <Label text="Andreas Schlömicher" BorderPane.alignment="CENTER">
+                                    <font>
+                                        <Font name="Berlin Sans FB" size="25.0" />
+                                    </font>
+                                </Label>
+                            </right>
+                        </BorderPane>
+                        <BorderPane layoutX="25.0" layoutY="400.0" prefHeight="190.0" prefWidth="400.0">
+                            <left>
+                                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                    <image>
+                                        <Image url="@../images/schausberger.jpg" />
+                                    </image>
+                                </ImageView>
+                            </left>
+                            <right>
+                                <Label text="Daniel Schausberger" BorderPane.alignment="CENTER">
+                                    <font>
+                                        <Font name="Berlin Sans FB" size="25.0" />
+                                    </font>
+                                </Label>
+                            </right>
+                        </BorderPane>
+                    </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+               </padding>
+                </VBox>
+            <BorderPane prefHeight="120.0" prefWidth="200.0" style="-fx-border-color: darkgrey transparent transparent transparent;">
+               <center>
+                  <Label text="OnTopCalc ist eine Weiterführung der Diplomarbeit von Elisabeth Pilz. " BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                        <Label alignment="CENTER" prefWidth="1000.0" text="Information" textFill="#3c84ff" BorderPane.alignment="CENTER">
+                            <font>
+                                <Font name="Berlin Sans FB" size="32.0" />
+                            </font>
+                        </Label>
+               </top>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+               </padding>
+            </BorderPane>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </VBox>
+    </content>
+</ScrollPane>

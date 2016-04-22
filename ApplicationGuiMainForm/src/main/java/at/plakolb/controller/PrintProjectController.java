@@ -3,7 +3,9 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -11,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -49,6 +52,8 @@ public class PrintProjectController implements Initializable {
     private CheckBox cb_transport;
     @FXML
     private CheckBox cb_costView;
+    @FXML
+    private TextField tf_dateAndPosition;
 
     /**
      * Initializes the controller class.
@@ -65,6 +70,8 @@ public class PrintProjectController implements Initializable {
         }else{
             cb_projects.getSelectionModel().select(0);
         }
+        
+        tf_dateAndPosition.setText("Rohrbach, am "+UtilityFormat.getDateString(new Date()));
     }    
     
     public static PrintProjectController getInstance() {

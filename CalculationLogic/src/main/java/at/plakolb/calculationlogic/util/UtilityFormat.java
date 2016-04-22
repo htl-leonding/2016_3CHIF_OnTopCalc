@@ -3,6 +3,8 @@ package at.plakolb.calculationlogic.util;
 import at.plakolb.calculationlogic.entity.Worth;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -108,5 +110,12 @@ public class UtilityFormat {
             return "0";
         }
         return getStringForLabel(worth.getWorth())+" " + worth.getParameter().getUnit().getShortTerm();
+    }
+    
+    public static String getDateString(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return String.format("%02d.%02d.%d",calendar.get(Calendar.DATE),
+                calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.YEAR));
     }
 }

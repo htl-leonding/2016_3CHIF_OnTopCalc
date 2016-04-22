@@ -37,6 +37,7 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         instance = this;
+
         ProjectController projectController = new ProjectController();
         List<Project> projects = projectController.findLastFiveProjects();
         List<MenuItem> items = new LinkedList<>();
@@ -130,5 +131,22 @@ public class MainFormController implements Initializable {
     @FXML
     private void createNewProject(ActionEvent event) {
         loadFxmlIntoPane("ProjectView.fxml");
+    }
+
+    @FXML
+    private void openAboutBox(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/About.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("OnTopCalc ©2016");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+        } catch (Exception e) {
+        }
     }
 }
