@@ -31,7 +31,7 @@ import javafx.scene.control.TextField;
  *
  * @author Kepplinger
  */
-public class Assembling_CounterBattenController  implements Observer, Initializable {
+public class Assembling_CounterBattenController implements Observer, Initializable {
 
     private static Assembling_CounterBattenController instance;
     @FXML
@@ -60,7 +60,7 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
     private TableColumn<Component, String> cl_dachsparrenLength;
     @FXML
     private Label lb_lengthWaste;
-        
+
     private Component component;
     private Worth lengthWaste;
     private Worth waste;//%
@@ -71,8 +71,10 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
     private Worth timeMontage;
     private Worth totalCost;
     private Worth profiHour;
+
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -92,7 +94,7 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
         totalCost = new Worth(parameterController.findParameterPByShortTerm("GKKL"));
 
         cb_counterBattern.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
-            pricePerMeter=newValue.getPriceUnit();
+            pricePerMeter = newValue.getPriceUnit();
             tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
             calculate();
         });
@@ -112,23 +114,22 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
             setTime();
             calculate();
         });
-        
-        cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component,String> param )->{
-        Component component =param.getValue();
-        return new ReadOnlyObjectWrapper<>(component.getDescription());
+
+        cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            return new ReadOnlyObjectWrapper<>(param.getValue().getDescription());
         });
-        
-        cl_dachsparrenLength.setCellValueFactory((TableColumn.CellDataFeatures<Component,String> param )->{
-        Component component =param.getValue();
-        return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForTextField(component.getLengthComponent())));
+
+        cl_dachsparrenLength.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent())) + " m");
         });
-        
+
         if (ProjectViewController.getOpenedProject() != null) {
             loadFromDb();
         }
-    }    
-    public void persist(){
-           WorthController worthController = new WorthController();
+    }
+
+    public void persist() {
+        WorthController worthController = new WorthController();
 
         Category category = new CategoryController().findCategoryByShortTerm("KL");//
         component = new ComponentController().findComponent(ProjectViewController.getOpenedProject().getId());
@@ -141,7 +142,7 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
 
             component.setDescription(product.getName());
             component.setCategory(category);
-            component.setComponentType("Produkt");          
+            component.setComponentType("Produkt");
             component.setPriceComponent(tf_pricePerMeter.getText().isEmpty() || !tf_pricePerMeter.getText().matches("[0-9]*.[0-9]*")
                     ? null : Double.valueOf(tf_pricePerMeter.getText()));
             component.setNumberOfProducts(counterBattern.getWorth());
@@ -187,6 +188,7 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
             }
         }
     }
+
     public void loadFromDb() {
         ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
@@ -201,10 +203,10 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
         productCost = (worthController.findWorthByShortTermAndProjectId("KProKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KProKL", openedProject.getId()) : productCost;
         montageCost = (worthController.findWorthByShortTermAndProjectId("KMonKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KMonKL", openedProject.getId()) : montageCost;
         Category category = new CategoryController().findCategoryByShortTerm("KL");
-       
+
         component = new ComponentController().findComponent(ProjectViewController.getOpenedProject().getId());
         if (component != null) {
-            cb_counterBattern.getSelectionModel().select(component.getProduct());            
+            cb_counterBattern.getSelectionModel().select(component.getProduct());
         }
         tf_profiHour.setText(UtilityFormat.getStringForTextField(profiHour));
         tf_waste.setText(UtilityFormat.getStringForTextField(waste));
@@ -218,35 +220,35 @@ public class Assembling_CounterBattenController  implements Observer, Initializa
         tv_dachsparren.setItems(FXCollections.observableList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
 
     }
-    public void calculate(){
-        double sum=0;
-        sum=Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
+
+    public void calculate() {
+        double sum = 0;
+        sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
         //Verschnitt in m
-        lengthWaste.setWorth(sum*(waste.getWorth()/100));
-        System.out.println(sum+"OIDA BITTE WOS!");
-        System.out.println(lengthWaste.getWorth()+"Verschnitt in Metah");
-        
-        lb_lengthWaste.setText(UtilityFormat.getStringForTextField(lengthWaste)+" m");
-        
+        lengthWaste.setWorth(sum * (waste.getWorth() / 100));
+
+        lb_lengthWaste.setText(UtilityFormat.getStringForTextField(lengthWaste) + " m");
+
         //Konterlattung in m
-        counterBattern.setWorth(sum+lengthWaste.getWorth());
-        lb_counterBattern.setText(UtilityFormat.getStringForTextField(counterBattern)+" m");
+        counterBattern.setWorth(sum + lengthWaste.getWorth());
+        lb_counterBattern.setText(UtilityFormat.getStringForTextField(counterBattern) + " m");
         //Kosten Konterlattung
-        productCost.setWorth(pricePerMeter*counterBattern.getWorth());
-        lb_productCost.setText(UtilityFormat.getStringForTextField(productCost)+" €");
-        
+        productCost.setWorth(pricePerMeter * counterBattern.getWorth());
+        lb_productCost.setText(UtilityFormat.getStringForTextField(productCost) + " €");
+
         //Kosten Montage
-         montageCost.setWorth(profiHour.getWorth()*timeMontage.getWorth());
-        lb_montageCost.setText(UtilityFormat.getStringForTextField(montageCost)+" €");
-        
+        montageCost.setWorth(profiHour.getWorth() * timeMontage.getWorth());
+        lb_montageCost.setText(UtilityFormat.getStringForTextField(montageCost) + " €");
+
         //Kosten Gesamt
-        totalCost.setWorth(montageCost.getWorth()+productCost.getWorth());
-        lb_totalCost.setText(UtilityFormat.getStringForTextField(totalCost)+" €");
-        
+        totalCost.setWorth(montageCost.getWorth() + productCost.getWorth());
+        lb_totalCost.setText(UtilityFormat.getStringForTextField(totalCost) + " €");
+
     }
-    public static Assembling_CounterBattenController getInstance(){
+
+    public static Assembling_CounterBattenController getInstance() {
         return instance;
-    }    
+    }
 
     public void setHour() {
         profiHour.setWorth(tf_profiHour.getText().isEmpty() || !tf_profiHour.getText().matches("[0-9]*.[0-9]*")

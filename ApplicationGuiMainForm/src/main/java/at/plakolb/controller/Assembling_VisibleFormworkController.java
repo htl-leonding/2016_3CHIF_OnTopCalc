@@ -207,7 +207,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         //Verschnittsfläche
         //Alte Formel-ID: VSS
         abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedge() * abatementPercent.getWorth() / 100);
-        lb_AbatementArea.setText(abatementArea.worthFormatWithUnit());
+        lb_AbatementArea.setText(UtilityFormat.getStringForLabel(abatementArea));
 
         //sicht. Schalung
         //Alte Formel-ID: SS

@@ -132,7 +132,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
         });
         cl_length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForTextField(component.getLengthComponent())));
+            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(component.getLengthComponent())) + " m");
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
