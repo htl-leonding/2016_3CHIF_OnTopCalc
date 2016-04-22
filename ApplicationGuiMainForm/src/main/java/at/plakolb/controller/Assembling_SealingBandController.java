@@ -18,6 +18,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -34,7 +35,7 @@ import javafx.scene.effect.Blend;
  *
  * @author Kepplinger
  */
-public class Assembling_SealingBandController implements Initializable,Observer {
+public class Assembling_SealingBandController implements Initializable, Observer {
 
     private static Assembling_SealingBandController instance;
     @FXML
@@ -62,7 +63,7 @@ public class Assembling_SealingBandController implements Initializable,Observer 
     @FXML
     private TableColumn<Component, String> cl_name;
     @FXML
-    private TableColumn<Component, Double> cl_length;
+    private TableColumn<Component, String> cl_length;
 
     private double price;
 
@@ -110,7 +111,7 @@ public class Assembling_SealingBandController implements Initializable,Observer 
             calculate();
         });
 
-        tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+        tf_priceLinearMeter.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerLinearMeter();
             calculate();
         });
@@ -123,6 +124,15 @@ public class Assembling_SealingBandController implements Initializable,Observer 
         cb_product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             tf_priceLinearMeter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
             calculate();
+        });
+
+        cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            Component component = param.getValue();
+            return new ReadOnlyObjectWrapper<>(component.getDescription());
+        });
+        cl_length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            Component component = param.getValue();
+            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForTextField(component.getLengthComponent())));
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -171,6 +181,7 @@ public class Assembling_SealingBandController implements Initializable,Observer 
         if (!ProjectViewController.isProjectOpened()) {
             blend.setProject(ProjectViewController.getOpenedProject());
             waste.setProject(ProjectViewController.getOpenedProject());
+            sealingBand.setProject(ProjectViewController.getOpenedProject());
             duration.setProject(ProjectViewController.getOpenedProject());
             productCosts.setProject(ProjectViewController.getOpenedProject());
             montageCosts.setProject(ProjectViewController.getOpenedProject());
@@ -180,6 +191,7 @@ public class Assembling_SealingBandController implements Initializable,Observer 
             worthController.create(blend);
             worthController.create(workerCosts);
             worthController.create(waste);
+            worthController.create(sealingBand);
             worthController.create(duration);
             worthController.create(montageCosts);
             worthController.create(productCosts);
@@ -189,6 +201,7 @@ public class Assembling_SealingBandController implements Initializable,Observer 
                 worthController.edit(blend);
                 worthController.edit(workerCosts);
                 worthController.edit(waste);
+                worthController.edit(sealingBand);
                 worthController.edit(duration);
                 worthController.edit(montageCosts);
                 worthController.edit(productCosts);
@@ -243,19 +256,32 @@ public class Assembling_SealingBandController implements Initializable,Observer 
             lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
             lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+            
+            tv_rafter.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
         }
-
     }
 
     public void calculate() {
         //Verschnitt Nageldichtband
         //Alte Formel-ID: VD
-        //select (select NULLIF(w.worth, 0) from Worth w join ParameterP p 
-        //on w.parameter_id = p.id where w.project_id = ? 
-        //and p.shortterm = ''LD'') * (select NULLIF(w.worth, 0)/100 from Worth w
-        //join ParameterP p on w.parameter_id = p.id where w.project_id = ? 
-        //and p.shortterm = ''VDP'') from sysibm.sysdummy1
-        waste.setWorth(1*blend.getWorth()/100);
+        waste.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() * blend.getWorth() / 100);
+        lb_blend.setText(UtilityFormat.getStringForLabel(waste));
+        //Nageldichtband
+        //Alte Formel-ID: ND
+        sealingBand.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() + waste.getWorth());
+        lb_sealingBand.setText(UtilityFormat.getStringForLabel(sealingBand));
+        //Produktkosten
+        //Alte Formel-ID: KPND
+        productCosts.setWorth(price*sealingBand.getWorth());
+        lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+        //Montagekosten
+        //Alte Formel-ID: KMND
+        montageCosts.setWorth(workerCosts.getWorth()*duration.getWorth());
+        lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
+        //Totalcosts
+        //Alte Formel-ID: GKND
+        totalCosts.setWorth(productCosts.getWorth()+montageCosts.getWorth());
+        lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
     }
 
     public static Assembling_SealingBandController getInstance() {
@@ -284,7 +310,9 @@ public class Assembling_SealingBandController implements Initializable,Observer 
 
     @Override
     public void update(Observable o, Object arg) {
-        
+        tv_rafter.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
+
+        calculate();
     }
 
 }

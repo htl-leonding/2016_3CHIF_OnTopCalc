@@ -110,8 +110,6 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         decimalFormatFour.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
             components = new ComponentController().findComponentsByProjectIdAndComponentType(ProjectViewController.getOpenedProject().getId(), "Kubikmeter");
-            setChanged();
-            notifyObservers();
         }
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -300,6 +298,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tv_Materials.getColumns().get(0).setVisible(false);
         tv_Materials.getColumns().get(0).setVisible(true);
         calculateCosts();
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -352,11 +352,11 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         }
         return list;
     }
-    
-    public double getTotalRafterLength(){
+
+    public double getTotalRafterLength() {
         double res = 0;
-        for(Component c:getRafterList()){
-            res+=c.getLengthComponent()*c.getNumberOfProducts();
+        for (Component c : getRafterList()) {
+            res += c.getLengthComponent() * c.getNumberOfProducts();
         }
         return res;
     }
