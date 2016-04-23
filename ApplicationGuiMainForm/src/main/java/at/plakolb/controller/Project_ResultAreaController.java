@@ -125,6 +125,9 @@ public class Project_ResultAreaController extends Observable implements Initiali
     public double getLedgeAndRoofArea() {
         return worthRoofAreaWhitRoofOverhang.getWorth();
     }
+    public Worth getLedgeAndRoofAreaWorth(){
+        return worthRoofAreaWhitRoofOverhang;
+    }
 
     /**
      * Calculates the total area of the roof.

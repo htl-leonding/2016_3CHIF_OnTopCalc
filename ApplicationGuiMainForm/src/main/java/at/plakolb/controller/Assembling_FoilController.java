@@ -178,6 +178,7 @@ public class Assembling_FoilController implements Initializable, Observer {
 
             if (component != null) {
                 cb_Product.getSelectionModel().select(component.getProduct());
+                tf_price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
             } else {
                 component = new Component();
                 component.setComponentType("Produkt");
