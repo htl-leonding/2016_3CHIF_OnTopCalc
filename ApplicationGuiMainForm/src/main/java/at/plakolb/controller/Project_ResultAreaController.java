@@ -66,7 +66,6 @@ public class Project_ResultAreaController extends Observable implements Initiali
         areaController = new LinkedList<>();
         tabs = tb_Roofarea.getTabs();
         instance = this;
-        
 
         if (ProjectViewController.isProjectOpened() && !ProjectViewController.getOpenedProject().getWorths().isEmpty()) {
             WorthController worthController = new WorthController();
@@ -125,7 +124,8 @@ public class Project_ResultAreaController extends Observable implements Initiali
     public double getLedgeAndRoofArea() {
         return worthRoofAreaWhitRoofOverhang.getWorth();
     }
-    public Worth getLedgeAndRoofAreaWorth(){
+
+    public Worth getLedgeAndRoofAreaWorth() {
         return worthRoofAreaWhitRoofOverhang;
     }
 
@@ -138,6 +138,11 @@ public class Project_ResultAreaController extends Observable implements Initiali
         double roofArea = 0;
         double ledge = 0;
         double ledgeAndRoofArea = 0;
+
+        double oldBA = worthArea.getWorth();
+        double oldRA = worthRoofArea.getWorth();
+        double oldL = worthRoofOverhang.getWorth();
+        double oldLARA = worthRoofAreaWhitRoofOverhang.getWorth();
 
         for (Project_BaseAndRoofAreaController controller : areaController) {
             baseArea += controller.getBaseAreaValue();
@@ -153,7 +158,9 @@ public class Project_ResultAreaController extends Observable implements Initiali
 
         setChanged();
         notifyObservers();
-        ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
+        if (oldBA != baseArea || oldRA != roofArea || oldL != ledge || oldLARA != ledgeAndRoofArea) {
+            ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
+        }
     }
 
     /**
@@ -230,6 +237,9 @@ public class Project_ResultAreaController extends Observable implements Initiali
 
             setChanged();
             notifyObservers();
+            if (event != null) {
+                ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
+            }
 
         } catch (IOException exception) {
             System.out.println("Exception Message: " + exception.getMessage());

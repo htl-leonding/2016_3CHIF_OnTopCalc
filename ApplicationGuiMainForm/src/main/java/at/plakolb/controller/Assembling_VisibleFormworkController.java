@@ -94,21 +94,25 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         tf_AbatementPercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setAbatementPercent();
             calculateFormwork();
+            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
         tf_AssemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setAssemblingDuration();
             calculateFormwork();
+            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
         tf_PricePerSquare.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculateFormwork();
+            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
         tf_WorkerCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setWorkerCosts();
             calculateFormwork();
+            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
         cb_Product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
@@ -181,6 +185,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             component = new Component();
             component.setCategory(category);
             component.setComponentType("Produkt");
+            component.setProject(openedProject);
         }
 
         abatementPercent = (worthController.findWorthByShortTermAndProjectId("VSSP", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("VSSP", openedProject.getId()) : abatementPercent;
@@ -201,6 +206,9 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
         lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(visibleFormwork));
+
+        lb_RoofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getLedge()) + " m²");
+        ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.FALSE);
     }
 
     private void calculateFormwork() {
@@ -292,8 +300,13 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
 
     @Override
     public void update(Observable o, Object arg) {
-        double roofArea = Project_ResultAreaController.getInstance().getRoofArea();
-        lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea) + " m²");
+        double oldVal = Double.parseDouble(lb_VisibleFormwork.getText().substring(0, lb_VisibleFormwork.getText().length() - 3));
+        double newVal = Project_ResultAreaController.getInstance().getLedge();
+        if (oldVal != newVal && ModifyController.getInstance().getProject_resultArea() ==  true &&
+                !(tf_AbatementPercent.getText().isEmpty() || tf_PricePerSquare.getText().isEmpty())) {
+            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
+        }
+        lb_RoofArea.setText(UtilityFormat.getStringForLabel(newVal) + " m²");
         calculateFormwork();
     }
 }
