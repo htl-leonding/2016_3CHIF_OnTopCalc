@@ -23,12 +23,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Blend;
 
 /**
  * FXML Controller class
@@ -41,7 +40,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
     @FXML
     private TextField tf_blend;
     @FXML
-    private ChoiceBox<Product> cb_product;
+    private ComboBox<Product> cb_product;
     @FXML
     private TextField tf_priceLinearMeter;
     @FXML

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -47,7 +47,7 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ChoiceBox fx:id="cb_product" minHeight="25.0" prefWidth="150.0" />
+                                    <ComboBox fx:id="cb_product" prefWidth="150.0" promptText="Produkt auswählen" />
                                     <TextField fx:id="tf_priceLinearMeter" minHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
                                     <TextField fx:id="tf_blend" minHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
                                  </children>

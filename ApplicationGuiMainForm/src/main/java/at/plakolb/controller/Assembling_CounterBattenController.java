@@ -21,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -37,7 +38,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     @FXML
     private TextField tf_waste;
     @FXML
-    private ChoiceBox<Product> cb_counterBattern;
+    private ComboBox<Product> cb_counterBattern;
     @FXML
     private TextField tf_pricePerMeter;
     @FXML
@@ -222,27 +223,26 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     }
 
     public void calculate() {
-        double sum = 0;
-        sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
+        double sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
         //Verschnitt in m
         lengthWaste.setWorth(sum * (waste.getWorth() / 100));
 
-        lb_lengthWaste.setText(UtilityFormat.getStringForTextField(lengthWaste) + " m");
+        lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
 
         //Konterlattung in m
         counterBattern.setWorth(sum + lengthWaste.getWorth());
-        lb_counterBattern.setText(UtilityFormat.getStringForTextField(counterBattern) + " m");
+        lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
         //Kosten Konterlattung
         productCost.setWorth(pricePerMeter * counterBattern.getWorth());
-        lb_productCost.setText(UtilityFormat.getStringForTextField(productCost) + " €");
+        lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
 
         //Kosten Montage
         montageCost.setWorth(profiHour.getWorth() * timeMontage.getWorth());
-        lb_montageCost.setText(UtilityFormat.getStringForTextField(montageCost) + " €");
+        lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
 
         //Kosten Gesamt
         totalCost.setWorth(montageCost.getWorth() + productCost.getWorth());
-        lb_totalCost.setText(UtilityFormat.getStringForTextField(totalCost) + " €");
+        lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
 
     }
 

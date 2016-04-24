@@ -1,114 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_BattensOrFullFormworkController">
+<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_BattensOrFullFormworkController">
    <children>
-      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="32.0" minHeight="-Infinity" minWidth="-Infinity" text="Lattung/Vollschalung" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <font>
-            <Font name="Berlin Sans FB" size="36.0" />
-         </font>
-      </Label>
-      <HBox alignment="CENTER" layoutX="332.0" layoutY="73.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox alignment="TOP_CENTER" layoutY="32.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label id="boldLettering" text="Dachart: ">
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Lattung/Vollschalung" textFill="#3c84ff">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="cb_roofType" prefWidth="150.0" />
-         </children>
-         <padding>
-            <Insets bottom="10.0" top="20.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER" layoutY="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <AnchorPane fx:id="contentPane" layoutX="124.0" layoutY="219.0" />
-            <AnchorPane fx:id="ap_general" prefHeight="240.0" prefWidth="171.0" visible="false">
+            <HBox alignment="CENTER">
                <children>
-                  <Label id="normalLettering" layoutY="84.0" text="Gesamte Montage Zeit: ">
+                  <Label id="boldLettering" text="Dachart: ">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label id="boldLettering" layoutY="196.0" text="Montage Kosten: ">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" layoutX="-1.0" layoutY="30.0" text="Produktkosten(m²/Lfm): ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="boldLettering" layoutX="1.0" layoutY="223.0" text="Gesamtpreis: ">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" layoutX="-1.0" layoutY="1.0" text="Produkt: ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" layoutY="57.0" text="Facharbeiter Stunde: ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="boldLettering" layoutY="169.0" text="Produkt Kosten: ">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="cb_product" layoutX="198.0" layoutY="2.0" prefWidth="150.0" />
-                  <TextField fx:id="tf_assemblingDuration" layoutX="198.0" layoutY="85.0" promptText="Zeit in h" />
-                  <TextField fx:id="tf_price" layoutX="198.0" layoutY="31.0" promptText="Produktkosten (m²/Lfm)" />
-                  <TextField fx:id="tf_workCosts" layoutX="198.0" layoutY="58.0" promptText="Kosten in €/h" />
-                  <Label id="normalLettering" fx:id="lb_productCosts" layoutX="150.0" layoutY="169.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" fx:id="lb_assemblingCosts" layoutX="150.0" layoutY="196.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" fx:id="lb_totalCosts" layoutX="150.0" layoutY="223.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="smallUnitsLettering" layoutX="350.0" layoutY="34.0" text="m²/Lfm">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label id="UnitNotInText" layoutX="366.0" layoutY="57.0" text="€/h">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="UnitNotInText" layoutX="369.0" layoutY="84.0" text="h">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <ChoiceBox fx:id="cb_roofType" prefWidth="150.0" />
                </children>
-            </AnchorPane>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <AnchorPane fx:id="contentPane" layoutX="124.0" layoutY="219.0" />
+                  <AnchorPane fx:id="ap_general" visible="false">
+                     <children>
+                        <VBox spacing="20.0">
+                           <children>
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Label id="normalLettering" minHeight="27.0" text="Produkt: ">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="normalLettering" minHeight="27.0" text="Produktkosten(m²/Lfm): ">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="normalLettering" minHeight="27.0" text="Facharbeiter Stunde: ">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="normalLettering" minHeight="27.0" text="Gesamte Montage Zeit: ">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="2.0">
+                                       <children>
+                                          <ChoiceBox fx:id="cb_product" minHeight="25.0" prefWidth="150.0" />
+                                          <TextField fx:id="tf_price" minHeight="25.0" prefWidth="150.0" promptText="Produktkosten (m²/Lfm)" />
+                                          <TextField fx:id="tf_workCosts" minHeight="25.0" prefWidth="150.0" promptText="Kosten in €/h" />
+                                          <TextField fx:id="tf_assemblingDuration" minHeight="25.0" prefWidth="150.0" promptText="Zeit in h" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="BOTTOM_LEFT">
+                                       <children>
+                                          <Label id="smallUnitsLettering" minHeight="27.0" text="m²/Lfm">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="UnitNotInText" minHeight="27.0" text="€/h">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="UnitNotInText" minHeight="27.0" text="h">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Label id="boldLettering" minHeight="27.0" text="Produkt Kosten: ">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="boldLettering" minHeight="27.0" text="Montage Kosten: ">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="boldLettering" minHeight="27.0" text="Gesamtpreis: ">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox>
+                                       <children>
+                                          <Label id="normalLettering" fx:id="lb_productCosts" minHeight="27.0" text="0 €">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="normalLettering" fx:id="lb_assemblingCosts" minHeight="27.0" text="0 €">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label id="normalLettering" fx:id="lb_totalCosts" minHeight="27.0" text="0 €">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>
