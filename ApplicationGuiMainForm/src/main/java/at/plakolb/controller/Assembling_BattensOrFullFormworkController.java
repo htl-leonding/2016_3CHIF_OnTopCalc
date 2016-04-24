@@ -93,8 +93,12 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         cb_roofType.getItems().addAll("Ziegeldach", "Blechdach");
 
         //Muss hier geladen werden! | Schlömi
-        wastePercent = (new WorthController().findWorthByShortTermAndProjectId("VLVP", ProjectViewController.getOpenedProject().getId()) != null)
-                ? new WorthController().findWorthByShortTermAndProjectId("VLVP", ProjectViewController.getOpenedProject().getId()) : new Worth(new ParameterController().findParameterPByShortTerm("VLVP"));
+        if (ProjectViewController.isProjectOpened()) {
+            wastePercent = (new WorthController().findWorthByShortTermAndProjectId("VLVP", ProjectViewController.getOpenedProject().getId()) != null)
+                    ? new WorthController().findWorthByShortTermAndProjectId("VLVP", ProjectViewController.getOpenedProject().getId()) : new Worth(new ParameterController().findParameterPByShortTerm("VLVP"));
+        } else {
+            wastePercent = new Worth(new ParameterController().findParameterPByShortTerm("VLVP"));
+        }
 
         try {
             tiledRoof = (Node) FXMLLoader.load(getClass().getResource("/fxml/Assembling_TiledRoof.fxml"));
@@ -141,7 +145,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 component.setCategory(new CategoryController().findCategoryByShortTerm(
                         newValue.intValue() == 0 ? "L" : "VS"));
             }
-            
+
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
 

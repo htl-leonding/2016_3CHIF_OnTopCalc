@@ -23,7 +23,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -259,7 +258,6 @@ public class ProjectViewController extends Observable implements Initializable, 
     public static void openProject(Project project) {
         projectOpened = true;
         openedProject = project;
-        System.out.println("----------------------------------------------------------------------------------");
     }
 
     /**
