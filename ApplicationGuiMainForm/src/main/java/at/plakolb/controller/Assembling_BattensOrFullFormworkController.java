@@ -141,6 +141,8 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 component.setCategory(new CategoryController().findCategoryByShortTerm(
                         newValue.intValue() == 0 ? "L" : "VS"));
             }
+            
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
 
         tf_assemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {

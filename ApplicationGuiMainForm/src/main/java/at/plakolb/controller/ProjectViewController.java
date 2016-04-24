@@ -75,18 +75,6 @@ public class ProjectViewController extends Observable implements Initializable, 
         addObserver(Assembling_FoilController.getInstance());
         ModifyController.getInstance().addObserver(this);
 
-        tb_MainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
-            String t = event.getTarget().toString().toLowerCase();
-            if (t.contains("tabpaneskin")
-                    || t.contains("text")) {
-                return;
-            }
-            Tab actTab = tb_MainPane.getSelectionModel().getSelectedItem();
-            if (!actTab.getText().contains("*")) {
-                actTab.setText(actTab.getText() + " *");
-            }
-        });
-
         if (projectOpened) {
             Project_InformationsController.getInstance().openProject(openedProject);
             bt_Dismiss.setText("Änderungen verwerfen");
