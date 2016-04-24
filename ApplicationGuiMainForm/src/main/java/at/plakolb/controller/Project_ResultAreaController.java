@@ -153,6 +153,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
 
         setChanged();
         notifyObservers();
+        ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
     }
 
     /**

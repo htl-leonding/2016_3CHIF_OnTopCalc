@@ -159,6 +159,7 @@ public class Project_InformationsController implements Initializable, Observer {
         tf_ZipCode.setDisable(true);
         tf_Email.setDisable(true);
         bt_NewClient.setDisable(false);
+        ModifyController.getInstance().setProject_information(Boolean.TRUE);
     }
 
     /**
@@ -235,5 +236,6 @@ public class Project_InformationsController implements Initializable, Observer {
         tf_PhoneNumber.setDisable(false);
         tf_ZipCode.setDisable(false);
         tf_Email.setDisable(false);
+        ModifyController.getInstance().setProject_information(Boolean.TRUE);
     }
 }

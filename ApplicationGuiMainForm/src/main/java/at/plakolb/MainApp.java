@@ -23,13 +23,18 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+    private static Stage rootStage;
+    public static Stage getStage(){
+        return rootStage;
+    }
     /**
      * @param stage
      * @throws Exception
      */
     @Override
     public void start(Stage stage) throws Exception {
-
+        rootStage = stage;
+        
         //TEST DATA
         insertTestData();
         

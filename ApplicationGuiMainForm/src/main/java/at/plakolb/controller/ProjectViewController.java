@@ -1,12 +1,15 @@
 package at.plakolb.controller;
 
+import at.plakolb.MainApp;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
 import java.net.URL;
+import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -18,6 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -25,7 +30,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Andreas
  */
-public class ProjectViewController extends Observable implements Initializable {
+public class ProjectViewController extends Observable implements Initializable, Observer {
 
     private static ProjectViewController instance;
     private static Project openedProject;
@@ -51,9 +56,8 @@ public class ProjectViewController extends Observable implements Initializable {
     private Tab tab_Colour;
     @FXML
     private Tab tab_Overview;
-    
-    private TabPane tb_Assebmling;
 
+    private TabPane tb_Assebmling;
 
     /**
      * Initializes the controller class.
@@ -64,9 +68,12 @@ public class ProjectViewController extends Observable implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        configurateStage(true);
+
         addObserver(Assembling_FormworkController.getInstance());
         addObserver(Assembling_VisibleFormworkController.getInstance());
         addObserver(Assembling_FoilController.getInstance());
+        ModifyController.getInstance().addObserver(this);
 
         tb_MainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
             String t = event.getTarget().toString().toLowerCase();
@@ -100,11 +107,11 @@ public class ProjectViewController extends Observable implements Initializable {
         tab_MaterialCosts.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             Project_MaterialAndCostController.getInstance().refreshTableView();
         });
-        
+
         tab_Colour.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             Project_ColourController.getInstance().updateVisibleFormwork();
         });
-        
+
         tab_Overview.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             setChanged();
             notifyObservers();
@@ -220,6 +227,8 @@ public class ProjectViewController extends Observable implements Initializable {
             Project_ColourController.getInstance().persist();
             Project_ConstructionMaterialController.getInstance().persist();
 
+            ModifyController.getInstance().reset();
+            configurateStage(false);
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
             openedProject = null;
@@ -233,14 +242,25 @@ public class ProjectViewController extends Observable implements Initializable {
      */
     @FXML
     private void dismiss(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind die sicher? Alle nichtgespeicherten Änderungen gehen verloren.",
-                ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
+        if (ModifyController.getInstance().isModified()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind die sicher? Alle nichtgespeicherten Änderungen gehen verloren.",
+                    ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                ModifyController.getInstance().reset();
+                configurateStage(false);
+                MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
+                projectOpened = false;
+                openedProject = null;
+            }
+        } else {
+            ModifyController.getInstance().reset();
+            configurateStage(false);
             MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
             openedProject = null;
         }
+
     }
 
     /**
@@ -334,5 +354,52 @@ public class ProjectViewController extends Observable implements Initializable {
 
     public TabPane getTb_MainPane() {
         return tb_MainPane;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        List<Boolean> modified = ModifyController.getInstance().getModifiedList();
+        int idx = 0;
+        for (Tab tab : tb_MainPane.getTabs()) {
+            String text = tab.getText();
+            if (idx < modified.size() && modified.get(idx) == true) {
+                tab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/warning24.png"))));
+            }
+            idx++;
+        }
+        if (ModifyController.getInstance().isModified()) {
+            bt_Save.getStyleClass().add("modified");
+        } else {
+            bt_Save.getStyleClass().remove("modified");
+        }
+    }
+
+    private void configurateStage(boolean b) {
+        if (b) {
+            MainApp.getStage().setOnCloseRequest((event) -> {
+                if (ModifyController.getInstance().isModified()) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Möchten Sie die Änderungen speichern?");
+                    alert.getButtonTypes().clear();
+                    alert.getButtonTypes().add(new ButtonType("Speichern"));
+                    alert.getButtonTypes().add(new ButtonType("Nicht Speichern"));
+                    alert.getButtonTypes().add(ButtonType.CANCEL);
+                    alert.showAndWait();
+                    switch (alert.getResult().getText()) {
+                        case "Speichern":
+                            saveProject(null);
+                            break;
+                        case "Nicht Speichern":
+                            dismiss(null);
+                            break;
+                        default:
+                            event.consume();
+                            break;
+                    }
+                }
+            });
+        } else {
+            MainApp.getStage().setOnCloseRequest(null);
+        }
     }
 }
