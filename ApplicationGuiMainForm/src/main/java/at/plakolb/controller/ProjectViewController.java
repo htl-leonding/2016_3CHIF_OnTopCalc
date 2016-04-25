@@ -349,7 +349,13 @@ public class ProjectViewController extends Observable implements Initializable, 
         for (Tab tab : tb_MainPane.getTabs()) {
             String text = tab.getText();
             if (idx < modified.size() && modified.get(idx) == true) {
-                tab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/warning24.png"))));
+                if(!text.contains("*"))
+                    tab.setText("*"+text);
+            }
+            else
+            {
+                if(text.contains("*"))
+                    tab.setText(text.substring(1));
             }
             idx++;
         }

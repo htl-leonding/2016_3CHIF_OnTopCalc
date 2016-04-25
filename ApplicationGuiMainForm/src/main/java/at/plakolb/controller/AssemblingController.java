@@ -67,7 +67,13 @@ public class AssemblingController implements Initializable,Observer {
         for (Tab tab : tb_AssemblingPane.getTabs()) {
             String text = tab.getText();
             if (idx < modified.size() && modified.get(idx) == true) {
-                tab.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/warning24.png"))));
+                if(!text.contains("*"))
+                    tab.setText("*"+text);
+            }
+            else
+            {
+                if(text.contains("*"))
+                    tab.setText(text.substring(1));
             }
             idx++;
         }

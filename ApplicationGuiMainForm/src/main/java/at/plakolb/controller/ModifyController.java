@@ -122,7 +122,6 @@ public class ModifyController extends Observable {
     }
 
     public void setProject_colour(Boolean project_colour) {
-        System.out.println("Colour modified");
         this.project_colour = project_colour;
         setChanged();
         notifyObservers();
@@ -151,8 +150,6 @@ public class ModifyController extends Observable {
     }
 
     public void setAssembling_visibleFormwork(Boolean assembling_visibleFormwork) {
-        if(assembling_visibleFormwork)
-            setProject_colour(true);
         this.assembling_visibleFormwork = assembling_visibleFormwork;
         setAssembling(assembling_visibleFormwork);
     }

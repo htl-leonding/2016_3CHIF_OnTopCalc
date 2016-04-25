@@ -8,7 +8,6 @@
 	-fx-graphic: url("../images/back.png");
 }
 .modified{
-	-fx-graphic: url("../images/warning32.png");
 	-fx-font-size: 18px;
 	-fx-font-weight: bold;
 }
