@@ -47,9 +47,9 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_counterBattern" prefWidth="150.0" promptText="Produkt auswählen" />
-                                    <TextField fx:id="tf_pricePerMeter" minHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
-                                    <TextField fx:id="tf_waste" minHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
+                                    <ComboBox fx:id="cb_counterBattern" minHeight="25.0" prefWidth="180.0" promptText="Produkt auswählen" />
+                                    <TextField fx:id="tf_pricePerMeter" minHeight="25.0" prefWidth="180.0" promptText="Preis in €" />
+                                    <TextField fx:id="tf_waste" minHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
                               <VBox>

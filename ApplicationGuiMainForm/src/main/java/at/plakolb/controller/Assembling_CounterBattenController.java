@@ -20,7 +20,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -62,9 +61,8 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     @FXML
     private Label lb_lengthWaste;
 
-    private Component component;
     private Worth lengthWaste;
-    private Worth waste;//%
+    private Worth waste;
     private double pricePerMeter;
     private Worth counterBattern;
     private Worth montageCost;
@@ -72,6 +70,8 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     private Worth timeMontage;
     private Worth totalCost;
     private Worth profiHour;
+
+    private Component component;
 
     /**
      * Initializes the controller class.
@@ -126,124 +126,9 @@ public class Assembling_CounterBattenController implements Observer, Initializab
 
         if (ProjectViewController.getOpenedProject() != null) {
             loadFromDb();
-        }
-    }
-
-    public void persist() {
-        WorthController worthController = new WorthController();
-
-        Category category = new CategoryController().findCategoryByShortTerm("KL");//
-        component = new ComponentController().findComponent(ProjectViewController.getOpenedProject().getId());
-
-        if (component == null) {
+        } else {
             component = new Component();
         }
-        try {
-            Product product = new ProductController().findProduct(cb_counterBattern.getSelectionModel().getSelectedItem().getId());
-
-            component.setDescription(product.getName());
-            component.setCategory(category);
-            component.setComponentType("Produkt");
-            component.setPriceComponent(tf_pricePerMeter.getText().isEmpty() || !tf_pricePerMeter.getText().matches("[0-9]*.[0-9]*")
-                    ? null : Double.valueOf(tf_pricePerMeter.getText()));
-            component.setNumberOfProducts(counterBattern.getWorth());
-            component.setUnit(product.getUnit());
-            component.setProduct(product);
-            component.setComponentType(ProductType.COUNTERBATTEN.toString());
-            component.setProject(ProjectViewController.getOpenedProject());
-            new ComponentController().edit(component);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        if (!ProjectViewController.isProjectOpened()) {
-            component.setProject(ProjectViewController.getOpenedProject());
-            profiHour.setProject(ProjectViewController.getOpenedProject());
-            counterBattern.setProject(ProjectViewController.getOpenedProject());
-            timeMontage.setProject(ProjectViewController.getOpenedProject());
-            waste.setProject(ProjectViewController.getOpenedProject());
-            productCost.setProject(ProjectViewController.getOpenedProject());
-            montageCost.setProject(ProjectViewController.getOpenedProject());
-            lengthWaste.setProject(ProjectViewController.getOpenedProject());
-            totalCost.setProject(ProjectViewController.getOpenedProject());
-
-            worthController.create(profiHour);
-            worthController.create(counterBattern);
-            worthController.create(timeMontage);
-            worthController.create(lengthWaste);
-            worthController.create(productCost);
-            worthController.create(montageCost);
-            worthController.create(waste);
-            worthController.create(totalCost);
-        } else {
-            try {
-                worthController.edit(profiHour);
-                worthController.edit(counterBattern);
-                worthController.edit(timeMontage);
-                worthController.edit(lengthWaste);
-                worthController.edit(productCost);
-                worthController.edit(montageCost);
-                worthController.edit(waste);
-                worthController.edit(totalCost);
-            } catch (Exception e) {
-            }
-        }
-    }
-
-    public void loadFromDb() {
-        ParameterController parameterController = new ParameterController();
-        WorthController worthController = new WorthController();
-        Project openedProject = ProjectViewController.getOpenedProject();
-
-        timeMontage = (worthController.findWorthByShortTermAndProjectId("ZPKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("ZPKL", openedProject.getId()) : timeMontage;
-        profiHour = (worthController.findWorthByShortTermAndProjectId("KPKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KPKL", openedProject.getId()) : profiHour;
-        counterBattern = (worthController.findWorthByShortTermAndProjectId("KL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KL", openedProject.getId()) : counterBattern;
-        lengthWaste = (worthController.findWorthByShortTermAndProjectId("VKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("VKL", openedProject.getId()) : lengthWaste;
-        totalCost = (worthController.findWorthByShortTermAndProjectId("GKKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("GKKL", openedProject.getId()) : totalCost;
-        waste = (worthController.findWorthByShortTermAndProjectId("VKLP", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("VKLP", openedProject.getId()) : waste;
-        productCost = (worthController.findWorthByShortTermAndProjectId("KProKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KProKL", openedProject.getId()) : productCost;
-        montageCost = (worthController.findWorthByShortTermAndProjectId("KMonKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KMonKL", openedProject.getId()) : montageCost;
-        Category category = new CategoryController().findCategoryByShortTerm("KL");
-
-        component = new ComponentController().findComponent(ProjectViewController.getOpenedProject().getId());
-        if (component != null) {
-            cb_counterBattern.getSelectionModel().select(component.getProduct());
-        }
-        tf_profiHour.setText(UtilityFormat.getStringForTextField(profiHour));
-        tf_waste.setText(UtilityFormat.getStringForTextField(waste));
-        tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(pricePerMeter));
-        tf_timeMontage.setText(UtilityFormat.getStringForTextField(timeMontage));
-        lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
-        lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
-        lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
-        lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
-        lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
-        tv_dachsparren.setItems(FXCollections.observableList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
-
-    }
-
-    public void calculate() {
-        double sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
-        //Verschnitt in m
-        lengthWaste.setWorth(sum * (waste.getWorth() / 100));
-
-        lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
-
-        //Konterlattung in m
-        counterBattern.setWorth(sum + lengthWaste.getWorth());
-        lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
-        //Kosten Konterlattung
-        productCost.setWorth(pricePerMeter * counterBattern.getWorth());
-        lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
-
-        //Kosten Montage
-        montageCost.setWorth(profiHour.getWorth() * timeMontage.getWorth());
-        lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
-
-        //Kosten Gesamt
-        totalCost.setWorth(montageCost.getWorth() + productCost.getWorth());
-        lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
-
     }
 
     public static Assembling_CounterBattenController getInstance() {
@@ -268,6 +153,145 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     public void setTime() {
         timeMontage.setWorth(tf_timeMontage.getText().isEmpty() || !tf_timeMontage.getText().matches("[0-9]*.[0-9]*")
                 ? 0 : Double.valueOf(tf_timeMontage.getText().replace(',', '.')));
+    }
+
+    public Component getComponent() {
+        return component;
+    }
+
+    public Worth getMaterial() {
+        return productCost;
+    }
+
+    public Worth getWage() {
+        return montageCost;
+    }
+
+    public Worth getTotalCosts() {
+        return totalCost;
+    }
+
+    public void loadFromDb() {
+        WorthController worthController = new WorthController();
+        Project openedProject = ProjectViewController.getOpenedProject();
+        Category category = new CategoryController().findCategoryByShortTerm("KL");
+
+        component = new ComponentController().findComponentByProjectIdAndComponentTypeAndCategoryId(openedProject.getId(),
+                "Produkt", category.getId());
+
+        if (component != null) {
+            cb_counterBattern.getSelectionModel().select(component.getProduct());
+        } else {
+            component = new Component();
+            component.setCategory(category);
+            component.setComponentType("Produkt");
+        }
+
+        timeMontage = (worthController.findWorthByShortTermAndProjectId("ZPKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("ZPKL", openedProject.getId()) : timeMontage;
+        profiHour = (worthController.findWorthByShortTermAndProjectId("KPKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KPKL", openedProject.getId()) : profiHour;
+        counterBattern = (worthController.findWorthByShortTermAndProjectId("KL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KL", openedProject.getId()) : counterBattern;
+        lengthWaste = (worthController.findWorthByShortTermAndProjectId("VKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("VKL", openedProject.getId()) : lengthWaste;
+        totalCost = (worthController.findWorthByShortTermAndProjectId("GKKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("GKKL", openedProject.getId()) : totalCost;
+        waste = (worthController.findWorthByShortTermAndProjectId("VKLP", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("VKLP", openedProject.getId()) : waste;
+        productCost = (worthController.findWorthByShortTermAndProjectId("KProKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KProKL", openedProject.getId()) : productCost;
+        montageCost = (worthController.findWorthByShortTermAndProjectId("KMonKL", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KMonKL", openedProject.getId()) : montageCost;
+
+        tf_profiHour.setText(UtilityFormat.getStringForTextField(profiHour));
+        tf_waste.setText(UtilityFormat.getStringForTextField(waste));
+        tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(pricePerMeter));
+        tf_timeMontage.setText(UtilityFormat.getStringForTextField(timeMontage));
+        lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
+        lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
+        lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
+        lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
+        lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
+        tv_dachsparren.setItems(FXCollections.observableList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
+
+    }
+
+    public void calculate() {
+        double sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
+        //Verschnitt in m
+        lengthWaste.setWorth(sum * (waste.getWorth() / 100));
+        lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
+
+        //Konterlattung in m
+        counterBattern.setWorth(sum + lengthWaste.getWorth());
+        lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
+
+        //Kosten Konterlattung
+        productCost.setWorth(pricePerMeter * counterBattern.getWorth());
+        lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
+
+        //Kosten Montage
+        montageCost.setWorth(profiHour.getWorth() * timeMontage.getWorth());
+        lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
+
+        //Kosten Gesamt
+        totalCost.setWorth(montageCost.getWorth() + productCost.getWorth());
+        lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
+
+        Product product = cb_counterBattern.getSelectionModel().getSelectedItem();
+
+        if (product != null) {
+            component.setDescription(product.getName());
+            component.setLengthComponent(product.getLengthProduct());
+            component.setWidthComponent(product.getWidthProduct());
+            component.setHeightComponent(product.getHeightProduct());
+            component.setProduct(product);
+            component.setUnit(product.getUnit());
+        } else {
+            component.setDescription("CounterBatten");
+            component.setLengthComponent(null);
+            component.setWidthComponent(null);
+            component.setHeightComponent(null);
+            component.setProduct(null);
+            component.setUnit(null);
+        }
+        component.setNumberOfProducts(counterBattern.getWorth());
+        component.setPriceComponent(pricePerMeter);
+
+    }
+
+    public void persist() {
+        WorthController worthController = new WorthController();
+        ComponentController componentController = new ComponentController();
+
+        if (!ProjectViewController.isProjectOpened()) {
+            component.setProject(ProjectViewController.getOpenedProject());
+            profiHour.setProject(ProjectViewController.getOpenedProject());
+            counterBattern.setProject(ProjectViewController.getOpenedProject());
+            timeMontage.setProject(ProjectViewController.getOpenedProject());
+            waste.setProject(ProjectViewController.getOpenedProject());
+            productCost.setProject(ProjectViewController.getOpenedProject());
+            montageCost.setProject(ProjectViewController.getOpenedProject());
+            lengthWaste.setProject(ProjectViewController.getOpenedProject());
+            totalCost.setProject(ProjectViewController.getOpenedProject());
+            component.setProject(ProjectViewController.getOpenedProject());
+
+            worthController.create(profiHour);
+            worthController.create(counterBattern);
+            worthController.create(timeMontage);
+            worthController.create(lengthWaste);
+            worthController.create(productCost);
+            worthController.create(montageCost);
+            worthController.create(waste);
+            worthController.create(totalCost);
+            componentController.create(component);
+        } else {
+            try {
+                worthController.edit(profiHour);
+                worthController.edit(counterBattern);
+                worthController.edit(timeMontage);
+                worthController.edit(lengthWaste);
+                worthController.edit(productCost);
+                worthController.edit(montageCost);
+                worthController.edit(waste);
+                worthController.edit(totalCost);
+                componentController.edit(component);
+            } catch (Exception e) {
+            }
+        }
     }
 
     @Override

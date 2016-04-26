@@ -121,6 +121,10 @@ public class Assembling_FormworkController implements Initializable, Observer {
         }
     }
 
+    public static Assembling_FormworkController getInstance() {
+        return instance;
+    }
+
     private void setPrice(String price) {
         price = price.replace(',', '.');
         if (price.isEmpty() || !price.matches("[0-9]*.[0-9]*") || Double.valueOf(price) < 0) {
@@ -148,16 +152,16 @@ public class Assembling_FormworkController implements Initializable, Observer {
     public Component getComponent() {
         return component;
     }
-    
-    public Worth getWage(){
+
+    public Worth getWage() {
         return costsMontage;
     }
-    
-    public Worth getMaterial(){
+
+    public Worth getMaterial() {
         return productCosts;
     }
-    
-    public Worth getTotalCosts(){
+
+    public Worth getTotalCosts() {
         return totalCosts;
     }
 
@@ -204,6 +208,8 @@ public class Assembling_FormworkController implements Initializable, Observer {
             totalCosts = (worthController.findWorthByShortTermAndProjectId("GKS", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("GKS", project.getId()) : totalCosts;
 
+            //TODO
+            // Diese Überprüfung wird nur bei der Schalung durchgeführt. Muss noch auf die anderen übernommen werden.
             if (waste == null || formwork == null || productCosts == null || blend == null || wage == null || time == null || costsMontage == null || totalCosts == null) {
                 new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Werte für die Schalung!").showAndWait();
             } else {
@@ -270,6 +276,8 @@ public class Assembling_FormworkController implements Initializable, Observer {
             totalCosts.setWorth(costsMontage.getWorth() + productCosts.getWorth());
             lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 
+            //TODO    
+            //Dieses try catch wird nur bei der Schalung durchgeführt. Muss noch auf die anderen übernommen werden.
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
@@ -300,9 +308,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
     public void persist() {
         try {
             WorthController worthController = new WorthController();
-
             ComponentController componentController = new ComponentController();
-            CategoryController categoryController = new CategoryController();
 
             if (!ProjectViewController.isProjectOpened()) {
                 blend.setProject(ProjectViewController.getOpenedProject());
@@ -341,10 +347,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
         } catch (Exception ex) {
             Logger.getLogger(Assembling_FormworkController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public static Assembling_FormworkController getInstance() {
-        return instance;
     }
 
     @Override

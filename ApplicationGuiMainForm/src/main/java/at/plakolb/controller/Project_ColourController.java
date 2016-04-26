@@ -116,15 +116,12 @@ public class Project_ColourController implements Initializable {
             calculateValues();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
-        cb_Product.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
-            @Override
-            public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
-                if (newValue != null) {
-                    pricePerLiter = newValue.getPriceUnit();
-                    tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
-                }
-                ModifyController.getInstance().setProject_colour(Boolean.TRUE);
+        cb_Product.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Product> observable, Product oldValue, Product newValue) -> {
+            if (newValue != null) {
+                pricePerLiter = newValue.getPriceUnit();
+                tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
             }
+            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -176,7 +173,6 @@ public class Project_ColourController implements Initializable {
 
     public void loadColourValues() {
 
-        ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
         Project openedProject = ProjectViewController.getOpenedProject();
 
@@ -262,8 +258,7 @@ public class Project_ColourController implements Initializable {
             component.setUnit(null);
         }
 
-        component.setPriceComponent(tf_PricePerLiter.getText().isEmpty() || !tf_PricePerLiter.getText().matches("[0-9]*.[0-9]*")
-                ? null : Double.valueOf(tf_PricePerLiter.getText()));
+        component.setPriceComponent(pricePerLiter);
         component.setNumberOfProducts(paintLiter.getWorth());
     }
 

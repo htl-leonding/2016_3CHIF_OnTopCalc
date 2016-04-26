@@ -24,7 +24,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="boldLettering" fx:id="lb_VisibleFormwork" prefHeight="17.0" prefWidth="76.0" text="0.00 m²">
+                  <Label id="boldLettering" fx:id="lb_VisibleFormwork" prefHeight="17.0" text="0 m²">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

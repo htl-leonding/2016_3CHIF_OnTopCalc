@@ -99,6 +99,11 @@ public class Project_OverviewController implements Initializable {
     
     public void refreshValues(){
         
+        nettoCosts += Project_ConstructionMaterialListController.getInstance().getTotalCosts();
+        lb_WoodMaterial.setText(UtilityFormat.getStringForLabel(Project_ConstructionMaterialListController.getInstance().getMaterial()) + " €");
+        lb_WoodWage.setText(UtilityFormat.getStringForLabel(Project_ConstructionMaterialListController.getInstance().getWage()) + " €");
+        lb_WoodTotal.setText(UtilityFormat.getStringForLabel(Project_ConstructionMaterialListController.getInstance().getTotalCosts()) + " €");
+        
         nettoCosts += Assembling_FormworkController.getInstance().getTotalCosts().getWorth();
         lb_FormworkMaterial.setText(UtilityFormat.getStringForLabel(Assembling_FormworkController.getInstance().getMaterial()));
         lb_FormworkWage.setText(UtilityFormat.getStringForLabel(Assembling_FormworkController.getInstance().getWage()));
@@ -113,6 +118,21 @@ public class Project_OverviewController implements Initializable {
         lb_FoilMaterial.setText(UtilityFormat.getStringForLabel(Assembling_FoilController.getInstance().getMaterial()));
         lb_FoilWage.setText(UtilityFormat.getStringForLabel(Assembling_FoilController.getInstance().getWage()));
         lb_FoilTotal.setText(UtilityFormat.getStringForLabel(Assembling_FoilController.getInstance().getTotalCosts()));
+        
+        nettoCosts += Assembling_SealingBandController.getInstance().getTotalCosts().getWorth();
+        lb_SealingBandMaterial.setText(UtilityFormat.getStringForLabel(Assembling_SealingBandController.getInstance().getMaterial()));
+        lb_SealingBandWage.setText(UtilityFormat.getStringForLabel(Assembling_SealingBandController.getInstance().getWage()));
+        lb_SealingBandTotal.setText(UtilityFormat.getStringForLabel(Assembling_SealingBandController.getInstance().getTotalCosts()));
+        
+        nettoCosts += Assembling_CounterBattenController.getInstance().getTotalCosts().getWorth();
+        lb_CounterBattenMaterial.setText(UtilityFormat.getStringForLabel(Assembling_CounterBattenController.getInstance().getMaterial()));
+        lb_CounterBattenWage.setText(UtilityFormat.getStringForLabel(Assembling_CounterBattenController.getInstance().getWage()));
+        lb_CounterBattenTotal.setText(UtilityFormat.getStringForLabel(Assembling_CounterBattenController.getInstance().getTotalCosts()));
+        
+        nettoCosts += Assembling_BattensOrFullFormworkController.getInstance().getTotalCosts().getWorth();
+        lb_BattenFormworkMaterial.setText(UtilityFormat.getStringForLabel(Assembling_BattensOrFullFormworkController.getInstance().getMaterial()));
+        lb_BattenFormworkWage.setText(UtilityFormat.getStringForLabel(Assembling_BattensOrFullFormworkController.getInstance().getWage()));
+        lb_BattenFormworkTotal.setText(UtilityFormat.getStringForLabel(Assembling_BattensOrFullFormworkController.getInstance().getTotalCosts()));
         
         nettoCosts += Project_ConstructionMaterialController.getInstance().getMaterial();
         lb_AssemblingMaterial.setText(UtilityFormat.getStringForLabel(Project_ConstructionMaterialController.getInstance().getMaterial()) + " €");

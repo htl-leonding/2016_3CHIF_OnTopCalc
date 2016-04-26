@@ -19,7 +19,7 @@
             </Label>
             <HBox alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Dachfläche: ">
+                  <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Dachvorsprung: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

@@ -167,102 +167,60 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             }
         });
 
-        load();
-    }
-
-    public void persist() {
-        if (loadedIndex >= 0 && loadedIndex != cb_roofType.getSelectionModel().selectedIndexProperty().get()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Zuletzt wurde \"" + cb_roofType.getItems().get(loadedIndex) + "\" als Dachmaterial gespeichert.\nWollen Sie nun das Dachmaterial auf \"" + cb_roofType.getSelectionModel().getSelectedItem() + "\" ändern?");
-            alert.setOnCloseRequest((event) -> {
-                if (alert.getResult() == ButtonType.NO) {
-                    if (loadedIndex == 0) {
-                        saveTiledRoof();
-                    } else {
-                        saveSheetRoof();
-                    }
-                } else if (cb_roofType.getSelectionModel().getSelectedIndex() == 0) {
-                    saveTiledRoof();
-                } else {
-                    saveSheetRoof();
-                }
-                saveRemaining();
-            });
-            alert.getButtonTypes().clear();
-            alert.getButtonTypes().add(ButtonType.YES);
-            alert.getButtonTypes().add(ButtonType.NO);
-            alert.showAndWait();
+        if (ProjectViewController.getOpenedProject() != null) {
+            load();
         } else {
-            if (cb_roofType.getSelectionModel().getSelectedIndex() == 0) {
-                saveTiledRoof();
-            } else {
-                saveSheetRoof();
-            }
-            saveRemaining();
+            component = new Component();
         }
+
     }
 
-    private void saveRemaining() {
-        Project project = ProjectViewController.getOpenedProject();
-        WorthController worthController = new WorthController();
-
-        Product product = cb_product.getSelectionModel().getSelectedItem();
-        if (product != null) {
-            component.setDescription(product.getName());
-            component.setLengthComponent(product.getLengthProduct());
-            component.setWidthComponent(product.getWidthProduct());
-            component.setHeightComponent(product.getHeightProduct());
-            component.setProduct(product);
-            component.setUnit(product.getUnit());
-        } else {
-            component.setDescription(title.getText());
-            component.setLengthComponent(null);
-            component.setWidthComponent(null);
-            component.setHeightComponent(null);
-            component.setProduct(null);
-            component.setUnit(null);
-        }
-
-        component.setPriceComponent(price);
-        try {
-            new ComponentController().edit(component);
-        } catch (Exception ex) {
-            Logger.getLogger(Assembling_BattensOrFullFormworkController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        if (project != null && !ProjectViewController.isProjectOpened()) {
-            assemblingDuration.setProject(project);
-            workCosts.setProject(project);
-            montageCosts.setProject(project);
-            productCosts.setProject(project);
-            totalCosts.setProject(project);
-            wastePercent.setProject(project);
-
-            worthController.create(assemblingDuration);
-            worthController.create(workCosts);
-            worthController.create(montageCosts);
-            worthController.create(productCosts);
-            worthController.create(totalCosts);
-            worthController.create(wastePercent);
-        } else {
-            try {
-                worthController.edit(assemblingDuration);
-                worthController.edit(workCosts);
-                worthController.edit(montageCosts);
-                worthController.edit(productCosts);
-                worthController.edit(totalCosts);
-                worthController.edit(wastePercent);
-            } catch (Exception ex) {
-                Logger.getLogger(Assembling_BattensOrFullFormworkController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public static Assembling_BattensOrFullFormworkController getInstance() {
+        return instance;
     }
 
-    private void saveSheetRoof() {
-        Assembling_SheetRoofController.getInstance().persist();
+    private void setAbatementDuration() {
+        assemblingDuration.setWorth(tf_assemblingDuration.getText().isEmpty() || !tf_assemblingDuration.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_assemblingDuration.getText().replace(',', '.')));
     }
 
-    private void saveTiledRoof() {
-        Assembling_TiledRoofController.getInstance().persist();
+    private void setPrice() {
+        price = (tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.')));
+    }
+
+    private void setWorkCosts() {
+        workCosts.setWorth(tf_workCosts.getText().isEmpty() || !tf_workCosts.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_workCosts.getText().replace(',', '.')));
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        calculate();
+    }
+
+    public double getWastePercent() {
+        return wastePercent.getWorth();
+    }
+
+    public void setWastePercent(double worth) {
+        wastePercent.setWorth(worth);
+    }
+
+    public Component getComponent() {
+        return component;
+    }
+
+    public Worth getMaterial() {
+        return productCosts;
+    }
+
+    public Worth getWage() {
+        return montageCosts;
+    }
+
+    public Worth getTotalCosts() {
+        return totalCosts;
     }
 
     public void load() {
@@ -282,13 +240,14 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             Category category = new CategoryController().findCategoryByShortTerm(categoryString);
 
             component = new ComponentController().findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(), "Produkt", category.getId());
+
             if (component != null) {
                 cb_product.getSelectionModel().select(component.getProduct());
                 tf_price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
             } else {
                 component = new Component();
                 component.setComponentType("Produkt");
-                component.setProject(project);
+                component.setCategory(category);
             }
 
             workCosts = (worthController.findWorthByShortTermAndProjectId("KPLV", project.getId()) != null)
@@ -329,41 +288,107 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         //Alte Formel-ID: GKLV
         totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
         lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
+        Product product = cb_product.getSelectionModel().getSelectedItem();
+
+        if (product != null) {
+            component.setDescription(product.getName());
+            component.setLengthComponent(product.getLengthProduct());
+            component.setWidthComponent(product.getWidthProduct());
+            component.setHeightComponent(product.getHeightProduct());
+            component.setProduct(product);
+            component.setUnit(product.getUnit());
+        } else {
+            component.setDescription(title.getText());
+            component.setLengthComponent(null);
+            component.setWidthComponent(null);
+            component.setHeightComponent(null);
+            component.setProduct(null);
+            component.setUnit(null);
+        }
+        component.setPriceComponent(price);
+        //Keine Ahnung was hinein gehört TODO
+        //component.setNumberOfProducts();
     }
 
-    public static Assembling_BattensOrFullFormworkController getInstance() {
-        return instance;
+    public void persist() {
+        if (loadedIndex >= 0 && loadedIndex != cb_roofType.getSelectionModel().selectedIndexProperty().get()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Zuletzt wurde \"" + cb_roofType.getItems().get(loadedIndex) + "\" als Dachmaterial gespeichert.\nWollen Sie nun das Dachmaterial auf \"" + cb_roofType.getSelectionModel().getSelectedItem() + "\" ändern?");
+            alert.setOnCloseRequest((event) -> {
+                if (alert.getResult() == ButtonType.NO) {
+                    if (loadedIndex == 0) {
+                        saveTiledRoof();
+                    } else {
+                        saveSheetRoof();
+                    }
+                } else if (cb_roofType.getSelectionModel().getSelectedIndex() == 0) {
+                    saveTiledRoof();
+                } else {
+                    saveSheetRoof();
+                }
+                saveRemaining();
+            });
+            alert.getButtonTypes().clear();
+            alert.getButtonTypes().add(ButtonType.YES);
+            alert.getButtonTypes().add(ButtonType.NO);
+            alert.showAndWait();
+        } else {
+            if (cb_roofType.getSelectionModel().getSelectedIndex() == 0) {
+                saveTiledRoof();
+            } else {
+                saveSheetRoof();
+            }
+            saveRemaining();
+        }
     }
 
-    private void setAbatementDuration() {
-        assemblingDuration.setWorth(tf_assemblingDuration.getText().isEmpty() || !tf_assemblingDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_assemblingDuration.getText().replace(',', '.')));
+    private void saveRemaining() {
+        Project project = ProjectViewController.getOpenedProject();
+        WorthController worthController = new WorthController();
+        ComponentController componentController = new ComponentController();
+
+        try {
+            new ComponentController().edit(component);
+        } catch (Exception ex) {
+            Logger.getLogger(Assembling_BattensOrFullFormworkController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (project != null && !ProjectViewController.isProjectOpened()) {
+            assemblingDuration.setProject(project);
+            workCosts.setProject(project);
+            montageCosts.setProject(project);
+            productCosts.setProject(project);
+            totalCosts.setProject(project);
+            wastePercent.setProject(project);
+            component.setProject(project);
+
+            worthController.create(assemblingDuration);
+            worthController.create(workCosts);
+            worthController.create(montageCosts);
+            worthController.create(productCosts);
+            worthController.create(totalCosts);
+            worthController.create(wastePercent);
+            componentController.create(component);
+        } else {
+            try {
+                worthController.edit(assemblingDuration);
+                worthController.edit(workCosts);
+                worthController.edit(montageCosts);
+                worthController.edit(productCosts);
+                worthController.edit(totalCosts);
+                worthController.edit(wastePercent);
+                componentController.edit(component);
+            } catch (Exception ex) {
+                Logger.getLogger(Assembling_BattensOrFullFormworkController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
-    private void setPrice() {
-        price = (tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.')));
+    private void saveSheetRoof() {
+        Assembling_SheetRoofController.getInstance().persist();
     }
 
-    private void setWorkCosts() {
-        workCosts.setWorth(tf_workCosts.getText().isEmpty() || !tf_workCosts.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_workCosts.getText().replace(',', '.')));
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        calculate();
-    }
-
-    public double getWastePercent() {
-        return wastePercent.getWorth();
-    }
-
-    public void setWastePercent(double worth) {
-        wastePercent.setWorth(worth);
-    }
-
-    public Component getComponent() {
-        return component;
+    private void saveTiledRoof() {
+        Assembling_TiledRoofController.getInstance().persist();
     }
 }

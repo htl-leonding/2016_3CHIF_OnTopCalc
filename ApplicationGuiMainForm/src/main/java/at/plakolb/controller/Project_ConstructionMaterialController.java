@@ -7,7 +7,6 @@ import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.entity.Assembly;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
-import at.plakolb.calculationlogic.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
@@ -99,7 +98,7 @@ public class Project_ConstructionMaterialController implements Initializable {
         );
 
         tc_TotalPrice.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param)
-                -> new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPrice() * param.getValue().getNumberOfComponents()))
+                -> new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPrice() * param.getValue().getNumberOfComponents()) + " €")
         );
 
         tc_Button.setCellFactory(new Callback<TableColumn<Component, String>, TableCell<Component, String>>() {
@@ -146,21 +145,21 @@ public class Project_ConstructionMaterialController implements Initializable {
 
         cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.MISCELLANEOUS)));
         cb_Component.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getComponents()));
-        
+
         cb_Product.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Product> observable, Product oldValue, Product newValue) -> {
             if (cb_Product.getSelectionModel().getSelectedItem() != null) {
                 tf_Price.setText(UtilityFormat.getStringForTextField(cb_Product.getSelectionModel().getSelectedItem().getPriceUnit()));
             }
         });
-        
+
         refreshListView();
     }
 
     public static Project_ConstructionMaterialController getInstance() {
         return instance;
     }
-    
-    public Double getMaterial(){
+
+    public Double getMaterial() {
         return getTotalCosts(assemblyList);
     }
 
@@ -172,27 +171,39 @@ public class Project_ConstructionMaterialController implements Initializable {
     }
 
     public void refreshComponents() {
-        
+
         componentList.clear();
         componentList.addAll(Project_ConstructionMaterialListController.getInstance().getComponents());
-        
+
         if (Assembling_FormworkController.getInstance().getComponent().getProduct() != null) {
             componentList.add(Assembling_FormworkController.getInstance().getComponent());
         }
-        
+
         if (Assembling_VisibleFormworkController.getInstance().getComponent().getProduct() != null) {
             componentList.add(Assembling_VisibleFormworkController.getInstance().getComponent());
         }
-        
+
         if (Assembling_FoilController.getInstance().getComponent().getProduct() != null) {
             componentList.add(Assembling_FoilController.getInstance().getComponent());
         }
 
-//      würde keinen Sinn machen       
+        if (Assembling_SealingBandController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_SealingBandController.getInstance().getComponent());
+        }
+
+        if (Assembling_CounterBattenController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_CounterBattenController.getInstance().getComponent());
+        }
+        
+        if (Assembling_BattensOrFullFormworkController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_BattensOrFullFormworkController.getInstance().getComponent());
+        }
+        
+//      würde keinen Sinn machen TODO      
 //        if (Project_ColourController.getInstance().getComponent().getProduct() != null) {
 //            componentList.add(Project_ColourController.getInstance().getComponent());
 //        }
-        
+
         cb_Component.setItems(FXCollections.observableArrayList(componentList));
 
         if (cb_Component.getItems().isEmpty()) {
@@ -231,10 +242,10 @@ public class Project_ConstructionMaterialController implements Initializable {
         }
 
         if (errorMessage.equals("")) {
-            
+
             Component component = cb_Component.getSelectionModel().getSelectedItem();
             component.setProject(ProjectViewController.getOpenedProject());
-            
+
             assemblyList.add(new Assembly(cb_Product.getSelectionModel().getSelectedItem(),
                     component,
                     ProjectViewController.getOpenedProject(),

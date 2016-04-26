@@ -16,8 +16,6 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -78,6 +76,8 @@ public class Assembling_SealingBandController implements Initializable, Observer
     private Worth montageCosts;
     private Worth totalCosts;
 
+    private Component component;
+
     /**
      * Initializes the controller class.
      *
@@ -126,106 +126,80 @@ public class Assembling_SealingBandController implements Initializable, Observer
         });
 
         cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<>(component.getDescription());
+            return new ReadOnlyObjectWrapper<>(param.getValue().getDescription());
         });
         cl_length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(component.getLengthComponent())) + " m");
+            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent())) + " m");
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
             load();
+        } else {
+            component = new Component();
         }
     }
 
-    public void persist() {
-        WorthController worthController = new WorthController();
+    public static Assembling_SealingBandController getInstance() {
+        return instance;
+    }
 
-        Category category = new CategoryController().findCategoryByShortTerm("ND");
-        if (category != null) {
-            try {
-                ComponentController componentController = new ComponentController();
-                Product product = cb_product.getSelectionModel().getSelectedItem();
-                Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(ProjectViewController.getOpenedProject().getId(), "ND", category.getId());
+    private void setBlend() {
+        blend.setWorth(tf_blend.getText().isEmpty() || !tf_blend.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_blend.getText().replace(',', '.')));
+    }
 
-                if (component == null) {
-                    component = new Component();
-                }
+    private void setDuration() {
+        duration.setWorth(tf_duration.getText().isEmpty() || !tf_duration.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_duration.getText().replace(',', '.')));
+    }
 
-                if (product != null) {
-                    component.setDescription(product.getName());
-                    component.setLengthComponent(product.getLengthProduct());
-                    component.setWidthComponent(product.getWidthProduct());
-                    component.setHeightComponent(product.getHeightProduct());
-                    component.setProduct(product);
-                } else {
-                    component.setDescription("");
-                    component.setLengthComponent(null);
-                    component.setWidthComponent(null);
-                    component.setHeightComponent(null);
-                    component.setProduct(null);
-                }
-                component.setCategory(category);
-                component.setComponentType("Produkt");
-                component.setProject(ProjectViewController.getOpenedProject());
-                component.setNumberOfProducts(sealingBand.getWorth());
-                component.setPriceComponent(price);
-                componentController.edit(component);
-            } catch (Exception ex) {
-                Logger.getLogger(Assembling_VisibleFormworkController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    private void setPricePerLinearMeter() {
+        price = (tf_priceLinearMeter.getText().isEmpty() || !tf_priceLinearMeter.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_priceLinearMeter.getText().replace(',', '.')));
+    }
 
-        if (!ProjectViewController.isProjectOpened()) {
-            blend.setProject(ProjectViewController.getOpenedProject());
-            waste.setProject(ProjectViewController.getOpenedProject());
-            sealingBand.setProject(ProjectViewController.getOpenedProject());
-            duration.setProject(ProjectViewController.getOpenedProject());
-            productCosts.setProject(ProjectViewController.getOpenedProject());
-            montageCosts.setProject(ProjectViewController.getOpenedProject());
-            totalCosts.setProject(ProjectViewController.getOpenedProject());
-            workerCosts.setProject(ProjectViewController.getOpenedProject());
-
-            worthController.create(blend);
-            worthController.create(workerCosts);
-            worthController.create(waste);
-            worthController.create(sealingBand);
-            worthController.create(duration);
-            worthController.create(montageCosts);
-            worthController.create(productCosts);
-            worthController.create(totalCosts);
-        } else {
-            try {
-                worthController.edit(blend);
-                worthController.edit(workerCosts);
-                worthController.edit(waste);
-                worthController.edit(sealingBand);
-                worthController.edit(duration);
-                worthController.edit(montageCosts);
-                worthController.edit(productCosts);
-                worthController.edit(totalCosts);
-            } catch (Exception e) {
-            }
-        }
+    private void setWorkCosts() {
+        workerCosts.setWorth(tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
+                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.')));
+    }
+    
+    public Component getComponent(){
+        return component;
+    }
+    
+    public Worth getMaterial(){
+        return productCosts;
+    }
+    
+    public Worth getWage(){
+        return montageCosts;
+    }
+    
+    public Worth getTotalCosts(){
+        return totalCosts;                
     }
 
     public void load() {
 
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
-            ParameterController parameterController = new ParameterController();
             WorthController worthController = new WorthController();
             ComponentController componentController = new ComponentController();
             CategoryController categoryController = new CategoryController();
             Category category = categoryController.findCategoryByShortTerm("ND");
 
-            Component component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
+            component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                     "Produkt", category.getId());
 
             if (component != null) {
                 cb_product.getSelectionModel().select(component.getProduct());
-                tf_price.setText(UtilityFormat.getStringForLabel(component.getPriceComponent()));
+                //Bin mir nicht sicher ob das so richtig ist (Keppi) TODO
+                //tf_price.setText(UtilityFormat.getStringForLabel(component.getPriceComponent()));
+            }
+            else{
+                component = new Component();
+                component.setCategory(category);
+                component.setComponentType("Produkt");
             }
 
             blend = (worthController.findWorthByShortTermAndProjectId("VDP", project.getId()) != null)
@@ -255,12 +229,12 @@ public class Assembling_SealingBandController implements Initializable, Observer
             lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
             lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
-            
+
             tv_rafter.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
         }
     }
 
-    public void calculate() {
+        public void calculate() {
         //Verschnitt Nageldichtband
         //Alte Formel-ID: VD
         waste.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() * blend.getWorth() / 100);
@@ -271,46 +245,81 @@ public class Assembling_SealingBandController implements Initializable, Observer
         lb_sealingBand.setText(UtilityFormat.getStringForLabel(sealingBand));
         //Produktkosten
         //Alte Formel-ID: KPND
-        productCosts.setWorth(price*sealingBand.getWorth());
+        productCosts.setWorth(price * sealingBand.getWorth());
         lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
         //Montagekosten
         //Alte Formel-ID: KMND
-        montageCosts.setWorth(workerCosts.getWorth()*duration.getWorth());
+        montageCosts.setWorth(workerCosts.getWorth() * duration.getWorth());
         lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
         //Totalcosts
         //Alte Formel-ID: GKND
-        totalCosts.setWorth(productCosts.getWorth()+montageCosts.getWorth());
+        totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
         lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
-    }
+        
+        Product product = cb_product.getSelectionModel().getSelectedItem();
 
-    public static Assembling_SealingBandController getInstance() {
-        return instance;
+        if (product != null) {
+            component.setDescription(product.getName());
+            component.setLengthComponent(product.getLengthProduct());
+            component.setWidthComponent(product.getWidthProduct());
+            component.setHeightComponent(product.getHeightProduct());
+            component.setProduct(product);
+            component.setUnit(product.getUnit());
+        } else {
+            component.setDescription("Nageldichtband");
+            component.setLengthComponent(null);
+            component.setWidthComponent(null);
+            component.setHeightComponent(null);
+            component.setProduct(null);
+            component.setUnit(null);
+        }
+        component.setNumberOfProducts(sealingBand.getWorth());
+        component.setPriceComponent(price);
     }
+    
+    public void persist() {
+        WorthController worthController = new WorthController();
+        ComponentController componentController = new ComponentController();
 
-    private void setBlend() {
-        blend.setWorth(tf_blend.getText().isEmpty() || !tf_blend.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_blend.getText().replace(',', '.')));
-    }
+        if (!ProjectViewController.isProjectOpened()) {
+            blend.setProject(ProjectViewController.getOpenedProject());
+            waste.setProject(ProjectViewController.getOpenedProject());
+            sealingBand.setProject(ProjectViewController.getOpenedProject());
+            duration.setProject(ProjectViewController.getOpenedProject());
+            productCosts.setProject(ProjectViewController.getOpenedProject());
+            montageCosts.setProject(ProjectViewController.getOpenedProject());
+            totalCosts.setProject(ProjectViewController.getOpenedProject());
+            workerCosts.setProject(ProjectViewController.getOpenedProject());
+            component.setProject(ProjectViewController.getOpenedProject());
 
-    private void setDuration() {
-        duration.setWorth(tf_duration.getText().isEmpty() || !tf_duration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_duration.getText().replace(',', '.')));
-    }
-
-    private void setPricePerLinearMeter() {
-        price = (tf_priceLinearMeter.getText().isEmpty() || !tf_priceLinearMeter.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_priceLinearMeter.getText().replace(',', '.')));
-    }
-
-    private void setWorkCosts() {
-        workerCosts.setWorth(tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.')));
+            worthController.create(blend);
+            worthController.create(workerCosts);
+            worthController.create(waste);
+            worthController.create(sealingBand);
+            worthController.create(duration);
+            worthController.create(montageCosts);
+            worthController.create(productCosts);
+            worthController.create(totalCosts);
+            componentController.create(component);
+        } else {
+            try {
+                worthController.edit(blend);
+                worthController.edit(workerCosts);
+                worthController.edit(waste);
+                worthController.edit(sealingBand);
+                worthController.edit(duration);
+                worthController.edit(montageCosts);
+                worthController.edit(productCosts);
+                worthController.edit(totalCosts);
+                componentController.edit(component);
+            } catch (Exception e) {
+            }
+        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
         tv_rafter.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
-
         calculate();
     }
 

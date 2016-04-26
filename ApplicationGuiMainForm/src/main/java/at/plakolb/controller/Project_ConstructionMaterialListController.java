@@ -16,9 +16,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -245,6 +243,18 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
     public static Project_ConstructionMaterialListController getInstance() {
         return instance;
+    }
+    
+    public double getWage(){
+        return Double.parseDouble(lb_CuttingCostSum.getText().substring(0, lb_CuttingCostSum.getText().length() - 2));
+    }
+    
+    public double getMaterial(){
+        return Double.parseDouble(lb_MaterialCostSum.getText().substring(0, lb_MaterialCostSum.getText().length() - 2));
+    }
+    
+    public double getTotalCosts(){
+        return Double.parseDouble(lb_TotalCosts.getText().substring(0, lb_TotalCosts.getText().length() - 2));
     }
 
     /**

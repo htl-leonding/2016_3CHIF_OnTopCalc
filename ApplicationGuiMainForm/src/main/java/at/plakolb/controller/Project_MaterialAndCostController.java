@@ -1,7 +1,6 @@
 package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.entity.Component;
-import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -11,14 +10,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -63,7 +60,7 @@ public class Project_MaterialAndCostController implements Initializable {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
         components = new LinkedList<>();
-        
+
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         tc_Component.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
@@ -101,7 +98,7 @@ public class Project_MaterialAndCostController implements Initializable {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
-        
+
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
 
         tc_PricePerUnit.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
@@ -113,7 +110,7 @@ public class Project_MaterialAndCostController implements Initializable {
         });
 
         tc_TotalCosts.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            if (param.getValue().getProduct() != null) {
+            if (param.getValue().getProduct() != null && param.getValue().getNumberOfProducts() != null) {
                 return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getNumberOfProducts() * param.getValue().getProduct().getPriceUnit()) + " €");
             } else {
                 return new ReadOnlyObjectWrapper<>("");
@@ -143,8 +140,20 @@ public class Project_MaterialAndCostController implements Initializable {
             components.add(Assembling_FoilController.getInstance().getComponent());
         }
 
+        if (Assembling_SealingBandController.getInstance().getComponent().getProduct() != null) {
+            components.add(Assembling_SealingBandController.getInstance().getComponent());
+        }
+
+        if (Assembling_CounterBattenController.getInstance().getComponent().getProduct() != null) {
+            components.add(Assembling_CounterBattenController.getInstance().getComponent());
+        }
+
         if (Project_ColourController.getInstance().getComponent().getProduct() != null) {
             components.add(Project_ColourController.getInstance().getComponent());
+        }
+
+        if (Assembling_BattensOrFullFormworkController.getInstance().getComponent().getProduct() != null) {
+            components.add(Assembling_BattensOrFullFormworkController.getInstance().getComponent());
         }
 
         tv_Materials.setItems(FXCollections.observableArrayList(components));
