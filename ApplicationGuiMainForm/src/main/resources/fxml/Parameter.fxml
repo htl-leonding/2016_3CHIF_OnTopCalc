@@ -22,9 +22,8 @@
                   <TableView fx:id="tv_Prameter" layoutX="41.0" layoutY="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                      <columns>
                         <TableColumn fx:id="tc_LongTerm" maxWidth="400.0" minWidth="200.0" prefWidth="250.0" text="Langbezeichnung" />
-                        <TableColumn fx:id="tc_DefaultValue" maxWidth="180.0" minWidth="100.0" prefWidth="120.0" style="-fx-alignment: center;" text="Vorgabewert" />
-                        <TableColumn fx:id="tc_Unit" maxWidth="180.0" minWidth="100.0" prefWidth="120.0" style="-fx-alignment: center;" text="Einheit" />
-                        <TableColumn fx:id="tc_Button" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" style="-fx-alignment: center;" />
+                        <TableColumn fx:id="tc_DefaultValue" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Vorgabewert" />
+                        <TableColumn fx:id="tc_Unit" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: center;" text="Einheit" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -28,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -48,11 +49,10 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     private Pane contentPane;
     @FXML
     private Label title;
-
     @FXML
     private AnchorPane ap_general;
     @FXML
-    private ChoiceBox<Product> cb_product;
+    private ComboBox<Product> cb_product;
     @FXML
     private TextField tf_assemblingDuration;
     @FXML
@@ -91,7 +91,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         cb_roofType.getItems().addAll("Ziegeldach", "Blechdach");
-
+        
         //Muss hier geladen werden! | Schlömi
         if (ProjectViewController.isProjectOpened()) {
             wastePercent = (new WorthController().findWorthByShortTermAndProjectId("VLVP", ProjectViewController.getOpenedProject().getId()) != null)
@@ -172,7 +172,8 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         } else {
             component = new Component();
         }
-
+        
+        cb_roofType.getSelectionModel().select(0);
     }
 
     public static Assembling_BattensOrFullFormworkController getInstance() {
