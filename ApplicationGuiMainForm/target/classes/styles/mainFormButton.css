@@ -43,11 +43,3 @@ and open the template in the editor.
 #openProject:hover{
     -fx-background-color:whitesmoke;
 }
-#aboutButton{
-	-fx-background-color:whitesmoke;
-	-fx-text-fill: #3c84ff;
-}
-#aboutButton:hover{
-	-fx-background-color:#3c84ff;
-	-fx-text-fill: white;
-}

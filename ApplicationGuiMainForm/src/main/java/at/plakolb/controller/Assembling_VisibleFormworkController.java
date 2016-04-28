@@ -20,6 +20,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -123,6 +125,8 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             loadValuesFromDataBase();
         } else {
             component = new Component();
+            component.setCategory(new CategoryController().findCategoryByShortTerm("SS"));
+            component.setComponentType("Produkt");
         }
     }
 
@@ -185,7 +189,6 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             component = new Component();
             component.setCategory(category);
             component.setComponentType("Produkt");
-            component.setProject(openedProject);
         }
 
         abatementPercent = (worthController.findWorthByShortTermAndProjectId("VSSP", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("VSSP", openedProject.getId()) : abatementPercent;
@@ -212,30 +215,36 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     }
 
     private void calculateFormwork() {
-        //Verschnittsfläche
-        //Alte Formel-ID: VSS
-        abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedge() * abatementPercent.getWorth() / 100);
-        lb_AbatementArea.setText(UtilityFormat.getStringForLabel(abatementArea));
+        try {
+            //Verschnittsfläche
+            //Alte Formel-ID: VSS
+            abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedge() * abatementPercent.getWorth() / 100);
+            lb_AbatementArea.setText(UtilityFormat.getStringForLabel(abatementArea));
 
-        //sicht. Schalung
-        //Alte Formel-ID: SS
-        visibleFormwork.setWorth(Project_ResultAreaController.getInstance().getLedge() + abatementArea.getWorth());
-        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(visibleFormwork));
+            //sicht. Schalung
+            //Alte Formel-ID: SS
+            visibleFormwork.setWorth(Project_ResultAreaController.getInstance().getLedge() + abatementArea.getWorth());
+            lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(visibleFormwork));
 
-        //Kosten Produkt
-        //Alte Formel-ID: KPSS
-        productCosts.setWorth(pricePerSquare * visibleFormwork.getWorth());
-        lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+            //Kosten Produkt
+            //Alte Formel-ID: KPSS
+            productCosts.setWorth(pricePerSquare * visibleFormwork.getWorth());
+            lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
 
-        //Kosten Montage
-        //Alte Formel-ID: KMSS
-        assemblingCosts.setWorth(workerCosts.getWorth() * assemblingDuration.getWorth());
-        lb_AssemblingCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
+            //Kosten Montage
+            //Alte Formel-ID: KMSS
+            assemblingCosts.setWorth(workerCosts.getWorth() * assemblingDuration.getWorth());
+            lb_AssemblingCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
 
-        //Gesamtkosten
-        //Alte Formel-ID: GKSS
-        totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
-        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+            //Gesamtkosten
+            //Alte Formel-ID: GKSS
+            totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
+            lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+        } catch (Exception ex) {
+            if (ProjectViewController.isProjectOpened()) {
+                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+            }
+        }
 
         Product product = cb_Product.getSelectionModel().getSelectedItem();
 
@@ -302,8 +311,8 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     public void update(Observable o, Object arg) {
         double oldVal = Double.parseDouble(lb_VisibleFormwork.getText().substring(0, lb_VisibleFormwork.getText().length() - 3));
         double newVal = Project_ResultAreaController.getInstance().getLedge();
-        if (oldVal != newVal && ModifyController.getInstance().getProject_resultArea() ==  true &&
-                !(tf_AbatementPercent.getText().isEmpty() || tf_PricePerSquare.getText().isEmpty())) {
+        if (oldVal != newVal && ModifyController.getInstance().getProject_resultArea() == true
+                && !(tf_AbatementPercent.getText().isEmpty() || tf_PricePerSquare.getText().isEmpty())) {
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         }
         lb_RoofArea.setText(UtilityFormat.getStringForLabel(newVal) + " m²");

@@ -114,152 +114,152 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_WoodMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_FormworkMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_TransportMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="10">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_ColourMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="9">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_AssemblingMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_BattenFormworkMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_CounterBattenMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_SealingBandMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_FoilMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_VisibleFormworkMaterial" text="0 €" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_FormworkTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_WoodTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="10">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_ColourWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="9">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="8">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_BattenFormworkWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="7">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_CounterBattenWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_SealingBandWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="5">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_FoilWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_VisibleFormworkWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_FormworkWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_WoodWage" text="0 €" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_ColourTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="9">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_AssemblingTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="8">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_BattenFormworkTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="7">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_CounterBattenTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="6">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_SealingBandTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="5">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_FoilTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_VisibleFormworkTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_TransportTotal" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="10">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="10">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -287,17 +287,17 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_Brutto" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="14">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="14">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_Tax" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="13">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="13">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_Netto" text="0 €" GridPane.columnIndex="3" GridPane.rowIndex="12">
+                  <Label id="normalLettering" text="0.00 €" GridPane.columnIndex="3" GridPane.rowIndex="12">
                      <font>
                         <Font size="18.0" />
                      </font>

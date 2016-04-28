@@ -84,6 +84,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        cb_Formwork.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.FORMWORK)));
 
         ParameterController parameterController = new ParameterController();
         waste = new Worth(parameterController.findParameterPByShortTerm("VS"));
@@ -122,6 +123,8 @@ public class Assembling_FormworkController implements Initializable, Observer {
             loadValuesFromDatabase();
         } else {
             component = new Component();
+            component.setCategory(new CategoryController().findCategoryByShortTerm("S"));
+            component.setComponentType("Produkt");
         }
     }
 
@@ -172,11 +175,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
     public void loadValuesFromDatabase() {
         ProductController productController = new ProductController();
 
-        ObservableList<Product> list = FXCollections.observableArrayList(productController.findByProductTypeOrderByName(ProductType.FORMWORK));
-        if (list != null) {
-            cb_Formwork.setItems(list);
-        }
-
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
             WorthController worthController = new WorthController();
@@ -212,22 +210,15 @@ public class Assembling_FormworkController implements Initializable, Observer {
             totalCosts = (worthController.findWorthByShortTermAndProjectId("GKS", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("GKS", project.getId()) : totalCosts;
 
-            //TODO
-            // Diese Überprüfung wird nur bei der Schalung durchgeführt. Muss noch auf die anderen übernommen werden.
-            if (waste == null || formwork == null || productCosts == null || blend == null || wage == null || time == null || costsMontage == null || totalCosts == null) {
-                new Alert(Alert.AlertType.ERROR, "Fehler beim Laden der Werte für die Schalung!").showAndWait();
-            } else {
-                lb_RoofArea.setText(UtilityFormat.worthWithTwoDecimalPlaces(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
-                lb_Waste.setText(UtilityFormat.getStringForLabel(waste));
-                lb_Formwork.setText(UtilityFormat.getStringForLabel(formwork));
-                lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
-                lb_AssebmlyCosts.setText(UtilityFormat.getStringForLabel(costsMontage));
-                lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
-                tf_Blend.setText(UtilityFormat.getStringForTextField(blend));
-                tf_Wage.setText(UtilityFormat.getStringForTextField(wage));
-                tf_Time.setText(UtilityFormat.getStringForTextField(time));
-            }
-            ModifyController.getInstance().setAssembling_formwork(Boolean.FALSE);
+            lb_RoofArea.setText(UtilityFormat.worthWithTwoDecimalPlaces(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
+            lb_Waste.setText(UtilityFormat.getStringForLabel(waste));
+            lb_Formwork.setText(UtilityFormat.getStringForLabel(formwork));
+            lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+            lb_AssebmlyCosts.setText(UtilityFormat.getStringForLabel(costsMontage));
+            lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+            tf_Blend.setText(UtilityFormat.getStringForTextField(blend));
+            tf_Wage.setText(UtilityFormat.getStringForTextField(wage));
+            tf_Time.setText(UtilityFormat.getStringForTextField(time));
         }
     }
 
@@ -281,8 +272,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
             totalCosts.setWorth(costsMontage.getWorth() + productCosts.getWorth());
             lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 
-            //TODO    
-            //Dieses try catch wird nur bei der Schalung durchgeführt. Muss noch auf die anderen übernommen werden.
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();

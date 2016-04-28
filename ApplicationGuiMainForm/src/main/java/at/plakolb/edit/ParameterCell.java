@@ -2,9 +2,6 @@
 package at.plakolb.edit;
 
 import at.plakolb.calculationlogic.entity.ParameterP;
-import at.plakolb.calculationlogic.util.UtilityFormat;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;

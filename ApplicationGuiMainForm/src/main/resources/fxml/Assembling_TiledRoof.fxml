@@ -1,81 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_TiledRoofController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_TiledRoofController">
    <children>
-      <HBox alignment="CENTER" layoutX="13.0" layoutY="14.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox spacing="40.0">
          <children>
-            <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="240.0" prefWidth="316.0">
+            <HBox spacing="5.0">
                <children>
-                  <Label id="boldLettering" layoutX="1.0" layoutY="123.0" text="Verschnitt: " AnchorPane.leftAnchor="1.0">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" layoutY="28.0" text="Verschnitt: ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="boldLettering" layoutX="1.0" layoutY="148.0" prefHeight="56.0" prefWidth="185.0" text="Länge der Dachlatten ohne Verschnitt: " wrapText="true" AnchorPane.leftAnchor="1.0">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" text="Lattenabstand: ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="boldLettering" layoutX="1.0" layoutY="207.0" text="Länge der Dachlatten: " AnchorPane.leftAnchor="1.0">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tf_slatSpacing" layoutX="128.0" layoutY="2.0" promptText="Lattenabstand in cm" />
-                  <TextField fx:id="tf_waste" layoutX="128.0" layoutY="29.0" promptText="Verschnitt in %" />
-                  <Label id="normalLettering" fx:id="lb_waste" layoutX="202.0" layoutY="123.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" fx:id="lb_lengthNoWaste" layoutX="202.0" layoutY="165.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" fx:id="lb_length" layoutX="202.0" layoutY="207.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="UnitNotInText" layoutX="287.0" layoutY="2.0" text="cm">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label id="UnitNotInText" layoutX="291.0" layoutY="28.0" text="\%">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
+                  <VBox>
+                     <children>
+                        <Label id="normalLettering" minHeight="27.0" text="Lattenabstand: ">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label id="normalLettering" minHeight="27.0" text="Verschnitt: ">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox spacing="2.0">
+                     <children>
+                        <TextField fx:id="tf_slatSpacing" minHeight="25.0" promptText="Lattenabstand in cm" />
+                        <TextField fx:id="tf_waste" minHeight="25.0" promptText="Verschnitt in %" />
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label id="UnitNotInText" minHeight="27.0" text="cm">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label id="UnitNotInText" minHeight="27.0" text="\%">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
-            </AnchorPane>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label id="boldLettering" minHeight="27.0" text="Verschnitt: ">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label id="boldLettering" minHeight="54.0" prefHeight="54.0" prefWidth="185.0" text="Länge der Dachlatten ohne Verschnitt: " wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label id="boldLettering" minHeight="27.0" text="Länge der Dachlatten: ">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label id="normalLettering" fx:id="lb_waste" minHeight="27.0" text="0 m">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label id="normalLettering" fx:id="lb_lengthNoWaste" minHeight="54.0" text="0 m">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label id="normalLettering" fx:id="lb_length" minHeight="27.0" text="0 m">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
    <padding>
       <Insets top="5.0" />

@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -96,15 +98,21 @@ public class Assembling_SheetRoofController extends Observable implements Initia
     }
 
     public void calculate() {
-        //Verschnitt Vollschalung
-        //Alte Formel-ID: VSS
-        waste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
-        lb_waste.setText(UtilityFormat.getStringForLabel(waste));
+        try {
+            //Verschnitt Vollschalung
+            //Alte Formel-ID: VSS
+            waste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
+            lb_waste.setText(UtilityFormat.getStringForLabel(waste));
 
-        //Vollschalung
-        //Alte Formel-ID: VollS
-        formwork.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() + waste.getWorth());
-        lb_formwork.setText(UtilityFormat.getStringForLabel(formwork));
+            //Vollschalung
+            //Alte Formel-ID: VollS
+            formwork.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() + waste.getWorth());
+            lb_formwork.setText(UtilityFormat.getStringForLabel(formwork));
+        } catch (Exception ex) {
+            if (ProjectViewController.isProjectOpened()) {
+                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+            }
+        }
 
         setChanged();
         notifyObservers();
@@ -125,7 +133,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
                 ? 0 : Double.valueOf(tf_wastePercent.getText().replace(',', '.')));
     }
 
-    public Worth getFormwork(){
+    public Worth getFormwork() {
         return formwork;
     }
 }

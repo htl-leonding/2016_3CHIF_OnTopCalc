@@ -9,8 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -52,11 +50,8 @@ public class AssemblingController implements Initializable,Observer {
         Assembling_FormworkController.getInstance().persist();
         Assembling_VisibleFormworkController.getInstance().persistVisibleFormwork();
         Assembling_FoilController.getInstance().persist();
-        if(Assembling_SealingBandController.getInstance() != null)
         Assembling_SealingBandController.getInstance().persist();
-        if(Assembling_CounterBattenController.getInstance() != null)
         Assembling_CounterBattenController.getInstance().persist();
-        if(Assembling_BattensOrFullFormworkController.getInstance() != null)
         Assembling_BattensOrFullFormworkController.getInstance().persist();
     }
 

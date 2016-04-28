@@ -26,6 +26,7 @@ public class WorthController {
     }
     
     public void create(Worth worth) {
+        
         try {
             em.getTransaction().begin();
             Project project = worth.getProject();

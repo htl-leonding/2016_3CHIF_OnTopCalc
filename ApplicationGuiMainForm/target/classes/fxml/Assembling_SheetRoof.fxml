@@ -1,76 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_SheetRoofController">
    <children>
-      <VBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" layoutX="13.0" layoutY="14.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <HBox spacing="5.0">
+            <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="240.0" prefWidth="316.0">
                <children>
-                  <Label id="normalLettering" text="Verschnitt: ">
+                  <Button id="btnLettering" layoutY="43.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="277.0" text="berechnen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Label id="boldLettering" layoutY="98.0" text="Verschnitt: " AnchorPane.leftAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutY="8.0" text="Verschnitt: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_wastePercent" promptText="Verschnitt in %" />
-                  <Label id="normalLettering" text="\%">
+                  <Label id="boldLettering" layoutY="152.0" prefHeight="27.0" prefWidth="134.0" text="Vollschalung: " wrapText="true" AnchorPane.leftAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="boldLettering" layoutY="124.0" text="Dachfläche: " AnchorPane.leftAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="114.0" layoutY="6.0" promptText="Verschnitt in %" />
+                  <Label id="normalLettering" layoutX="139.0" layoutY="96.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="139.0" layoutY="122.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m²">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="139.0" layoutY="152.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m²">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="295.0" layoutY="8.0" text="\%">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                </children>
-            </HBox>
-            <HBox>
+            </AnchorPane>
+            <AnchorPane layoutX="404.0" layoutY="14.0" prefHeight="240.0" prefWidth="171.0">
                <children>
-                  <VBox>
-                     <children>
-                        <Label id="boldLettering" text="Verschnitt: ">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label id="boldLettering" text="Dachfläche: ">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label id="boldLettering" prefHeight="27.0" prefWidth="134.0" text="Vollschalung: " wrapText="true">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox>
-                     <children>
-                        <Label id="normalLettering" fx:id="lb_waste" prefHeight="27.0" prefWidth="89.0" text="0 m">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label id="normalLettering" fx:id="lb_roofArea" prefHeight="27.0" prefWidth="89.0" text="0 m²">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label id="normalLettering" fx:id="lb_formwork" prefHeight="27.0" prefWidth="89.0" text="0 m²">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
+                  <Label id="normalLettering" layoutY="84.0" text="Gesamte Montage Zeit: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="boldLettering" layoutY="196.0" text="Monatge Kosten: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="-2.0" layoutY="33.0" text="Produktkosten(m²/Lfm): ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button id="btnLettering" layoutY="116.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="345.0" text="Kosten berechnen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Label id="boldLettering" layoutX="1.0" layoutY="223.0" text="Gesamtpreis: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="1.0" layoutY="3.0" text="Produkt: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutY="57.0" text="Facharbeiter Stunde: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="boldLettering" layoutY="169.0" text="Produkt Kosten: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox layoutX="198.0" layoutY="2.0" prefWidth="150.0" />
+                  <TextField layoutX="198.0" layoutY="85.0" promptText="Zeit in h" />
+                  <TextField layoutX="198.0" layoutY="31.0" promptText="Produktkosten (m²/Lfm)" />
+                  <TextField layoutX="198.0" layoutY="58.0" promptText="Kosten in €/h" />
+                  <Label id="normalLettering" layoutX="159.0" layoutY="167.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="159.0" layoutY="194.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="159.0" layoutY="221.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="smallUnitsLettering" layoutX="350.0" layoutY="34.0" text="m²/Lfm">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="370.0" layoutY="57.0" text="€/h">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="369.0" layoutY="84.0" text="h">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                </children>
-            </HBox>
+            </AnchorPane>
          </children>
-      </VBox>
+      </HBox>
    </children>
    <padding>
       <Insets top="5.0" />

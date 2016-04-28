@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -26,8 +25,8 @@
             <Insets top="10.0" />
          </padding>
       </Label>
-      <ComboBox fx:id="cb_projects" layoutX="125.0" layoutY="51.0" prefWidth="150.0" promptText="Projekt auswählen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0" />
-      <TextField fx:id="tf_dateAndPosition" layoutX="126.0" layoutY="95.0" promptText="Ort- und Datumsangabe" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="105.0" />
+      <ComboBox fx:id="cb_projects" layoutX="125.0" layoutY="51.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0" />
+      <TextField layoutX="126.0" layoutY="95.0" promptText="Ort- und Datumsangabe" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="105.0" />
       <Label id="boldLettering" layoutX="20.0" layoutY="135.0" text="Gewählte Ansichten werden gedruckt" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="145.0">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -146,7 +145,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button id="btnLettering" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="529.0" mnemonicParsing="false" onAction="#print" style="-fx-graphic: url(&quot;../images/printer.png&quot;);" text="Drucken" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="20.0">
+      <Button id="btnLettering" layoutX="227.0" layoutY="529.0" mnemonicParsing="false" onAction="#print" text="Drucken" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="20.0">
          <font>
             <Font size="18.0" />
          </font>

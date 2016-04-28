@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -14,12 +9,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_TiledRoofController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_TiledRoofController">
    <children>
       <HBox alignment="CENTER" layoutX="13.0" layoutY="14.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="240.0" prefWidth="316.0">
                <children>
+                  <Button id="btnLettering" layoutX="-1.0" layoutY="60.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="277.0" text="Lattung berechnen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                   <Label id="boldLettering" layoutX="1.0" layoutY="123.0" text="Verschnitt: " AnchorPane.leftAnchor="1.0">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -45,29 +45,107 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tf_slatSpacing" layoutX="128.0" layoutY="2.0" promptText="Lattenabstand in cm" />
-                  <TextField fx:id="tf_waste" layoutX="128.0" layoutY="29.0" promptText="Verschnitt in %" />
-                  <Label id="normalLettering" fx:id="lb_waste" layoutX="202.0" layoutY="123.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
+                  <TextField layoutX="128.0" layoutY="2.0" promptText="Lattenabstand in cm" />
+                  <TextField layoutX="128.0" layoutY="29.0" promptText="Verschnitt in %" />
+                  <Label id="normalLettering" layoutX="202.0" layoutY="123.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_lengthNoWaste" layoutX="202.0" layoutY="165.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
+                  <Label id="normalLettering" layoutX="202.0" layoutY="165.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" fx:id="lb_length" layoutX="202.0" layoutY="207.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
+                  <Label id="normalLettering" layoutX="202.0" layoutY="207.0" prefHeight="27.0" prefWidth="89.0" text="0.00 m">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label id="UnitNotInText" layoutX="287.0" layoutY="2.0" text="cm">
+                  <Label id="UnitNotInText" layoutX="294.0" layoutY="6.0" text="cm">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label id="UnitNotInText" layoutX="291.0" layoutY="28.0" text="\%">
+                  <Label id="UnitNotInText" layoutX="298.0" layoutY="31.0" text="\%">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="404.0" layoutY="14.0" prefHeight="240.0" prefWidth="171.0">
+               <children>
+                  <Label id="normalLettering" layoutY="84.0" text="Gesamte Montage Zeit: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="boldLettering" layoutY="196.0" text="Monatge Kosten: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="-1.0" layoutY="30.0" text="Produktkosten(m²/Lfm): ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button id="btnLettering" layoutY="116.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="345.0" text="Kosten berechnen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Label id="boldLettering" layoutX="1.0" layoutY="223.0" text="Gesamtpreis: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="-1.0" layoutY="1.0" text="Produkt: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutY="57.0" text="Facharbeiter Stunde: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="boldLettering" layoutY="169.0" text="Produkt Kosten: ">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox layoutX="198.0" layoutY="2.0" prefWidth="150.0" />
+                  <TextField layoutX="198.0" layoutY="85.0" promptText="Zeit in h" />
+                  <TextField layoutX="198.0" layoutY="31.0" promptText="Produktkosten (m²/Lfm)" />
+                  <TextField layoutX="198.0" layoutY="58.0" promptText="Kosten in €/h" />
+                  <Label id="normalLettering" layoutX="150.0" layoutY="169.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="150.0" layoutY="196.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="normalLettering" layoutX="150.0" layoutY="223.0" prefHeight="27.0" prefWidth="191.0" text="0.00 €">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="smallUnitsLettering" layoutX="350.0" layoutY="34.0" text="m²/Lfm">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label id="UnitNotInText" layoutX="366.0" layoutY="57.0" text="€/h">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label id="UnitNotInText" layoutX="369.0" layoutY="84.0" text="h">
                      <font>
                         <Font size="18.0" />
                      </font>
