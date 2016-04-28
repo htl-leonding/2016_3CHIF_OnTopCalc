@@ -30,3 +30,11 @@
 #options{
     -fx-graphic: url("../images/option.png");
 }
+#about{
+	-fx-font-weight: bold;
+}
+#about:hover{
+	-fx-background-color: #3c84ff;
+	-fx-background-radius: 100%;
+	-fx-text-fill:whitesmoke;
+}

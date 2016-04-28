@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -7,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1145.0" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.AllProjectsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1145.0" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.AllProjectsController">
    <left>
       <fx:include source="SideView.fxml" />
    </left>
@@ -19,7 +23,7 @@
                   <Font name="Berlin Sans FB" size="24.0" />
                </font>
             </Label>
-            <TableView fx:id="tv_ProjectList" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+            <TableView fx:id="tv_ProjectList" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
               <columns>
                 <TableColumn fx:id="tc_Id" editable="false" maxWidth="600.0" minWidth="0.0" prefWidth="60.0" style="-fx-alignment: center;" text="ID" />
                 <TableColumn fx:id="tc_PrecalcId" editable="false" maxWidth="600.0" minWidth="0.0" prefWidth="112.0" style="-fx-alignment: center;" text="Vork. ID" />

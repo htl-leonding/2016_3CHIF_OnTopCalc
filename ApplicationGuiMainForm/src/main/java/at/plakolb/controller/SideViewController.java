@@ -82,4 +82,21 @@ public class SideViewController implements Initializable {
         MainFormController.getInstance().loadFxmlIntoPane("Options.fxml");
     }
 
+    @FXML
+    private void showAbout(MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/About.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("OnTopCalc ©2016");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+        } catch (Exception e) {
+        }
+    }
+
 }

@@ -3,14 +3,20 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.util.BackUpDatabase;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -42,6 +48,10 @@ public class OptionsController implements Initializable {
     private Tooltip tooltip;
     @FXML
     private TableColumn cl_options;
+    @FXML
+    private Button bt_createBackup;
+    @FXML
+    private ProgressIndicator pgic_backupProgress;
 
     /**
      * Initializes the controller class.
@@ -56,59 +66,60 @@ public class OptionsController implements Initializable {
         cl_client.setCellValueFactory(new PropertyValueFactory<>("client"));
         cl_type.setCellValueFactory(new PropertyValueFactory<>("constructionType"));
         cl_roofType.setCellValueFactory(new PropertyValueFactory<>("roofForm"));
+
         updateData();
 
         cl_options.setCellValueFactory(new PropertyValueFactory<>("Buttons"));
 
         Callback<TableColumn<Project, String>, TableCell<Project, String>> cellFactory
                 = new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {
-            @Override
-            public TableCell call(final TableColumn<Project, String> param) {
-                final TableCell<Project, String> cell = new TableCell<Project, String>() {
-
-                    final Label l_restore = new Label();
-                    final Label l_delFinal = new Label();
-                    final HBox box = new HBox(l_restore, l_delFinal);
-
                     @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                            setText(null);
-                        } else {
-                            l_restore.setId("restore");
-                            l_delFinal.setId("deleteFinal");
-                            box.setId("box");
+                    public TableCell call(final TableColumn<Project, String> param) {
+                        final TableCell<Project, String> cell = new TableCell<Project, String>() {
 
-                            l_restore.setTooltip(new Tooltip("Projekt wiederherstellen"));
-                            l_delFinal.setTooltip(new Tooltip("Projekt entgültig löschen"));
+                            final Label l_restore = new Label();
+                            final Label l_delFinal = new Label();
+                            final HBox box = new HBox(l_restore, l_delFinal);
 
-                            l_restore.setOnMouseClicked(event -> {
-                                Project project = getTableView().getItems().get(getIndex());
-                                project.setDeletion(false);
-                                try {
-                                    new ProjectController().edit(project);
-                                    updateData();
-                                } catch (NonexistentEntityException ex) {
-                                    Logger.getLogger(OptionsController.class.getName()).log(Level.SEVERE, null, ex);
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    l_restore.setId("restore");
+                                    l_delFinal.setId("deleteFinal");
+                                    box.setId("box");
+
+                                    l_restore.setTooltip(new Tooltip("Projekt wiederherstellen"));
+                                    l_delFinal.setTooltip(new Tooltip("Projekt entgültig löschen"));
+
+                                    l_restore.setOnMouseClicked(event -> {
+                                        Project project = getTableView().getItems().get(getIndex());
+                                        project.setDeletion(false);
+                                        try {
+                                            new ProjectController().edit(project);
+                                            updateData();
+                                        } catch (NonexistentEntityException ex) {
+                                            Logger.getLogger(OptionsController.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                        updateData();
+                                    });
+                                    l_delFinal.setOnMouseClicked(event -> {
+                                        Project p = getTableView().getItems().get(getIndex());
+                                        ProjectController c = new ProjectController();
+                                        c.delete(p.getId());
+                                        updateData();
+                                    });
+                                    setGraphic(box);
+                                    setText(null);
                                 }
-                                updateData();
-                            });
-                            l_delFinal.setOnMouseClicked(event -> {
-                                Project p = getTableView().getItems().get(getIndex());
-                                ProjectController c = new ProjectController();
-                                c.delete(p.getId());
-                                updateData();
-                            });
-                            setGraphic(box);
-                            setText(null);
-                        }
+                            }
+                        };
+                        return cell;
                     }
                 };
-                return cell;
-            }
-        };
 
         cl_options.setCellFactory(cellFactory);
     }
@@ -116,4 +127,38 @@ public class OptionsController implements Initializable {
     public void updateData() {
         tv_paperbin.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(true)));
     }
+
+    @FXML
+    private void createBackup(ActionEvent event) {
+        pgic_backupProgress.setVisible(true);
+        Thread t = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                BackUpDatabase backUpDatabase = new BackUpDatabase();
+                int returnValue = backUpDatabase.exp();
+                if (returnValue == 3) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Die Sicherung wurde erfolgreich erstellt!");
+                    alert.setHeaderText("Sicherung erstellt");
+                    alert.showAndWait();
+
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Es konnte keine Sicherung erstellt werden!");
+                    alert.setHeaderText("Fehler");
+                    alert.showAndWait();
+                }
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        pgic_backupProgress.setVisible(false);
+                    }
+                });
+            }
+        }, "BackupCreatorThread");
+        t.start();
+    }
+
 }
