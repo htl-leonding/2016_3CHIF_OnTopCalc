@@ -204,6 +204,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 new Alert(Alert.AlertType.ERROR, "Geben Sie bitte eine Zahl ein.\n(Eingegebens Zeichen: " + textField.getText().charAt(textField.getText().length() - 1) + ")").showAndWait();
                 textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
             } finally {
+                ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
                 isCalculating = false;
             }
         }
@@ -252,9 +253,8 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         tf_GableRight.setText(UtilityFormat.getStringForTextField(gableRight));
         tf_GableLeft.setText(UtilityFormat.getStringForTextField(gableLeft));
         lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge));
-        lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea));
+        lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea));   
     }
-
     /**
      * Persists the calculated Values to the database.
      */

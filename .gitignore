@@ -1,2 +1,3 @@
 *.jar
-*/target/**
+*/ApplicationGuiMainForm/target/**
+*/CalculationLogic/target/**

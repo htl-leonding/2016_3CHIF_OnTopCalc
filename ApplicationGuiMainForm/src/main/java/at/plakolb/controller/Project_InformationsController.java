@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -86,6 +88,33 @@ public class Project_InformationsController implements Initializable, Observer {
                     }
                 }
             }
+        });
+        tf_City.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_ClientName.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_Description.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_Email.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_InvoiceNumber.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_ProjectName.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_PhoneNumber.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_Street.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        tf_ZipCode.textProperty().addListener((observable,oldValue, newValue)-> {
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
     }
 
@@ -192,6 +221,7 @@ public class Project_InformationsController implements Initializable, Observer {
             tf_Email.setDisable(true);
 
         }
+        ModifyController.getInstance().setProject_information(Boolean.FALSE);
     }
 
     /**

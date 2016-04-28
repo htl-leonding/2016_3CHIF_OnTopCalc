@@ -25,7 +25,6 @@ public class ModifyController extends Observable {
     private Boolean project_information = false;
     private Boolean project_resultArea = false;
     private Boolean project_constructionmaterialList = false;
-    private Boolean assembling = false;
     private Boolean project_constructionMaterial = false;
     private Boolean project_colour = false;
     private Boolean project_transport = false;
@@ -43,7 +42,6 @@ public class ModifyController extends Observable {
         project_information = false;
         project_resultArea = false;
         project_constructionmaterialList = false;
-        assembling = false;
         project_constructionMaterial = false;
         project_colour = false;
         project_transport = false;
@@ -63,13 +61,14 @@ public class ModifyController extends Observable {
         res.add(project_information);
         res.add(project_resultArea);
         res.add(project_constructionmaterialList);
-        res.add(assembling);
+        res.add(getAssembling());
         res.add(project_constructionMaterial);
         res.add(project_colour);
         res.add(project_transport);
         res.add(project_materialAndCost);
         return res;
     }
+
     public List<Boolean> getAssemblingModifiedList() {
         List<Boolean> res = new ArrayList<>();
 
@@ -109,12 +108,6 @@ public class ModifyController extends Observable {
         notifyObservers();
     }
 
-    public void setAssembling(Boolean assembling) {
-        this.assembling = assembling;
-        setChanged();
-        notifyObservers();
-    }
-
     public void setProject_constructionMaterial(Boolean project_constructionMaterial) {
         this.project_constructionMaterial = project_constructionMaterial;
         setChanged();
@@ -138,35 +131,41 @@ public class ModifyController extends Observable {
         setChanged();
         notifyObservers();
     }
- 
+
     public void setAssembling_formwork(Boolean assembling_formwork) {
         this.assembling_formwork = assembling_formwork;
-        setAssembling(true);
+        setChanged();
+        notifyObservers();
     }
 
     public void setAssembling_foil(Boolean assembling_foil) {
         this.assembling_foil = assembling_foil;
-        setAssembling(assembling_foil);
+        setChanged();
+        notifyObservers();
     }
 
     public void setAssembling_visibleFormwork(Boolean assembling_visibleFormwork) {
         this.assembling_visibleFormwork = assembling_visibleFormwork;
-        setAssembling(assembling_visibleFormwork);
+        setChanged();
+        notifyObservers();
     }
 
     public void setAssembling_sealingBand(Boolean assembling_sealingBand) {
         this.assembling_sealingBand = assembling_sealingBand;
-        setAssembling(assembling_sealingBand);
+        setChanged();
+        notifyObservers();
     }
 
     public void setAssembling_counterBattens(Boolean assembling_counterBattens) {
         this.assembling_counterBattens = assembling_counterBattens;
-        setAssembling(assembling_counterBattens);
+        setChanged();
+        notifyObservers();
     }
 
     public void setAssembling_battensOrFullFormwork(Boolean assembling_battensOrFullFormwork) {
         this.assembling_battensOrFullFormwork = assembling_battensOrFullFormwork;
-        setAssembling(assembling_battensOrFullFormwork);
+        setChanged();
+        notifyObservers();
     }
 
     public Boolean getProject_resultArea() {
@@ -174,9 +173,8 @@ public class ModifyController extends Observable {
     }
 
     public Boolean getAssembling() {
-        return assembling;
+        return /*assembling_battensOrFullFormwork || */assembling_counterBattens || assembling_foil
+                || assembling_formwork || assembling_formwork || assembling_sealingBand || assembling_visibleFormwork;
     }
 
-    
-    
 }
