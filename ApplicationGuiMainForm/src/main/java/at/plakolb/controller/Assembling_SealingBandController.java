@@ -21,6 +21,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -136,6 +138,8 @@ public class Assembling_SealingBandController implements Initializable, Observer
             load();
         } else {
             component = new Component();
+            component.setCategory(new CategoryController().findCategoryByShortTerm("ND"));
+            component.setComponentType("Produkt");
         }
     }
 
@@ -162,21 +166,21 @@ public class Assembling_SealingBandController implements Initializable, Observer
         workerCosts.setWorth(tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
                 ? 0 : Double.valueOf(tf_price.getText().replace(',', '.')));
     }
-    
-    public Component getComponent(){
+
+    public Component getComponent() {
         return component;
     }
-    
-    public Worth getMaterial(){
+
+    public Worth getMaterial() {
         return productCosts;
     }
-    
-    public Worth getWage(){
+
+    public Worth getWage() {
         return montageCosts;
     }
-    
-    public Worth getTotalCosts(){
-        return totalCosts;                
+
+    public Worth getTotalCosts() {
+        return totalCosts;
     }
 
     public void load() {
@@ -195,8 +199,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
                 cb_product.getSelectionModel().select(component.getProduct());
                 //Bin mir nicht sicher ob das so richtig ist (Keppi) TODO
                 //tf_price.setText(UtilityFormat.getStringForLabel(component.getPriceComponent()));
-            }
-            else{
+            } else {
                 component = new Component();
                 component.setCategory(category);
                 component.setComponentType("Produkt");
@@ -234,28 +237,35 @@ public class Assembling_SealingBandController implements Initializable, Observer
         }
     }
 
-        public void calculate() {
-        //Verschnitt Nageldichtband
-        //Alte Formel-ID: VD
-        waste.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() * blend.getWorth() / 100);
-        lb_blend.setText(UtilityFormat.getStringForLabel(waste));
-        //Nageldichtband
-        //Alte Formel-ID: ND
-        sealingBand.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() + waste.getWorth());
-        lb_sealingBand.setText(UtilityFormat.getStringForLabel(sealingBand));
-        //Produktkosten
-        //Alte Formel-ID: KPND
-        productCosts.setWorth(price * sealingBand.getWorth());
-        lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
-        //Montagekosten
-        //Alte Formel-ID: KMND
-        montageCosts.setWorth(workerCosts.getWorth() * duration.getWorth());
-        lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
-        //Totalcosts
-        //Alte Formel-ID: GKND
-        totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
-        lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
-        
+    public void calculate() {
+        try {
+            //Verschnitt Nageldichtband
+            //Alte Formel-ID: VD
+            waste.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() * blend.getWorth() / 100);
+            lb_blend.setText(UtilityFormat.getStringForLabel(waste));
+            //Nageldichtband
+            //Alte Formel-ID: ND
+            sealingBand.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() + waste.getWorth());
+            lb_sealingBand.setText(UtilityFormat.getStringForLabel(sealingBand));
+            //Produktkosten
+            //Alte Formel-ID: KPND
+            productCosts.setWorth(price * sealingBand.getWorth());
+            lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+            //Montagekosten
+            //Alte Formel-ID: KMND
+            montageCosts.setWorth(workerCosts.getWorth() * duration.getWorth());
+            lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
+            //Totalcosts
+            //Alte Formel-ID: GKND
+            totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
+            lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
+        } catch (Exception ex) {
+            if (ProjectViewController.isProjectOpened()) {
+                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+            }
+        }
+
         Product product = cb_product.getSelectionModel().getSelectedItem();
 
         if (product != null) {
@@ -276,7 +286,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
         component.setNumberOfProducts(sealingBand.getWorth());
         component.setPriceComponent(price);
     }
-    
+
     public void persist() {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();

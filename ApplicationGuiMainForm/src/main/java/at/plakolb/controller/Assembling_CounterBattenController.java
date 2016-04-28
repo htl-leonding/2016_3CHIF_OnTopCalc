@@ -20,6 +20,8 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -128,6 +130,8 @@ public class Assembling_CounterBattenController implements Observer, Initializab
             loadFromDb();
         } else {
             component = new Component();
+            component.setCategory(new CategoryController().findCategoryByShortTerm("KL"));
+            component.setComponentType("Produkt");
         }
     }
 
@@ -210,26 +214,32 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     }
 
     public void calculate() {
-        double sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
-        //Verschnitt in m
-        lengthWaste.setWorth(sum * (waste.getWorth() / 100));
-        lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
+        try {
+            double sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
+            //Verschnitt in m
+            lengthWaste.setWorth(sum * (waste.getWorth() / 100));
+            lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
 
-        //Konterlattung in m
-        counterBattern.setWorth(sum + lengthWaste.getWorth());
-        lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
+            //Konterlattung in m
+            counterBattern.setWorth(sum + lengthWaste.getWorth());
+            lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
 
-        //Kosten Konterlattung
-        productCost.setWorth(pricePerMeter * counterBattern.getWorth());
-        lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
+            //Kosten Konterlattung
+            productCost.setWorth(pricePerMeter * counterBattern.getWorth());
+            lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
 
-        //Kosten Montage
-        montageCost.setWorth(profiHour.getWorth() * timeMontage.getWorth());
-        lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
+            //Kosten Montage
+            montageCost.setWorth(profiHour.getWorth() * timeMontage.getWorth());
+            lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
 
-        //Kosten Gesamt
-        totalCost.setWorth(montageCost.getWorth() + productCost.getWorth());
-        lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
+            //Kosten Gesamt
+            totalCost.setWorth(montageCost.getWorth() + productCost.getWorth());
+            lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
+        } catch (Exception ex) {
+            if (ProjectViewController.isProjectOpened()) {
+                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+            }
+        }
 
         Product product = cb_counterBattern.getSelectionModel().getSelectedItem();
 
@@ -241,7 +251,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
             component.setProduct(product);
             component.setUnit(product.getUnit());
         } else {
-            component.setDescription("CounterBatten");
+            component.setDescription("Konterlattung");
             component.setLengthComponent(null);
             component.setWidthComponent(null);
             component.setHeightComponent(null);

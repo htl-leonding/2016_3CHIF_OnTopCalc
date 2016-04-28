@@ -45,7 +45,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
     Worth worthArea;
     Worth worthRoofArea;
     Worth worthRoofOverhang;
-    Worth worthRoofAreaWhitRoofOverhang;
+    Worth worthRoofAreaWithRoofOverhang;
 
     private int next_ID;
 
@@ -72,13 +72,13 @@ public class Project_ResultAreaController extends Observable implements Initiali
             worthArea = worthController.findWorthByShortTermAndProjectId("A", ProjectViewController.getOpenedProject().getId());
             worthRoofArea = worthController.findWorthByShortTermAndProjectId("D", ProjectViewController.getOpenedProject().getId());
             worthRoofOverhang = worthController.findWorthByShortTermAndProjectId("DV", ProjectViewController.getOpenedProject().getId());
-            worthRoofAreaWhitRoofOverhang = worthController.findWorthByShortTermAndProjectId("DF", ProjectViewController.getOpenedProject().getId());
+            worthRoofAreaWithRoofOverhang = worthController.findWorthByShortTermAndProjectId("DF", ProjectViewController.getOpenedProject().getId());
         } else {
             ParameterController parameterController = new ParameterController();
             worthArea = new Worth(parameterController.findParameterPByShortTerm("A"));
             worthRoofArea = new Worth(parameterController.findParameterPByShortTerm("D"));
             worthRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DV"));
-            worthRoofAreaWhitRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DF"));
+            worthRoofAreaWithRoofOverhang = new Worth(parameterController.findParameterPByShortTerm("DF"));
         }
 
         tabs.get(0).setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/images/addTab.png"))));
@@ -122,11 +122,11 @@ public class Project_ResultAreaController extends Observable implements Initiali
     }
 
     public double getLedgeAndRoofArea() {
-        return worthRoofAreaWhitRoofOverhang.getWorth();
+        return worthRoofAreaWithRoofOverhang.getWorth();
     }
 
     public Worth getLedgeAndRoofAreaWorth() {
-        return worthRoofAreaWhitRoofOverhang;
+        return worthRoofAreaWithRoofOverhang;
     }
 
     /**
@@ -142,7 +142,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
         double oldBA = worthArea.getWorth();
         double oldRA = worthRoofArea.getWorth();
         double oldL = worthRoofOverhang.getWorth();
-        double oldLARA = worthRoofAreaWhitRoofOverhang.getWorth();
+        double oldLARA = worthRoofAreaWithRoofOverhang.getWorth();
 
         for (Project_BaseAndRoofAreaController controller : areaController) {
             baseArea += controller.getBaseAreaValue();
@@ -154,7 +154,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
         worthArea.setWorth(baseArea);
         worthRoofArea.setWorth(roofArea);
         worthRoofOverhang.setWorth(ledge);
-        worthRoofAreaWhitRoofOverhang.setWorth(ledgeAndRoofArea);
+        worthRoofAreaWithRoofOverhang.setWorth(ledgeAndRoofArea);
 
         setChanged();
         notifyObservers();
@@ -261,18 +261,18 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 worthArea.setProject(project);
                 worthRoofArea.setProject(project);
                 worthRoofOverhang.setProject(project);
-                worthRoofAreaWhitRoofOverhang.setProject(project);
+                worthRoofAreaWithRoofOverhang.setProject(project);
 
                 worthController.create(worthArea);
                 worthController.create(worthRoofArea);
                 worthController.create(worthRoofOverhang);
-                worthController.create(worthRoofAreaWhitRoofOverhang);
+                worthController.create(worthRoofAreaWithRoofOverhang);
             } else {
                 try {
                     worthController.edit(worthArea);
                     worthController.edit(worthRoofArea);
                     worthController.edit(worthRoofOverhang);
-                    worthController.edit(worthRoofAreaWhitRoofOverhang);
+                    worthController.edit(worthRoofAreaWithRoofOverhang);
                 } catch (Exception ex) {
                     Logger.getLogger(Project_ResultAreaController.class.getName()).log(Level.SEVERE, null, ex);
                 }

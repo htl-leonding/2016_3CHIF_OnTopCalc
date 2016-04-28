@@ -22,6 +22,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -122,6 +124,8 @@ public class Assembling_FoilController implements Initializable, Observer {
             loadValuesFromDatabase();
         } else {
             component = new Component();
+            component.setCategory(new CategoryController().findCategoryByShortTerm("F"));
+            component.setComponentType("Produkt");
         }
     }
 
@@ -216,30 +220,37 @@ public class Assembling_FoilController implements Initializable, Observer {
     }
 
     public void calculate() {
-        //Fläche (mit Verschnitt) in m²
-        //Alte Formel-ID: FUE
-        abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * abatementPercent.getWorth() / 100);
-        lb_blend.setText(UtilityFormat.getStringForLabel(abatementArea));
+        try {
+            //Fläche (mit Verschnitt) in m²
+            //Alte Formel-ID: FUE
+            abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * abatementPercent.getWorth() / 100);
+            lb_blend.setText(UtilityFormat.getStringForLabel(abatementArea));
 
-        //Folie
-        //Alte Formel-ID: F
-        foil.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() + abatementArea.getWorth());
-        lb_foil.setText(UtilityFormat.getStringForLabel(foil));
+            //Folie
+            //Alte Formel-ID: F
+            foil.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() + abatementArea.getWorth());
+            lb_foil.setText(UtilityFormat.getStringForLabel(foil));
 
-        //Produktkosten
-        //Alte Formel-ID: KPF
-        productCosts.setWorth(pricePerSquare * foil.getWorth());
-        lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+            //Produktkosten
+            //Alte Formel-ID: KPF
+            productCosts.setWorth(pricePerSquare * foil.getWorth());
+            lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
 
-        //Montage Kosten
-        //Alte Formel-ID: KMF
-        assemblingCosts.setWorth(workerCosts.getWorth() * assemblingDuration.getWorth());
-        lb_montageCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
+            //Montage Kosten
+            //Alte Formel-ID: KMF
+            assemblingCosts.setWorth(workerCosts.getWorth() * assemblingDuration.getWorth());
+            lb_montageCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
 
-        //Totalcosts
-        //Alte Formel-ID: GKF
-        totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
-        lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+            //Totalcosts
+            //Alte Formel-ID: GKF
+            totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
+            lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
+        } catch (Exception ex) {
+            if (ProjectViewController.isProjectOpened()) {
+                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+            }
+        }
 
         Product product = cb_Product.getSelectionModel().getSelectedItem();
         if (product != null) {

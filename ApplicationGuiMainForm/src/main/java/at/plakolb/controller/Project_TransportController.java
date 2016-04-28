@@ -64,7 +64,6 @@ public class Project_TransportController extends java.util.Observable implements
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        System.out.println("Load Transport");
         decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
@@ -147,7 +146,6 @@ public class Project_TransportController extends java.util.Observable implements
     }
 
     public void loadTransportCosts() {
-        ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
         Project openedProject = ProjectViewController.getOpenedProject();
 

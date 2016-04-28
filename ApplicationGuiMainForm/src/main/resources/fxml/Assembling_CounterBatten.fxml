@@ -52,7 +52,7 @@
                                     <TextField fx:id="tf_waste" minHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
-                              <VBox>
+                              <VBox alignment="BOTTOM_LEFT">
                                  <children>
                                     <Label id="normalLettering" minHeight="27.0" text="€">
                                        <font>

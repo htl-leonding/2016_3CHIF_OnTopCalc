@@ -91,13 +91,42 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         cb_roofType.getItems().addAll("Ziegeldach", "Blechdach");
-        
-        //Muss hier geladen werden! | Schlömi
-        if (ProjectViewController.isProjectOpened()) {
-            wastePercent = (new WorthController().findWorthByShortTermAndProjectId("VLVP", ProjectViewController.getOpenedProject().getId()) != null)
-                    ? new WorthController().findWorthByShortTermAndProjectId("VLVP", ProjectViewController.getOpenedProject().getId()) : new Worth(new ParameterController().findParameterPByShortTerm("VLVP"));
+        ParameterController parameterController = new ParameterController();
+
+        wastePercent = new Worth(parameterController.findParameterPByShortTerm("VLVP"));
+        workCosts = new Worth(parameterController.findParameterPByShortTerm("KPLV"));
+        assemblingDuration = new Worth(parameterController.findParameterPByShortTerm("ZPLV"));
+        montageCosts = new Worth(parameterController.findParameterPByShortTerm("KMLatVoll"));
+        productCosts = new Worth(parameterController.findParameterPByShortTerm("KPLatVoll"));
+        totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKLatVoll"));
+
+        tf_assemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            setAbatementDuration();
+            calculate();
+        });
+        tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            setPrice();
+            calculate();
+        });
+        tf_workCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            setWorkCosts();
+            calculate();
+        });
+        cb_product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
+            if (newValue != null) {
+                tf_price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
+            }
+        });
+
+        if (ProjectViewController.getOpenedProject() != null) {
+            load();
         } else {
-            wastePercent = new Worth(new ParameterController().findParameterPByShortTerm("VLVP"));
+            String categoryString = loadedIndex == 0 ? "L" : "VS";
+            Category category = new CategoryController().findCategoryByShortTerm(categoryString);
+
+            component = new Component();
+            component.setComponentType("Produkt");
+            component.setCategory(category);
         }
 
         try {
@@ -128,52 +157,20 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 ProjectViewController.getOpenedProject().setRoofMaterial("Blechdach");
                 cb_product.setItems(FXCollections.observableArrayList(productController.findByProductTypeOrderByName(ProductType.FORMWORK)));
             }
-            tf_price.setText("");
 
-            price = 0;
-            String categoryString = newValue.intValue() == 0 ? "L" : "VS";
-            Category category = new CategoryController().findCategoryByShortTerm(categoryString);
-
-            component = new ComponentController().findComponentByProjectIdAndComponentTypeAndCategoryId(ProjectViewController.getOpenedProject().getId(), "Produkt", category.getId());
-            if (component != null) {
-                cb_product.getSelectionModel().select(component.getProduct());
-                tf_price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
-            } else {
-                component = new Component();
-                component.setComponentType("Produkt");
-                component.setProject(ProjectViewController.getOpenedProject());
-                component.setCategory(new CategoryController().findCategoryByShortTerm(
-                        newValue.intValue() == 0 ? "L" : "VS"));
+            if (oldValue.intValue() != -1) {
+                price = 0;
+                tf_price.clear();
             }
 
+            String categoryString = newValue.intValue() == 0 ? "L" : "VS";
+            component.setCategory(new CategoryController().findCategoryByShortTerm(categoryString));
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
 
-        tf_assemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setAbatementDuration();
-            calculate();
-        });
-        tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setPrice();
-            calculate();
-        });
-        tf_workCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setWorkCosts();
-            calculate();
-        });
-        cb_product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
-            if (newValue != null) {
-                tf_price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
-            }
-        });
-
-        if (ProjectViewController.getOpenedProject() != null) {
-            load();
-        } else {
-            component = new Component();
+        if (loadedIndex != -1) {
+            cb_roofType.getSelectionModel().select(ProjectViewController.getOpenedProject().getRoofMaterial());
         }
-        
-        cb_roofType.getSelectionModel().select(0);
     }
 
     public static Assembling_BattensOrFullFormworkController getInstance() {
@@ -229,8 +226,21 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         ParameterController parameterController = new ParameterController();
         Project project = ProjectViewController.getOpenedProject();
 
-        if (ProjectViewController.getOpenedProject() != null) {
-            cb_roofType.getSelectionModel().select(ProjectViewController.getOpenedProject().getRoofMaterial());
+        if (project != null) {
+
+            workCosts = (worthController.findWorthByShortTermAndProjectId("KPLV", project.getId()) != null)
+                    ? worthController.findWorthByShortTermAndProjectId("KPLV", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KPLV"));
+            assemblingDuration = (worthController.findWorthByShortTermAndProjectId("ZPLV", project.getId()) != null)
+                    ? worthController.findWorthByShortTermAndProjectId("ZPLV", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("ZPLV"));
+            montageCosts = (worthController.findWorthByShortTermAndProjectId("KMLatVoll", project.getId()) != null)
+                    ? worthController.findWorthByShortTermAndProjectId("KMLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KMLatVoll"));
+            productCosts = (worthController.findWorthByShortTermAndProjectId("KPLatVoll", project.getId()) != null)
+                    ? worthController.findWorthByShortTermAndProjectId("KPLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KPLatVoll"));
+            totalCosts = (worthController.findWorthByShortTermAndProjectId("GKLatVoll", project.getId()) != null)
+                    ? worthController.findWorthByShortTermAndProjectId("GKLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("GKLatVoll"));
+            wastePercent = (new WorthController().findWorthByShortTermAndProjectId("VLVP", project.getId()) != null)
+                    ? new WorthController().findWorthByShortTermAndProjectId("VLVP", project.getId()) : new Worth(new ParameterController().findParameterPByShortTerm("VLVP"));
+
             if ("Ziegeldach".equals(ProjectViewController.getOpenedProject().getRoofMaterial())) {
                 loadedIndex = 0;
             } else if ("Blechdach".equals(ProjectViewController.getOpenedProject().getRoofMaterial())) {
@@ -248,21 +258,10 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             } else {
                 component = new Component();
                 component.setComponentType("Produkt");
+                component.setProject(project);
                 component.setCategory(category);
             }
 
-            workCosts = (worthController.findWorthByShortTermAndProjectId("KPLV", project.getId()) != null)
-                    ? worthController.findWorthByShortTermAndProjectId("KPLV", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KPLV"));
-            assemblingDuration = (worthController.findWorthByShortTermAndProjectId("ZPLV", project.getId()) != null)
-                    ? worthController.findWorthByShortTermAndProjectId("ZPLV", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("ZPLV"));
-            montageCosts = (worthController.findWorthByShortTermAndProjectId("KMLatVoll", project.getId()) != null)
-                    ? worthController.findWorthByShortTermAndProjectId("KMLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KMLatVoll"));
-            productCosts = (worthController.findWorthByShortTermAndProjectId("KPLatVoll", project.getId()) != null)
-                    ? worthController.findWorthByShortTermAndProjectId("KPLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KPLatVoll"));
-            totalCosts = (worthController.findWorthByShortTermAndProjectId("GKLatVoll", project.getId()) != null)
-                    ? worthController.findWorthByShortTermAndProjectId("GKLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("GKLatVoll"));
-
-            //WastePercent ist im initialize da es in den RoofControllern schon benötigt wird! |Schlömi
             lb_assemblingCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
             lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
@@ -273,22 +272,28 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     }
 
     public void calculate() {
-        int index = cb_roofType.getSelectionModel().getSelectedIndex();
-        //Produktkosten
-        //Alte Formel-ID: KProdLV
-        productCosts.setWorth(price * (index == 0 ? Assembling_TiledRoofController.getInstance().getLength().getWorth()
-                : Assembling_SheetRoofController.getInstance().getFormwork().getWorth()));
-        lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+        try {
+            int index = cb_roofType.getSelectionModel().getSelectedIndex();
+            //Produktkosten
+            //Alte Formel-ID: KProdLV
+            productCosts.setWorth(price * (index == 0 ? Assembling_TiledRoofController.getInstance().getLength().getWorth()
+                    : Assembling_SheetRoofController.getInstance().getFormwork().getWorth()));
+            lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
 
-        //Montagekosten
-        //Alte Formel-ID: KMLV
-        montageCosts.setWorth(workCosts.getWorth() * assemblingDuration.getWorth());
-        lb_assemblingCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
+            //Montagekosten
+            //Alte Formel-ID: KMLV
+            montageCosts.setWorth(workCosts.getWorth() * assemblingDuration.getWorth());
+            lb_assemblingCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
 
-        //Totalcosts
-        //Alte Formel-ID: GKLV
-        totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
-        lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+            //Totalcosts
+            //Alte Formel-ID: GKLV
+            totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
+            lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+        } catch (Exception ex) {
+            if (ProjectViewController.isProjectOpened()) {
+                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+            }
+        }
 
         Product product = cb_product.getSelectionModel().getSelectedItem();
 
@@ -347,12 +352,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         Project project = ProjectViewController.getOpenedProject();
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
-
-        try {
-            new ComponentController().edit(component);
-        } catch (Exception ex) {
-            Logger.getLogger(Assembling_BattensOrFullFormworkController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         if (project != null && !ProjectViewController.isProjectOpened()) {
             assemblingDuration.setProject(project);

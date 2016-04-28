@@ -2,7 +2,6 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
-import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Worth;
 import at.plakolb.calculationlogic.util.UtilityFormat;
@@ -15,6 +14,8 @@ import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -23,7 +24,7 @@ import javafx.scene.control.TextField;
  *
  * @author Kepplinger
  */
-public class Assembling_TiledRoofController extends Observable implements Initializable,Observer {
+public class Assembling_TiledRoofController extends Observable implements Initializable, Observer {
 
     private static Assembling_TiledRoofController instance;
     @FXML
@@ -73,7 +74,7 @@ public class Assembling_TiledRoofController extends Observable implements Initia
 
     public void persist() {
         WorthController wc = new WorthController();
-        
+
         if (!ProjectViewController.isProjectOpened() || slatSpacing.getProject() == null) {
             slatSpacing.setProject(ProjectViewController.getOpenedProject());
             waste.setProject(ProjectViewController.getOpenedProject());
@@ -120,21 +121,27 @@ public class Assembling_TiledRoofController extends Observable implements Initia
     }
 
     public void calculate() {
-        //Länge der Dachlatten ohne Verschnitt
-        //Alte Formel-ID: LDOV
-        lengthNoWaste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea()/slatSpacing.getWorth()/100);
-        lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
-        
-        //Verschnitt
-        //Alte Formel-ID:VL
-        waste.setWorth(lengthNoWaste.getWorth()*Assembling_BattensOrFullFormworkController.getInstance().getWastePercent()/100);
-        lb_waste.setText(UtilityFormat.getStringForLabel(waste));
-        
-        //Länge - Verschnitt
-        //Alte Formel-ID:LL
-        length.setWorth(lengthNoWaste.getWorth()+waste.getWorth());
-        lb_length.setText(UtilityFormat.getStringForLabel(length));
-        
+        try {
+            //Länge der Dachlatten ohne Verschnitt
+            //Alte Formel-ID: LDOV
+            lengthNoWaste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() / slatSpacing.getWorth() / 100);
+            lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
+
+            //Verschnitt
+            //Alte Formel-ID:VL
+            waste.setWorth(lengthNoWaste.getWorth() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
+            lb_waste.setText(UtilityFormat.getStringForLabel(waste));
+
+            //Länge - Verschnitt
+            //Alte Formel-ID:LL
+            length.setWorth(lengthNoWaste.getWorth() + waste.getWorth());
+            lb_length.setText(UtilityFormat.getStringForLabel(length));
+        } catch (Exception ex) {
+            if (ProjectViewController.isProjectOpened()) {
+                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+            }
+        }
+
         setChanged();
         notifyObservers();
     }
@@ -158,8 +165,7 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         calculate();
     }
 
-    
-    public Worth getLength(){
+    public Worth getLength() {
         return length;
     }
 }

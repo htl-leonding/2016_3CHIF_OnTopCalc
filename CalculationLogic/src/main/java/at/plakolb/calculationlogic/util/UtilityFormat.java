@@ -61,7 +61,11 @@ public class UtilityFormat {
     public static String getStringForTextField(Double number) {
         if (number == null) {
             return "";
-        } else if (number == 0) {
+        } else if (number.isInfinite()) {
+            number = 0.0;
+        }
+
+        if (number == 0 || number.isNaN()) {
             return "";
         } else {
             DecimalFormat decimalFormat = new DecimalFormat("#.#######");
@@ -93,6 +97,12 @@ public class UtilityFormat {
         if (number == null) {
             return "0";
         } else {
+            if (number.isNaN()) {
+                return "0";
+            }
+            if (number.isInfinite()) {
+                number = 0.0;
+            }
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
             decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
             return String.valueOf(decimalFormat.format(number));
@@ -109,13 +119,13 @@ public class UtilityFormat {
         if (worth == null) {
             return "0";
         }
-        return getStringForLabel(worth.getWorth())+" " + worth.getParameter().getUnit().getShortTerm();
+        return getStringForLabel(worth.getWorth()) + " " + worth.getParameter().getUnit().getShortTerm();
     }
-    
-    public static String getDateString(Date date){
+
+    public static String getDateString(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        return String.format("%02d.%02d.%d",calendar.get(Calendar.DATE),
-                calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.YEAR));
+        return String.format("%02d.%02d.%d", calendar.get(Calendar.DATE),
+                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
     }
 }
