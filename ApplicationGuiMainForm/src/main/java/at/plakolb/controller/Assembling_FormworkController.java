@@ -101,18 +101,22 @@ public class Assembling_FormworkController implements Initializable, Observer {
         tf_Price.textProperty().addListener((observable, oldValue, newValue) -> {
             setPrice(newValue);
             calculate();
+            ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
         tf_Time.textProperty().addListener((observable, oldValue, newValue) -> {
             setTime();
             calculate();
+            ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
         tf_Wage.textProperty().addListener((observable, oldValue, newValue) -> {
             setWage();
             calculate();
+            ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
         tf_Blend.textProperty().addListener((observable, oldValue, newValue) -> {
             setBlend();
             calculate();
+            ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
         if (ProjectViewController.getOpenedProject() != null) {
             loadValuesFromDatabase();
@@ -223,6 +227,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 tf_Wage.setText(UtilityFormat.getStringForTextField(wage));
                 tf_Time.setText(UtilityFormat.getStringForTextField(time));
             }
+            ModifyController.getInstance().setAssembling_formwork(Boolean.FALSE);
         }
     }
 

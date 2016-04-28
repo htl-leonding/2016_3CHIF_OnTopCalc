@@ -193,6 +193,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                         if (tv_Materials.getSelectionModel().getSelectedItem().getId() != null) {
                                             new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
                                         }
+                                        ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
                                     } catch (Exception e) {
                                     } finally {
                                         refreshTable();
@@ -233,6 +234,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                 } catch (IOException ex) {
                 }
                 MaterialModifierController.getInstance().loadProductIntoModifier(tv_Materials.getSelectionModel().getSelectedItem());
+                ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
             }
         });
     }
@@ -292,6 +294,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                     setChanged();
                     notifyObservers();
                 }
+                ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
             }
         } catch (NumberFormatException e) {
             new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur Zahlen enthalten").showAndWait();

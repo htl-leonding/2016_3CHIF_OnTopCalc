@@ -103,26 +103,31 @@ public class Assembling_SealingBandController implements Initializable, Observer
         tf_blend.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setBlend();
             calculate();
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
 
         tf_duration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setDuration();
             calculate();
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
 
         tf_priceLinearMeter.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerLinearMeter();
             calculate();
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
 
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setWorkCosts();
             calculate();
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
 
         cb_product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             tf_priceLinearMeter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
             calculate();
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
 
         cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
@@ -231,6 +236,8 @@ public class Assembling_SealingBandController implements Initializable, Observer
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 
             tv_rafter.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
+            
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.FALSE);
         }
     }
 

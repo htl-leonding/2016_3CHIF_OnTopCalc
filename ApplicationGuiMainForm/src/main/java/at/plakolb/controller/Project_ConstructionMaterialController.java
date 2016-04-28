@@ -129,6 +129,7 @@ public class Project_ConstructionMaterialController implements Initializable {
                                         if (tv_Assembly.getSelectionModel().getSelectedItem().getId() != null) {
                                             new ComponentController().destroy(tv_Assembly.getSelectionModel().getSelectedItem().getId());
                                         }
+                                        ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
                                     } catch (Exception e) {
                                     } finally {
                                         refreshListView();
@@ -194,16 +195,15 @@ public class Project_ConstructionMaterialController implements Initializable {
         if (Assembling_CounterBattenController.getInstance().getComponent().getProduct() != null) {
             componentList.add(Assembling_CounterBattenController.getInstance().getComponent());
         }
-        
+
         if (Assembling_BattensOrFullFormworkController.getInstance().getComponent().getProduct() != null) {
             componentList.add(Assembling_BattensOrFullFormworkController.getInstance().getComponent());
         }
-        
+
 //      würde keinen Sinn machen TODO      
 //        if (Project_ColourController.getInstance().getComponent().getProduct() != null) {
 //            componentList.add(Project_ColourController.getInstance().getComponent());
 //        }
-
         cb_Component.setItems(FXCollections.observableArrayList(componentList));
 
         if (cb_Component.getItems().isEmpty()) {
@@ -251,6 +251,8 @@ public class Project_ConstructionMaterialController implements Initializable {
                     ProjectViewController.getOpenedProject(),
                     amount,
                     price));
+
+            ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
             refreshListView();
         } else {
             new Alert(Alert.AlertType.ERROR, errorMessage).showAndWait();

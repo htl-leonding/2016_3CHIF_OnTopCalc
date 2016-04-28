@@ -1,130 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ColourController">
+<AnchorPane prefHeight="373.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ColourController">
    <children>
-      <Label alignment="CENTER" text="Farbe" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <font>
-            <Font name="Berlin Sans FB" size="36.0" />
-         </font>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
-      </Label>
-      <HBox alignment="CENTER" layoutX="207.0" layoutY="61.0" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Label id="boldLettering" alignment="CENTER" text="sichtbare Schalung:">
+            <Label alignment="CENTER" text="Farbe" textFill="#3c84ff">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
-            <Label id="boldLettering" fx:id="lb_VisibleFormwork" prefHeight="17.0" prefWidth="76.0" text="0.00 m²">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets top="25.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER" layoutY="108.0" nodeOrientation="LEFT_TO_RIGHT" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <AnchorPane layoutX="100.0" layoutY="50.0" nodeOrientation="LEFT_TO_RIGHT">
+            <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0">
                <children>
-                  <Label id="normalLettering" layoutX="-14.0" layoutY="32.0" text="zusätzlicher Farbfaktor: ">
+                  <Label id="boldLettering" alignment="CENTER" text="sichtbare Schalung:">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="normalLettering" layoutX="-14.0" layoutY="61.0" text="Preis Farbe €/l: ">
+                  <Label id="boldLettering" fx:id="lb_VisibleFormwork" prefHeight="17.0" text="0 m²">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="cb_Product" layoutX="193.0" layoutY="1.0" prefHeight="25.0" prefWidth="88.0" />
-                  <TextField fx:id="tf_ProfiHour" layoutX="193.0" layoutY="88.0" prefHeight="25.0" prefWidth="88.0" promptText="Kosten in €/h" />
-                  <TextField fx:id="tf_AdittionalColourFactor" layoutX="193.0" layoutY="30.0" prefHeight="25.0" prefWidth="88.0" promptText="Faktor in m²" />
-                  <Label id="normalLettering" layoutX="-14.0" layoutY="119.0" text="Gesamtzeit für Anstrich: ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tf_TimeOfPainting" layoutX="193.0" layoutY="117.0" prefHeight="25.0" prefWidth="88.0" promptText="Zeit in h" />
-                  <Label id="normalLettering" layoutX="-14.0" layoutY="90.0" text="Facharbeiter Stunde: ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label id="normalLettering" layoutX="-14.0" layoutY="3.0" text="Farbe: ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tf_PricePerLiter" layoutX="193.0" layoutY="59.0" prefHeight="25.0" prefWidth="88.0" promptText="Farbe in €/l" />
                </children>
-            </AnchorPane>
-            <AnchorPane layoutX="95.0" layoutY="298.0" nodeOrientation="LEFT_TO_RIGHT">
+            </HBox>
+            <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" spacing="20.0">
                <children>
-                  <Label id="normalLettering" fx:id="lb_PaintArea" alignment="CENTER" layoutX="196.0" text="0.00 m²">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-                  <Label id="normalLettering" alignment="CENTER" layoutY="57.0" text="Produkt Kosten:">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-                  <Label id="normalLettering" fx:id="lb_ProductCost" alignment="CENTER" layoutX="195.0" layoutY="57.0" text="0.00 €">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-                  <Label id="normalLettering" alignment="CENTER" layoutY="85.0" text="Montage Kosten:">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-                  <Label id="normalLettering" alignment="CENTER" text="benötigte Farbe in m²:">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-                  <Label id="normalLettering" fx:id="lb_MontageCost" alignment="CENTER" layoutX="195.0" layoutY="85.0" text="0.00 €">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
-                  <Label id="boldLettering" fx:id="lb_PaintLiter" alignment="CENTER" layoutX="196.0" layoutY="28.0" text="0.00 l">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font></Label>
-                  <Label id="boldLettering" fx:id="lb_TotalCosts" alignment="CENTER" layoutX="193.0" layoutY="120.0" text="0.00 €">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font></Label>
-                  <Label id="boldLettering" alignment="CENTER" layoutY="28.0" text="benötigte Farbe in l:">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font></Label>
-                  <Label id="boldLettering" alignment="CENTER" layoutX="-2.0" layoutY="120.0" text="Gesamtkosten: ">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font></Label>
+                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0" HBox.hgrow="NEVER">
+                     <children>
+                        <HBox spacing="5.0" AnchorPane.rightAnchor="0.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label id="normalLettering" minHeight="27.0" text="Farbe: ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" minHeight="27.0" text="zusätzlicher Farbfaktor: ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" minHeight="27.0" text="Preis Farbe: ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" minHeight="27.0" text="Facharbeiter Stunde: ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" minHeight="27.0" text="Gesamtzeit für Anstrich: ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="2.0">
+                                 <children>
+                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="143.0" promptText="Farbe auswählen" />
+                                    <TextField fx:id="tf_AdittionalColourFactor" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Faktor in m²" />
+                                    <TextField fx:id="tf_PricePerLiter" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Farbe in €/l" />
+                                    <TextField fx:id="tf_ProfiHour" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Kosten in €/h" />
+                                    <TextField fx:id="tf_TimeOfPainting" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Zeit in h" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="BOTTOM_LEFT">
+                                 <children>
+                                    <Label text="m²">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="€/l">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="€/h">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="h">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0" HBox.hgrow="NEVER">
+                     <children>
+                        <HBox spacing="5.0" AnchorPane.leftAnchor="0.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label id="normalLettering" alignment="CENTER" minHeight="27.0" text="benötigte Farbe in m²:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="boldLettering" alignment="CENTER" minHeight="27.0" text="benötigte Farbe in l:">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" alignment="CENTER" minHeight="27.0" text="Produkt Kosten:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" alignment="CENTER" minHeight="27.0" text="Montage Kosten:">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="boldLettering" alignment="CENTER" minHeight="27.0" text="Gesamtkosten: ">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label id="normalLettering" fx:id="lb_PaintArea" alignment="CENTER" minHeight="27.0" text="0.00 m²">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="boldLettering" fx:id="lb_PaintLiter" alignment="CENTER" minHeight="27.0" text="0.00 l">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" fx:id="lb_ProductCost" alignment="CENTER" minHeight="27.0" text="0.00 €">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="normalLettering" fx:id="lb_MontageCost" alignment="CENTER" minHeight="27.0" text="0.00 €">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="boldLettering" fx:id="lb_TotalCosts" alignment="CENTER" minHeight="27.0" text="0.00 €">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
+            </HBox>
          </children>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>

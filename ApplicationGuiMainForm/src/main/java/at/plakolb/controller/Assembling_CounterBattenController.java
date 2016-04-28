@@ -97,23 +97,26 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         cb_counterBattern.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             pricePerMeter = newValue.getPriceUnit();
             tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
-            calculate();
         });
         tf_pricePerMeter.textProperty().addListener((observable, oldValue, newValue) -> {
             setPrice();
             calculate();
+            ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
         tf_profiHour.textProperty().addListener((observable, oldValue, newValue) -> {
             setHour();
             calculate();
+            ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
         tf_waste.textProperty().addListener((observable, oldValue, newValue) -> {
             setWaste();
             calculate();
+            ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
         tf_timeMontage.textProperty().addListener((observable, oldValue, newValue) -> {
             setTime();
             calculate();
+            ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
 
         cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
@@ -207,6 +210,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
         tv_dachsparren.setItems(FXCollections.observableList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
 
+        ModifyController.getInstance().setAssembling_counterBattens(Boolean.FALSE);
     }
 
     public void calculate() {

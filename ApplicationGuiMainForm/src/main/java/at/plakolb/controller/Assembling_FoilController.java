@@ -97,21 +97,25 @@ public class Assembling_FoilController implements Initializable, Observer {
         tf_blend.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setAbatementPercent();
             calculate();
+            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
         });
 
         tf_time.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setAssemblingDuration();
             calculate();
+            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
         });
 
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculate();
+            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
         });
 
         tf_workerCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setWorkerCosts();
             calculate();
+            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
         });
 
         cb_Product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
@@ -212,6 +216,8 @@ public class Assembling_FoilController implements Initializable, Observer {
             tf_blend.setText(UtilityFormat.getStringForTextField(abatementPercent));
             tf_time.setText(UtilityFormat.getStringForTextField(assemblingDuration));
             tf_workerCosts.setText(UtilityFormat.getStringForTextField(workerCosts));
+            
+            ModifyController.getInstance().setAssembling_foil(Boolean.FALSE);
         }
     }
 

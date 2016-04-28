@@ -25,7 +25,6 @@ import javafx.scene.control.TextField;
 public class Project_TransportController extends java.util.Observable implements Initializable {
 
     private static Project_TransportController instance;
-    private static boolean valuesChanged;
 
     @FXML
     private TextField tf_pkwDays;
@@ -109,12 +108,8 @@ public class Project_TransportController extends java.util.Observable implements
         return instance;
     }
 
-    public static boolean isValuesChanged() {
-        return valuesChanged;
-    }
-
     public static void setValuesChanged(boolean valuesChanged) {
-        Project_TransportController.valuesChanged = valuesChanged;
+        ModifyController.getInstance().setProject_transport(valuesChanged);
     }
 
     public void setPrice() {
