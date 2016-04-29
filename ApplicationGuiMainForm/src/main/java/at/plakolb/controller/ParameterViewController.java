@@ -7,6 +7,7 @@ import at.plakolb.calculationlogic.entity.Unit;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -35,8 +36,6 @@ public class ParameterViewController implements Initializable {
     private TableColumn<ParameterP, String> tc_DefaultValue;
     @FXML
     private TableColumn<ParameterP, Unit> tc_Unit;
-    @FXML
-    private TableColumn tc_Button;
 
     /**
      * Initializes the controller class.
@@ -67,8 +66,7 @@ public class ParameterViewController implements Initializable {
             parameter.setDefaultValue(Double.parseDouble(event.getNewValue()));
         });
 
-        tc_Unit.setCellValueFactory(
-                new PropertyValueFactory<>("unit"));
+        tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
 
         tv_Prameter.setItems(FXCollections.observableArrayList(new ParameterController().findEditableParameter()));
     }
@@ -83,5 +81,13 @@ public class ParameterViewController implements Initializable {
     public void refreshTable() {
         tv_Prameter.getColumns().get(0).setVisible(false);
         tv_Prameter.getColumns().get(0).setVisible(true);
+    }
+    
+    public void setNewDefaultValue(ParameterP parameter, int index){
+        List<ParameterP> parameterList = tv_Prameter.getItems();
+        parameterList.add(index, parameter);
+        parameterList.remove(index+1);
+        tv_Prameter.setItems(FXCollections.observableArrayList(parameterList));
+        refreshTable();
     }
 }
