@@ -94,7 +94,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
                     ctrl.loadValuesFromDataBase();
                 }
                 calcArea();
-                System.out.println("Loaded Tabs");
+                ModifyController.getInstance().setProject_resultArea(Boolean.FALSE);
             } else {
                 addTab(null);
 

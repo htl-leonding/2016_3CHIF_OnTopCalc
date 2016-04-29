@@ -173,7 +173,7 @@ public class ModifyController extends Observable {
     }
 
     public Boolean getAssembling() {
-        return /*assembling_battensOrFullFormwork || */assembling_counterBattens || assembling_foil
+        return assembling_battensOrFullFormwork || assembling_counterBattens || assembling_foil
                 || assembling_formwork || assembling_formwork || assembling_sealingBand || assembling_visibleFormwork;
     }
 
