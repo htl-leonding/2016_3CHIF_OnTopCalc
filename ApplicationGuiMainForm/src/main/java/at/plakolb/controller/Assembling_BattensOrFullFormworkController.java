@@ -103,14 +103,17 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         tf_assemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setAbatementDuration();
             calculate();
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPrice();
             calculate();
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
         tf_workCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setWorkCosts();
             calculate();
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
         cb_product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             if (newValue != null) {
@@ -170,6 +173,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
 
         if (loadedIndex != -1) {
             cb_roofType.getSelectionModel().select(ProjectViewController.getOpenedProject().getRoofMaterial());
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.FALSE);
         }
     }
 

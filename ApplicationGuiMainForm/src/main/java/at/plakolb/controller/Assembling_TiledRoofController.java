@@ -63,10 +63,12 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         tf_slatSpacing.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setSlatSpacing();
             calculate();
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
         tf_waste.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setWastePercent();
             calculate();
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
 
         load();
@@ -117,6 +119,8 @@ public class Assembling_TiledRoofController extends Observable implements Initia
             lb_length.setText(UtilityFormat.getStringForLabel(length));
             lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
+            
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.FALSE);
         }
     }
 

@@ -32,6 +32,7 @@
 }
 #about{
 	-fx-font-weight: bold;
+	-fx-font-size: 24px;
 }
 #about:hover{
 	-fx-background-color: #3c84ff;
