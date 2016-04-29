@@ -116,8 +116,8 @@ public class AllProjectsController implements Initializable {
 
                             openP.setOnMouseClicked((MouseEvent event) -> {
                                 Project p = getTableView().getItems().get(getIndex());
+                                ProjectViewController.openProject(p);
                                 MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
-                                ProjectViewController.getInstance().openProject(p);
                             });
                             printP.setOnMouseClicked((MouseEvent event) -> {
                                 Project p = getTableView().getItems().get(getIndex());

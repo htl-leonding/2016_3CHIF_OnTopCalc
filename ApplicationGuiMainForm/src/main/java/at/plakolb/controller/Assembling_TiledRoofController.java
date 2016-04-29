@@ -76,6 +76,7 @@ public class Assembling_TiledRoofController extends Observable implements Initia
 
     public void persist() {
         WorthController wc = new WorthController();
+        Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(length.getWorth());
 
         if (!ProjectViewController.isProjectOpened() || slatSpacing.getProject() == null) {
             slatSpacing.setProject(ProjectViewController.getOpenedProject());
@@ -119,7 +120,7 @@ public class Assembling_TiledRoofController extends Observable implements Initia
             lb_length.setText(UtilityFormat.getStringForLabel(length));
             lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
-            
+
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.FALSE);
         }
     }
@@ -136,10 +137,11 @@ public class Assembling_TiledRoofController extends Observable implements Initia
             waste.setWorth(lengthNoWaste.getWorth() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
 
-            //Länge - Verschnitt
+            //Länge + Verschnitt
             //Alte Formel-ID:LL
             length.setWorth(lengthNoWaste.getWorth() + waste.getWorth());
             lb_length.setText(UtilityFormat.getStringForLabel(length));
+
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();

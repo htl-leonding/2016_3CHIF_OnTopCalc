@@ -89,7 +89,11 @@ public class Worth implements Serializable {
     }
 
     public void setWorth(double worth) {
-        this.worth = worth;
+        if (Double.isNaN(worth) || Double.isInfinite(worth)) {
+            this.worth = 0;
+        } else {
+            this.worth = worth;
+        }
     }
 
 //    public String worthFormat() {

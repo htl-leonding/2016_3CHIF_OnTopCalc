@@ -65,6 +65,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
 
     public void persist() {
         WorthController wc = new WorthController();
+        Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(formwork.getWorth());
 
         if (!ProjectViewController.isProjectOpened() || waste.getProject() == null) {
             waste.setProject(ProjectViewController.getOpenedProject());
@@ -110,6 +111,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
             //Alte Formel-ID: VollS
             formwork.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() + waste.getWorth());
             lb_formwork.setText(UtilityFormat.getStringForLabel(formwork));
+
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
