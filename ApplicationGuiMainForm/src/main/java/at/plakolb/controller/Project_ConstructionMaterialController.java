@@ -280,4 +280,32 @@ public class Project_ConstructionMaterialController implements Initializable {
 
         return totalCosts;
     }
+
+    public int getAssemblyCount() {
+        return assemblyList.size();
+    }
+    public void deleteRelativeAssemblies(Component c){
+    try {
+            
+             System.out.println(c.getId());
+             for (Assembly assembly : assemblyList) { 
+                 System.out.println(assembly.getComponent().getId());
+                 if (assembly.getComponent().getId()==c.getId()||assembly.getComponent()==c) {
+                                         
+
+                     assemblyList.remove(assembly);
+                
+                new AssemblyController().destroy(assembly.getId());
+            
+                     
+                 }
+             }
+
+               ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
+               } catch (Exception e) {
+               } finally {
+                  refreshListView();
+                }
+    }
+    
 }

@@ -184,11 +184,23 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                             deletionLabel.setTooltip(new Tooltip("Material löschen"));
 
                             deletionLabel.setOnMouseClicked(event -> {
+                                
                                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten? Vorsicht, der Löschvorgang kann nicht mehr rückgängig gemacht werden.",
                                         ButtonType.YES, ButtonType.CANCEL);
-                                alert.showAndWait();
+                                 alert.showAndWait();
+                                if (Project_ConstructionMaterialController.getInstance().getAssemblyCount()>0) {
+                                    Alert assemblyAlert =new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie auch die zu diesem Material gehörenden Produkte löschen?",
+                                        ButtonType.YES, ButtonType.CANCEL);
+                                    assemblyAlert.showAndWait();
+                                    if (assemblyAlert.getResult()==ButtonType.YES) {
+                                        Project_ConstructionMaterialController.getInstance().deleteRelativeAssemblies(tv_Materials.getSelectionModel().getSelectedItem());
+                                        
+                                    }
+                                }
+                               
                                 if (alert.getResult() == ButtonType.YES) {
                                     try {
+                                        
                                         components.remove(tv_Materials.getSelectionModel().getSelectedItem());
                                         if (tv_Materials.getSelectionModel().getSelectedItem().getId() != null) {
                                             new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
