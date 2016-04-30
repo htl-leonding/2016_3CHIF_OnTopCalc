@@ -128,4 +128,9 @@ public class UtilityFormat {
         return String.format("%02d.%02d.%d", calendar.get(Calendar.DATE),
                 calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
     }
+    
+    public static String twoDecimalPlaces(double decimal) {
+        DecimalFormat twoDForm = new DecimalFormat("0.00");
+        return twoDForm.format(decimal);
+    }
 }

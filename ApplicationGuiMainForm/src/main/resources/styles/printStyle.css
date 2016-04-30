@@ -1,0 +1,37 @@
+/*	HTL Leonding	*//* 
+    Created on : 30.04.2016, 22:50:44
+    Author     : Andreas
+*/
+
+.printButton{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 3px;
+}
+.printButton:hover{
+    -fx-background-color: white;
+    -fx-background-radius: 10%;
+    -fx-border-color: derive(black,60%);
+    -fx-border-radius: 10%;
+}
+#print{
+    -fx-graphic:  url("../images/printer2.png");
+}
+#print:disabled{
+    -fx-graphic:  url("../images/printer3.png");
+}
+#createpdf{
+    -fx-graphic:  url("../images/pdf.png");
+}
+#createpdf:disabled{
+    -fx-graphic:  url("../images/pdf2.png");
+}
+#choosePath{
+    -fx-background-color:whitesmoke;
+    -fx-border-color: #3c84ff;
+    -fx-border-radius: 10%;
+}
+#choosePath:hover{
+    -fx-background-color:#3c84ff;
+    -fx-text-fill: whitesmoke;
+}

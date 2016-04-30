@@ -226,6 +226,23 @@ public class Component implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public String getFullNameProduct() {
+        String name = "";
+        if (product != null) {
+            name += product.getName() + " ";
+            if (lengthComponent != null) {
+                name += lengthComponent + "/";
+            }
+            if (widthComponent != null) {
+                name += widthComponent + "/";
+            }
+            if (heightComponent != null) {
+                name += heightComponent + "/";
+            }
+        }
+        return name.substring(0, name.length() - 1);
+    }
+    
     @Override
     public String toString() {
         return product.getFullName();
