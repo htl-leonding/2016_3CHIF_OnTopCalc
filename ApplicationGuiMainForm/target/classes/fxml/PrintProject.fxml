@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -15,140 +17,172 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
-   <children>
-      <Label alignment="CENTER" text="Projekt drucken" textFill="#3c84ff" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <font>
-            <Font name="Berlin Sans FB" size="36.0" />
-         </font>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
+    <left>
+        <AnchorPane prefHeight="566.0" prefWidth="439.0" BorderPane.alignment="CENTER">
+            <children>
+                <ComboBox fx:id="cb_projects" prefWidth="150.0" promptText="Projekt auswählen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
+                <Button id="btnLettering" layoutX="25.0" layoutY="445.0" mnemonicParsing="false" onAction="#deleteSelection" prefWidth="200.0" text="Auswahl löschen" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+            <VBox layoutX="25.0" layoutY="85.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
+               <children>
+                      <Label id="boldLettering" layoutY="80.0" text="Gewählte Ansichten werden gedruckt" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+                          <font>
+                              <Font name="System Bold" size="18.0" />
+                          </font>
+                      </Label>
+                      <VBox layoutY="107.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                          <children>
+                              <CheckBox id="chbLettering" fx:id="cb_mainInformations" alignment="CENTER" mnemonicParsing="false" selected="true" text="Allgemeine Informationen">
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                              </CheckBox>
+                              <CheckBox id="smallBtnLettering" fx:id="cb_materialAndCostList" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_woodmaterialAndConstruction" alignment="CENTER" mnemonicParsing="false" selected="true" text="Holzmaterial für Konstruktion">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_formwork" alignment="CENTER" mnemonicParsing="false" selected="true" text="Schalung">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_visibleFormwork" alignment="CENTER" mnemonicParsing="false" selected="true" text="Sichtbare Schalung">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_foil" alignment="CENTER" mnemonicParsing="false" selected="true" text="Folie">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_nailSealingTape" alignment="CENTER" mnemonicParsing="false" selected="true" text="Nageldichtband">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_battens" alignment="CENTER" mnemonicParsing="false" selected="true" text="Konterlattung">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_lathing" alignment="CENTER" mnemonicParsing="false" selected="true" text="Lattung oder Vollschalung">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_materialMontage" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material für Montage">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_color" alignment="CENTER" mnemonicParsing="false" selected="true" text="Farbe">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_transport" alignment="CENTER" mnemonicParsing="false" selected="true" text="Transport">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                              <CheckBox id="smallNormalLettering" fx:id="cb_costView" alignment="CENTER" mnemonicParsing="false" selected="true" text="Kosten Übersicht">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
+                          </children>
+                      </VBox>
+               </children>
+            </VBox>
+                <Button id="btnLettering" fx:id="bt_print" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="225.0" layoutY="445.0" mnemonicParsing="false" onAction="#print" prefWidth="150.0" style="-fx-graphic: url(&quot;../images/printer.png&quot;);" text="Drucken" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <TextField fx:id="tf_dateAndPosition" layoutY="40.0" promptText="Ort- und Datumsangabe" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="35.0" />
+            <HBox layoutX="25.0" layoutY="81.0" spacing="2.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+               <children>
+                  <TextField fx:id="tf_path" editable="false" layoutX="25.0" layoutY="81.0" onMouseClicked="#choosePath" prefHeight="27.0" prefWidth="281.0" promptText="Dateipfad" style="-fx-background-color: derive(gray,80%); -fx-border-color: derive(black,60%); -fx-background-radius: 5px; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS" />
+                  <Button layoutX="362.0" layoutY="81.0" mnemonicParsing="false" onAction="#choosePath" style="-fx-background-color: whitesmoke; -fx-border-color: #3c84ff; -fx-border-radius: 10%;" text="🖿" textFill="#3c84ff" />
+               </children>
+            </HBox>
+            </children>
          <padding>
-            <Insets top="10.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
-      </Label>
-      <ComboBox fx:id="cb_projects" layoutX="125.0" layoutY="51.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0" />
-      <TextField layoutX="126.0" layoutY="95.0" promptText="Ort- und Datumsangabe" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="105.0" />
-      <Label id="boldLettering" layoutX="20.0" layoutY="135.0" text="Gewählte Ansichten werden gedruckt" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="145.0">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <VBox layoutX="20.0" layoutY="172.0">
+        </AnchorPane>
+    </left>
+    <top>
+        <Label alignment="CENTER" text="Projekt drucken" textFill="#3c84ff" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="Berlin Sans FB" size="36.0" />
+            </font>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+        </Label>
+    </top>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <CheckBox id="chbLettering" fx:id="cb_mainInformations" alignment="CENTER" mnemonicParsing="false" selected="true" text="Allgemeine Informationen">
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </CheckBox>
-            <CheckBox id="smallBtnLettering" fx:id="cb_materialAndCostList" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_woodmaterialAndConstruction" alignment="CENTER" mnemonicParsing="false" selected="true" text="Holzmaterial für Konstruktion">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_formwork" alignment="CENTER" mnemonicParsing="false" selected="true" text="Schalung">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_visibleFormwork" alignment="CENTER" mnemonicParsing="false" selected="true" text="Sichtbare Schalung">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_foil" alignment="CENTER" mnemonicParsing="false" selected="true" text="Folie">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_nailSealingTape" alignment="CENTER" mnemonicParsing="false" selected="true" text="Nageldichtband">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_battens" alignment="CENTER" mnemonicParsing="false" selected="true" text="Konterlattung">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_lathing" alignment="CENTER" mnemonicParsing="false" selected="true" text="Lattung oder Vollschalung">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_materialMontage" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material für Montage">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_color" alignment="CENTER" mnemonicParsing="false" selected="true" text="Farbe">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_transport" alignment="CENTER" mnemonicParsing="false" selected="true" text="Transport">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox id="smallNormalLettering" fx:id="cb_costView" alignment="CENTER" mnemonicParsing="false" selected="true" text="Kosten Übersicht">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </CheckBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <ImageView fx:id="iv_pdfView" fitHeight="600.0" fitWidth="400.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <Button fx:id="bt_next" layoutX="154.0" layoutY="527.0" mnemonicParsing="false" prefWidth="80.0" text="Weiter" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            <Button fx:id="bt_back" layoutX="10.0" layoutY="527.0" mnemonicParsing="false" prefWidth="80.0" text="Zurück" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
          </children>
-      </VBox>
-      <Button id="btnLettering" layoutX="20.0" layoutY="529.0" mnemonicParsing="false" onAction="#deleteSelection" text="Auswahl löschen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="210.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button id="btnLettering" layoutX="227.0" layoutY="529.0" mnemonicParsing="false" onAction="#print" text="Drucken" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="20.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </right>
+</BorderPane>

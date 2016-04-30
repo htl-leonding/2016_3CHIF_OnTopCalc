@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
@@ -10,9 +15,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="872.0" style="-fx-background-color: White;" stylesheets="@../styles/projectButtons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProjectViewController">
+<AnchorPane prefHeight="654.0" prefWidth="973.0" style="-fx-background-color: White;" stylesheets="@../styles/projectButtons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProjectViewController">
    <children>
-      <GridPane layoutY="568.0" style="-fx-background-color: linear-gradient(#ffffff  0%, lightgrey  20%, lightgrey 80%, lightgrey 100%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
+      <GridPane layoutY="568.0" prefHeight="70.0" style="-fx-background-color: linear-gradient(#ffffff  0%, lightgrey  20%, lightgrey 80%, lightgrey 100%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="32.0" />
             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="18.0" />
@@ -82,12 +88,12 @@
                    <fx:include source="Assembling.fxml" />
                </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material für Montage">
+            <Tab fx:id="tab_Material" closable="false" onSelectionChanged="#normalTabSelected" text="Material für Montage">
                 <content>
                    <fx:include source="Project_ConstructionMaterial.fxml" />
                 </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Farbe">
+            <Tab fx:id="tab_Colour" closable="false" onSelectionChanged="#normalTabSelected" text="Farbe">
                 <content>
                    <fx:include source="Project_Colour.fxml" />
                 </content>
@@ -97,12 +103,12 @@
                     <fx:include source="Project_Transport.fxml" />
                 </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#normalTabSelected" text="Material- und Kostenliste">
+            <Tab fx:id="tab_MaterialCosts" closable="false" onSelectionChanged="#normalTabSelected" text="Material- und Kostenliste">
                 <content>
                     <fx:include source="Project_MaterialAndCost.fxml" />
                 </content>
             </Tab>
-            <Tab closable="false" onSelectionChanged="#lastTabSelected" text="Übersicht">
+            <Tab fx:id="tab_Overview" closable="false" onSelectionChanged="#lastTabSelected" text="Übersicht">
                 <content>
                     <fx:include source="Project_Overview.fxml" />
                 </content>

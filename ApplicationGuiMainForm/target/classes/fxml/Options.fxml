@@ -29,7 +29,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
+            <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
               <columns>
                 <TableColumn fx:id="cl_id" maxWidth="120.0" minWidth="15.0" prefWidth="75.0" style="-fx-aglinment: center;" text="ID" />
                 <TableColumn fx:id="cl_pname" maxWidth="500.0" minWidth="100.0" prefWidth="110.0" text="Projektname" />
@@ -47,7 +47,8 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button id="smallBtnLettering" layoutX="15.0" layoutY="350.0" mnemonicParsing="false" text="Sicherung erstellen" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="15.0" />
+            <Button id="smallBtnLettering" fx:id="bt_createBackup" layoutX="15.0" layoutY="350.0" mnemonicParsing="false" onAction="#createBackup" text="Sicherung erstellen" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="15.0" />
+            <ProgressIndicator fx:id="pgic_backupProgress" layoutX="139.0" layoutY="520.0" prefHeight="25.0" prefWidth="25.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="139.0" />
          </children>
       </AnchorPane>
    </center>
