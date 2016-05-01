@@ -82,12 +82,4 @@ public class ParameterViewController implements Initializable {
         tv_Prameter.getColumns().get(0).setVisible(false);
         tv_Prameter.getColumns().get(0).setVisible(true);
     }
-    
-    public void setNewDefaultValue(ParameterP parameter, int index){
-        List<ParameterP> parameterList = tv_Prameter.getItems();
-        parameterList.add(index, parameter);
-        parameterList.remove(index+1);
-        tv_Prameter.setItems(FXCollections.observableArrayList(parameterList));
-        refreshTable();
-    }
 }

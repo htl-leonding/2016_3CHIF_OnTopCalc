@@ -29,12 +29,10 @@ import javafx.stage.Stage;
  *
  * @author Kepplinger
  */
-public class ProductModifierController implements Initializable {
+public class ProductCreatorController implements Initializable {
 
-    private static ProductModifierController instance;
+    private static ProductCreatorController instance;
 
-    @FXML
-    private Label lb_Id;
     @FXML
     private TextField tf_Name;
     @FXML
@@ -71,7 +69,7 @@ public class ProductModifierController implements Initializable {
         instance = this;
     }
 
-    public static ProductModifierController getInstance() {
+    public static ProductCreatorController getInstance() {
         return instance;
     }
 
@@ -82,7 +80,6 @@ public class ProductModifierController implements Initializable {
      */
     public void loadProductIntoModifier(Product product) {
         openedProduct = product;
-        lb_Id.setText(String.valueOf(openedProduct.getId()));
         tf_Name.setText(openedProduct.getName());
         tf_Width.setText(parseString(openedProduct.getWidthProduct()));
         tf_Height.setText(parseString(openedProduct.getHeightProduct()));

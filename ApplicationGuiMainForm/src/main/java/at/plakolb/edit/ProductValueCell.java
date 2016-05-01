@@ -1,10 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.edit;
 
-import at.plakolb.calculationlogic.entity.ParameterP;
-import at.plakolb.controller.ParameterViewController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import at.plakolb.calculationlogic.entity.Product;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
@@ -16,11 +13,11 @@ import javafx.scene.input.KeyEvent;
  *
  * @author Kepplinger
  */
-public class ParameterCell extends TableCell<ParameterP, String> {
+public class ProductValueCell extends TableCell<Product, String> {
 
     private TextField textField;
 
-    public ParameterCell() {
+    public ProductValueCell() {
 
     }
 
@@ -29,7 +26,6 @@ public class ParameterCell extends TableCell<ParameterP, String> {
         if (!isEmpty()) {
             super.startEdit();
             createTextField();
-
             setGraphic(textField);
             textField.requestFocus();
         }
@@ -61,7 +57,14 @@ public class ParameterCell extends TableCell<ParameterP, String> {
     }
 
     private void createTextField() {
-        textField = new TextField(getString());
+
+        String item = getString();
+
+        if (getTableColumn().getId().equals("tc_PriceUnit") && item.length() >= 2) {
+            item = item.substring(0, item.length() - 2);
+        }
+
+        textField = new TextField(item);
         textField.setAlignment(Pos.CENTER);
         textField.setPrefWidth(this.getWidth() - 5);
 
@@ -79,6 +82,11 @@ public class ParameterCell extends TableCell<ParameterP, String> {
                     new Alert(Alert.AlertType.ERROR, "Die eingegbene Zahl ist nicht im richtigen Format.").showAndWait();
                     return;
                 }
+
+                if (getTableColumn().getId().equals("tc_PriceUnit")) {
+                    textField.setText(textField.getText() + " €");
+                }
+
                 commitEdit(textField.getText());
             } else if (t.getCode() == KeyCode.ESCAPE) {
                 cancelEdit();
