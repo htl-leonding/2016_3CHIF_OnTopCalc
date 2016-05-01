@@ -4,6 +4,7 @@ package at.plakolb.edit;
 import at.plakolb.calculationlogic.db.controller.UnitController;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.controller.ProductListController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,6 +30,10 @@ public class ProductUnitCell extends TableCell<Product, Unit> {
     public void startEdit() {
         super.startEdit();
 
+        if (((Product)getTableRow().getItem()).getProductType().equals(ProductType.COLOR)) {
+            cancelEdit();
+        }
+        
         if (comboBox == null) {
             createComboBox();
         }

@@ -1,10 +1,12 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.calculationlogic.db.controller.AssemblyController;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.ProductController;
+import at.plakolb.calculationlogic.entity.Assembly;
 import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
@@ -184,31 +186,43 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                             deletionLabel.setTooltip(new Tooltip("Material löschen"));
 
                             deletionLabel.setOnMouseClicked(event -> {
-                                
-                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten? Vorsicht, der Löschvorgang kann nicht mehr rückgängig gemacht werden.",
-                                        ButtonType.YES, ButtonType.CANCEL);
-                                 alert.showAndWait();
-                                if (Project_ConstructionMaterialController.getInstance().getAssemblyCount()>0) {
-                                    Alert assemblyAlert =new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie auch die zu diesem Material gehörenden Produkte löschen?",
-                                        ButtonType.YES, ButtonType.CANCEL);
-                                    assemblyAlert.showAndWait();
-                                    if (assemblyAlert.getResult()==ButtonType.YES) {
+
+                                Alert alert = null;
+
+                                if (Project_ConstructionMaterialController.getInstance().getAssemblyCount() > 0) {
+                                    alert = new Alert(Alert.AlertType.CONFIRMATION, "Wenn Sie dieses Material löschen, werden auch alle dazugehörigen Produkte gelöscht:\n" + getBelongings(tv_Materials.getSelectionModel().getSelectedItem()) + ".\nMöchten Sie troztdem fortfahren?",
+                                            ButtonType.YES, ButtonType.CANCEL);
+                                    alert.showAndWait();
+                                    if (alert.getResult() == ButtonType.YES) {
                                         Project_ConstructionMaterialController.getInstance().deleteRelativeAssemblies(tv_Materials.getSelectionModel().getSelectedItem());
-                                        
-                                    }
-                                }
-                               
-                                if (alert.getResult() == ButtonType.YES) {
-                                    try {
-                                        
-                                        components.remove(tv_Materials.getSelectionModel().getSelectedItem());
-                                        if (tv_Materials.getSelectionModel().getSelectedItem().getId() != null) {
-                                            new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
+
+                                        try {
+                                            components.remove(tv_Materials.getSelectionModel().getSelectedItem());
+                                            if (tv_Materials.getSelectionModel().getSelectedItem().getId() != null) {
+                                                new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
+                                            }
+                                            ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
+                                        } catch (Exception e) {
+                                        } finally {
+                                            refreshTable();
                                         }
-                                        ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
-                                    } catch (Exception e) {
-                                    } finally {
-                                        refreshTable();
+                                    }
+                                } else {
+                                    alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten?",
+                                            ButtonType.YES, ButtonType.CANCEL);
+                                    alert.showAndWait();
+
+                                    if (alert.getResult() == ButtonType.YES) {
+                                        try {
+                                            components.remove(tv_Materials.getSelectionModel().getSelectedItem());
+                                            if (tv_Materials.getSelectionModel().getSelectedItem().getId() != null) {
+                                                new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
+                                            }
+                                            ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
+                                        } catch (Exception e) {
+                                        } finally {
+                                            refreshTable();
+                                        }
                                     }
                                 }
                             });
@@ -258,16 +272,16 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     public static Project_ConstructionMaterialListController getInstance() {
         return instance;
     }
-    
-    public double getWage(){
+
+    public double getWage() {
         return Double.parseDouble(lb_CuttingCostSum.getText().substring(0, lb_CuttingCostSum.getText().length() - 2));
     }
-    
-    public double getMaterial(){
+
+    public double getMaterial() {
         return Double.parseDouble(lb_MaterialCostSum.getText().substring(0, lb_MaterialCostSum.getText().length() - 2));
     }
-    
-    public double getTotalCosts(){
+
+    public double getTotalCosts() {
         return Double.parseDouble(lb_TotalCosts.getText().substring(0, lb_TotalCosts.getText().length() - 2));
     }
 
@@ -384,5 +398,22 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
             res += c.getLengthComponent() * c.getNumberOfProducts();
         }
         return res;
+    }
+
+    private String getBelongings(Component component) {
+
+        String belongings = "";
+        
+        if (component != null) {
+            
+
+            for (Assembly assembly : Project_ConstructionMaterialController.getInstance().getAssemblys()) {
+                if (assembly.getComponent().equals(component)) {
+                    belongings += ("- " + assembly.getProduct().toString() + "\n");
+                }
+            }
+        }
+
+        return belongings;
     }
 }

@@ -2,6 +2,7 @@
 package at.plakolb.edit;
 
 import at.plakolb.calculationlogic.entity.Product;
+import at.plakolb.calculationlogic.eunmeration.ProductType;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
@@ -28,6 +29,11 @@ public class ProductValueCell extends TableCell<Product, String> {
             createTextField();
             setGraphic(textField);
             textField.requestFocus();
+
+            if ((!((Product)getTableRow().getItem()).getProductType().equals(ProductType.COLOR) && getTableColumn().getId().equals("tc_ColourFactor")) || 
+                    ((Product)getTableRow().getItem()).getProductType().equals(ProductType.COLOR) && (getTableColumn().getId().equals("tc_Width") || getTableColumn().getId().equals("tc_Height") || getTableColumn().getId().equals("tc_Length"))) {
+                cancelEdit();
+            }
         }
     }
 
@@ -73,10 +79,13 @@ public class ProductValueCell extends TableCell<Product, String> {
                 if (textField.getText().isEmpty()) {
                     textField.setText("0");
                 }
-
+                
                 try {
                     textField.setText(textField.getText().replace(",", "."));
                     Double.parseDouble(textField.getText());
+                    if (getTableColumn().getId().equals("tc_PriceUnit") && Double.parseDouble(textField.getText()) < 0) {
+                        new Alert(Alert.AlertType.ERROR,"Der Preis darf nicht negativ sein.").showAndWait();
+                    }
                 } catch (NumberFormatException e) {
                     cancelEdit();
                     new Alert(Alert.AlertType.ERROR, "Die eingegbene Zahl ist nicht im richtigen Format.").showAndWait();
