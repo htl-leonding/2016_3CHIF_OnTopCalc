@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1145.0" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.AllProjectsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1145.0" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.AllProjectsController">
    <left>
       <fx:include source="SideView.fxml" />
    </left>
@@ -27,11 +23,11 @@
               <columns>
                 <TableColumn fx:id="tc_Id" editable="false" maxWidth="600.0" minWidth="0.0" prefWidth="60.0" style="-fx-alignment: center;" text="ID" />
                 <TableColumn fx:id="tc_PrecalcId" editable="false" maxWidth="600.0" minWidth="0.0" prefWidth="112.0" style="-fx-alignment: center;" text="Vork. ID" />
-                  <TableColumn fx:id="tc_ProjectName" editable="false" maxWidth="2000.0" minWidth="0.0" prefWidth="186.0" text="Projektname" />
-                  <TableColumn fx:id="tc_Type" editable="false" maxWidth="1100.0" minWidth="0.0" prefWidth="110.0" text="Art" />
-                  <TableColumn fx:id="tc_RoofForm" editable="false" maxWidth="1100.0" minWidth="0.0" prefWidth="110.0" text="Dachform" />
-                  <TableColumn fx:id="tc_Client" editable="false" maxWidth="1500.0" minWidth="0.0" prefWidth="150.0" text="Auftraggeber" />
-                  <TableColumn fx:id="tc_action" maxWidth="107.0" minWidth="107.0" prefWidth="107.0" />
+                  <TableColumn fx:id="tc_ProjectName" editable="false" maxWidth="2000.0" minWidth="0.0" prefWidth="186.0" style="-fx-alignment: center;" text="Projektname" />
+                  <TableColumn fx:id="tc_Type" editable="false" maxWidth="1100.0" minWidth="0.0" prefWidth="110.0" style="-fx-alignment: center;" text="Art" />
+                  <TableColumn fx:id="tc_RoofForm" editable="false" maxWidth="1100.0" minWidth="0.0" prefWidth="110.0" style="-fx-alignment: center;" text="Dachform" />
+                  <TableColumn fx:id="tc_Client" editable="false" maxWidth="1500.0" minWidth="0.0" prefWidth="150.0" style="-fx-alignment: center;" text="Auftraggeber" />
+                  <TableColumn fx:id="tc_action" maxWidth="107.0" minWidth="107.0" prefWidth="107.0" style="-fx-alignment: center;" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

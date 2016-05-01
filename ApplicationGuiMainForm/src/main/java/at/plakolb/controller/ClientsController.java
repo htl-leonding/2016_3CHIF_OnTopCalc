@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -137,22 +139,27 @@ public class ClientsController implements Initializable {
 
         tv_Clients.setItems(FXCollections.observableArrayList(new ClientController().findAll()));
 
-        tv_Clients.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && tv_Clients.getSelectionModel().getSelectedItem() != null) {
-                Parent root;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/fxml/ClientModifier.fxml"));
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setTitle("Auftraggeber editieren");
-                    stage.setScene(scene);
-                    stage.initModality(Modality.WINDOW_MODAL);
-                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-                    stage.show();
-                } catch (IOException ex) {
+        tv_Clients.setRowFactory((TableView<Client> param) -> {
+            TableRow<Client> tableRow = new TableRow<>();
+            tableRow.setOnMouseClicked((MouseEvent event) -> {
+                if (event.getClickCount() == 2 && tableRow.getItem() != null) {
+                    Parent root;
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/fxml/ClientModifier.fxml"));
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setTitle("Auftraggeber editieren");
+                        stage.setScene(scene);
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                        stage.show();
+                    } catch (IOException ex) {
+                    }
+                    ClientModifierController.getInstance().loadClientIntoModifier(tableRow.getItem());
                 }
-                ClientModifierController.getInstance().loadClientIntoModifier(tv_Clients.getSelectionModel().getSelectedItem());
-            }
+            });
+
+            return tableRow;
         });
     }
 

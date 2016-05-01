@@ -7,9 +7,6 @@ import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +17,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -30,8 +26,6 @@ import javafx.stage.Stage;
  * @author Kepplinger
  */
 public class ProductCreatorController implements Initializable {
-
-    private static ProductCreatorController instance;
 
     @FXML
     private TextField tf_Name;
@@ -52,7 +46,6 @@ public class ProductCreatorController implements Initializable {
 
     private ObservableList<Unit> units;
     private ObservableList<ProductType> productTypes;
-    private Product openedProduct;
 
     /**
      * Initializes the controller class.
@@ -66,28 +59,6 @@ public class ProductCreatorController implements Initializable {
         productTypes = FXCollections.observableArrayList(ProductType.values());
         cb_Unit.setItems(units);
         cb_ProductType.setItems(productTypes);
-        instance = this;
-    }
-
-    public static ProductCreatorController getInstance() {
-        return instance;
-    }
-
-    /**
-     * Loads a product into the Modifier.
-     *
-     * @param product
-     */
-    public void loadProductIntoModifier(Product product) {
-        openedProduct = product;
-        tf_Name.setText(openedProduct.getName());
-        tf_Width.setText(parseString(openedProduct.getWidthProduct()));
-        tf_Height.setText(parseString(openedProduct.getHeightProduct()));
-        tf_Length.setText(parseString(openedProduct.getLengthProduct()));
-        tf_ColorFactor.setText(parseString(openedProduct.getColorFactor()));
-        tf_PriceUnit.setText(parseString(openedProduct.getPriceUnit()));
-        cb_Unit.setValue(openedProduct.getUnit());
-        cb_ProductType.setValue(openedProduct.getProductType());
     }
 
     /**
@@ -96,7 +67,7 @@ public class ProductCreatorController implements Initializable {
      * @param event
      */
     @FXML
-    private void save(ActionEvent event) {
+    private void create(ActionEvent event) {
 
         String errorMessage = "";
 
@@ -117,27 +88,28 @@ public class ProductCreatorController implements Initializable {
 
         if (errorMessage.isEmpty()) {
             try {
-                if (cb_ProductType.getSelectionModel().getSelectedItem() == ProductType.COLOR) {
-                    openedProduct.setName(tf_Name.getText());
-                    openedProduct.setWidthProduct(null);
-                    openedProduct.setHeightProduct(null);
-                    openedProduct.setLengthProduct(null);
-                    openedProduct.setColorFactor(tryParseDouble(tf_ColorFactor.getText()));
-                    openedProduct.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
-                    openedProduct.setUnit(cb_Unit.getValue());
-                    openedProduct.setProductType(cb_ProductType.getValue());
-                } else {
-                    openedProduct.setName(tf_Name.getText());
-                    openedProduct.setWidthProduct(tryParseDouble(tf_Width.getText()));
-                    openedProduct.setHeightProduct(tryParseDouble(tf_Height.getText()));
-                    openedProduct.setLengthProduct(tryParseDouble(tf_Length.getText()));
-                    openedProduct.setColorFactor(null);
-                    openedProduct.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
-                    openedProduct.setUnit(cb_Unit.getValue());
-                    openedProduct.setProductType(cb_ProductType.getValue());
-                }
+                Product product = new Product();
 
-                new ProductController().edit(openedProduct);
+                if (cb_ProductType.getSelectionModel().getSelectedItem() == ProductType.COLOR) {
+                    product.setName(tf_Name.getText());
+                    product.setWidthProduct(null);
+                    product.setHeightProduct(null);
+                    product.setLengthProduct(null);
+                    product.setColorFactor(tryParseDouble(tf_ColorFactor.getText()));
+                    product.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
+                    product.setUnit(cb_Unit.getValue());
+                    product.setProductType(cb_ProductType.getValue());
+                } else {
+                    product.setName(tf_Name.getText());
+                    product.setWidthProduct(tryParseDouble(tf_Width.getText()));
+                    product.setHeightProduct(tryParseDouble(tf_Height.getText()));
+                    product.setLengthProduct(tryParseDouble(tf_Length.getText()));
+                    product.setColorFactor(null);
+                    product.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
+                    product.setUnit(cb_Unit.getValue());
+                    product.setProductType(cb_ProductType.getValue());
+                }
+                new ProductController().create(product);
 
             } catch (Exception ex) {
             }
@@ -149,47 +121,38 @@ public class ProductCreatorController implements Initializable {
         }
     }
 
+    /**
+     * Closes window.
+     *
+     * @param event
+     */
     @FXML
     private void cancel(ActionEvent event) {
         ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
 
     /**
-     * Parses a double into a string and returns "" if the number is null.
+     * Gets called when the product type ComboBox selection is changed.
      *
-     * @param number
-     * @return
+     * @param event
      */
-    private String parseString(Double number) {
-        if (number == null) {
-            return "";
-        }
-        DecimalFormat decimalFormat = new DecimalFormat("#.########");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-        return decimalFormat.format(number);
-    }
-
-    /**
-     * Enables and disables the right TextFields when the Product Type is
-     * changed.
-     */
-    private void manageTextFields() {
+    @FXML
+    private void productTypeChanged(ActionEvent event) {
         if (cb_ProductType.getSelectionModel().getSelectedItem() == ProductType.COLOR) {
+            cb_Unit.getSelectionModel().select(new UnitController().findUnitByShortTerm("l"));
+            cb_Unit.setDisable(true);
             tf_Height.setDisable(true);
             tf_Length.setDisable(true);
             tf_Width.setDisable(true);
             tf_ColorFactor.setDisable(false);
         } else {
+            cb_Unit.getSelectionModel().select(0);
+            cb_Unit.setDisable(false);
             tf_Height.setDisable(false);
             tf_Length.setDisable(false);
             tf_Width.setDisable(false);
             tf_ColorFactor.setDisable(true);
         }
-    }
-
-    @FXML
-    private void productTypeChanged(ActionEvent event) {
-        manageTextFields();
     }
 
     /**
@@ -206,4 +169,5 @@ public class ProductCreatorController implements Initializable {
             return null;
         }
     }
+
 }

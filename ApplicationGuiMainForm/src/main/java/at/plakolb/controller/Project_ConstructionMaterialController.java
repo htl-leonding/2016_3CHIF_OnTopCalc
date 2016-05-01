@@ -164,6 +164,10 @@ public class Project_ConstructionMaterialController implements Initializable {
         return getTotalCosts(assemblyList);
     }
 
+    public List<Assembly> getAssemblys() {
+        return assemblyList;
+    }
+
     public void refreshListView() {
         tv_Assembly.setItems(FXCollections.observableArrayList(assemblyList));
         tv_Assembly.getColumns().get(0).setVisible(false);
@@ -284,28 +288,26 @@ public class Project_ConstructionMaterialController implements Initializable {
     public int getAssemblyCount() {
         return assemblyList.size();
     }
-    public void deleteRelativeAssemblies(Component c){
-    try {
-            
-             System.out.println(c.getId());
-             for (Assembly assembly : assemblyList) { 
-                 System.out.println(assembly.getComponent().getId());
-                 if (assembly.getComponent().getId()==c.getId()||assembly.getComponent()==c) {
-                                         
 
-                     assemblyList.remove(assembly);
-                
-                new AssemblyController().destroy(assembly.getId());
-            
-                     
-                 }
-             }
+    public void deleteRelativeAssemblies(Component c) {
+        try {
+            List<Assembly> supportList = new LinkedList<>();
+            supportList.addAll(assemblyList);
+            for (Assembly assembly : supportList) {
+                if (assembly.getComponent().equals(c) || assembly.getComponent().getId().equals(c.getId())) {
+                    assemblyList.remove(assembly);
 
-               ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
-               } catch (Exception e) {
-               } finally {
-                  refreshListView();
+                    if (assembly.getId() != null) {
+                        new AssemblyController().destroy(assembly.getId());
+                    }
                 }
+            }
+
+            ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
+        } catch (Exception e) {
+        } finally {
+            refreshListView();
+        }
     }
-    
+
 }

@@ -22,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -75,11 +76,15 @@ public class AllProjectsController implements Initializable {
 
         updateData();
 
-        tv_ProjectList.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && tv_ProjectList.getSelectionModel().getSelectedItem() != null) {
-                ProjectViewController.openProject(tv_ProjectList.getSelectionModel().getSelectedItem());
-                MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
-            }
+        tv_ProjectList.setRowFactory((TableView<Project> param) -> {
+            TableRow<Project> tableRow = new TableRow<>();
+            tableRow.setOnMouseClicked((MouseEvent event) -> {
+                if (event.getClickCount() == 2 && tableRow.getItem() != null) {
+                    ProjectViewController.openProject(tableRow.getItem());
+                    MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
+                }
+            });
+            return tableRow;
         });
 
         tc_action.setCellFactory(new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {

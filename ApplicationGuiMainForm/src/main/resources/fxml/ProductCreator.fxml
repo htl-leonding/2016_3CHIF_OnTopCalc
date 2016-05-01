@@ -14,7 +14,7 @@
    <children>
       <VBox alignment="CENTER" layoutY="10.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
-            <Label alignment="CENTER" text="Produkt ändern" textAlignment="CENTER" textFill="#3c84ff">
+            <Label alignment="CENTER" text="Produkt erstellen" textAlignment="CENTER" textFill="#3c84ff">
                <font>
                   <Font name="Berlin Sans FB" size="28.0" />
                </font>
@@ -23,6 +23,11 @@
                <children>
                   <VBox alignment="CENTER_RIGHT">
                      <children>
+                        <Label prefHeight="30.0" text="Produkttyp: ">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                         <Label prefHeight="30.0" text="Bezeichnung: ">
                            <font>
                               <Font size="18.0" />
@@ -58,33 +63,31 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="30.0" text="Produkttyp: ">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
                      </children>
                   </VBox>
                   <VBox spacing="5.0">
                      <children>
-                        <TextField fx:id="tf_Name" prefHeight="25.0" promptText="Name des Produkts">
+                        <ComboBox fx:id="cb_ProductType" maxWidth="1.7976931348623157E308" onAction="#productTypeChanged" prefHeight="25.0" promptText="Produkttyp auswählen">
                            <VBox.margin>
                               <Insets top="4.0" />
+                           </VBox.margin></ComboBox>
+                        <TextField fx:id="tf_Name" prefHeight="25.0" promptText="Name des Produkts">
+                           <VBox.margin>
+                              <Insets />
                            </VBox.margin></TextField>
                         <TextField fx:id="tf_Width" prefHeight="25.0" promptText="Breite in cm" />
                         <TextField fx:id="tf_Height" prefHeight="25.0" promptText="Höhe in cm" />
                         <TextField fx:id="tf_Length" prefHeight="25.0" promptText="Länge in m" />
                         <TextField fx:id="tf_ColorFactor" prefHeight="25.0" promptText="Farbfaktor" />
                         <TextField fx:id="tf_PriceUnit" prefHeight="25.0" promptText="Preis pro Einheit in €" />
-                        <ComboBox fx:id="cb_Unit" maxWidth="1.7976931348623157E308" prefHeight="25.0" />
-                        <ComboBox fx:id="cb_ProductType" maxWidth="1.7976931348623157E308" onAction="#productTypeChanged" prefHeight="25.0" />
+                        <ComboBox fx:id="cb_Unit" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Einheit auswählen" />
                      </children>
                   </VBox>
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="140.0" text="Erstellen">
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#create" prefHeight="30.0" prefWidth="140.0" text="Erstellen">
                      <font>
                         <Font size="18.0" />
                      </font>
