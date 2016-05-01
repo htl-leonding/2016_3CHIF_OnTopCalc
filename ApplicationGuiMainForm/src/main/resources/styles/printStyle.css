@@ -26,6 +26,13 @@
 #createpdf:disabled{
     -fx-graphic:  url("../images/pdf2.png");
 }
+#showPDF{
+    visibility: visible;
+    -fx-graphic:  url("../images/pdf3.png");
+}
+#showPDF:disabled{
+    visibility: hidden;
+}
 #choosePath{
     -fx-background-color:whitesmoke;
     -fx-border-color: #3c84ff;

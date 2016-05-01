@@ -18,9 +18,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="573.0" stylesheets="@../styles/printStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="777.0" prefWidth="573.0" stylesheets="@../styles/printStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
     <left>
-      <VBox spacing="5.0">
+      <VBox prefHeight="755.0" prefWidth="573.0" spacing="5.0">
          <children>
             <VBox alignment="CENTER" spacing="10.0">
                <children>
@@ -60,14 +60,14 @@
                                       <Font size="14.0" />
                                   </font>
                               </CheckBox>
-                              <CheckBox id="smallBtnLettering" fx:id="cb_materialAndCostList" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
-                                  <font>
-                                      <Font size="14.0" />
-                                  </font>
-                                  <padding>
-                                      <Insets bottom="5.0" />
-                                  </padding>
-                              </CheckBox>
+                        <CheckBox id="smallNormalLettering" fx:id="cb_Area" alignment="CENTER" mnemonicParsing="false" selected="true" text="Grund- und Dachflächenermittlung">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
+                        </CheckBox>
                               <CheckBox id="smallNormalLettering" fx:id="cb_woodmaterialAndConstruction" alignment="CENTER" mnemonicParsing="false" selected="true" text="Holzmaterial für Konstruktion">
                                   <font>
                                       <Font size="14.0" />
@@ -148,6 +148,14 @@
                                       <Insets bottom="5.0" />
                                   </padding>
                               </CheckBox>
+                              <CheckBox id="smallBtnLettering" fx:id="cb_materialAndCostList" alignment="CENTER" mnemonicParsing="false" selected="true" text="Material- und Kostenliste">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets bottom="5.0" />
+                                  </padding>
+                              </CheckBox>
                               <CheckBox id="smallNormalLettering" fx:id="cb_costView" alignment="CENTER" mnemonicParsing="false" selected="true" text="Kosten Übersicht">
                                   <font>
                                       <Font size="14.0" />
@@ -193,11 +201,20 @@
                   <Insets top="10.0" />
                </padding>
             </HBox>
-            <VBox alignment="CENTER" prefHeight="25.0" prefWidth="533.0" spacing="5.0">
+            <AnchorPane>
                <children>
-                  <CheckBox fx:id="cb_openAfterCreation" mnemonicParsing="false" text="PDF nach dem Erstellen öffnen" />
+                  <Button id="showPDF" fx:id="bt_showLastPDF" disable="true" layoutX="284.0" mnemonicParsing="false" onAction="#showLastPDF" styleClass="printButton" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                  </Button>
+                  <CheckBox fx:id="cb_openAfterCreation" layoutY="15.0" mnemonicParsing="false" text="PDF nach dem Erstellen öffnen" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="160.0">
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                  </CheckBox>
                </children>
-            </VBox>
+            </AnchorPane>
          </children>
          <BorderPane.margin>
             <Insets />

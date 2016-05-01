@@ -32,10 +32,9 @@ import java.util.Locale;
 import javax.print.PrintService;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Chromaticity;
 import javax.print.attribute.standard.JobName;
-import javax.print.attribute.standard.MediaPrintableArea;
-import javax.print.attribute.standard.MediaSize;
-import javax.print.attribute.standard.PageRanges;
+import javax.print.attribute.standard.MediaSizeName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPrintable;
 
@@ -73,6 +72,8 @@ public class Print {
         System.out.println("Erstelle: " + file.toPath());
         document = new Document();
         document.setPageSize(PageSize.A4);
+        float cm = 72.0f / 2.54f;
+        document.setMargins(2.54f * cm, 2.54f * cm, 2.54f * cm, 2.54f * cm);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
         document.open();
 
@@ -139,9 +140,9 @@ public class Print {
         PrinterJob job = PrinterJob.getPrinterJob();
         double cm = 72.0 / 2.54;
         PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-        attr.add(new PageRanges(1, doc.getNumberOfPages()));
-        attr.add(new JobName("OnTopCalc - " + project.getProjectNameWithId(), Locale.ROOT));
-        attr.add(new MediaPrintableArea(0,0,210, 295, MediaSize.MM));//?
+        attr.add(Chromaticity.MONOCHROME);
+        attr.add(new JobName("OnTopCalc - " + project.getProjectName(), Locale.ROOT));
+        attr.add(MediaSizeName.ISO_A4);
 
         Paper paper = new Paper();
         paper.setSize(21.0 * cm, 29.5 * cm);
@@ -153,15 +154,18 @@ public class Print {
         Book book = new Book();
         book.append(new PDFPrintable(doc), pageFormat, doc.getNumberOfPages());
         job.setPageable(book);
-
         if (job.printDialog(attr)) {
             job.print(attr);
         }
     }
 
     private static void addEmptyLine(Paragraph paragraph, int number) {
-        for (int i = 0; i < number; i++) {
-            paragraph.add(new Paragraph(" "));
+        if (number < 0) {
+            paragraph.add(new Paragraph(" ", new Font(Font.FontFamily.TIMES_ROMAN, 5)));
+        } else {
+            for (int i = 0; i < number; i++) {
+                paragraph.add(new Paragraph(" "));
+            }
         }
     }
 
@@ -229,25 +233,25 @@ public class Print {
 
         WorthController worthJpaController = new WorthController();
 
-        Worth area = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("A", project.getId());
+        Worth area = worthJpaController.findWorthByShortTermAndProjectId("A", project.getId());
         if (area != null) {
             paragraph.add(new Paragraph("Grundfläche: "
                     + area.worthFormatWithUnit(), normalFont));
         }
 
-        Worth roofAreaWithoutRoofOverhang = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("D", project.getId());
+        Worth roofAreaWithoutRoofOverhang = worthJpaController.findWorthByShortTermAndProjectId("D", project.getId());
         if (roofAreaWithoutRoofOverhang != null) {
             paragraph.add(new Paragraph("Dachfläche "
                     + roofAreaWithoutRoofOverhang.worthFormatWithUnit(), normalFont));
         }
 
-        Worth roofOverhang = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("DV", project.getId());
+        Worth roofOverhang = worthJpaController.findWorthByShortTermAndProjectId("DV", project.getId());
         if (roofOverhang != null) {
             paragraph.add(new Paragraph("Dachvorsprung "
                     + roofOverhang.worthFormatWithUnit(), normalFont));
         }
 
-        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("DF", project.getId());
+        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectId("DF", project.getId());
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachfläche mit Dachvorsprung: "
                     + roofArea.worthFormatWithUnit(), normalFont));
@@ -260,6 +264,7 @@ public class Print {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
         paragraph.add(new Paragraph("Holzmaterial für Konsruktion", subFont));
+        addEmptyLine(paragraph, -1);
 
         Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f, Font.BOLD);
         Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f);
@@ -277,9 +282,9 @@ public class Print {
                     tableHeaderFont));
             table.addCell(new Phrase("Holzprodukt",
                     tableHeaderFont));
-            table.addCell(new Phrase("columnComponentNumberOfProducts",
-                    tableHeaderFont));
             table.addCell(new Phrase("Anzahl",
+                    tableHeaderFont));
+            table.addCell(new Phrase("m³",
                     tableHeaderFont));
             table.addCell(new Phrase("Preis m³/€",
                     tableHeaderFont));
@@ -363,7 +368,7 @@ public class Print {
         }
 
         WorthController worthJpaController = new WorthController();
-        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("D", project.getId());
+        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectId("D", project.getId());
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachfläche: "
                     + roofArea.worthFormatWithUnit(), normalFont));
@@ -441,7 +446,7 @@ public class Print {
         }
 
         WorthController worthJpaController = new WorthController();
-        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("DV", project.getId());
+        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectId("DV", project.getId());
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachvorsprung: "
                     + roofArea.worthFormatWithUnit(), normalFont));
@@ -519,7 +524,7 @@ public class Print {
         }
 
         WorthController worthJpaController = new WorthController();
-        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("DF", project.getId());
+        Worth roofArea = worthJpaController.findWorthByShortTermAndProjectId("DF", project.getId());
 
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachfläche mit Dachvorsprung: "
@@ -598,6 +603,7 @@ public class Print {
             paragraph.add(new Paragraph(
                     "Nageldichtband", subFont));
         }
+        addEmptyLine(paragraph, -1);
         PdfPTable table = new PdfPTable(new float[]{6f, 3.5f});
         table.setWidthPercentage(100f);
 
@@ -703,7 +709,7 @@ public class Print {
         } else {
             paragraph.add(new Paragraph("Konterlattung", subFont));
         }
-
+        addEmptyLine(paragraph, -1);
         PdfPTable table = new PdfPTable(new float[]{6f, 3.5f});
         table.setWidthPercentage(100f);
 
@@ -864,7 +870,7 @@ public class Print {
                         + worthAbatementPercent.worthFormatWithUnit(), normalFont));
             }
 
-            Worth worthRoofArea = worthJpaController.findWorthByShortTermAndProjectIdAndWorthShortTermIsNull("DF", project.getId());
+            Worth worthRoofArea = worthJpaController.findWorthByShortTermAndProjectId("DF", project.getId());
             if (worthRoofArea != null) {
                 paragraph.add(new Paragraph("Dachfläche: "
                         + worthRoofArea.worthFormatWithUnit(), normalFont));
@@ -927,7 +933,7 @@ public class Print {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
         paragraph.add(new Paragraph("Material für Montage", subFont));
-
+        addEmptyLine(paragraph, -1);
         WorthController worthJpaController = new WorthController();
 
         Worth allAroundPrice = worthJpaController.findWorthByShortTermAndProjectId("GMFM", project.getId());
@@ -1111,6 +1117,7 @@ public class Print {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
         paragraph.add(new Paragraph("Material- und Kostenliste", subFont));
+        addEmptyLine(paragraph, -1);
         ComponentController componentJpaController = new ComponentController();
         java.util.List<Component> listComponents = componentJpaController.findComponentsByProjectIdOrderById(project.getId());
 
@@ -1163,7 +1170,7 @@ public class Print {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
         paragraph.add(new Paragraph("Kosten Übersicht", subFont));
-
+        addEmptyLine(paragraph, -1);
         PdfPTable table = new PdfPTable(new float[]{6, 4.5f, 4.5f, 4.5f});
         table.setWidthPercentage(100f);
 

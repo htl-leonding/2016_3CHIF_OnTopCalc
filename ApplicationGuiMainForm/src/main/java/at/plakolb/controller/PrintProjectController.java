@@ -83,9 +83,15 @@ public class PrintProjectController implements Initializable {
     private Button bt_createPDFAndPrint;
 
     java.io.File path;
+    String lastPath;
     PrintService printService;
+    
     @FXML
     private CheckBox cb_openAfterCreation;
+    @FXML
+    private Button bt_showLastPDF;
+    @FXML
+    private CheckBox cb_Area;
 
     /**
      * Initializes the controller class.
@@ -110,6 +116,7 @@ public class PrintProjectController implements Initializable {
         
         bt_createPDF.setTooltip(new Tooltip("PDF erstellen"));
         bt_createPDFAndPrint.setTooltip(new Tooltip("PDF erstellen und drucken"));
+        bt_showLastPDF.setTooltip(new Tooltip("Letzte PDF anzeigen"));
         refreshPrintAbility();
     }
 
@@ -193,7 +200,7 @@ public class PrintProjectController implements Initializable {
         try {
             List<Boolean> listPrint = new ArrayList<>();
             listPrint.add(cb_mainInformations.isSelected());
-            listPrint.add(cb_materialAndCostList.isSelected());
+            listPrint.add(cb_Area.isSelected());
             listPrint.add(cb_woodmaterialAndConstruction.isSelected());
             listPrint.add(cb_formwork.isSelected());
             listPrint.add(cb_visibleFormwork.isSelected());
@@ -208,7 +215,8 @@ public class PrintProjectController implements Initializable {
             listPrint.add(cb_costView.isSelected());
 
             print.setListPrint(listPrint);
-            showPDF(print.createPDF());
+            showPDF(print.createPDF(),cb_openAfterCreation.isSelected());
+            bt_showLastPDF.setDisable(false);
             if (p) {
                 try {
                     print.print(printService);
@@ -222,8 +230,9 @@ public class PrintProjectController implements Initializable {
         }
     }
 
-    public void showPDF(String path) {
-        if (Desktop.isDesktopSupported()&&cb_openAfterCreation.isSelected()) {
+    public void showPDF(String path,boolean allowed) {
+        lastPath = path;
+        if (Desktop.isDesktopSupported()&&allowed) {
             try {
                 Desktop.getDesktop().open(new File(path));
             } catch (IOException ex) {
@@ -235,6 +244,7 @@ public class PrintProjectController implements Initializable {
     @FXML
     private void selectAll(ActionEvent event) {
         cb_battens.setSelected(true);
+        cb_Area.setSelected(true);
         cb_color.setSelected(true);
         cb_costView.setSelected(true);
         cb_foil.setSelected(true);
@@ -252,6 +262,7 @@ public class PrintProjectController implements Initializable {
     @FXML
     private void deleteSelection(ActionEvent event) {
         cb_battens.setSelected(false);
+        cb_Area.setSelected(false);
         cb_color.setSelected(false);
         cb_costView.setSelected(false);
         cb_foil.setSelected(false);
@@ -264,5 +275,10 @@ public class PrintProjectController implements Initializable {
         cb_transport.setSelected(false);
         cb_visibleFormwork.setSelected(false);
         cb_woodmaterialAndConstruction.setSelected(false);
+    }
+
+    @FXML
+    private void showLastPDF(ActionEvent event) {
+        showPDF(lastPath,true);
     }
 }

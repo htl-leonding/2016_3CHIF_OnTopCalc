@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -29,7 +30,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
+            <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" prefHeight="242.0" prefWidth="648.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
               <columns>
                 <TableColumn fx:id="cl_id" maxWidth="120.0" minWidth="15.0" prefWidth="75.0" style="-fx-aglinment: center;" text="ID" />
                 <TableColumn fx:id="cl_pname" maxWidth="500.0" minWidth="100.0" prefWidth="110.0" text="Projektname" />
@@ -42,13 +43,58 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Label id="boldLettering" layoutX="17.0" layoutY="323.0" text="Sicherung" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Button id="smallBtnLettering" fx:id="bt_createBackup" layoutX="15.0" layoutY="350.0" mnemonicParsing="false" onAction="#createBackup" text="Sicherung erstellen" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="15.0" />
-            <ProgressIndicator fx:id="pgic_backupProgress" layoutX="139.0" layoutY="520.0" prefHeight="25.0" prefWidth="25.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="139.0" />
+            <AnchorPane layoutX="20.0" layoutY="406.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
+               <children>
+                  <BorderPane layoutY="70.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <left>
+                        <Label text="Standard Sicherungs Speicherort:" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets right="5.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </left>
+                     <center>
+                        <TextField fx:id="tf_defaultBackupDirectory" prefHeight="25.0" prefWidth="429.0" promptText="Standartspeicherort für Sicherungen" BorderPane.alignment="CENTER" />
+                     </center>
+                     <right>
+                        <Button fx:id="bt_chooseFileBackup" mnemonicParsing="false" text="🖿" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets left="2.0" />
+                           </BorderPane.margin>
+                        </Button>
+                     </right>
+                  </BorderPane>
+                  <Label id="boldLettering" text="Sicherung">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button id="smallBtnLettering" fx:id="bt_createBackup" layoutY="114.0" mnemonicParsing="false" onAction="#createBackup" text="Sicherung erstellen" />
+                  <ProgressIndicator fx:id="pgic_backupProgress" layoutX="122.0" layoutY="116.0" prefHeight="22.0" prefWidth="22.0" />
+                  <CheckBox fx:id="cb_backUpStartCheck" layoutY="33.0" mnemonicParsing="false" text="Beim Start überprüfen ob die Letzte Sicherung älter als " />
+                  <ComboBox fx:id="cb_weeks" editable="true" layoutX="319.0" layoutY="29.0" prefHeight="25.0" prefWidth="54.0" promptText="1" />
+                  <Label fx:id="lb_weekTXT" layoutX="380.0" layoutY="33.0" text="Wochen ist." />
+               </children>
+            </AnchorPane>
+            <BorderPane layoutX="46.0" layoutY="311.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
+               <left>
+                  <Label text="Standard PDF Speicherort:" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="5.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </left>
+               <center>
+                  <TextField fx:id="tf_defaultPDFDirectory" prefHeight="25.0" prefWidth="466.0" promptText="Standartspeicherort für die PDFs" BorderPane.alignment="CENTER" />
+               </center>
+               <right>
+                  <Button fx:id="bt_chooseFilePDF" mnemonicParsing="false" text="🖿" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets left="2.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </right>
+            </BorderPane>
          </children>
       </AnchorPane>
    </center>
