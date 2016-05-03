@@ -91,6 +91,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Hyperlink fx:id="hl_lastBackup" layoutX="133.0" layoutY="484.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="120.0" />
          </children>
       </AnchorPane>
    </children>

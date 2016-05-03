@@ -6,6 +6,9 @@ import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -132,5 +135,25 @@ public class UtilityFormat {
     public static String twoDecimalPlaces(double decimal) {
         DecimalFormat twoDForm = new DecimalFormat("0.00");
         return twoDForm.format(decimal);
+    }
+    
+    public static void setCutTextForTextField(TextField textField, String original) {
+        original = original.replace("\\", "/");
+        textField.setTooltip(new Tooltip(original));
+        Text text = new Text(original);
+        text.setFont(textField.getFont());
+        String[] splittedPath = original.split("/");
+
+        double width = textField.getWidth()==0?textField.getPrefWidth():textField.getWidth();
+        if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
+            text.setText(splittedPath.length > 3 ? String.format("%s/%s/.../%s",
+                    splittedPath[0],
+                    splittedPath[1],
+                    splittedPath[splittedPath.length - 1]) : "../" + splittedPath[splittedPath.length - 1]);
+            if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
+                text.setText("../" + splittedPath[splittedPath.length - 1]);
+            }
+        }
+        textField.setText(text.getText());
     }
 }

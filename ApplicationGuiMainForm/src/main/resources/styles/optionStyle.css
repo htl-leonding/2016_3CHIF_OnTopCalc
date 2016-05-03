@@ -1,0 +1,22 @@
+/*	HTL Leonding	*//* 
+    Created on : 02.05.2016, 07:50:00
+    Author     : Andreas
+*/
+
+.textfieldPath{
+    -fx-background-color: derive(gray,80%);
+    -fx-background-radius: 5px;
+    -fx-border-color: derive(black,60%);
+    -fx-border-radius: 5px;
+}
+.buttonChoosePath{
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-color: #3c84ff;
+    -fx-text-fill: #3c84ff;
+    -fx-border-radius: 5px;
+}
+.buttonChoosePath:hover{
+    -fx-background-color: #3c84ff;
+    -fx-text-fill: white;
+}

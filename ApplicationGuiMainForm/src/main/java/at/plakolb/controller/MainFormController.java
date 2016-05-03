@@ -2,8 +2,11 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.settings.SettingsController;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -14,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -33,6 +37,8 @@ public class MainFormController implements Initializable {
     private static MainFormController instance;
     @FXML
     private MenuButton mb_openProjects;
+    @FXML
+    private Hyperlink hl_lastBackup;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,6 +68,16 @@ public class MainFormController implements Initializable {
         }
 
         mb_openProjects.getItems().addAll(items);
+        
+        if(SettingsController.getBooleanProperty("remindBackup")==true && SettingsController.getDateProperty("lastBackup").getTime()+
+                Integer.valueOf(SettingsController.getProperty("remindBackupWeeks"))*604800000 <= new Date().getTime()){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            hl_lastBackup.setText("Die letzte Sicherung wurde am "+sdf.format(SettingsController.getDateProperty("lastBackup"))+" erstellt. Erstellen Sie jetzt eine Sicherung!");
+            hl_lastBackup.setOnAction((event)->{
+                loadFxmlIntoPane("Options.fxml");
+                OptionsController.getInstance().createBackup();
+            });
+        }
     }
 
     public static MainFormController getInstance() {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -13,7 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="570.0" prefWidth="903.0" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="570.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -54,13 +56,19 @@
                         </Label>
                      </left>
                      <center>
-                        <TextField fx:id="tf_defaultBackupDirectory" prefHeight="25.0" prefWidth="429.0" promptText="Standartspeicherort für Sicherungen" BorderPane.alignment="CENTER" />
+                        <TextField fx:id="tf_defaultBackupDirectory" editable="false" prefHeight="25.0" prefWidth="429.0" promptText="Standartspeicherort für Sicherungen" styleClass="textfieldPath" BorderPane.alignment="CENTER">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></TextField>
                      </center>
                      <right>
-                        <Button fx:id="bt_chooseFileBackup" mnemonicParsing="false" text="🖿" BorderPane.alignment="CENTER">
+                        <Button fx:id="bt_chooseFileBackup" mnemonicParsing="false" styleClass="buttonChoosePath" text="🗁" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets left="2.0" />
                            </BorderPane.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </right>
                   </BorderPane>
@@ -70,10 +78,11 @@
                      </font>
                   </Label>
                   <Button id="smallBtnLettering" fx:id="bt_createBackup" layoutY="114.0" mnemonicParsing="false" onAction="#createBackup" text="Sicherung erstellen" />
-                  <ProgressIndicator fx:id="pgic_backupProgress" layoutX="122.0" layoutY="116.0" prefHeight="22.0" prefWidth="22.0" />
+                  <ProgressIndicator fx:id="pgic_backupProgress" layoutX="122.0" layoutY="116.0" prefHeight="22.0" prefWidth="22.0" visible="false" />
                   <CheckBox fx:id="cb_backUpStartCheck" layoutY="33.0" mnemonicParsing="false" text="Beim Start überprüfen ob die Letzte Sicherung älter als " />
                   <ComboBox fx:id="cb_weeks" editable="true" layoutX="319.0" layoutY="29.0" prefHeight="25.0" prefWidth="54.0" promptText="1" />
                   <Label fx:id="lb_weekTXT" layoutX="380.0" layoutY="33.0" text="Wochen ist." />
+                  <Label fx:id="lb_percentage" layoutX="153.0" layoutY="119.0" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="155.0" />
                </children>
             </AnchorPane>
             <BorderPane layoutX="46.0" layoutY="311.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
@@ -85,17 +94,27 @@
                   </Label>
                </left>
                <center>
-                  <TextField fx:id="tf_defaultPDFDirectory" prefHeight="25.0" prefWidth="466.0" promptText="Standartspeicherort für die PDFs" BorderPane.alignment="CENTER" />
+                  <TextField fx:id="tf_defaultPDFDirectory" editable="false" prefHeight="25.0" prefWidth="466.0" promptText="Standartspeicherort für die PDFs" styleClass="textfieldPath" BorderPane.alignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></TextField>
                </center>
                <right>
-                  <Button fx:id="bt_chooseFilePDF" mnemonicParsing="false" text="🖿" BorderPane.alignment="CENTER">
+                  <Button fx:id="bt_chooseFilePDF" mnemonicParsing="false" styleClass="buttonChoosePath" text="Ordner auswählen" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets left="2.0" />
                      </BorderPane.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </right>
             </BorderPane>
          </children>
       </AnchorPane>
    </center>
+   <stylesheets>
+      <URL value="@../styles/columnbuttons.css" />
+      <URL value="@../styles/optionStyle.css" />
+   </stylesheets>
 </BorderPane>

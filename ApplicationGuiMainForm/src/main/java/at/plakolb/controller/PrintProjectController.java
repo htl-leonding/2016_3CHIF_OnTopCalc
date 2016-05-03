@@ -5,6 +5,7 @@ import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.util.Print;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+import at.plakolb.settings.SettingsController;
 import com.itextpdf.text.DocumentException;
 import java.awt.Desktop;
 import java.awt.print.PrinterException;
@@ -117,6 +118,13 @@ public class PrintProjectController implements Initializable {
         bt_createPDF.setTooltip(new Tooltip("PDF erstellen"));
         bt_createPDFAndPrint.setTooltip(new Tooltip("PDF erstellen und drucken"));
         bt_showLastPDF.setTooltip(new Tooltip("Letzte PDF anzeigen"));
+        
+        File f = new File(SettingsController.getProperty("pdfPath"));
+        if(f.isDirectory()){
+            path = f;
+            UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
+        }
+        
         refreshPrintAbility();
     }
 
@@ -154,7 +162,7 @@ public class PrintProjectController implements Initializable {
             if (p != null) {
                 path = p;
             }
-            setCutTextForTextField(tf_path, path.getAbsolutePath());
+            UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
         } catch (Exception e) {
         } finally {
             refreshPrintAbility();
@@ -169,25 +177,6 @@ public class PrintProjectController implements Initializable {
             bt_createPDFAndPrint.setDisable(true);
             bt_createPDF.setDisable(true);
         }
-    }
-
-    private void setCutTextForTextField(TextField textField, String original) {
-        original = original.replace("\\", "/");
-        textField.setTooltip(new Tooltip(original));
-        Text text = new Text(original);
-        text.setFont(textField.getFont());
-        String[] splittedPath = original.split("/");
-
-        if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > textField.getWidth()) {
-            text.setText(splittedPath.length > 3 ? String.format("%s/%s/.../%s",
-                    splittedPath[0],
-                    splittedPath[1],
-                    splittedPath[splittedPath.length - 1]) : "../" + splittedPath[splittedPath.length - 1]);
-            if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > textField.getWidth()) {
-                text.setText("../" + splittedPath[splittedPath.length - 1]);
-            }
-        }
-        textField.setText(text.getText());
     }
 
     @FXML
