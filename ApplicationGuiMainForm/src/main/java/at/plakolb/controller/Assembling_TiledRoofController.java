@@ -158,12 +158,12 @@ public class Assembling_TiledRoofController extends Observable implements Initia
 
     private void setSlatSpacing() {
         slatSpacing.setWorth(tf_slatSpacing.getText().isEmpty() || !tf_slatSpacing.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_slatSpacing.getText().replace(',', '.')));
+                ? 0 : Double.valueOf(tf_slatSpacing.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
     }
 
     private void setWastePercent() {
         Assembling_BattensOrFullFormworkController.getInstance().setWastePercent(tf_waste.getText().isEmpty() || !tf_waste.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_waste.getText().replace(',', '.')));
+                ? 0 : Double.valueOf(tf_waste.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
     }
 
     @Override

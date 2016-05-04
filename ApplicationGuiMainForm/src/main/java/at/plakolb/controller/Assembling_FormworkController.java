@@ -99,22 +99,22 @@ public class Assembling_FormworkController implements Initializable, Observer {
             tf_Price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
         });
         tf_Price.textProperty().addListener((observable, oldValue, newValue) -> {
-            setPrice(newValue);
+            setPrice();
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
         tf_Time.textProperty().addListener((observable, oldValue, newValue) -> {
-            setTime();
+            UtilityFormat.setWorthFromTextField(tf_Time, time);
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
         tf_Wage.textProperty().addListener((observable, oldValue, newValue) -> {
-            setWage();
+            UtilityFormat.setWorthFromTextField(tf_Wage, wage);
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
         tf_Blend.textProperty().addListener((observable, oldValue, newValue) -> {
-            setBlend();
+            UtilityFormat.setWorthFromTextField(tf_Blend, blend);
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
@@ -131,28 +131,14 @@ public class Assembling_FormworkController implements Initializable, Observer {
         return instance;
     }
 
-    private void setPrice(String price) {
-        price = price.replace(',', '.');
-        if (price.isEmpty() || !price.matches("[0-9]*.[0-9]*") || Double.valueOf(price) < 0) {
+    private void setPrice() {
+        tf_Price.setText(tf_Price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
+        if (tf_Price.getText().isEmpty() || Double.valueOf(tf_Price.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
         } else {
-            this.price = Double.valueOf(price);
+            this.price = Double.valueOf(tf_Price.getText());
         }
-    }
-
-    private void setBlend() {
-        blend.setWorth(tf_Blend.getText().isEmpty() || !tf_Blend.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_Blend.getText().replace(',', '.')));
-    }
-
-    private void setWage() {
-        wage.setWorth(tf_Wage.getText().isEmpty() || !tf_Wage.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_Wage.getText().replace(',', '.')));
-    }
-
-    private void setTime() {
-        time.setWorth(tf_Time.getText().isEmpty() || !tf_Time.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_Time.getText().replace(',', '.')));
     }
 
     public Component getComponent() {
@@ -172,8 +158,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
     }
 
     public void loadValuesFromDatabase() {
-        ProductController productController = new ProductController();
-
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
             WorthController worthController = new WorthController();
@@ -209,7 +193,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
             totalCosts = (worthController.findWorthByShortTermAndProjectId("GKS", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("GKS", project.getId()) : totalCosts;
 
-            lb_RoofArea.setText(UtilityFormat.worthWithTwoDecimalPlaces(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
+            lb_RoofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
             lb_Waste.setText(UtilityFormat.getStringForLabel(waste));
             lb_Formwork.setText(UtilityFormat.getStringForLabel(formwork));
             lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));

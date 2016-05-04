@@ -182,18 +182,23 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     }
 
     private void setAbatementDuration() {
+        tf_assemblingDuration.setText(tf_assemblingDuration.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
         assemblingDuration.setWorth(tf_assemblingDuration.getText().isEmpty() || !tf_assemblingDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_assemblingDuration.getText().replace(',', '.')));
+                ? 0 : Double.valueOf(tf_assemblingDuration.getText()));
     }
 
     private void setPrice() {
-        price = (tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.')));
+        tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
+        } else {
+            this.price = Double.valueOf(tf_price.getText());
+        }
     }
 
     private void setWorkCosts() {
         workCosts.setWorth(tf_workCosts.getText().isEmpty() || !tf_workCosts.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_workCosts.getText().replace(',', '.')));
+                ? 0 : Double.valueOf(tf_workCosts.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
     }
 
     @Override

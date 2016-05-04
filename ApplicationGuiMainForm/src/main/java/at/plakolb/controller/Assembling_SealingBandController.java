@@ -102,18 +102,6 @@ public class Assembling_SealingBandController implements Initializable, Observer
         montageCosts = new Worth(parameterController.findParameterPByShortTerm("KMonD"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKND"));
 
-        tf_blend.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setBlend();
-            calculate();
-            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
-        });
-
-        tf_duration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setDuration();
-            calculate();
-            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
-        });
-
         tf_priceLinearMeter.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerLinearMeter();
             calculate();
@@ -121,7 +109,19 @@ public class Assembling_SealingBandController implements Initializable, Observer
         });
 
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setWorkCosts();
+            UtilityFormat.setWorthFromTextField(tf_priceLinearMeter, workerCosts);
+            calculate();
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
+        });
+
+        tf_blend.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_blend, blend);
+            calculate();
+            ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
+        });
+
+        tf_duration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_duration, duration);
             calculate();
             ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
@@ -152,24 +152,14 @@ public class Assembling_SealingBandController implements Initializable, Observer
         return instance;
     }
 
-    private void setBlend() {
-        blend.setWorth(tf_blend.getText().isEmpty() || !tf_blend.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_blend.getText().replace(',', '.')));
-    }
-
-    private void setDuration() {
-        duration.setWorth(tf_duration.getText().isEmpty() || !tf_duration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_duration.getText().replace(',', '.')));
-    }
-
     private void setPricePerLinearMeter() {
-        price = (tf_priceLinearMeter.getText().isEmpty() || !tf_priceLinearMeter.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_priceLinearMeter.getText().replace(',', '.')));
-    }
-
-    private void setWorkCosts() {
-        workerCosts.setWorth(tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.')));
+        tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_price.setText(UtilityFormat.removeUnnecessaryCommas(tf_price.getText()));
+        if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
+        } else {
+            this.price = Double.valueOf(tf_price.getText());
+        }
     }
 
     public Component getComponent() {
@@ -239,7 +229,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 
             tv_rafter.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getRafterList()));
-            
+
             ModifyController.getInstance().setAssembling_sealingBand(Boolean.FALSE);
         }
     }

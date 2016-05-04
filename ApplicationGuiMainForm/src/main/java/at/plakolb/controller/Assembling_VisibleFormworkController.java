@@ -93,26 +93,26 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKSS"));
         workerCosts = new Worth(parameterController.findParameterPByShortTerm("KPSS"));
 
-        tf_AbatementPercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setAbatementPercent();
-            calculateFormwork();
-            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
-        });
-
-        tf_AssemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setAssemblingDuration();
-            calculateFormwork();
-            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
-        });
-
         tf_PricePerSquare.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculateFormwork();
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
+        tf_AbatementPercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_AbatementPercent, abatementPercent);
+            calculateFormwork();
+            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
+        });
+
+        tf_AssemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_AssemblingDuration, assemblingDuration);
+            calculateFormwork();
+            ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
+        });
+
         tf_WorkerCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setWorkerCosts();
+            UtilityFormat.setWorthFromTextField(tf_WorkerCosts, workerCosts);
             calculateFormwork();
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
@@ -143,23 +143,13 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     }
 
     public void setPricePerSquare() {
-        pricePerSquare = tf_PricePerSquare.getText().isEmpty() || !tf_PricePerSquare.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_PricePerSquare.getText().replace(',', '.'));
-    }
-
-    public void setAbatementPercent() {
-        abatementPercent.setWorth(tf_AbatementPercent.getText().isEmpty() || !tf_AbatementPercent.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_AbatementPercent.getText().replace(',', '.')));
-    }
-
-    public void setWorkerCosts() {
-        workerCosts.setWorth(tf_WorkerCosts.getText().isEmpty() || !tf_WorkerCosts.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_WorkerCosts.getText().replace(',', '.')));
-    }
-
-    public void setAssemblingDuration() {
-        assemblingDuration.setWorth(tf_AssemblingDuration.getText().isEmpty() || !tf_AssemblingDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_AssemblingDuration.getText().replace(',', '.')));
+        tf_PricePerSquare.setText(tf_PricePerSquare.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_PricePerSquare.setText(UtilityFormat.removeUnnecessaryCommas(tf_PricePerSquare.getText()));
+        if (tf_PricePerSquare.getText().isEmpty() || Double.valueOf(tf_PricePerSquare.getText()) < 0) {
+            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerSquare + "\"", ButtonType.OK).showAndWait();
+        } else {
+            this.pricePerSquare = Double.valueOf(tf_PricePerSquare.getText());
+        }
     }
 
     public Worth getWage() {

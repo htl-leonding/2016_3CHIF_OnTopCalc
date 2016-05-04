@@ -106,17 +106,17 @@ public class Assembling_CounterBattenController implements Observer, Initializab
             ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
         tf_profiHour.textProperty().addListener((observable, oldValue, newValue) -> {
-            setHour();
+            UtilityFormat.setWorthFromTextField(tf_profiHour, profiHour);
             calculate();
             ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
         tf_waste.textProperty().addListener((observable, oldValue, newValue) -> {
-            setWaste();
+            UtilityFormat.setWorthFromTextField(tf_waste, waste);
             calculate();
             ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
         tf_timeMontage.textProperty().addListener((observable, oldValue, newValue) -> {
-            setTime();
+            UtilityFormat.setWorthFromTextField(tf_timeMontage, timeMontage);
             calculate();
             ModifyController.getInstance().setAssembling_counterBattens(Boolean.TRUE);
         });
@@ -142,24 +142,14 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         return instance;
     }
 
-    public void setHour() {
-        profiHour.setWorth(tf_profiHour.getText().isEmpty() || !tf_profiHour.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_profiHour.getText().replace(',', '.')));
-    }
-
     public void setPrice() {
-        pricePerMeter = (tf_pricePerMeter.getText().isEmpty() || !tf_pricePerMeter.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pricePerMeter.getText().replace(',', '.')));
-    }
-
-    public void setWaste() {
-        waste.setWorth(tf_waste.getText().isEmpty() || !tf_waste.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_waste.getText().replace(',', '.')));
-    }
-
-    public void setTime() {
-        timeMontage.setWorth(tf_timeMontage.getText().isEmpty() || !tf_timeMontage.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_timeMontage.getText().replace(',', '.')));
+        tf_pricePerMeter.setText(tf_pricePerMeter.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_pricePerMeter.setText(UtilityFormat.removeUnnecessaryCommas(tf_pricePerMeter.getText()));
+        if (tf_pricePerMeter.getText().isEmpty() || Double.valueOf(tf_pricePerMeter.getText()) < 0) {
+            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerMeter + "\"", ButtonType.OK).showAndWait();
+        } else {
+            this.pricePerMeter = Double.valueOf(tf_pricePerMeter.getText());
+        }
     }
 
     public Component getComponent() {

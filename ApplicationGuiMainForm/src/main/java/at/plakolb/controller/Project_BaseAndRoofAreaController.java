@@ -176,9 +176,8 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         if (!isCalculating) {
             try {
                 isCalculating = true;
-                textField.setText(textField.getText().replaceAll(",", "."));
-                textField.setText(textField.getText().replaceAll("[^\\d.]", ""));
-
+                textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+                
                 if (textField.equals(tf_Angle)) {
                     if (parseDouble(textField.getText()) >= 90) {
                         textField.setText(textField.getText().substring(0, textField.getText().length() - 1));

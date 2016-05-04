@@ -6,6 +6,8 @@ import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
@@ -18,26 +20,26 @@ public class UtilityFormat {
 
     public static String worthWithTwoDecimalPlaces(double d) {
         if (d <= 0.001 && d != 0) {
-            return ("" + d).replace(".", ",");
+            return ("" + d).replaceAll(".", ",");
         }
         DecimalFormat twoDForm = new DecimalFormat("0.00");
-        return twoDForm.format(d).replace(",", ".");
+        return twoDForm.format(d).replaceAll(",", ".");
     }
 
     public static String worthWithThreeDecimalPlaces(double d) {
         DecimalFormat twoDForm = new DecimalFormat("0.000");
-        return twoDForm.format(d).replace(",", ".");
+        return twoDForm.format(d).replaceAll(",", ".");
     }
 
     public static String worthWithDecimalPattern(String pattern, double d) {
         if (d <= 0.001 && d != 0) {
-            return ("" + d).replace(",", ".");
+            return ("" + d).replaceAll(",", ".");
         }
         if (pattern == null) {
             return worthWithTwoDecimalPlaces(d);
         }
         DecimalFormat twoDForm = new DecimalFormat(pattern);
-        return twoDForm.format(d).replace(",", ".");
+        return twoDForm.format(d).replaceAll(",", ".");
     }
 
     public static String formatValueWithShortTerm(double worth, String shortTerm) {
@@ -132,6 +134,13 @@ public class UtilityFormat {
                 calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
     }
 
+    /**
+     * Parses a double into a formatted String, which has 2 decimals and fits
+     * into a table column.
+     *
+     * @param number
+     * @return
+     */
     public static String getStringForTableColumn(Double number) {
         if (number == null) {
             return "";
@@ -154,7 +163,7 @@ public class UtilityFormat {
     }
 
     public static void setCutTextForTextField(TextField textField, String original) {
-        original = original.replace("\\", "/");
+        original = original.replaceAll("\\", "/");
         textField.setTooltip(new Tooltip(original));
         Text text = new Text(original);
         text.setFont(textField.getFont());
@@ -171,5 +180,84 @@ public class UtilityFormat {
             }
         }
         textField.setText(text.getText());
+    }
+
+    /**
+     * Saves the number of a textfield into a worth object.
+     *
+     * @param textField
+     * @param worth
+     * @return
+     */
+    public static boolean setWorthFromTextField(TextField textField, Worth worth) {
+
+        try {
+            if (textField != null) {
+                textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+                textField.setText(removeUnnecessaryCommas(textField.getText()));
+
+                if (textField.getText().isEmpty()) {
+                    worth.setWorth(0);
+                } else {
+                    worth.setWorth(Double.parseDouble(textField.getText()));
+                }
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UtilityFormat.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Saves the price of a textfield into a double.
+     *
+     * @param textField
+     * @param doubleValue
+     * @return
+     */
+    public static double getPriceFromTextField(TextField textField, double doubleValue) {
+
+        try {
+            if (textField != null) {
+                textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+                textField.setText(removeUnnecessaryCommas(textField.getText()));
+
+                if (textField.getText().isEmpty()) {
+                    doubleValue = 0;
+                } else {
+                    doubleValue = Double.parseDouble(textField.getText());
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(UtilityFormat.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
+        return doubleValue;
+    }
+
+    /**
+     * Reduces the amount of commas to one.
+     *
+     * @param numberString
+     * @return
+     */
+    public static String removeUnnecessaryCommas(String numberString) {
+
+        String newString = numberString;
+
+        if ((numberString.length() - numberString.replace(".", "").length()) > 1) {
+            int index = numberString.lastIndexOf(".");
+
+            for (int i = 0; i < numberString.length(); i++) {
+                if (numberString.charAt(i) == '.' && i != index) {
+                    newString = newString.replaceFirst("\\.", "");
+                }
+            }
+        }
+        return newString;
     }
 }

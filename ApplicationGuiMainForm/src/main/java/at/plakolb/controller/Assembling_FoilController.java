@@ -96,26 +96,26 @@ public class Assembling_FoilController implements Initializable, Observer {
         assemblingCosts = new Worth(parameterController.findParameterPByShortTerm("KMF"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKF"));
 
-        tf_blend.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setAbatementPercent();
-            calculate();
-            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
-        });
-
-        tf_time.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setAssemblingDuration();
-            calculate();
-            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
-        });
-
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculate();
             ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
         });
 
+        tf_blend.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_blend, abatementPercent);
+            calculate();
+            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
+        });
+
+        tf_time.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_time, assemblingDuration);
+            calculate();
+            ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
+        });
+
         tf_workerCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setWorkerCosts();
+            UtilityFormat.setWorthFromTextField(tf_workerCosts, workerCosts);
             calculate();
             ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
         });
@@ -142,23 +142,13 @@ public class Assembling_FoilController implements Initializable, Observer {
     }
 
     public void setPricePerSquare() {
-        pricePerSquare = tf_price.getText().isEmpty() || !tf_price.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_price.getText().replace(',', '.'));
-    }
-
-    public void setAbatementPercent() {
-        abatementPercent.setWorth(tf_blend.getText().isEmpty() || !tf_blend.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_blend.getText().replace(',', '.')));
-    }
-
-    public void setWorkerCosts() {
-        workerCosts.setWorth(tf_workerCosts.getText().isEmpty() || !tf_workerCosts.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_workerCosts.getText().replace(',', '.')));
-    }
-
-    public void setAssemblingDuration() {
-        assemblingDuration.setWorth(tf_time.getText().isEmpty() || !tf_time.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_time.getText().replace(',', '.')));
+        tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_price.setText(UtilityFormat.removeUnnecessaryCommas(tf_price.getText()));
+        if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerSquare + "\"", ButtonType.OK).showAndWait();
+        } else {
+            this.pricePerSquare = Double.valueOf(tf_price.getText());
+        }
     }
 
     public Worth getWage() {
@@ -210,7 +200,7 @@ public class Assembling_FoilController implements Initializable, Observer {
             totalCosts = (worthController.findWorthByShortTermAndProjectId("GKF", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("GKF", project.getId()) : totalCosts;
 
-            lb_RoofArea.setText(UtilityFormat.worthWithTwoDecimalPlaces(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
+            lb_RoofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
             lb_blend.setText(UtilityFormat.getStringForLabel(abatementArea));
             lb_foil.setText(UtilityFormat.getStringForLabel(foil));
             lb_montageCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
@@ -220,7 +210,7 @@ public class Assembling_FoilController implements Initializable, Observer {
             tf_blend.setText(UtilityFormat.getStringForTextField(abatementPercent));
             tf_time.setText(UtilityFormat.getStringForTextField(assemblingDuration));
             tf_workerCosts.setText(UtilityFormat.getStringForTextField(workerCosts));
-            
+
             ModifyController.getInstance().setAssembling_foil(Boolean.FALSE);
         }
     }

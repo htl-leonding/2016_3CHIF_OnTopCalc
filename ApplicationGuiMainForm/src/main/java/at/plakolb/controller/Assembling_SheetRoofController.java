@@ -134,7 +134,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
 
     private void setWastePercent() {
         Assembling_BattensOrFullFormworkController.getInstance().setWastePercent(tf_wastePercent.getText().isEmpty() || !tf_wastePercent.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_wastePercent.getText().replace(',', '.')));
+                ? 0 : Double.valueOf(tf_wastePercent.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
     }
 
     public Worth getFormwork() {
