@@ -24,11 +24,11 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
     private static Stage rootStage;
-    
-    public static Stage getStage(){
+
+    public static Stage getStage() {
         return rootStage;
     }
-    
+
     /**
      * @param stage
      * @throws Exception
@@ -36,10 +36,10 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         rootStage = stage;
-        
+
         //TEST DATA
         insertTestData();
-        
+
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
 
         Scene scene = new Scene(root);
@@ -49,7 +49,6 @@ public class MainApp extends Application {
 //        } else {
 //            scene.getStylesheets().add("/styles/Style_MacOS.css");
 //        }
-
         scene.getStylesheets().add("/styles/main.css");
 
         stage.setTitle("OnTopCalc");

@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
@@ -219,7 +220,8 @@ public class ProductListController implements Initializable {
                                         new ProductController().destroy(tv_Products.getSelectionModel().getSelectedItem().getId());
                                         refreshTable();
                                     }
-                                } catch (Exception exception) {
+                                } catch (Exception ex) {
+                                    Logging.getLogger().log(Level.SEVERE, "", ex);
                                 }
                             });
                             setGraphic(delete);
@@ -260,6 +262,7 @@ public class ProductListController implements Initializable {
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
         } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 
@@ -318,7 +321,7 @@ public class ProductListController implements Initializable {
                         productController.edit(product);
                     }
                 } catch (Exception ex) {
-                    Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logging.getLogger().log(Level.SEVERE, "", ex);
                 }
             });
         }

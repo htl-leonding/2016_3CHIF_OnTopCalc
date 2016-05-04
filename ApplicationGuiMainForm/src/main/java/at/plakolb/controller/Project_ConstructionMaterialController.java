@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.AssemblyController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ProductController;
@@ -16,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -140,7 +142,8 @@ public class Project_ConstructionMaterialController implements Initializable {
                                             new ComponentController().destroy(tv_Assembly.getSelectionModel().getSelectedItem().getId());
                                         }
                                         ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
-                                    } catch (Exception e) {
+                                    } catch (Exception ex) {
+                                        Logging.getLogger().log(Level.SEVERE, "", ex);
                                     } finally {
                                         refreshListView();
                                     }
@@ -251,7 +254,7 @@ public class Project_ConstructionMaterialController implements Initializable {
             if (amount < 0 || price < 0) {
                 errorMessage += "Negative Zahlen sind nicht erlaubt.\n";
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ex) {
             errorMessage += "Die eingegebenen Zahlen sind nicht gültig.\n";
         }
 
@@ -314,7 +317,8 @@ public class Project_ConstructionMaterialController implements Initializable {
             }
 
             ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         } finally {
             refreshListView();
         }

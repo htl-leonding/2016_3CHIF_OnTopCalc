@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -235,6 +237,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
 
@@ -296,7 +299,8 @@ public class Assembling_CounterBattenController implements Observer, Initializab
                 worthController.edit(waste);
                 worthController.edit(totalCost);
                 componentController.edit(component);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
     }

@@ -94,7 +94,7 @@ public class ProductValueCell extends TableCell<Product, String> {
                         if (!getTableColumn().getId().equals("tc_PriceUnit") && UtilityFormat.getStringForTableColumn(number).equals("0")) {
                             textField.setText("");
                         }
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException ex) {
                         cancelEdit();
                         new Alert(Alert.AlertType.ERROR, "Die eingegbene Zahl ist nicht im richtigen Format.").showAndWait();
                         return;

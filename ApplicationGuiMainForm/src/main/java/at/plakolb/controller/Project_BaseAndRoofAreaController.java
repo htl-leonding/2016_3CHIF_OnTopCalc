@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Worth;
@@ -12,6 +13,7 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -90,7 +92,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         ParameterController parameterController = new ParameterController();
         length = new Worth(parameterController.findParameterPByShortTerm("l"));
         width = new Worth(parameterController.findParameterPByShortTerm("b"));
@@ -302,7 +304,8 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 worthController.edit(ridge);
                 worthController.edit(gableRight);
                 worthController.edit(gableLeft);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
     }

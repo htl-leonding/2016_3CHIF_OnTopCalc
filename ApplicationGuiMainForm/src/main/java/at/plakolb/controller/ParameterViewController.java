@@ -4,10 +4,10 @@ import at.plakolb.edit.ParameterCell;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.entity.ParameterP;
 import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -55,7 +55,7 @@ public class ParameterViewController implements Initializable {
 
         tc_DefaultValue.setCellValueFactory((TableColumn.CellDataFeatures<ParameterP, String> param) -> {
             if (param.getValue().getDefaultValue() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getDefaultValue()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForLabel(param.getValue().getDefaultValue()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -64,6 +64,7 @@ public class ParameterViewController implements Initializable {
         tc_DefaultValue.setOnEditCommit((CellEditEvent<ParameterP, String> event) -> {
             ParameterP parameter = ((ParameterP) event.getTableView().getItems().get(event.getTablePosition().getRow()));
             parameter.setDefaultValue(Double.parseDouble(event.getNewValue()));
+            refreshTable();
         });
 
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));

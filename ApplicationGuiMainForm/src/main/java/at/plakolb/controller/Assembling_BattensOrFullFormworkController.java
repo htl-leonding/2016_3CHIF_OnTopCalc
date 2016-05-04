@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -139,7 +140,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             tiledRoof = (Node) FXMLLoader.load(getClass().getResource("/fxml/Assembling_TiledRoof.fxml"));
             sheetRoof = (Node) FXMLLoader.load(getClass().getResource("/fxml/Assembling_SheetRoof.fxml"));
         } catch (IOException ex) {
-            Logger.getLogger(Assembling_BattensOrFullFormworkController.class.getName()).log(Level.SEVERE, null, ex);
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
 
         //Add change listener to change the fxml file of the content pane if the selection has changed.
@@ -297,6 +298,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Logging.getLogger().log(Level.SEVERE, "Assembling_BattensOrFullFormworkController: caluclate methode didn't work.", ex);
             }
         }
 
@@ -384,7 +386,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 worthController.edit(wastePercent);
                 componentController.edit(component);
             } catch (Exception ex) {
-                Logger.getLogger(Assembling_BattensOrFullFormworkController.class.getName()).log(Level.SEVERE, null, ex);
+                 Logging.getLogger().log(Level.SEVERE, "Assembling_BattensOrFullFormworkController: perist method didn't work.", ex);
             }
         }
     }

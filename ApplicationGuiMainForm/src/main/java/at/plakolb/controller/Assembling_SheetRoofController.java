@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -78,7 +79,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
                 wc.edit(waste);
                 wc.edit(formwork);
             } catch (Exception ex) {
-                Logger.getLogger(Assembling_SheetRoofController.class.getName()).log(Level.SEVERE, null, ex);
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
     }
@@ -115,6 +116,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
 

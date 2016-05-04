@@ -1,9 +1,11 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,8 +50,10 @@ public class SideViewController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
-        } catch (IOException e) {
-        } catch (Exception e) {
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 

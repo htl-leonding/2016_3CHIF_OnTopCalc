@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.MainApp;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -191,6 +193,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                     openedProject.setRoofForm(informations.getRoofForm());
                     projectController.edit(openedProject);
                 } catch (NonexistentEntityException ex) {
+                    Logging.getLogger().log(Level.SEVERE, "", ex);
                 }
             } else {
                 openedProject.setClient(client);

@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.entity.Component;
 import java.net.URL;
@@ -8,6 +9,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,7 +65,7 @@ public class MaterialModifierController implements Initializable {
                 }
                 
                 Integer.parseInt(tf_Count.getText());
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ex) {
                 tf_Count.setText("1");
             }
             if (tf_Count.getText().isEmpty() || tf_Count.getText().equals("0") || tf_Count.getText().contains("-")) {
@@ -129,8 +131,10 @@ public class MaterialModifierController implements Initializable {
                 } else {
                     tf_TotalPrice.setText("0");
                 }
-            } catch (NumberFormatException e) {
-            } catch (Exception e){
+            } catch (NumberFormatException ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
+            } catch (Exception ex){
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
 
@@ -144,8 +148,10 @@ public class MaterialModifierController implements Initializable {
                 } else {
                     tf_TotalPrice.setText("0");
                 }
-            } catch (NumberFormatException e) {
-            } catch (Exception e){
+            } catch (NumberFormatException ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
+            } catch (Exception ex){
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
 
@@ -159,8 +165,10 @@ public class MaterialModifierController implements Initializable {
                 } else {
                     tf_PriceUnit.setText("0");
                 }
-            } catch (NumberFormatException e) {
-            } catch (Exception e){
+            } catch (NumberFormatException ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
+            } catch (Exception ex){
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
     }
@@ -188,7 +196,8 @@ public class MaterialModifierController implements Initializable {
             openedComponent.setTailoringHours(tryParseDouble(tf_CuttingTime.getText()));
             openedComponent.setTailoringPricePerHour(tryParseDouble(tf_CuttingPricePerHour.getText()));
             new ComponentController().edit(openedComponent);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
 
         Project_ConstructionMaterialListController.getInstance().refreshTable();
@@ -213,7 +222,7 @@ public class MaterialModifierController implements Initializable {
     private Double tryParseDouble(String numberString) {
         try {
             return Double.parseDouble(numberString);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ex) {
             return null;
         }
     }

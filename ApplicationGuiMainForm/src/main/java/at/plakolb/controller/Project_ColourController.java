@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -18,6 +19,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -293,7 +295,8 @@ public class Project_ColourController implements Initializable {
                 worthController.edit(paintLiter);
                 worthController.edit(totalCost);
                 componentController.edit(component);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
     }

@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -11,6 +12,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -172,7 +174,8 @@ public class Project_TransportController extends java.util.Observable implements
                 worthController.edit(transportCosts);
                 worthController.edit(abidanceCosts);
                 worthController.edit(totalCosts);
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
 
@@ -191,7 +194,7 @@ public class Project_TransportController extends java.util.Observable implements
             lb_PriceComplete.setText(decimalFormat.format(totalCosts.getWorth()) + " €");
             setValuesChanged(true);
         } catch (Exception ex) {
-            new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 }

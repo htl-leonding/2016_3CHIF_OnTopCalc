@@ -1,11 +1,13 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
@@ -126,7 +128,8 @@ public class ClientModifierController implements Initializable {
             openedClient.setTelephoneNumber(tf_Phonenumber.getText());
             openedClient.setEmail(tf_Email.getText());
             new ClientController().edit(openedClient);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
 
         ClientsController.getInstance().refreshTable();

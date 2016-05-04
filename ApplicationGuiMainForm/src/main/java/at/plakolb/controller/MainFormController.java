@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.settings.SettingsController;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -97,8 +99,10 @@ public class MainFormController implements Initializable {
         try {
             mainPane.getChildren().clear();
             mainPane.getChildren().add((Node) FXMLLoader.load(getClass().getResource("/fxml/" + fxmlURL)));
-        } catch (IOException e) {
-        } catch (Exception e) {
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 
@@ -114,8 +118,10 @@ public class MainFormController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
-        } catch (IOException e) {
-        } catch (Exception e) {
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 
@@ -161,8 +167,10 @@ public class MainFormController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
-        } catch (IOException e) {
-        } catch (Exception e) {
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 }

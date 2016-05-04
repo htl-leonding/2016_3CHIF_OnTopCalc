@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -238,8 +240,10 @@ public class Project_InformationsController implements Initializable, Observer {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
-        } catch (IOException e) {
-        } catch (Exception e) {
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
         ClientsSmallController.getInstance().addObserver(this);
     }

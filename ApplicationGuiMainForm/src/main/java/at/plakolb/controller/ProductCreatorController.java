@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.db.controller.UnitController;
 import at.plakolb.calculationlogic.entity.Product;
@@ -8,6 +9,7 @@ import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -112,6 +114,7 @@ public class ProductCreatorController implements Initializable {
                 new ProductController().create(product);
 
             } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
 
             ProductListController.getInstance().refreshTable();
@@ -165,7 +168,7 @@ public class ProductCreatorController implements Initializable {
         try {
             numberString = numberString.replace(",", ".");
             return Double.parseDouble(numberString);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ex) {
             return null;
         }
     }

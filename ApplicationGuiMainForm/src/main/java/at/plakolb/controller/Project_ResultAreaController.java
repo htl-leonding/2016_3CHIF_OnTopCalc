@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -241,10 +242,10 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
             }
 
-        } catch (IOException exception) {
-            System.out.println("Exception Message: " + exception.getMessage());
-        } catch (Exception exception) {
-            System.out.println("Exception Message: " + exception.getMessage());
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
 
     }
@@ -274,7 +275,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
                     worthController.edit(worthRoofOverhang);
                     worthController.edit(worthRoofAreaWithRoofOverhang);
                 } catch (Exception ex) {
-                    Logger.getLogger(Project_ResultAreaController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logging.getLogger().log(Level.SEVERE, "", ex);
                 }
             }
         }

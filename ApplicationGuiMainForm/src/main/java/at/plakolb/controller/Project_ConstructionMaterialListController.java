@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -19,8 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -209,7 +210,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                                 new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
                                             }
                                             ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
-                                        } catch (Exception e) {
+                                        } catch (Exception ex) {
+                                            Logging.getLogger().log(Level.SEVERE, "", ex);
                                         } finally {
                                             refreshTable();
                                         }
@@ -226,7 +228,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                                 new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
                                             }
                                             ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
-                                        } catch (Exception e) {
+                                        } catch (Exception ex) {
+                                            Logging.getLogger().log(Level.SEVERE, "", ex);
                                         } finally {
                                             refreshTable();
                                         }
@@ -265,6 +268,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                     stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                     stage.show();
                 } catch (IOException ex) {
+                    Logging.getLogger().log(Level.SEVERE, "", ex);
                 }
                 MaterialModifierController.getInstance().loadProductIntoModifier(tv_Materials.getSelectionModel().getSelectedItem());
                 ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
@@ -329,7 +333,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                 }
                 ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ex) {
             new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur Zahlen enthalten").showAndWait();
         }
 

@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -272,6 +273,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
 
@@ -322,7 +324,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 worthController.create(totalCosts);
                 componentController.create(component);
             } else {
-                try {
                     worthController.edit(blend);
                     worthController.edit(time);
                     worthController.edit(formwork);
@@ -332,11 +333,9 @@ public class Assembling_FormworkController implements Initializable, Observer {
                     worthController.edit(costsMontage);
                     worthController.edit(totalCosts);
                     componentController.edit(component);
-                } catch (Exception e) {
-                }
             }
         } catch (Exception ex) {
-            Logger.getLogger(Assembling_FormworkController.class.getName()).log(Level.SEVERE, null, ex);
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 

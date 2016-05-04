@@ -1,5 +1,6 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
@@ -140,8 +141,8 @@ public class AllProjectsController implements Initializable {
                                     stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                                     PrintProjectController.getInstance().SetProject(p);
                                     stage.show();
-                                } catch (IOException e) {
-                                } catch (Exception e) {
+                                } catch (IOException ex) {
+                                    Logging.getLogger().log(Level.SEVERE, "Couldn't open the  printView.", ex);
                                 }
                             });
                             costingP.setOnMouseClicked((MouseEvent event) -> {
@@ -179,7 +180,7 @@ public class AllProjectsController implements Initializable {
                                     c.sendToRecyclebin(p.getId());
                                     tv_ProjectList.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
                                 } catch (NonexistentEntityException ex) {
-                                    Logger.getLogger(AllProjectsController.class.getName()).log(Level.SEVERE, null, ex);
+                                    Logging.getLogger().log(Level.SEVERE, "Couldn't find project.", ex);
                                 }
                             });
 

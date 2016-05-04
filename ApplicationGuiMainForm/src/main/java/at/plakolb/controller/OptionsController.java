@@ -1,12 +1,12 @@
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.util.BackUpDatabase;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.settings.SettingsController;
-import com.sun.scenario.Settings;
 import java.io.File;
 import java.net.URL;
 import java.util.Date;
@@ -35,8 +35,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
@@ -139,7 +137,7 @@ public class OptionsController implements Initializable, Observer {
                                             new ProjectController().edit(project);
                                             updateData();
                                         } catch (NonexistentEntityException ex) {
-                                            Logger.getLogger(OptionsController.class.getName()).log(Level.SEVERE, null, ex);
+                                            Logging.getLogger().log(Level.SEVERE, "", ex);
                                         }
                                         updateData();
                                     });
@@ -221,7 +219,8 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultBackupDirectory.setText("");
                     tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
 
@@ -241,7 +240,8 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultPDFDirectory.setText("");
                     tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
         tf_defaultBackupDirectory.setOnMouseClicked((event) -> {
@@ -261,7 +261,8 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultBackupDirectory.setText("");
                     tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
 
@@ -281,7 +282,8 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultPDFDirectory.setText("");
                     tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
-            } catch (Exception e) {
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
 

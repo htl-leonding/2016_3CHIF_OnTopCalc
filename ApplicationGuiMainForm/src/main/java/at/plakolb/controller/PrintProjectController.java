@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.util.Print;
@@ -32,7 +33,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -163,7 +163,8 @@ public class PrintProjectController implements Initializable {
                 path = p;
             }
             UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         } finally {
             refreshPrintAbility();
         }
@@ -210,12 +211,12 @@ public class PrintProjectController implements Initializable {
                 try {
                     print.print(printService);
                 } catch (PrinterException | IOException ex) {
-                    Logger.getLogger(PrintProjectController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logging.getLogger().log(Level.SEVERE, "", ex);
                     new Alert(Alert.AlertType.ERROR, ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
                 }
             }
         } catch (DocumentException | FileNotFoundException ex) {
-            Logger.getLogger(PrintProjectController.class.getName()).log(Level.SEVERE, null, ex);
+            Logging.getLogger().log(Level.SEVERE, "", ex);
         }
     }
 
@@ -225,7 +226,7 @@ public class PrintProjectController implements Initializable {
             try {
                 Desktop.getDesktop().open(new File(path));
             } catch (IOException ex) {
-                Logger.getLogger(PrintProjectController.class.getName()).log(Level.SEVERE, null, ex);
+                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         }
     }
