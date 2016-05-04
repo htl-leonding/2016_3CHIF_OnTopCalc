@@ -6,6 +6,8 @@ import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -101,23 +103,34 @@ public class ClientModifierController implements Initializable {
 
         if (tf_Name.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Namen ein.").showAndWait();
-        } else if (!tf_Email.getText().isEmpty() && !tf_Email.getText().contains("@")) {
-            new Alert(Alert.AlertType.ERROR, "Die E-Mail Adresse benötigt ein @-Zeichen.").showAndWait();
-        } else {
-            try {
-                openedClient.setName(tf_Name.getText());
-                openedClient.setStreet(tf_Street.getText());
-                openedClient.setZipCode(tf_Zipcode.getText());
-                openedClient.setCity(tf_City.getText());
-                openedClient.setTelephoneNumber(tf_Phonenumber.getText());
-                openedClient.setEmail(tf_Email.getText());
-                new ClientController().edit(openedClient);
-            } catch (Exception e) {
-            }
+        } else if (!tf_Email.getText().isEmpty()) {
+            String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+            Matcher matcher = Pattern.compile(regex).matcher(tf_Email.getText());
 
-            ClientsController.getInstance().refreshTable();
-            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
+            if (!matcher.matches()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Die eingegeben E-Mail Adresse ist nicht korrekt.\nMöchten Sie trotzdem fortfahren.",
+                        ButtonType.YES, ButtonType.CANCEL);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.CANCEL) {
+                    return;
+                }
+            }
         }
+
+        try {
+            openedClient.setName(tf_Name.getText());
+            openedClient.setStreet(tf_Street.getText());
+            openedClient.setZipCode(tf_Zipcode.getText());
+            openedClient.setCity(tf_City.getText());
+            openedClient.setTelephoneNumber(tf_Phonenumber.getText());
+            openedClient.setEmail(tf_Email.getText());
+            new ClientController().edit(openedClient);
+        } catch (Exception e) {
+        }
+
+        ClientsController.getInstance().refreshTable();
+        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
 
     /**
@@ -129,5 +142,4 @@ public class ClientModifierController implements Initializable {
     private void cancel(ActionEvent event) {
         ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
-
 }

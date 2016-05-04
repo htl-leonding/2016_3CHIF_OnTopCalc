@@ -177,6 +177,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
             try {
                 isCalculating = true;
                 textField.setText(textField.getText().replaceAll(",", "."));
+                textField.setText(textField.getText().replaceAll("[^\\d.]", ""));
 
                 if (textField.equals(tf_Angle)) {
                     if (parseDouble(textField.getText()) >= 90) {
@@ -201,8 +202,8 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 Project_ResultAreaController.getInstance().calcArea();
 
             } catch (NumberFormatException e) {
-                new Alert(Alert.AlertType.ERROR, "Geben Sie bitte eine Zahl ein.\n(Eingegebens Zeichen: " + textField.getText().charAt(textField.getText().length() - 1) + ")").showAndWait();
-                textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
+                new Alert(Alert.AlertType.ERROR, "Fehlerhafte Eingabe").showAndWait();
+                textField.setText("");
             } finally {
                 ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
                 isCalculating = false;

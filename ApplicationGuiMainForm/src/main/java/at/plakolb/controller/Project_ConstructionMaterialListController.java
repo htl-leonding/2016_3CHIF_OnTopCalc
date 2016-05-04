@@ -1,7 +1,6 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.db.controller.AssemblyController;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -298,7 +297,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         try {
             if (tf_Amount.getText().isEmpty() || tf_Amount.getText().equals("0") || tf_Amount.getText().contains("-")) {
-                new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine Anzahl an die größer als null ist.").showAndWait();
+                new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine gültige Zahl ein, die größer als 0 ist.").showAndWait();
             } else {
                 Component component = new Component(product.getFullName(),
                         product.getWidthProduct(),

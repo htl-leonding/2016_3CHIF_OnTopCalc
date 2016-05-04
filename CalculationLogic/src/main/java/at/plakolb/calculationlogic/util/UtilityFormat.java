@@ -131,12 +131,28 @@ public class UtilityFormat {
         return String.format("%02d.%02d.%d", calendar.get(Calendar.DATE),
                 calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
     }
-    
+
+    public static String getStringForTableColumn(Double number) {
+        if (number == null) {
+            return "";
+        } else {
+            if (number.isNaN()) {
+                return "";
+            }
+            if (number.isInfinite()) {
+                number = 0.0;
+            }
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+            return String.valueOf(decimalFormat.format(number));
+        }
+    }
+
     public static String twoDecimalPlaces(double decimal) {
         DecimalFormat twoDForm = new DecimalFormat("0.00");
         return twoDForm.format(decimal);
     }
-    
+
     public static void setCutTextForTextField(TextField textField, String original) {
         original = original.replace("\\", "/");
         textField.setTooltip(new Tooltip(original));
@@ -144,7 +160,7 @@ public class UtilityFormat {
         text.setFont(textField.getFont());
         String[] splittedPath = original.split("/");
 
-        double width = textField.getWidth()==0?textField.getPrefWidth():textField.getWidth();
+        double width = textField.getWidth() == 0 ? textField.getPrefWidth() : textField.getWidth();
         if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
             text.setText(splittedPath.length > 3 ? String.format("%s/%s/.../%s",
                     splittedPath[0],
