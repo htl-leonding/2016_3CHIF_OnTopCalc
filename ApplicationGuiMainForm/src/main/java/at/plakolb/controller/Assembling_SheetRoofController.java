@@ -55,7 +55,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         formwork = new Worth(parameterController.findParameterPByShortTerm("VollS"));
 
         tf_wastePercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setWastePercent();
+            UtilityFormat.setWorthFromTextField(tf_wastePercent, waste);
             calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
@@ -130,11 +130,6 @@ public class Assembling_SheetRoofController extends Observable implements Initia
     public void update(Observable o, Object arg) {
         lb_roofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getLedgeAndRoofAreaWorth()));
         calculate();
-    }
-
-    private void setWastePercent() {
-        Assembling_BattensOrFullFormworkController.getInstance().setWastePercent(tf_wastePercent.getText().isEmpty() || !tf_wastePercent.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_wastePercent.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
     }
 
     public Worth getFormwork() {

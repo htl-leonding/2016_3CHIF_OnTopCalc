@@ -145,7 +145,10 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     public void setPricePerSquare() {
         tf_PricePerSquare.setText(tf_PricePerSquare.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
         tf_PricePerSquare.setText(UtilityFormat.removeUnnecessaryCommas(tf_PricePerSquare.getText()));
-        if (tf_PricePerSquare.getText().isEmpty() || Double.valueOf(tf_PricePerSquare.getText()) < 0) {
+
+        if (tf_PricePerSquare.getText().isEmpty()) {
+            this.pricePerSquare = 0;
+        } else if (tf_PricePerSquare.getText().isEmpty() || Double.valueOf(tf_PricePerSquare.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerSquare + "\"", ButtonType.OK).showAndWait();
         } else {
             this.pricePerSquare = Double.valueOf(tf_PricePerSquare.getText());

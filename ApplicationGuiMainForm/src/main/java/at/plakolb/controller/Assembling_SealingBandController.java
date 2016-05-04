@@ -109,7 +109,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
         });
 
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            UtilityFormat.setWorthFromTextField(tf_priceLinearMeter, workerCosts);
+            UtilityFormat.setWorthFromTextField(tf_price, workerCosts);
             calculate();
             ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
@@ -153,12 +153,15 @@ public class Assembling_SealingBandController implements Initializable, Observer
     }
 
     private void setPricePerLinearMeter() {
-        tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
-        tf_price.setText(UtilityFormat.removeUnnecessaryCommas(tf_price.getText()));
-        if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+        tf_priceLinearMeter.setText(tf_priceLinearMeter.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_priceLinearMeter.setText(UtilityFormat.removeUnnecessaryCommas(tf_priceLinearMeter.getText()));
+
+        if (tf_priceLinearMeter.getText().isEmpty()) {
+            this.price = 0;
+        } else if (tf_priceLinearMeter.getText().isEmpty() || Double.valueOf(tf_priceLinearMeter.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
         } else {
-            this.price = Double.valueOf(tf_price.getText());
+            this.price = Double.valueOf(tf_priceLinearMeter.getText());
         }
     }
 

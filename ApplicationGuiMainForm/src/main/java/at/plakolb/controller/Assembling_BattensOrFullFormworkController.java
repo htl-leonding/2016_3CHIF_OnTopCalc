@@ -100,21 +100,24 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         productCosts = new Worth(parameterController.findParameterPByShortTerm("KPLatVoll"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKLatVoll"));
 
-        tf_assemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setAbatementDuration();
-            calculate();
-            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
-        });
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPrice();
             calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
-        tf_workCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setWorkCosts();
+
+        tf_assemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_assemblingDuration, assemblingDuration);
             calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
+
+        tf_workCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_workCosts, workCosts);
+            calculate();
+            ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
+        });
+
         cb_product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             if (newValue != null) {
                 tf_price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
@@ -181,24 +184,17 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         return instance;
     }
 
-    private void setAbatementDuration() {
-        tf_assemblingDuration.setText(tf_assemblingDuration.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
-        assemblingDuration.setWorth(tf_assemblingDuration.getText().isEmpty() || !tf_assemblingDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_assemblingDuration.getText()));
-    }
-
     private void setPrice() {
         tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
-        if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+        tf_price.setText(UtilityFormat.removeUnnecessaryCommas(tf_price.getText()));
+
+        if (tf_price.getText().isEmpty()) {
+            this.price = 0;
+        } else if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
         } else {
             this.price = Double.valueOf(tf_price.getText());
         }
-    }
-
-    private void setWorkCosts() {
-        workCosts.setWorth(tf_workCosts.getText().isEmpty() || !tf_workCosts.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_workCosts.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
     }
 
     @Override

@@ -78,23 +78,23 @@ public class Project_TransportController extends java.util.Observable implements
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GPT"));
 
         tf_pkwMoney.textProperty().addListener((observable, oldValue, newValue) -> {
-            setKilometerAllowance();
+            UtilityFormat.setWorthFromTextField(tf_pkwMoney, kilometerAllowance);
             calcTransportCosts();
         });
         tf_pkwDistance.textProperty().addListener((observable, oldValue, newValue) -> {
-            setDistance();
+             UtilityFormat.setWorthFromTextField(tf_pkwDistance, distance);
             calcTransportCosts();
         });
         tf_pkwDays.textProperty().addListener((observable, oldValue, newValue) -> {
-            setDays();
+             UtilityFormat.setWorthFromTextField(tf_pkwDays, days);
             calcTransportCosts();
         });
         tf_lkwDuration.textProperty().addListener((observable, oldValue, newValue) -> {
-            setDuration();
+             UtilityFormat.setWorthFromTextField(tf_lkwDuration, duration);
             calcTransportCosts();
         });
         tf_lkwPrice.textProperty().addListener((observable, oldValue, newValue) -> {
-            setPrice();
+             UtilityFormat.setWorthFromTextField(tf_lkwPrice, pricePerHour);
             calcTransportCosts();
         });
 
@@ -110,31 +110,6 @@ public class Project_TransportController extends java.util.Observable implements
 
     public static void setValuesChanged(boolean valuesChanged) {
         ModifyController.getInstance().setProject_transport(valuesChanged);
-    }
-
-    public void setPrice() {
-        pricePerHour.setWorth(tf_lkwPrice.getText().isEmpty() || !tf_lkwPrice.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwPrice.getText().replace(',', '.')));
-    }
-
-    public void setKilometerAllowance() {
-        kilometerAllowance.setWorth(tf_pkwMoney.getText().isEmpty() || !tf_pkwMoney.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwMoney.getText().replace(',', '.')));
-    }
-
-    public void setDistance() {
-        distance.setWorth(tf_pkwDistance.getText().isEmpty() || !tf_pkwDistance.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDistance.getText().replace(',', '.')));
-    }
-
-    public void setDuration() {
-        duration.setWorth(tf_lkwDuration.getText().isEmpty() || !tf_lkwDuration.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_lkwDuration.getText().replace(',', '.')));
-    }
-
-    public void setDays() {
-        days.setWorth(tf_pkwDays.getText().isEmpty() || !tf_pkwDays.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_pkwDays.getText().replace(',', '.')));
     }
     
     public Worth getTotalCosts(){

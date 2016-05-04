@@ -24,9 +24,11 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
     private static Stage rootStage;
+    
     public static Stage getStage(){
         return rootStage;
     }
+    
     /**
      * @param stage
      * @throws Exception

@@ -90,6 +90,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         ParameterController parameterController = new ParameterController();
         length = new Worth(parameterController.findParameterPByShortTerm("l"));
         width = new Worth(parameterController.findParameterPByShortTerm("b"));
@@ -168,7 +169,41 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     }
 
     /**
-     * Calcuates all roof areas.
+     * Loads all existing worth objects from the database into the view.
+     */
+    public void loadValuesFromDataBase() {
+        long projectId = ProjectViewController.getOpenedProject().getId();
+        WorthController worthController = new WorthController();
+
+        int index = Project_ResultAreaController.getInstance().getIndex(getID());
+        length = (worthController.findWorthByShortTermAndProjectId("l" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("l" + index, projectId) : length;
+        width = (worthController.findWorthByShortTermAndProjectId("b" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("b" + index, projectId) : width;
+        baseArea = (worthController.findWorthByShortTermAndProjectId("A" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("A" + index, projectId) : baseArea;
+        angle = (worthController.findWorthByShortTermAndProjectId("N" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("N" + index, projectId) : angle;
+        roofArea = (worthController.findWorthByShortTermAndProjectId("D" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("D" + index, projectId) : roofArea;
+        eaves = (worthController.findWorthByShortTermAndProjectId("dv" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dv" + index, projectId) : eaves;
+        ridge = (worthController.findWorthByShortTermAndProjectId("dh" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dh" + index, projectId) : ridge;
+        gableRight = (worthController.findWorthByShortTermAndProjectId("dr" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dr" + index, projectId) : gableRight;
+        gableLeft = (worthController.findWorthByShortTermAndProjectId("dl" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dl" + index, projectId) : gableLeft;
+        ledge = (worthController.findWorthByShortTermAndProjectId("DV" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("DV" + index, projectId) : ledge;
+        ledgeAndRoofArea = (worthController.findWorthByShortTermAndProjectId("DF" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("DF" + index, projectId) : ledgeAndRoofArea;
+
+        tf_Length.setText(UtilityFormat.getStringForTextField(length));
+        tf_Width.setText(UtilityFormat.getStringForTextField(width));
+        lb_BaseArea.setText(UtilityFormat.getStringForLabel(baseArea));
+        tf_Angle.setText(UtilityFormat.getStringForTextField(angle));
+        lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea));
+        tf_Eaves.setText(UtilityFormat.getStringForTextField(eaves));
+        tf_Ridge.setText(UtilityFormat.getStringForTextField(ridge));
+        tf_GableRight.setText(UtilityFormat.getStringForTextField(gableRight));
+        tf_GableLeft.setText(UtilityFormat.getStringForTextField(gableLeft));
+        lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge));
+        lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea));
+    }
+
+    /**
+     * Transforms the textfield String into a calculable number and saves it
+     * into the worth Object. After that, all areas gets calclutated.
      *
      * @param event
      */
@@ -177,7 +212,8 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
             try {
                 isCalculating = true;
                 textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
-                
+                textField.setText(UtilityFormat.removeUnnecessaryCommas(textField.getText()));
+
                 if (textField.equals(tf_Angle)) {
                     if (parseDouble(textField.getText()) >= 90) {
                         textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
@@ -211,7 +247,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     }
 
     /**
-     * Gets the total areas from the ResultAreaController.
+     * Returns the total areas from the ResultAreaController.
      *
      * @param o
      * @param arg
@@ -224,37 +260,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         lb_TotalLedgeAndRoofArea.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getLedgeAndRoofArea()) + " m²");
     }
 
-    public void loadValuesFromDataBase() {
-        long projectId = ProjectViewController.getOpenedProject().getId();
-        WorthController worthController = new WorthController();
-
-        int index = Project_ResultAreaController.getInstance().getIndex(getID());
-        length = (worthController.findWorthByShortTermAndProjectId("l" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("l" + index, projectId) : length;
-        width = (worthController.findWorthByShortTermAndProjectId("b" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("b" + index, projectId) : width;
-        baseArea = (worthController.findWorthByShortTermAndProjectId("A" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("A" + index, projectId) : baseArea;
-        angle = (worthController.findWorthByShortTermAndProjectId("N" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("N" + index, projectId) : angle;
-        roofArea = (worthController.findWorthByShortTermAndProjectId("D" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("D" + index, projectId) : roofArea;
-        eaves = (worthController.findWorthByShortTermAndProjectId("dv" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dv" + index, projectId) : eaves;
-        ridge = (worthController.findWorthByShortTermAndProjectId("dh" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dh" + index, projectId) : ridge;
-        gableRight = (worthController.findWorthByShortTermAndProjectId("dr" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dr" + index, projectId) : gableRight;
-        gableLeft = (worthController.findWorthByShortTermAndProjectId("dl" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("dl" + index, projectId) : gableLeft;
-        ledge = (worthController.findWorthByShortTermAndProjectId("DV" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("DV" + index, projectId) : ledge;
-        ledgeAndRoofArea = (worthController.findWorthByShortTermAndProjectId("DF" + index, projectId) != null) ? worthController.findWorthByShortTermAndProjectId("DF" + index, projectId) : ledgeAndRoofArea;
-
-        
-        
-        tf_Length.setText(UtilityFormat.getStringForTextField(length));
-        tf_Width.setText(UtilityFormat.getStringForTextField(width));
-        lb_BaseArea.setText(UtilityFormat.getStringForLabel(baseArea));
-        tf_Angle.setText(UtilityFormat.getStringForTextField(angle));
-        lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea));
-        tf_Eaves.setText(UtilityFormat.getStringForTextField(eaves));
-        tf_Ridge.setText(UtilityFormat.getStringForTextField(ridge));
-        tf_GableRight.setText(UtilityFormat.getStringForTextField(gableRight));
-        tf_GableLeft.setText(UtilityFormat.getStringForTextField(gableLeft));
-        lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge));
-        lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea));   
-    }
     /**
      * Persists the calculated Values to the database.
      */
@@ -264,13 +269,13 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
 
         int index = Project_ResultAreaController.getInstance().getIndex(getID());
 
-        length.setShortTerm(length.getParameter().getShortTerm()+ index);
-        width.setShortTerm(width.getParameter().getShortTerm()+ index);
-        angle.setShortTerm(angle.getParameter().getShortTerm()+ index);
-        eaves.setShortTerm(eaves.getParameter().getShortTerm()+ index);
-        ridge.setShortTerm(ridge.getParameter().getShortTerm()+ index);
-        gableRight.setShortTerm(gableRight.getParameter().getShortTerm()+ index);
-        gableLeft.setShortTerm(gableLeft.getParameter().getShortTerm()+ index);
+        length.setShortTerm(length.getParameter().getShortTerm() + index);
+        width.setShortTerm(width.getParameter().getShortTerm() + index);
+        angle.setShortTerm(angle.getParameter().getShortTerm() + index);
+        eaves.setShortTerm(eaves.getParameter().getShortTerm() + index);
+        ridge.setShortTerm(ridge.getParameter().getShortTerm() + index);
+        gableRight.setShortTerm(gableRight.getParameter().getShortTerm() + index);
+        gableLeft.setShortTerm(gableLeft.getParameter().getShortTerm() + index);
 
         if (!ProjectViewController.isProjectOpened()) {
             length.setProject(ProjectViewController.getOpenedProject());
