@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -11,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProductListController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProductListController">
    <left>
        <fx:include source="SideView.fxml" />
    </left>
@@ -31,7 +35,7 @@
                         <MenuButton fx:id="mb_ProductTypesFilter" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Alle" HBox.hgrow="NEVER" />
                      </children>
                   </HBox>
-                  <TableView fx:id="tv_Products" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="tv_Products" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="tc_Name" maxWidth="1000.0" minWidth="100.0" prefWidth="150.0" text="Bezeichnung" />
                       <TableColumn fx:id="tc_Width" maxWidth="360.0" minWidth="75.0" prefWidth="90.0" style="-fx-alignment: center;" text="Breite in cm" />

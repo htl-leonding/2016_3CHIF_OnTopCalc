@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,6 +59,8 @@ public class AllProjectsController implements Initializable {
 
     private ObservableList<Project> projects;
 
+    boolean doubleClickAvailable = true;
+
     /**
      * Initializes the controller class. Adds all projects from the database to
      * the table view.
@@ -79,7 +82,7 @@ public class AllProjectsController implements Initializable {
         tv_ProjectList.setRowFactory((TableView<Project> param) -> {
             TableRow<Project> tableRow = new TableRow<>();
             tableRow.setOnMouseClicked((MouseEvent event) -> {
-                if (event.getClickCount() == 2 && tableRow.getItem() != null) {
+                if (event.getClickCount() == 2 && tableRow.getItem() != null && doubleClickAvailable) {
                     ProjectViewController.openProject(tableRow.getItem());
                     MainFormController.getInstance().loadFxmlIntoPane("ProjectView.fxml");
                 }
@@ -179,6 +182,14 @@ public class AllProjectsController implements Initializable {
                                     Logger.getLogger(AllProjectsController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             });
+
+                            box.setOnMouseEntered((event) -> {
+                                doubleClickAvailable = false;
+                            });
+                            box.setOnMouseExited((event) -> {
+                                doubleClickAvailable = true;
+                            });
+
                             setGraphic(box);
                             setText(null);
                         }

@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.settings;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,12 +19,17 @@ public class SettingsController {
 
     private static Properties prop = new Properties();
     private static final String filename = "src/main/java/at/plakolb/settings/settings.properties";
+    private static final String filenameBuild = "settings.properties";
 
     public static void setProperty(String property, String newValue) {
         OutputStream output = null;
         try {
-
-            output = new FileOutputStream(filename);
+            if(new File(filename).exists()){
+                output = new FileOutputStream(filename);
+            }
+            else{
+                output = new FileOutputStream(filenameBuild);
+            }
 
             // set the properties value
             prop.setProperty(property, newValue);
@@ -48,7 +54,12 @@ public class SettingsController {
     public static String getProperty(String property) {
         InputStream input = null;
         try {
-            input = new FileInputStream(filename);
+            if(new File(filename).exists()){
+                input = new FileInputStream(filename);
+            }
+            else{
+                input = new FileInputStream(filenameBuild);
+            }
             // load a properties file
             prop.load(input);
             return prop.getProperty(property);

@@ -88,7 +88,7 @@ public class OptionsController implements Initializable, Observer {
     private static OptionsController controller;
     @FXML
     private Label lb_percentage;
-    
+
     /**
      * Initializes the controller class.
      *
@@ -161,6 +161,8 @@ public class OptionsController implements Initializable, Observer {
         cl_options.setCellFactory(cellFactory);
 
         ///SICHERUNG und PDF
+        tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+        tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
         UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, SettingsController.getProperty("backupPath"));
         UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, SettingsController.getProperty("pdfPath"));
 
@@ -217,6 +219,7 @@ public class OptionsController implements Initializable, Observer {
                     UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, p.getAbsolutePath());
                 } else {
                     tf_defaultBackupDirectory.setText("");
+                    tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception e) {
             }
@@ -236,6 +239,7 @@ public class OptionsController implements Initializable, Observer {
                     UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, p.getAbsolutePath());
                 } else {
                     tf_defaultPDFDirectory.setText("");
+                    tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception e) {
             }
@@ -255,6 +259,7 @@ public class OptionsController implements Initializable, Observer {
                     UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, p.getAbsolutePath());
                 } else {
                     tf_defaultBackupDirectory.setText("");
+                    tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception e) {
             }
@@ -274,6 +279,7 @@ public class OptionsController implements Initializable, Observer {
                     UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, p.getAbsolutePath());
                 } else {
                     tf_defaultPDFDirectory.setText("");
+                    tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception e) {
             }
@@ -294,10 +300,14 @@ public class OptionsController implements Initializable, Observer {
             }
         });
         tf_defaultBackupDirectory.widthProperty().addListener((event) -> {
-            UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, tf_defaultBackupDirectory.getTooltip().getText());
+            if (tf_defaultBackupDirectory.getTooltip() != null && !SettingsController.getProperty("backupPath").isEmpty()) {
+                UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, tf_defaultBackupDirectory.getTooltip().getText());
+            }
         });
         tf_defaultPDFDirectory.widthProperty().addListener((event) -> {
-            UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, tf_defaultPDFDirectory.getTooltip().getText());
+            if (tf_defaultPDFDirectory.getTooltip() != null && !SettingsController.getProperty("pdfPath").isEmpty()) {
+                UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, tf_defaultPDFDirectory.getTooltip().getText());
+            }
         });
     }
 
@@ -325,7 +335,7 @@ public class OptionsController implements Initializable, Observer {
                         alert.setHeaderText("Sicherung erstellt");
                         alert.setContentText("Die Sicherung wurde erfolgreich erstellt!");
                         alert.showAndWait();
-                        SettingsController.setDateProperty("lastBackup",new Date());
+                        SettingsController.setDateProperty("lastBackup", new Date());
 
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -353,12 +363,12 @@ public class OptionsController implements Initializable, Observer {
             pgic_backupProgress.setVisible(true);
         });
     }
-    
-    public void createBackup(){
+
+    public void createBackup() {
         createBackup(null);
     }
-    
-    public static OptionsController getInstance(){
+
+    public static OptionsController getInstance() {
         return controller;
     }
 }

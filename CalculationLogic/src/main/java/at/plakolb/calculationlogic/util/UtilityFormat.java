@@ -163,23 +163,29 @@ public class UtilityFormat {
     }
 
     public static void setCutTextForTextField(TextField textField, String original) {
-        original = original.replaceAll("\\", "/");
-        textField.setTooltip(new Tooltip(original));
-        Text text = new Text(original);
-        text.setFont(textField.getFont());
-        String[] splittedPath = original.split("/");
+        if (!original.isEmpty()) {
+            try {
+            original = original.replace("\\", "/");//Darf nicht replaceAll sein aufgrund des Backslashes!
+            textField.setTooltip(new Tooltip(original));
+            Text text = new Text(original);
+            text.setFont(textField.getFont());
+            String[] splittedPath = original.split("/");
 
-        double width = textField.getWidth() == 0 ? textField.getPrefWidth() : textField.getWidth();
-        if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
-            text.setText(splittedPath.length > 3 ? String.format("%s/%s/.../%s",
-                    splittedPath[0],
-                    splittedPath[1],
-                    splittedPath[splittedPath.length - 1]) : "../" + splittedPath[splittedPath.length - 1]);
+            double width = textField.getWidth() == 0 ? textField.getPrefWidth() : textField.getWidth();
             if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
-                text.setText("../" + splittedPath[splittedPath.length - 1]);
+                text.setText(splittedPath.length > 3 ? String.format("%s/%s/.../%s",
+                        splittedPath[0],
+                        splittedPath[1],
+                        splittedPath[splittedPath.length - 1]) : "../" + splittedPath[splittedPath.length - 1]);
+                if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
+                    text.setText("../" + splittedPath[splittedPath.length - 1]);
+                }
+            }
+            textField.setText(text.getText());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        textField.setText(text.getText());
     }
 
     /**
