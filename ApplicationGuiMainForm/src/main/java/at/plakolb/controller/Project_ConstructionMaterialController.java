@@ -89,6 +89,16 @@ public class Project_ConstructionMaterialController implements Initializable {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
+        tf_Amount.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            tf_Amount.setText(tf_Amount.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Amount.setText(UtilityFormat.removeUnnecessaryCommas(tf_Amount.getText()));
+        });
+        
+        tf_Price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            tf_Price.setText(tf_Price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
+        });
+
         tc_Product.setCellValueFactory(new PropertyValueFactory<>("product"));
         tc_Amount.setCellValueFactory(new PropertyValueFactory<>("numberOfComponents"));
         tc_Component.setCellValueFactory(new PropertyValueFactory<>("component"));

@@ -144,7 +144,10 @@ public class Assembling_FoilController implements Initializable, Observer {
     public void setPricePerSquare() {
         tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
         tf_price.setText(UtilityFormat.removeUnnecessaryCommas(tf_price.getText()));
-        if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+
+        if (tf_price.getText().isEmpty()) {
+            this.pricePerSquare = 0;
+        } else if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerSquare + "\"", ButtonType.OK).showAndWait();
         } else {
             this.pricePerSquare = Double.valueOf(tf_price.getText());

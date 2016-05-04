@@ -2,7 +2,7 @@
 package at.plakolb.edit;
 
 import at.plakolb.calculationlogic.entity.ParameterP;
-import at.plakolb.controller.ParameterViewController;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -65,6 +65,11 @@ public class ParameterCell extends TableCell<ParameterP, String> {
         textField.setAlignment(Pos.CENTER);
         textField.setPrefWidth(this.getWidth() - 5);
 
+        textField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            textField.setText(UtilityFormat.removeUnnecessaryCommas(textField.getText()));
+        });
+        
         textField.setOnKeyReleased((KeyEvent t) -> {
             if (t.getCode() == KeyCode.ENTER) {
                 if (textField.getText().isEmpty()) {

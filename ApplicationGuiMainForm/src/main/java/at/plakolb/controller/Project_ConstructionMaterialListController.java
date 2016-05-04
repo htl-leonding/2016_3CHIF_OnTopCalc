@@ -10,6 +10,7 @@ import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -110,6 +113,11 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
             components = new ComponentController().findComponentsByProjectIdAndComponentType(ProjectViewController.getOpenedProject().getId(), "Kubikmeter");
         }
+
+        tf_Amount.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            tf_Amount.setText(tf_Amount.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Amount.setText(UtilityFormat.removeUnnecessaryCommas(tf_Amount.getText()));
+        });
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
         tc_ProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
@@ -296,7 +304,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         Category category = cb_Category.getValue();
 
         try {
-            if (tf_Amount.getText().isEmpty() || tf_Amount.getText().equals("0") || tf_Amount.getText().contains("-")) {
+            if (tf_Amount.getText().isEmpty() || Double.parseDouble(tf_Amount.getText()) <= 0) {
                 new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine gültige Zahl ein, die größer als 0 ist.").showAndWait();
             } else {
                 Component component = new Component(product.getFullName(),
@@ -402,9 +410,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     private String getBelongings(Component component) {
 
         String belongings = "";
-        
+
         if (component != null) {
-            
 
             for (Assembly assembly : Project_ConstructionMaterialController.getInstance().getAssemblys()) {
                 if (assembly.getComponent().equals(component)) {

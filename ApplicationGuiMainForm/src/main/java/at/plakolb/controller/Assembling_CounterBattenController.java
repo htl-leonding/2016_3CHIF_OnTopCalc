@@ -145,7 +145,10 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     public void setPrice() {
         tf_pricePerMeter.setText(tf_pricePerMeter.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
         tf_pricePerMeter.setText(UtilityFormat.removeUnnecessaryCommas(tf_pricePerMeter.getText()));
-        if (tf_pricePerMeter.getText().isEmpty() || Double.valueOf(tf_pricePerMeter.getText()) < 0) {
+
+        if (tf_pricePerMeter.getText().isEmpty()) {
+            this.pricePerMeter = 0;
+        } else if (tf_pricePerMeter.getText().isEmpty() || Double.valueOf(tf_pricePerMeter.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerMeter + "\"", ButtonType.OK).showAndWait();
         } else {
             this.pricePerMeter = Double.valueOf(tf_pricePerMeter.getText());

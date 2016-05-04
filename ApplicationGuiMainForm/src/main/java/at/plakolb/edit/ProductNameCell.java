@@ -2,7 +2,6 @@
 package at.plakolb.edit;
 
 import at.plakolb.calculationlogic.entity.Product;
-import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -17,7 +16,6 @@ public class ProductNameCell extends TableCell<Product, String> {
     private TextField textField;
 
     public ProductNameCell() {
-
     }
 
     @Override

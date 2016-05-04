@@ -61,12 +61,12 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         lengthNoWaste = new Worth(parameterController.findParameterPByShortTerm("LDOV"));
 
         tf_slatSpacing.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setSlatSpacing();
+            UtilityFormat.setWorthFromTextField(tf_slatSpacing, slatSpacing);
             calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
         tf_waste.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            setWastePercent();
+            UtilityFormat.setWorthFromTextField(tf_waste, waste);
             calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
@@ -154,16 +154,6 @@ public class Assembling_TiledRoofController extends Observable implements Initia
 
     public static Assembling_TiledRoofController getInstance() {
         return instance;
-    }
-
-    private void setSlatSpacing() {
-        slatSpacing.setWorth(tf_slatSpacing.getText().isEmpty() || !tf_slatSpacing.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_slatSpacing.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
-    }
-
-    private void setWastePercent() {
-        Assembling_BattensOrFullFormworkController.getInstance().setWastePercent(tf_waste.getText().isEmpty() || !tf_waste.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_waste.getText().replaceAll(",", ".").replaceAll("[^\\d.]", "")));
     }
 
     @Override

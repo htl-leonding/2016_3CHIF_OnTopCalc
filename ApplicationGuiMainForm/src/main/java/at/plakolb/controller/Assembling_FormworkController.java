@@ -98,26 +98,31 @@ public class Assembling_FormworkController implements Initializable, Observer {
         cb_Formwork.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             tf_Price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
         });
+
         tf_Price.textProperty().addListener((observable, oldValue, newValue) -> {
             setPrice();
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
+
         tf_Time.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_Time, time);
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
+
         tf_Wage.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_Wage, wage);
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
+
         tf_Blend.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_Blend, blend);
             calculate();
             ModifyController.getInstance().setAssembling_formwork(Boolean.TRUE);
         });
+
         if (ProjectViewController.getOpenedProject() != null) {
             loadValuesFromDatabase();
         } else {
@@ -134,7 +139,11 @@ public class Assembling_FormworkController implements Initializable, Observer {
     private void setPrice() {
         tf_Price.setText(tf_Price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
         tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
-        if (tf_Price.getText().isEmpty() || Double.valueOf(tf_Price.getText()) < 0) {
+        
+        if (tf_Price.getText().isEmpty()) {
+            this.price = 0;
+        }
+        else if (Double.valueOf(tf_Price.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
         } else {
             this.price = Double.valueOf(tf_Price.getText());
@@ -157,6 +166,9 @@ public class Assembling_FormworkController implements Initializable, Observer {
         return totalCosts;
     }
 
+    /**
+     * Loads all existing worth objects from the database into the view.
+     */
     public void loadValuesFromDatabase() {
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
@@ -202,7 +214,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
             tf_Blend.setText(UtilityFormat.getStringForTextField(blend));
             tf_Wage.setText(UtilityFormat.getStringForTextField(wage));
             tf_Time.setText(UtilityFormat.getStringForTextField(time));
-            
+
             ModifyController.getInstance().setAssembling_formwork(Boolean.FALSE);
         }
     }

@@ -22,6 +22,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -95,23 +97,23 @@ public class Project_ColourController implements Initializable {
         paintLiter = new Worth(parameterController.findParameterPByShortTerm("FML"));
         totalCost = new Worth(parameterController.findParameterPByShortTerm("GKFarbe"));
 
-        tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
-            setHour();
-            calculateValues();
-            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
-        });
         tf_PricePerLiter.textProperty().addListener((observable, oldValue, newValue) -> {
             setPricePerLiter();
             calculateValues();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
+        tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_ProfiHour, profiHour);
+            calculateValues();
+            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
+        });
         tf_AdittionalColourFactor.textProperty().addListener((observable, oldValue, newValue) -> {
-            setColourFactor();
+            UtilityFormat.setWorthFromTextField(tf_AdittionalColourFactor, additionalColourFactor);
             calculateValues();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
         tf_TimeOfPainting.textProperty().addListener((observable, oldValue, newValue) -> {
-            setTime();
+            UtilityFormat.setWorthFromTextField(tf_TimeOfPainting, timeofPainting);
             calculateValues();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
@@ -127,6 +129,8 @@ public class Project_ColourController implements Initializable {
             loadColourValues();
         } else {
             component = new Component();
+            component.setCategory(new CategoryController().findCategoryByShortTerm("X"));
+            component.setComponentType("Produkt");
         }
     }
 
@@ -134,24 +138,17 @@ public class Project_ColourController implements Initializable {
         return component;
     }
 
-    public void setHour() {
-        profiHour.setWorth(tf_ProfiHour.getText().isEmpty() || !tf_ProfiHour.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_ProfiHour.getText().replace(',', '.')));
-    }
-
     public void setPricePerLiter() {
-        pricePerLiter = (tf_PricePerLiter.getText().isEmpty() || !tf_PricePerLiter.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_PricePerLiter.getText().replace(',', '.')));
-    }
+        tf_PricePerLiter.setText(tf_PricePerLiter.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_PricePerLiter.setText(UtilityFormat.removeUnnecessaryCommas(tf_PricePerLiter.getText()));
 
-    public void setColourFactor() {
-        additionalColourFactor.setWorth(tf_AdittionalColourFactor.getText().isEmpty() || !tf_AdittionalColourFactor.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_AdittionalColourFactor.getText().replace(',', '.')));
-    }
-
-    public void setTime() {
-        timeofPainting.setWorth(tf_TimeOfPainting.getText().isEmpty() || !tf_TimeOfPainting.getText().matches("[0-9]*.[0-9]*")
-                ? 0 : Double.valueOf(tf_TimeOfPainting.getText().replace(',', '.')));
+        if (tf_PricePerLiter.getText().isEmpty()) {
+            this.pricePerLiter = 0;
+        } else if (tf_PricePerLiter.getText().isEmpty() || Double.valueOf(tf_PricePerLiter.getText()) < 0) {
+            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerLiter + "\"", ButtonType.OK).showAndWait();
+        } else {
+            this.pricePerLiter = Double.valueOf(tf_PricePerLiter.getText());
+        }
     }
 
     public static Project_ColourController getInstance() {
