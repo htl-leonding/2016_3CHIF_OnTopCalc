@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
@@ -129,7 +129,7 @@ public class ClientModifierController implements Initializable {
             openedClient.setEmail(tf_Email.getText());
             new ClientController().edit(openedClient);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Client couldn't be modified correctly.", ex);
         }
 
         ClientsController.getInstance().refreshTable();

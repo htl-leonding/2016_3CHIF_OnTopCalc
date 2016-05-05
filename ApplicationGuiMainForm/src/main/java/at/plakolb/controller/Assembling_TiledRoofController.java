@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -11,7 +12,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -78,26 +78,26 @@ public class Assembling_TiledRoofController extends Observable implements Initia
     public void persist() {
         WorthController wc = new WorthController();
         Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(length.getWorth());
+        try {
+            if (!ProjectViewController.isProjectOpened() || slatSpacing.getProject() == null) {
+                slatSpacing.setProject(ProjectViewController.getOpenedProject());
+                waste.setProject(ProjectViewController.getOpenedProject());
+                lengthNoWaste.setProject(ProjectViewController.getOpenedProject());
+                length.setProject(ProjectViewController.getOpenedProject());
 
-        if (!ProjectViewController.isProjectOpened() || slatSpacing.getProject() == null) {
-            slatSpacing.setProject(ProjectViewController.getOpenedProject());
-            waste.setProject(ProjectViewController.getOpenedProject());
-            lengthNoWaste.setProject(ProjectViewController.getOpenedProject());
-            length.setProject(ProjectViewController.getOpenedProject());
+                wc.create(slatSpacing);
+                wc.create(waste);
+                wc.create(lengthNoWaste);
+                wc.create(length);
+            } else {
 
-            wc.create(slatSpacing);
-            wc.create(waste);
-            wc.create(lengthNoWaste);
-            wc.create(length);
-        } else {
-            try {
                 wc.edit(slatSpacing);
                 wc.edit(waste);
                 wc.edit(lengthNoWaste);
                 wc.edit(length);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_TiledRoofController: persist method didn't work.", ex);
         }
     }
 
@@ -146,7 +146,7 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "Assembling_TiledRoofController: calculate method didn't work.", ex);
             }
         }
 

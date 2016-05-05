@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.db.controller.UnitController;
 import at.plakolb.calculationlogic.entity.Product;
@@ -114,7 +114,7 @@ public class ProductCreatorController implements Initializable {
                 new ProductController().create(product);
 
             } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "Couldn't create product.", ex);
             }
 
             ProductListController.getInstance().refreshTable();

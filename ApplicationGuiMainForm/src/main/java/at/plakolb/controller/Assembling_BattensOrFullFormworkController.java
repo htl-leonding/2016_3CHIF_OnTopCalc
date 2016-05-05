@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -19,7 +20,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -140,7 +140,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             tiledRoof = (Node) FXMLLoader.load(getClass().getResource("/fxml/Assembling_TiledRoof.fxml"));
             sheetRoof = (Node) FXMLLoader.load(getClass().getResource("/fxml/Assembling_SheetRoof.fxml"));
         } catch (IOException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't open Assembling_TiledRoof.fxml and Assembling_SheetRoof.fxml", ex);
         }
 
         //Add change listener to change the fxml file of the content pane if the selection has changed.
@@ -298,7 +298,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
-                Logging.getLogger().log(Level.SEVERE, "Assembling_BattensOrFullFormworkController: caluclate methode didn't work.", ex);
+                Logging.getLogger().log(Level.SEVERE, "Assembling_BattensOrFullFormworkController: caluclate method didn't work.", ex);
             }
         }
 
@@ -360,24 +360,24 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
 
-        if (project != null && !ProjectViewController.isProjectOpened()) {
-            assemblingDuration.setProject(project);
-            workCosts.setProject(project);
-            montageCosts.setProject(project);
-            productCosts.setProject(project);
-            totalCosts.setProject(project);
-            wastePercent.setProject(project);
-            component.setProject(project);
+        try {
+            if (project != null && !ProjectViewController.isProjectOpened()) {
+                assemblingDuration.setProject(project);
+                workCosts.setProject(project);
+                montageCosts.setProject(project);
+                productCosts.setProject(project);
+                totalCosts.setProject(project);
+                wastePercent.setProject(project);
+                component.setProject(project);
 
-            worthController.create(assemblingDuration);
-            worthController.create(workCosts);
-            worthController.create(montageCosts);
-            worthController.create(productCosts);
-            worthController.create(totalCosts);
-            worthController.create(wastePercent);
-            componentController.create(component);
-        } else {
-            try {
+                worthController.create(assemblingDuration);
+                worthController.create(workCosts);
+                worthController.create(montageCosts);
+                worthController.create(productCosts);
+                worthController.create(totalCosts);
+                worthController.create(wastePercent);
+                componentController.create(component);
+            } else {
                 worthController.edit(assemblingDuration);
                 worthController.edit(workCosts);
                 worthController.edit(montageCosts);
@@ -385,9 +385,9 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 worthController.edit(totalCosts);
                 worthController.edit(wastePercent);
                 componentController.edit(component);
-            } catch (Exception ex) {
-                 Logging.getLogger().log(Level.SEVERE, "Assembling_BattensOrFullFormworkController: perist method didn't work.", ex);
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_BattensOrFullFormworkController: persist method didn't work.", ex);
         }
     }
 

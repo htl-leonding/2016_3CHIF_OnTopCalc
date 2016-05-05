@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -18,7 +19,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -273,7 +273,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "Assembling_FormworkController: calculate method didn't work.", ex);
             }
         }
 
@@ -335,7 +335,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
                     componentController.edit(component);
             }
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Assembling_FormworkController: perist method didn't work.", ex);
         }
     }
 

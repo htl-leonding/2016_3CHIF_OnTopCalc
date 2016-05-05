@@ -1,8 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
-import java.io.IOException;
+import at.plakolb.calculationlogic.util.Logging;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -50,10 +49,8 @@ public class SideViewController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
-        } catch (IOException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't open PrintProject.fxml.", ex);
         }
     }
 

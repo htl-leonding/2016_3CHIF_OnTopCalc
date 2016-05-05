@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Product;
@@ -113,7 +113,7 @@ public class ClientsController implements Initializable {
                                     stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                                     stage.show();
                                 } catch (IOException ex) {
-                                    Logging.getLogger().log(Level.SEVERE, "", ex);
+                                    Logging.getLogger().log(Level.SEVERE, "Couldn't open ClientModifier.fxml.", ex);
                                 }
 
                                 ClientModifierController.getInstance().loadClientIntoModifier(tv_Clients.getSelectionModel().getSelectedItem());
@@ -128,7 +128,7 @@ public class ClientsController implements Initializable {
                                         refreshTable();
                                     }
                                 } catch (Exception ex) {
-                                    Logging.getLogger().log(Level.SEVERE, "", ex);
+                                    Logging.getLogger().log(Level.SEVERE, "Couldn't delete client.", ex);
                                 }
                             });
                             setGraphic(box);
@@ -157,7 +157,7 @@ public class ClientsController implements Initializable {
                         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                         stage.show();
                     } catch (IOException ex) {
-                        Logging.getLogger().log(Level.SEVERE, "", ex);
+                        Logging.getLogger().log(Level.SEVERE, "Couldn't open ClientModifier.fxml.", ex);
                     }
                     ClientModifierController.getInstance().loadClientIntoModifier(tableRow.getItem());
                 }

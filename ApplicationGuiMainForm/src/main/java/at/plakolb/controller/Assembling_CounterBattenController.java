@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -237,7 +238,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "Assembling_CounterBattenController: calculate method didn't work.", ex);
             }
         }
 
@@ -266,30 +267,29 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     public void persist() {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
+        try {
+            if (!ProjectViewController.isProjectOpened()) {
+                component.setProject(ProjectViewController.getOpenedProject());
+                profiHour.setProject(ProjectViewController.getOpenedProject());
+                counterBattern.setProject(ProjectViewController.getOpenedProject());
+                timeMontage.setProject(ProjectViewController.getOpenedProject());
+                waste.setProject(ProjectViewController.getOpenedProject());
+                productCost.setProject(ProjectViewController.getOpenedProject());
+                montageCost.setProject(ProjectViewController.getOpenedProject());
+                lengthWaste.setProject(ProjectViewController.getOpenedProject());
+                totalCost.setProject(ProjectViewController.getOpenedProject());
+                component.setProject(ProjectViewController.getOpenedProject());
 
-        if (!ProjectViewController.isProjectOpened()) {
-            component.setProject(ProjectViewController.getOpenedProject());
-            profiHour.setProject(ProjectViewController.getOpenedProject());
-            counterBattern.setProject(ProjectViewController.getOpenedProject());
-            timeMontage.setProject(ProjectViewController.getOpenedProject());
-            waste.setProject(ProjectViewController.getOpenedProject());
-            productCost.setProject(ProjectViewController.getOpenedProject());
-            montageCost.setProject(ProjectViewController.getOpenedProject());
-            lengthWaste.setProject(ProjectViewController.getOpenedProject());
-            totalCost.setProject(ProjectViewController.getOpenedProject());
-            component.setProject(ProjectViewController.getOpenedProject());
-
-            worthController.create(profiHour);
-            worthController.create(counterBattern);
-            worthController.create(timeMontage);
-            worthController.create(lengthWaste);
-            worthController.create(productCost);
-            worthController.create(montageCost);
-            worthController.create(waste);
-            worthController.create(totalCost);
-            componentController.create(component);
-        } else {
-            try {
+                worthController.create(profiHour);
+                worthController.create(counterBattern);
+                worthController.create(timeMontage);
+                worthController.create(lengthWaste);
+                worthController.create(productCost);
+                worthController.create(montageCost);
+                worthController.create(waste);
+                worthController.create(totalCost);
+                componentController.create(component);
+            } else {
                 worthController.edit(profiHour);
                 worthController.edit(counterBattern);
                 worthController.edit(timeMontage);
@@ -299,9 +299,10 @@ public class Assembling_CounterBattenController implements Observer, Initializab
                 worthController.edit(waste);
                 worthController.edit(totalCost);
                 componentController.edit(component);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_CounterBattenController: persist method didn't work.", ex);
         }
     }
 

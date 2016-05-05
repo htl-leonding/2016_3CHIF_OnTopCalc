@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -265,7 +266,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "Assembling_SealingBandController: calculate method didn't work.", ex);
             }
         }
 
@@ -293,29 +294,29 @@ public class Assembling_SealingBandController implements Initializable, Observer
     public void persist() {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
+        try {
+            if (!ProjectViewController.isProjectOpened()) {
+                blend.setProject(ProjectViewController.getOpenedProject());
+                waste.setProject(ProjectViewController.getOpenedProject());
+                sealingBand.setProject(ProjectViewController.getOpenedProject());
+                duration.setProject(ProjectViewController.getOpenedProject());
+                productCosts.setProject(ProjectViewController.getOpenedProject());
+                montageCosts.setProject(ProjectViewController.getOpenedProject());
+                totalCosts.setProject(ProjectViewController.getOpenedProject());
+                workerCosts.setProject(ProjectViewController.getOpenedProject());
+                component.setProject(ProjectViewController.getOpenedProject());
 
-        if (!ProjectViewController.isProjectOpened()) {
-            blend.setProject(ProjectViewController.getOpenedProject());
-            waste.setProject(ProjectViewController.getOpenedProject());
-            sealingBand.setProject(ProjectViewController.getOpenedProject());
-            duration.setProject(ProjectViewController.getOpenedProject());
-            productCosts.setProject(ProjectViewController.getOpenedProject());
-            montageCosts.setProject(ProjectViewController.getOpenedProject());
-            totalCosts.setProject(ProjectViewController.getOpenedProject());
-            workerCosts.setProject(ProjectViewController.getOpenedProject());
-            component.setProject(ProjectViewController.getOpenedProject());
+                worthController.create(blend);
+                worthController.create(workerCosts);
+                worthController.create(waste);
+                worthController.create(sealingBand);
+                worthController.create(duration);
+                worthController.create(montageCosts);
+                worthController.create(productCosts);
+                worthController.create(totalCosts);
+                componentController.create(component);
+            } else {
 
-            worthController.create(blend);
-            worthController.create(workerCosts);
-            worthController.create(waste);
-            worthController.create(sealingBand);
-            worthController.create(duration);
-            worthController.create(montageCosts);
-            worthController.create(productCosts);
-            worthController.create(totalCosts);
-            componentController.create(component);
-        } else {
-            try {
                 worthController.edit(blend);
                 worthController.edit(workerCosts);
                 worthController.edit(waste);
@@ -325,9 +326,9 @@ public class Assembling_SealingBandController implements Initializable, Observer
                 worthController.edit(productCosts);
                 worthController.edit(totalCosts);
                 componentController.edit(component);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_SealingBandController: perist method didn't work", ex);
         }
     }
 

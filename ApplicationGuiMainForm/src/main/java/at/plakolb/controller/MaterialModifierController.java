@@ -1,9 +1,23 @@
-/*	HTL Leonding	*/
+/**
+ * 
+ * 
+ * 
+ * 
+ * Methode wird nicht mehr benötigt.
+ * Sie soll durch edit Felder in der TableView wersetzt werden.
+ * 
+ * 
+ * 
+ * 
+ */
+
+
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.entity.Component;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -56,21 +70,8 @@ public class MaterialModifierController implements Initializable {
         instance = this;
 
         tf_Count.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            try {
-                if (tf_Count.getText().contains(",")) {
-                    tf_Count.setText(tf_Count.getText().substring(0, tf_Count.getText().lastIndexOf(",")));
-                }
-                if (tf_Count.getText().contains(".")) {
-                    tf_Count.setText(tf_Count.getText().substring(0, tf_Count.getText().lastIndexOf(".")));
-                }
-                
-                Integer.parseInt(tf_Count.getText());
-            } catch (NumberFormatException ex) {
-                tf_Count.setText("1");
-            }
-            if (tf_Count.getText().isEmpty() || tf_Count.getText().equals("0") || tf_Count.getText().contains("-")) {
-                tf_Count.setText("1");
-            }
+            tf_Count.setText(tf_Count.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Count.setText(UtilityFormat.removeUnnecessaryCommas(tf_Count.getText()));
         });
 
         tf_PriceUnit.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
@@ -131,9 +132,7 @@ public class MaterialModifierController implements Initializable {
                 } else {
                     tf_TotalPrice.setText("0");
                 }
-            } catch (NumberFormatException ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
-            } catch (Exception ex){
+            } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
@@ -150,7 +149,7 @@ public class MaterialModifierController implements Initializable {
                 }
             } catch (NumberFormatException ex) {
                 Logging.getLogger().log(Level.SEVERE, "", ex);
-            } catch (Exception ex){
+            } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });
@@ -167,7 +166,7 @@ public class MaterialModifierController implements Initializable {
                 }
             } catch (NumberFormatException ex) {
                 Logging.getLogger().log(Level.SEVERE, "", ex);
-            } catch (Exception ex){
+            } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, "", ex);
             }
         });

@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
@@ -16,7 +17,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -221,7 +221,7 @@ public class ProductListController implements Initializable {
                                         refreshTable();
                                     }
                                 } catch (Exception ex) {
-                                    Logging.getLogger().log(Level.SEVERE, "", ex);
+                                    Logging.getLogger().log(Level.SEVERE, "Couldn't delete product.", ex);
                                 }
                             });
                             setGraphic(delete);
@@ -262,7 +262,7 @@ public class ProductListController implements Initializable {
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
         } catch (IOException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't open ProductCreator.fxml.", ex);
         }
     }
 
@@ -321,7 +321,7 @@ public class ProductListController implements Initializable {
                         productController.edit(product);
                     }
                 } catch (Exception ex) {
-                    Logging.getLogger().log(Level.SEVERE, "", ex);
+                    Logging.getLogger().log(Level.SEVERE, "Couldn't perists products.", ex);
                 }
             });
         }

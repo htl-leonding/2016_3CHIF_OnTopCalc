@@ -1,5 +1,5 @@
 /*	HTL Leonding	*/
-package at.plakolb;
+package at.plakolb.calculationlogic.util;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;

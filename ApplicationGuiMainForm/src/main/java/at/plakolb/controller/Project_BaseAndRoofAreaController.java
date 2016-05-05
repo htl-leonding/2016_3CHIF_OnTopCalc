@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Worth;
@@ -110,31 +110,31 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         tf_Length.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            calcArea(tf_Length, length);
+            calculate(tf_Length, length);
         });
 
         tf_Width.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            calcArea(tf_Width, width);
+            calculate(tf_Width, width);
         });
 
         tf_Angle.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            calcArea(tf_Angle, angle);
+            calculate(tf_Angle, angle);
         });
 
         tf_Ridge.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            calcArea(tf_Ridge, ridge);
+            calculate(tf_Ridge, ridge);
         });
 
         tf_Eaves.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            calcArea(tf_Eaves, eaves);
+            calculate(tf_Eaves, eaves);
         });
 
         tf_GableRight.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            calcArea(tf_GableRight, gableRight);
+            calculate(tf_GableRight, gableRight);
         });
 
         tf_GableLeft.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            calcArea(tf_GableLeft, gableLeft);
+            calculate(tf_GableLeft, gableLeft);
         });
     }
 
@@ -209,7 +209,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
      *
      * @param event
      */
-    private void calcArea(TextField textField, Worth worth) {
+    private void calculate(TextField textField, Worth worth) {
         if (!isCalculating) {
             try {
                 isCalculating = true;
@@ -241,6 +241,8 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
             } catch (NumberFormatException e) {
                 new Alert(Alert.AlertType.ERROR, "Fehlerhafte Eingabe").showAndWait();
                 textField.setText("");
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "Project_BaseAndRoofAreaController: calculate method didn't work.", ex);
             } finally {
                 ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
                 isCalculating = false;
@@ -265,7 +267,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     /**
      * Persists the calculated Values to the database.
      */
-    public void persistArea() {
+    public void persist() {
         ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
 
@@ -279,24 +281,25 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         gableRight.setShortTerm(gableRight.getParameter().getShortTerm() + index);
         gableLeft.setShortTerm(gableLeft.getParameter().getShortTerm() + index);
 
-        if (!ProjectViewController.isProjectOpened()) {
-            length.setProject(ProjectViewController.getOpenedProject());
-            width.setProject(ProjectViewController.getOpenedProject());
-            angle.setProject(ProjectViewController.getOpenedProject());
-            eaves.setProject(ProjectViewController.getOpenedProject());
-            ridge.setProject(ProjectViewController.getOpenedProject());
-            gableRight.setProject(ProjectViewController.getOpenedProject());
-            gableLeft.setProject(ProjectViewController.getOpenedProject());
+        try {
+            if (!ProjectViewController.isProjectOpened()) {
+                length.setProject(ProjectViewController.getOpenedProject());
+                width.setProject(ProjectViewController.getOpenedProject());
+                angle.setProject(ProjectViewController.getOpenedProject());
+                eaves.setProject(ProjectViewController.getOpenedProject());
+                ridge.setProject(ProjectViewController.getOpenedProject());
+                gableRight.setProject(ProjectViewController.getOpenedProject());
+                gableLeft.setProject(ProjectViewController.getOpenedProject());
 
-            worthController.create(length);
-            worthController.create(width);
-            worthController.create(angle);
-            worthController.create(eaves);
-            worthController.create(ridge);
-            worthController.create(gableRight);
-            worthController.create(gableLeft);
-        } else {
-            try {
+                worthController.create(length);
+                worthController.create(width);
+                worthController.create(angle);
+                worthController.create(eaves);
+                worthController.create(ridge);
+                worthController.create(gableRight);
+                worthController.create(gableLeft);
+            } else {
+
                 worthController.edit(length);
                 worthController.edit(width);
                 worthController.edit(angle);
@@ -304,9 +307,10 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 worthController.edit(ridge);
                 worthController.edit(gableRight);
                 worthController.edit(gableLeft);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Project_BaseAndRoofAreaController: persist method didn't work.", ex);
         }
     }
 

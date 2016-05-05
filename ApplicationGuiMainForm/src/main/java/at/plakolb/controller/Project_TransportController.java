@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -15,8 +15,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -81,23 +79,23 @@ public class Project_TransportController extends java.util.Observable implements
 
         tf_pkwMoney.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_pkwMoney, kilometerAllowance);
-            calcTransportCosts();
+            calculate();
         });
         tf_pkwDistance.textProperty().addListener((observable, oldValue, newValue) -> {
-             UtilityFormat.setWorthFromTextField(tf_pkwDistance, distance);
-            calcTransportCosts();
+            UtilityFormat.setWorthFromTextField(tf_pkwDistance, distance);
+            calculate();
         });
         tf_pkwDays.textProperty().addListener((observable, oldValue, newValue) -> {
-             UtilityFormat.setWorthFromTextField(tf_pkwDays, days);
-            calcTransportCosts();
+            UtilityFormat.setWorthFromTextField(tf_pkwDays, days);
+            calculate();
         });
         tf_lkwDuration.textProperty().addListener((observable, oldValue, newValue) -> {
-             UtilityFormat.setWorthFromTextField(tf_lkwDuration, duration);
-            calcTransportCosts();
+            UtilityFormat.setWorthFromTextField(tf_lkwDuration, duration);
+            calculate();
         });
         tf_lkwPrice.textProperty().addListener((observable, oldValue, newValue) -> {
-             UtilityFormat.setWorthFromTextField(tf_lkwPrice, pricePerHour);
-            calcTransportCosts();
+            UtilityFormat.setWorthFromTextField(tf_lkwPrice, pricePerHour);
+            calculate();
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -113,8 +111,8 @@ public class Project_TransportController extends java.util.Observable implements
     public static void setValuesChanged(boolean valuesChanged) {
         ModifyController.getInstance().setProject_transport(valuesChanged);
     }
-    
-    public Worth getTotalCosts(){
+
+    public Worth getTotalCosts() {
         return totalCosts;
     }
 
@@ -146,26 +144,27 @@ public class Project_TransportController extends java.util.Observable implements
     public void persist() {
         WorthController worthController = new WorthController();
 
-        if (!ProjectViewController.isProjectOpened()) {
-            kilometerAllowance.setProject(ProjectViewController.getOpenedProject());
-            distance.setProject(ProjectViewController.getOpenedProject());
-            days.setProject(ProjectViewController.getOpenedProject());
-            pricePerHour.setProject(ProjectViewController.getOpenedProject());
-            duration.setProject(ProjectViewController.getOpenedProject());
-            transportCosts.setProject(ProjectViewController.getOpenedProject());
-            abidanceCosts.setProject(ProjectViewController.getOpenedProject());
-            totalCosts.setProject(ProjectViewController.getOpenedProject());
+        try {
+            if (!ProjectViewController.isProjectOpened()) {
+                kilometerAllowance.setProject(ProjectViewController.getOpenedProject());
+                distance.setProject(ProjectViewController.getOpenedProject());
+                days.setProject(ProjectViewController.getOpenedProject());
+                pricePerHour.setProject(ProjectViewController.getOpenedProject());
+                duration.setProject(ProjectViewController.getOpenedProject());
+                transportCosts.setProject(ProjectViewController.getOpenedProject());
+                abidanceCosts.setProject(ProjectViewController.getOpenedProject());
+                totalCosts.setProject(ProjectViewController.getOpenedProject());
 
-            worthController.create(kilometerAllowance);
-            worthController.create(distance);
-            worthController.create(days);
-            worthController.create(pricePerHour);
-            worthController.create(duration);
-            worthController.create(transportCosts);
-            worthController.create(abidanceCosts);
-            worthController.create(totalCosts);
-        } else {
-            try {
+                worthController.create(kilometerAllowance);
+                worthController.create(distance);
+                worthController.create(days);
+                worthController.create(pricePerHour);
+                worthController.create(duration);
+                worthController.create(transportCosts);
+                worthController.create(abidanceCosts);
+                worthController.create(totalCosts);
+            } else {
+
                 worthController.edit(kilometerAllowance);
                 worthController.edit(distance);
                 worthController.edit(days);
@@ -174,27 +173,27 @@ public class Project_TransportController extends java.util.Observable implements
                 worthController.edit(transportCosts);
                 worthController.edit(abidanceCosts);
                 worthController.edit(totalCosts);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Project_TransportController: perists method didn't work.", ex);
         }
 
         setValuesChanged(false);
     }
 
-    private void calcTransportCosts() {
-
-        transportCosts.setWorth(days.getWorth() * kilometerAllowance.getWorth() * distance.getWorth() * 2);
-        abidanceCosts.setWorth(pricePerHour.getWorth() * duration.getWorth());
-        totalCosts.setWorth(transportCosts.getWorth() + abidanceCosts.getWorth());
+    private void calculate() {
 
         try {
+            transportCosts.setWorth(days.getWorth() * kilometerAllowance.getWorth() * distance.getWorth() * 2);
+            abidanceCosts.setWorth(pricePerHour.getWorth() * duration.getWorth());
+            totalCosts.setWorth(transportCosts.getWorth() + abidanceCosts.getWorth());
+
             lb_PriceTransport.setText(decimalFormat.format(transportCosts.getWorth()) + " €");
             lb_PriceStay.setText(decimalFormat.format(abidanceCosts.getWorth()) + " €");
             lb_PriceComplete.setText(decimalFormat.format(totalCosts.getWorth()) + " €");
             setValuesChanged(true);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Project_TransportController: calculate method didn't work.", ex);
         }
     }
 }

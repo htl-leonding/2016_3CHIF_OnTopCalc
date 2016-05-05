@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.AssemblyController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ProductController;
@@ -143,7 +143,7 @@ public class Project_ConstructionMaterialController implements Initializable {
                                         }
                                         ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
                                     } catch (Exception ex) {
-                                        Logging.getLogger().log(Level.SEVERE, "", ex);
+                                        Logging.getLogger().log(Level.SEVERE, "Couldn't delete material.", ex);
                                     } finally {
                                         refreshListView();
                                     }
@@ -318,7 +318,7 @@ public class Project_ConstructionMaterialController implements Initializable {
 
             ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't delete relative assemblies.", ex);
         } finally {
             refreshListView();
         }

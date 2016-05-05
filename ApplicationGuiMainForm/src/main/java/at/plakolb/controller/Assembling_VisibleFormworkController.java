@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -97,25 +98,25 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
 
         tf_PricePerSquare.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
-            calculateFormwork();
+            calculate();
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
         tf_AbatementPercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_AbatementPercent, abatementPercent);
-            calculateFormwork();
+            calculate();
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
         tf_AssemblingDuration.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_AssemblingDuration, assemblingDuration);
-            calculateFormwork();
+            calculate();
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
         tf_WorkerCosts.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_WorkerCosts, workerCosts);
-            calculateFormwork();
+            calculate();
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         });
 
@@ -209,7 +210,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.FALSE);
     }
 
-    private void calculateFormwork() {
+    private void calculate() {
         try {
             //Verschnittsfläche
             //Alte Formel-ID: VSS
@@ -238,7 +239,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "Assembling_VisibleFormworkController: calculate method didn't work.", ex);
             }
         }
 
@@ -263,32 +264,33 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         component.setPriceComponent(pricePerSquare);
     }
 
-    public void persistVisibleFormwork() {
+    public void persist() {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
 
-        if (!ProjectViewController.isProjectOpened()) {
-            abatementPercent.setProject(ProjectViewController.getOpenedProject());
-            abatementArea.setProject(ProjectViewController.getOpenedProject());
-            visibleFormwork.setProject(ProjectViewController.getOpenedProject());
-            productCosts.setProject(ProjectViewController.getOpenedProject());
-            assemblingDuration.setProject(ProjectViewController.getOpenedProject());
-            assemblingCosts.setProject(ProjectViewController.getOpenedProject());
-            totalCosts.setProject(ProjectViewController.getOpenedProject());
-            workerCosts.setProject(ProjectViewController.getOpenedProject());
-            component.setProject(ProjectViewController.getOpenedProject());
+        try {
+            if (!ProjectViewController.isProjectOpened()) {
+                abatementPercent.setProject(ProjectViewController.getOpenedProject());
+                abatementArea.setProject(ProjectViewController.getOpenedProject());
+                visibleFormwork.setProject(ProjectViewController.getOpenedProject());
+                productCosts.setProject(ProjectViewController.getOpenedProject());
+                assemblingDuration.setProject(ProjectViewController.getOpenedProject());
+                assemblingCosts.setProject(ProjectViewController.getOpenedProject());
+                totalCosts.setProject(ProjectViewController.getOpenedProject());
+                workerCosts.setProject(ProjectViewController.getOpenedProject());
+                component.setProject(ProjectViewController.getOpenedProject());
 
-            worthController.create(abatementPercent);
-            worthController.create(workerCosts);
-            worthController.create(assemblingDuration);
-            worthController.create(abatementArea);
-            worthController.create(visibleFormwork);
-            worthController.create(productCosts);
-            worthController.create(assemblingCosts);
-            worthController.create(totalCosts);
-            componentController.create(component);
-        } else {
-            try {
+                worthController.create(abatementPercent);
+                worthController.create(workerCosts);
+                worthController.create(assemblingDuration);
+                worthController.create(abatementArea);
+                worthController.create(visibleFormwork);
+                worthController.create(productCosts);
+                worthController.create(assemblingCosts);
+                worthController.create(totalCosts);
+                componentController.create(component);
+            } else {
+
                 worthController.edit(abatementPercent);
                 worthController.edit(workerCosts);
                 worthController.edit(assemblingDuration);
@@ -298,9 +300,9 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
                 worthController.edit(assemblingCosts);
                 worthController.edit(totalCosts);
                 componentController.edit(component);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_VisibleFormworkController: persist method didn't work.", ex);
         }
     }
 
@@ -313,6 +315,6 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
         }
         lb_RoofArea.setText(UtilityFormat.getStringForLabel(newVal) + " m²");
-        calculateFormwork();
+        calculate();
     }
 }

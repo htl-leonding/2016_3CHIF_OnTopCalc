@@ -1,10 +1,10 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.settings.SettingsController;
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,12 +70,12 @@ public class MainFormController implements Initializable {
         }
 
         mb_openProjects.getItems().addAll(items);
-        
-        if(SettingsController.getBooleanProperty("remindBackup")==true && SettingsController.getDateProperty("lastBackup").getTime()+
-                Integer.valueOf(SettingsController.getProperty("remindBackupWeeks"))*604800000 <= new Date().getTime()){
+
+        if (SettingsController.getBooleanProperty("remindBackup") == true && SettingsController.getDateProperty("lastBackup").getTime()
+                + Integer.valueOf(SettingsController.getProperty("remindBackupWeeks")) * 604800000 <= new Date().getTime()) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            hl_lastBackup.setText("Die letzte Sicherung wurde am "+sdf.format(SettingsController.getDateProperty("lastBackup"))+" erstellt. Erstellen Sie jetzt eine Sicherung!");
-            hl_lastBackup.setOnAction((event)->{
+            hl_lastBackup.setText("Die letzte Sicherung wurde am " + sdf.format(SettingsController.getDateProperty("lastBackup")) + " erstellt. Erstellen Sie jetzt eine Sicherung!");
+            hl_lastBackup.setOnAction((event) -> {
                 loadFxmlIntoPane("Options.fxml");
                 OptionsController.getInstance().createBackup();
             });
@@ -99,10 +99,8 @@ public class MainFormController implements Initializable {
         try {
             mainPane.getChildren().clear();
             mainPane.getChildren().add((Node) FXMLLoader.load(getClass().getResource("/fxml/" + fxmlURL)));
-        } catch (IOException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't load fxml file into pane.", ex);
         }
     }
 
@@ -118,10 +116,8 @@ public class MainFormController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
-        } catch (IOException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't open print view.", ex);
         }
     }
 
@@ -167,10 +163,8 @@ public class MainFormController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
-        } catch (IOException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't open About.fxml.", ex);
         }
     }
 }

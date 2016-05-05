@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -11,7 +12,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -68,19 +68,20 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         WorthController wc = new WorthController();
         Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(formwork.getWorth());
 
-        if (!ProjectViewController.isProjectOpened() || waste.getProject() == null) {
-            waste.setProject(ProjectViewController.getOpenedProject());
-            formwork.setProject(ProjectViewController.getOpenedProject());
+        try {
+            if (!ProjectViewController.isProjectOpened() || waste.getProject() == null) {
+                waste.setProject(ProjectViewController.getOpenedProject());
+                formwork.setProject(ProjectViewController.getOpenedProject());
 
-            wc.create(waste);
-            wc.create(formwork);
-        } else {
-            try {
+                wc.create(waste);
+                wc.create(formwork);
+            } else {
+
                 wc.edit(waste);
                 wc.edit(formwork);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_SheetRoofController: persist method didn't work.", ex);
         }
     }
 
@@ -116,7 +117,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "Assembling_SheetRoofController: calculate method didn't work", ex);
             }
         }
 

@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -101,22 +101,22 @@ public class Project_ColourController implements Initializable {
 
         tf_PricePerLiter.textProperty().addListener((observable, oldValue, newValue) -> {
             setPricePerLiter();
-            calculateValues();
+            calculate();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
         tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_ProfiHour, profiHour);
-            calculateValues();
+            calculate();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
         tf_AdittionalColourFactor.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_AdittionalColourFactor, additionalColourFactor);
-            calculateValues();
+            calculate();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
         tf_TimeOfPainting.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_TimeOfPainting, timeofPainting);
-            calculateValues();
+            calculate();
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
         cb_Product.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Product> observable, Product oldValue, Product newValue) -> {
@@ -210,33 +210,37 @@ public class Project_ColourController implements Initializable {
         ModifyController.getInstance().setProject_colour(Boolean.FALSE);
     }
 
-    public void calculateValues() {
-        //Benötigte Farbe in m²
-        //Alte Formel-ID: FMM
-        paintArea.setWorth(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork() + additionalColourFactor.getWorth());
-        lb_PaintArea.setText(UtilityFormat.getStringForLabel(paintArea));
+    public void calculate() {
+        try {
+            //Benötigte Farbe in m²
+            //Alte Formel-ID: FMM
+            paintArea.setWorth(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork() + additionalColourFactor.getWorth());
+            lb_PaintArea.setText(UtilityFormat.getStringForLabel(paintArea));
 
-        //Benötigte Farbe in l
-        //Alte Formel-ID:FML
-        paintLiter.setWorth(paintArea.getWorth() / 10);
-        lb_PaintLiter.setText(UtilityFormat.getStringForLabel(paintLiter));
+            //Benötigte Farbe in l
+            //Alte Formel-ID:FML
+            paintLiter.setWorth(paintArea.getWorth() / 10);
+            lb_PaintLiter.setText(UtilityFormat.getStringForLabel(paintLiter));
 
-        //Montage Kosten
-        //Alte Formel-ID: KMFarbe
-        montageCost.setWorth(profiHour.getWorth() * timeofPainting.getWorth());
-        lb_MontageCost.setText(UtilityFormat.getStringForLabel(montageCost));
+            //Montage Kosten
+            //Alte Formel-ID: KMFarbe
+            montageCost.setWorth(profiHour.getWorth() * timeofPainting.getWorth());
+            lb_MontageCost.setText(UtilityFormat.getStringForLabel(montageCost));
 
-        //product Kosten
-        //Alte Formel KPFarbe
-        productCost.setWorth(pricePerLiter * paintLiter.getWorth());
-        lb_ProductCost.setText(UtilityFormat.getStringForLabel(productCost));
-        //Gesamtkosten
-        //Alte Formel: GK
-        //INSERT INTO FORMULA (ID,LONGTERM,SELECTSTATEMENT,SHORTTERM) values (NEXT VALUE FOR FORMULA_SEQ,'Gesamtkosten Farbe',
-        //'select NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KPFarbe''), 0) + 
-        // NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KMFarbe''), 0) from sysibm.sysdummy1','GKFarbe');
-        totalCost.setWorth(productCost.getWorth() + montageCost.getWorth());
-        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCost));
+            //product Kosten
+            //Alte Formel KPFarbe
+            productCost.setWorth(pricePerLiter * paintLiter.getWorth());
+            lb_ProductCost.setText(UtilityFormat.getStringForLabel(productCost));
+            //Gesamtkosten
+            //Alte Formel: GK
+            //INSERT INTO FORMULA (ID,LONGTERM,SELECTSTATEMENT,SHORTTERM) values (NEXT VALUE FOR FORMULA_SEQ,'Gesamtkosten Farbe',
+            //'select NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KPFarbe''), 0) + 
+            // NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KMFarbe''), 0) from sysibm.sysdummy1','GKFarbe');
+            totalCost.setWorth(productCost.getWorth() + montageCost.getWorth());
+            lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCost));
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Project_BaseAndRoofAreaController: calculate method didn't work.", ex);
+        }
 
         Product product = cb_Product.getSelectionModel().getSelectedItem();
 
@@ -264,28 +268,29 @@ public class Project_ColourController implements Initializable {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
 
-        if (!ProjectViewController.isProjectOpened()) {
-            profiHour.setProject(ProjectViewController.getOpenedProject());
-            additionalColourFactor.setProject(ProjectViewController.getOpenedProject());
-            timeofPainting.setProject(ProjectViewController.getOpenedProject());
-            paintArea.setProject(ProjectViewController.getOpenedProject());
-            productCost.setProject(ProjectViewController.getOpenedProject());
-            montageCost.setProject(ProjectViewController.getOpenedProject());
-            paintLiter.setProject(ProjectViewController.getOpenedProject());
-            totalCost.setProject(ProjectViewController.getOpenedProject());
-            component.setProject(ProjectViewController.getOpenedProject());
+        try {
+            if (!ProjectViewController.isProjectOpened()) {
+                profiHour.setProject(ProjectViewController.getOpenedProject());
+                additionalColourFactor.setProject(ProjectViewController.getOpenedProject());
+                timeofPainting.setProject(ProjectViewController.getOpenedProject());
+                paintArea.setProject(ProjectViewController.getOpenedProject());
+                productCost.setProject(ProjectViewController.getOpenedProject());
+                montageCost.setProject(ProjectViewController.getOpenedProject());
+                paintLiter.setProject(ProjectViewController.getOpenedProject());
+                totalCost.setProject(ProjectViewController.getOpenedProject());
+                component.setProject(ProjectViewController.getOpenedProject());
 
-            worthController.create(profiHour);
-            worthController.create(additionalColourFactor);
-            worthController.create(timeofPainting);
-            worthController.create(paintArea);
-            worthController.create(productCost);
-            worthController.create(montageCost);
-            worthController.create(paintLiter);
-            worthController.create(totalCost);
-            componentController.create(component);
-        } else {
-            try {
+                worthController.create(profiHour);
+                worthController.create(additionalColourFactor);
+                worthController.create(timeofPainting);
+                worthController.create(paintArea);
+                worthController.create(productCost);
+                worthController.create(montageCost);
+                worthController.create(paintLiter);
+                worthController.create(totalCost);
+                componentController.create(component);
+            } else {
+
                 worthController.edit(profiHour);
                 worthController.edit(additionalColourFactor);
                 worthController.edit(timeofPainting);
@@ -295,9 +300,9 @@ public class Project_ColourController implements Initializable {
                 worthController.edit(paintLiter);
                 worthController.edit(totalCost);
                 componentController.edit(component);
-            } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
             }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Project_ColourController: persist method didn't work.", ex);
         }
     }
 
@@ -310,6 +315,6 @@ public class Project_ColourController implements Initializable {
 
         }
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(newVal) + " m²");
-        calculateValues();
+        calculate();
     }
 }

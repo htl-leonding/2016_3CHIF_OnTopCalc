@@ -1,11 +1,10 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.MainApp;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
-import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
 import java.net.URL;
@@ -183,8 +182,9 @@ public class ProjectViewController extends Observable implements Initializable, 
             }
 
             ProjectController projectController = new ProjectController();
-            if (projectOpened) {
-                try {
+            try {
+                if (projectOpened) {
+
                     openedProject.setClient(client);
                     openedProject.setProjectName(informations.getProjectName());
                     openedProject.setDescription(informations.getDescription());
@@ -192,17 +192,18 @@ public class ProjectViewController extends Observable implements Initializable, 
                     openedProject.setConstructionType(informations.getConstructionType());
                     openedProject.setRoofForm(informations.getRoofForm());
                     projectController.edit(openedProject);
-                } catch (NonexistentEntityException ex) {
-                    Logging.getLogger().log(Level.SEVERE, "", ex);
+
+                } else {
+                    openedProject.setClient(client);
+                    openedProject.setProjectName(informations.getProjectName());
+                    openedProject.setDescription(informations.getDescription());
+                    openedProject.setInvoiceNumber(informations.getInvoiceNumber());
+                    openedProject.setConstructionType(informations.getConstructionType());
+                    openedProject.setRoofForm(informations.getRoofForm());
+                    projectController.create(openedProject);
                 }
-            } else {
-                openedProject.setClient(client);
-                openedProject.setProjectName(informations.getProjectName());
-                openedProject.setDescription(informations.getDescription());
-                openedProject.setInvoiceNumber(informations.getInvoiceNumber());
-                openedProject.setConstructionType(informations.getConstructionType());
-                openedProject.setRoofForm(informations.getRoofForm());
-                projectController.create(openedProject);
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "Couldn't persist project.", ex);
             }
 
             if (openedProject.getWorths().isEmpty()) {
@@ -351,13 +352,11 @@ public class ProjectViewController extends Observable implements Initializable, 
         for (Tab tab : tb_MainPane.getTabs()) {
             String text = tab.getText();
             if (idx < modified.size() && modified.get(idx) == true) {
-                if(!text.contains("*"))
-                    tab.setText("*"+text);
-            }
-            else
-            {
-                if(text.contains("*"))
-                    tab.setText(text.substring(1));
+                if (!text.contains("*")) {
+                    tab.setText("*" + text);
+                }
+            } else if (text.contains("*")) {
+                tab.setText(text.substring(1));
             }
             idx++;
         }

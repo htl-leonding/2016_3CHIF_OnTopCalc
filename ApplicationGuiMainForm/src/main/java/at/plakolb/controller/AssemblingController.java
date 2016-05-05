@@ -1,3 +1,4 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
 import java.net.URL;
@@ -48,7 +49,7 @@ public class AssemblingController implements Initializable,Observer {
 
     public void persist() {
         Assembling_FormworkController.getInstance().persist();
-        Assembling_VisibleFormworkController.getInstance().persistVisibleFormwork();
+        Assembling_VisibleFormworkController.getInstance().persist();
         Assembling_FoilController.getInstance().persist();
         Assembling_SealingBandController.getInstance().persist();
         Assembling_CounterBattenController.getInstance().persist();

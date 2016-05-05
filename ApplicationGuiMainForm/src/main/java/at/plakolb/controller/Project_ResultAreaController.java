@@ -1,12 +1,11 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Worth;
-import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.Observable;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -242,10 +240,8 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
             }
 
-        } catch (IOException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "Couldn't add new tab.", ex);
         }
 
     }
@@ -257,31 +253,32 @@ public class Project_ResultAreaController extends Observable implements Initiali
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
             WorthController worthController = new WorthController();
+            try {
+                if (!ProjectViewController.isProjectOpened()) {
+                    worthArea.setProject(project);
+                    worthRoofArea.setProject(project);
+                    worthRoofOverhang.setProject(project);
+                    worthRoofAreaWithRoofOverhang.setProject(project);
 
-            if (!ProjectViewController.isProjectOpened()) {
-                worthArea.setProject(project);
-                worthRoofArea.setProject(project);
-                worthRoofOverhang.setProject(project);
-                worthRoofAreaWithRoofOverhang.setProject(project);
+                    worthController.create(worthArea);
+                    worthController.create(worthRoofArea);
+                    worthController.create(worthRoofOverhang);
+                    worthController.create(worthRoofAreaWithRoofOverhang);
+                } else {
 
-                worthController.create(worthArea);
-                worthController.create(worthRoofArea);
-                worthController.create(worthRoofOverhang);
-                worthController.create(worthRoofAreaWithRoofOverhang);
-            } else {
-                try {
                     worthController.edit(worthArea);
                     worthController.edit(worthRoofArea);
                     worthController.edit(worthRoofOverhang);
                     worthController.edit(worthRoofAreaWithRoofOverhang);
-                } catch (Exception ex) {
-                    Logging.getLogger().log(Level.SEVERE, "", ex);
+
                 }
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "Project_ResultAreaController: persist method didn't work.", ex);
             }
         }
 
         for (Project_BaseAndRoofAreaController c : areaController) {
-            c.persistArea();
+            c.persist();
         }
     }
 

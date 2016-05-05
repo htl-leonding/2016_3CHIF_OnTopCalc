@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Client;
@@ -10,10 +11,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -142,7 +141,7 @@ public class AllProjectsController implements Initializable {
                                     PrintProjectController.getInstance().SetProject(p);
                                     stage.show();
                                 } catch (IOException ex) {
-                                    Logging.getLogger().log(Level.SEVERE, "Couldn't open the  printView.", ex);
+                                    Logging.getLogger().log(Level.SEVERE, "Couldn't open PrintProject.fxml.", ex);
                                 }
                             });
                             costingP.setOnMouseClicked((MouseEvent event) -> {
@@ -180,7 +179,7 @@ public class AllProjectsController implements Initializable {
                                     c.sendToRecyclebin(p.getId());
                                     tv_ProjectList.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
                                 } catch (NonexistentEntityException ex) {
-                                    Logging.getLogger().log(Level.SEVERE, "Couldn't find project.", ex);
+                                    Logging.getLogger().log(Level.SEVERE, "Couldn't find project to delete.", ex);
                                 }
                             });
 

@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -211,7 +211,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                             }
                                             ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
                                         } catch (Exception ex) {
-                                            Logging.getLogger().log(Level.SEVERE, "", ex);
+                                            Logging.getLogger().log(Level.SEVERE, "Couldn't delete material.", ex);
                                         } finally {
                                             refreshTable();
                                         }
@@ -229,7 +229,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                             }
                                             ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
                                         } catch (Exception ex) {
-                                            Logging.getLogger().log(Level.SEVERE, "", ex);
+                                            Logging.getLogger().log(Level.SEVERE, "Couldn't delete material.", ex);
                                         } finally {
                                             refreshTable();
                                         }
@@ -268,7 +268,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                     stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                     stage.show();
                 } catch (IOException ex) {
-                    Logging.getLogger().log(Level.SEVERE, "", ex);
+                    Logging.getLogger().log(Level.SEVERE, "Couldn't open MaterialModifier.fxml.", ex);
                 }
                 MaterialModifierController.getInstance().loadProductIntoModifier(tv_Materials.getSelectionModel().getSelectedItem());
                 ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);

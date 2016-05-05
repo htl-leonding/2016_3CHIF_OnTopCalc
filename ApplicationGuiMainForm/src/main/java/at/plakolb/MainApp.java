@@ -1,3 +1,4 @@
+/*	HTL Leonding	*/
 package at.plakolb;
 
 import at.plakolb.calculationlogic.db.controller.CategoryController;

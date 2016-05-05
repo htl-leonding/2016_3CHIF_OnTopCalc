@@ -1,6 +1,7 @@
+/*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.entity.Project;
@@ -14,7 +15,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -137,7 +137,7 @@ public class OptionsController implements Initializable, Observer {
                                             new ProjectController().edit(project);
                                             updateData();
                                         } catch (NonexistentEntityException ex) {
-                                            Logging.getLogger().log(Level.SEVERE, "", ex);
+                                            Logging.getLogger().log(Level.SEVERE, "Project couldn't be restored.", ex);
                                         }
                                         updateData();
                                     });
@@ -220,7 +220,7 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, null, ex);
             }
         });
 
@@ -241,7 +241,7 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, null, ex);
             }
         });
         tf_defaultBackupDirectory.setOnMouseClicked((event) -> {
@@ -262,7 +262,7 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, null, ex);
             }
         });
 
@@ -283,7 +283,7 @@ public class OptionsController implements Initializable, Observer {
                     tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
                 }
             } catch (Exception ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, null, ex);
             }
         });
 

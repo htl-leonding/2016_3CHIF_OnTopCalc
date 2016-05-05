@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.Logging;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.util.Print;
@@ -19,16 +19,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -164,7 +161,7 @@ public class PrintProjectController implements Initializable {
             }
             UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
         } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, null, ex);
         } finally {
             refreshPrintAbility();
         }
@@ -211,12 +208,11 @@ public class PrintProjectController implements Initializable {
                 try {
                     print.print(printService);
                 } catch (PrinterException | IOException ex) {
-                    Logging.getLogger().log(Level.SEVERE, "", ex);
-                    new Alert(Alert.AlertType.ERROR, ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                    Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
                 }
             }
         } catch (DocumentException | FileNotFoundException ex) {
-            Logging.getLogger().log(Level.SEVERE, "", ex);
+            Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
         }
     }
 
@@ -226,7 +222,7 @@ public class PrintProjectController implements Initializable {
             try {
                 Desktop.getDesktop().open(new File(path));
             } catch (IOException ex) {
-                Logging.getLogger().log(Level.SEVERE, "", ex);
+                Logging.getLogger().log(Level.SEVERE, "ShowPDF method didn't work.", ex);
             }
         }
     }
