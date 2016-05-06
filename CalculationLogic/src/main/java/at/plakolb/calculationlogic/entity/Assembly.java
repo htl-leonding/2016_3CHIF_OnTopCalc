@@ -33,8 +33,8 @@ public class Assembly implements Serializable {
     private Component component;
     @ManyToOne
     private Project project;
-    private int numberOfComponents;
-    private double price;
+    private Double numberOfComponents;
+    private Double price;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date creationDate;
 
@@ -42,7 +42,7 @@ public class Assembly implements Serializable {
         creationDate = new Date();
     }
 
-    public Assembly(Product product, Component component, Project project, int number, double price) {
+    public Assembly(Product product, Component component, Project project, Double number, Double price) {
         this();
         this.product = product;    
         this.numberOfComponents = number;
@@ -70,11 +70,11 @@ public class Assembly implements Serializable {
         this.id = id;
     }
 
-    public int getNumberOfComponents() {
+    public Double getNumberOfComponents() {
         return numberOfComponents;
     }
 
-    public void setNumberOfComponents(int number) {
+    public void setNumberOfComponents(Double number) {
         this.numberOfComponents = number;
     }
 
@@ -94,11 +94,11 @@ public class Assembly implements Serializable {
         this.project = project;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

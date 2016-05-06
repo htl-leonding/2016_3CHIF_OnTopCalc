@@ -12,7 +12,7 @@ import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
-import java.io.IOException;
+import at.plakolb.edit.ComponentValueCell;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -26,11 +26,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -42,8 +38,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -63,7 +57,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     @FXML
     private TableColumn<Component, String> tc_Length;
     @FXML
-    private TableColumn<Component, Integer> tc_Amount;
+    private TableColumn<Component, String> tc_Amount;
     @FXML
     private TableColumn<Component, String> tc_Volume;
     @FXML
@@ -115,12 +109,15 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
             components = new ComponentController().findComponentsByProjectIdAndComponentType(ProjectViewController.getOpenedProject().getId(), "Kubikmeter");
         }
 
+        tv_Materials.setEditable(true);
+
         tf_Amount.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             tf_Amount.setText(tf_Amount.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_Amount.setText(UtilityFormat.removeUnnecessaryCommas(tf_Amount.getText()));
         });
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
+
         tc_ProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
 
         tc_Length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
@@ -130,8 +127,34 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
+        tc_Length.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
+        tc_Length.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
+            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            if (!event.getNewValue().equals("")) {
+                component.setLengthComponent(Double.parseDouble(event.getNewValue()));
+            } else {
+                component.setLengthComponent(null);
+            }
+            refreshTable();
+        });
 
-        tc_Amount.setCellValueFactory(new PropertyValueFactory<>("numberOfProducts"));
+        tc_Amount.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
+            if (param.getValue().getNumberOfProducts() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getNumberOfProducts()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+        tc_Amount.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
+        tc_Amount.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
+            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            if (!event.getNewValue().equals("")) {
+                component.setNumberOfProducts(Double.parseDouble(event.getNewValue()));
+            } else {
+                component.setNumberOfProducts(null);
+            }
+            refreshTable();
+        });
 
         tc_Volume.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
@@ -142,6 +165,12 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
             Component component = param.getValue();
             return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts())));
         });
+        tc_PricePerCubic.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
+        tc_PricePerCubic.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
+            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            component.setPriceComponent(((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts()) * Double.parseDouble(event.getNewValue()));
+            refreshTable();
+        });
 
         tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getPriceComponent() != null) {
@@ -149,6 +178,16 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
+        });
+        tc_Price.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
+        tc_Price.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
+            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            if (!event.getNewValue().equals("")) {
+                component.setPriceComponent(Double.parseDouble(event.getNewValue()));
+            } else {
+                component.setPriceComponent(null);
+            }
+            refreshTable();
         });
 
         tc_CuttingHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
@@ -158,6 +197,16 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
+        tc_CuttingHours.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
+        tc_CuttingHours.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
+            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            if (!event.getNewValue().equals("")) {
+                component.setTailoringHours(Double.parseDouble(event.getNewValue()));
+            } else {
+                component.setTailoringHours(null);
+            }
+            refreshTable();
+        });
 
         tc_CuttingPricePerHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getTailoringPricePerHour() != null) {
@@ -165,6 +214,16 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
+        });
+        tc_CuttingPricePerHours.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
+        tc_CuttingPricePerHours.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
+            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            if (!event.getNewValue().equals("")) {
+                component.setTailoringPricePerHour(Double.parseDouble(event.getNewValue()));
+            } else {
+                component.setTailoringPricePerHour(null);
+            }
+            refreshTable();
         });
 
         tc_CuttingPrice.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
@@ -254,26 +313,6 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         cb_Product.getSelectionModel().select(0);
 
         refreshTable();
-
-        tv_Materials.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && tv_Materials.getSelectionModel().getSelectedItem() != null) {
-                Parent root;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/fxml/MaterialModifier.fxml"));
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setTitle("Material");
-                    stage.setScene(scene);
-                    stage.initModality(Modality.WINDOW_MODAL);
-                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-                    stage.show();
-                } catch (IOException ex) {
-                    Logging.getLogger().log(Level.SEVERE, "Couldn't open MaterialModifier.fxml.", ex);
-                }
-                MaterialModifierController.getInstance().loadProductIntoModifier(tv_Materials.getSelectionModel().getSelectedItem());
-                ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
-            }
-        });
     }
 
     public List<Component> getComponents() {

@@ -10,6 +10,7 @@ import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+import at.plakolb.edit.AssemblyValueCell;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -57,7 +58,7 @@ public class Project_ConstructionMaterialController implements Initializable {
     @FXML
     private TableColumn<Assembly, String> tc_Product;
     @FXML
-    private TableColumn<Assembly, Integer> tc_Amount;
+    private TableColumn<Assembly, String> tc_Amount;
     @FXML
     private TableColumn<Assembly, String> tc_Price;
     @FXML
@@ -91,23 +92,57 @@ public class Project_ConstructionMaterialController implements Initializable {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
+        tv_Assembly.setEditable(true);
+
         tf_Amount.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             tf_Amount.setText(tf_Amount.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_Amount.setText(UtilityFormat.removeUnnecessaryCommas(tf_Amount.getText()));
         });
-        
+        tc_Amount.setCellFactory((TableColumn<Assembly, String> param) -> new AssemblyValueCell());
+        tc_Amount.setOnEditCommit((TableColumn.CellEditEvent<Assembly, String> event) -> {
+            Assembly assembly = ((Assembly) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            if (!event.getNewValue().equals("")) {
+                assembly.setNumberOfComponents(Double.parseDouble(event.getNewValue()));
+            } else {
+                assembly.setNumberOfComponents(null);
+            }
+            refreshListView();
+        });
+
         tf_Price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             tf_Price.setText(tf_Price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
         });
 
         tc_Product.setCellValueFactory(new PropertyValueFactory<>("product"));
-        tc_Amount.setCellValueFactory(new PropertyValueFactory<>("numberOfComponents"));
+        
+        tc_Amount.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param) -> {
+            if (param.getValue().getNumberOfComponents() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getNumberOfComponents()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+        
         tc_Component.setCellValueFactory(new PropertyValueFactory<>("component"));
 
-        tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param)
-                -> new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPrice()))
-        );
+        tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param) -> {
+            if (param.getValue().getPrice() != null) {
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPrice()));
+            } else {
+                return new ReadOnlyObjectWrapper<>("");
+            }
+        });
+        tc_Price.setCellFactory((TableColumn<Assembly, String> param) -> new AssemblyValueCell());
+        tc_Price.setOnEditCommit((TableColumn.CellEditEvent<Assembly, String> event) -> {
+            Assembly assembly = ((Assembly) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            if (!event.getNewValue().equals("")) {
+                assembly.setPrice(Double.parseDouble(event.getNewValue()));
+            } else {
+                assembly.setPrice(null);
+            }
+            refreshListView();
+        });
 
         tc_TotalPrice.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param)
                 -> new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPrice() * param.getValue().getNumberOfComponents()) + " €")
@@ -233,7 +268,7 @@ public class Project_ConstructionMaterialController implements Initializable {
     @FXML
     private void addMaterial(ActionEvent event) {
 
-        int amount = 0;
+        double amount = 0;
         double price = 0;
         String errorMessage = "";
 
@@ -245,7 +280,7 @@ public class Project_ConstructionMaterialController implements Initializable {
         }
 
         try {
-            amount = Integer.parseInt(tf_Amount.getText());
+            amount = Double.parseDouble(tf_Amount.getText());
             price = Double.parseDouble(tf_Price.getText());
 
             if (amount == 0) {
