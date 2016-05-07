@@ -55,6 +55,9 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         waste = new Worth(parameterController.findParameterPByShortTerm("VVS"));
         formwork = new Worth(parameterController.findParameterPByShortTerm("VollS"));
 
+        lb_waste.setText(UtilityFormat.getStringForLabel(waste));
+        lb_formwork.setText(UtilityFormat.getStringForLabel(formwork));
+
         tf_wastePercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_wastePercent, waste);
             calculate();

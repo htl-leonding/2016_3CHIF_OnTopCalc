@@ -97,6 +97,16 @@ public class Assembling_FoilController implements Initializable, Observer {
         assemblingCosts = new Worth(parameterController.findParameterPByShortTerm("KMF"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKF"));
 
+        lb_blend.setText(UtilityFormat.getStringForLabel(abatementArea));
+        lb_foil.setText(UtilityFormat.getStringForLabel(foil));
+        lb_montageCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
+        lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+        lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
+        tf_blend.setText(UtilityFormat.getStringForTextField(abatementPercent));
+        tf_time.setText(UtilityFormat.getStringForTextField(assemblingDuration));
+        tf_workerCosts.setText(UtilityFormat.getStringForTextField(workerCosts));
+
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculate();
@@ -300,15 +310,15 @@ public class Assembling_FoilController implements Initializable, Observer {
                 worthController.create(totalCosts);
                 componentController.create(component);
             } else {
-                    worthController.edit(abatementArea);
-                    worthController.edit(assemblingCosts);
-                    worthController.edit(assemblingDuration);
-                    worthController.edit(productCosts);
-                    worthController.edit(abatementPercent);
-                    worthController.edit(foil);
-                    worthController.edit(workerCosts);
-                    worthController.edit(totalCosts);
-                    componentController.edit(component);
+                worthController.edit(abatementArea);
+                worthController.edit(assemblingCosts);
+                worthController.edit(assemblingDuration);
+                worthController.edit(productCosts);
+                worthController.edit(abatementPercent);
+                worthController.edit(foil);
+                worthController.edit(workerCosts);
+                worthController.edit(totalCosts);
+                componentController.edit(component);
             }
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Assembling_FoilController: persist method didn't work.", ex);

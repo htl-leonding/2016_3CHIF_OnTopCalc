@@ -105,6 +105,16 @@ public class Assembling_SealingBandController implements Initializable, Observer
         montageCosts = new Worth(parameterController.findParameterPByShortTerm("KMonD"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKND"));
 
+        tf_blend.setText(UtilityFormat.getStringForTextField(blend));
+        tf_price.setText(UtilityFormat.getStringForTextField(workerCosts));
+        tf_duration.setText(UtilityFormat.getStringForTextField(duration));
+
+        lb_blend.setText(UtilityFormat.getStringForLabel(waste));
+        lb_sealingBand.setText(UtilityFormat.getStringForLabel(sealingBand));
+        lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+        lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
+        lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
         tf_priceLinearMeter.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerLinearMeter();
             calculate();

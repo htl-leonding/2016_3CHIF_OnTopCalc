@@ -462,7 +462,6 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                 }
             }
         }
-
         return belongings;
     }
 }

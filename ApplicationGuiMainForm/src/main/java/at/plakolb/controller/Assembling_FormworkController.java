@@ -96,6 +96,15 @@ public class Assembling_FormworkController implements Initializable, Observer {
         costsMontage = new Worth(parameterController.findParameterPByShortTerm("KMS"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKS"));
 
+        lb_Waste.setText(UtilityFormat.getStringForLabel(waste));
+        lb_Formwork.setText(UtilityFormat.getStringForLabel(formwork));
+        lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+        lb_AssebmlyCosts.setText(UtilityFormat.getStringForLabel(costsMontage));
+        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+        tf_Blend.setText(UtilityFormat.getStringForTextField(blend));
+        tf_Wage.setText(UtilityFormat.getStringForTextField(wage));
+        tf_Time.setText(UtilityFormat.getStringForTextField(time));
+
         cb_Formwork.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             tf_Price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
         });
@@ -140,11 +149,10 @@ public class Assembling_FormworkController implements Initializable, Observer {
     private void setPrice() {
         tf_Price.setText(tf_Price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
         tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
-        
+
         if (tf_Price.getText().isEmpty()) {
             this.price = 0;
-        }
-        else if (Double.valueOf(tf_Price.getText()) < 0) {
+        } else if (Double.valueOf(tf_Price.getText()) < 0) {
             new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
         } else {
             this.price = Double.valueOf(tf_Price.getText());
@@ -324,15 +332,15 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 worthController.create(totalCosts);
                 componentController.create(component);
             } else {
-                    worthController.edit(blend);
-                    worthController.edit(time);
-                    worthController.edit(formwork);
-                    worthController.edit(productCosts);
-                    worthController.edit(wage);
-                    worthController.edit(waste);
-                    worthController.edit(costsMontage);
-                    worthController.edit(totalCosts);
-                    componentController.edit(component);
+                worthController.edit(blend);
+                worthController.edit(time);
+                worthController.edit(formwork);
+                worthController.edit(productCosts);
+                worthController.edit(wage);
+                worthController.edit(waste);
+                worthController.edit(costsMontage);
+                worthController.edit(totalCosts);
+                componentController.edit(component);
             }
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Assembling_FormworkController: perist method didn't work.", ex);

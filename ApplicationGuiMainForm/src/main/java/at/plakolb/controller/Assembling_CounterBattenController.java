@@ -99,6 +99,16 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         montageCost = new Worth(parameterController.findParameterPByShortTerm("KMonKL"));
         totalCost = new Worth(parameterController.findParameterPByShortTerm("GKKL"));
 
+        tf_profiHour.setText(UtilityFormat.getStringForTextField(profiHour));
+        tf_waste.setText(UtilityFormat.getStringForTextField(waste));
+        tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(pricePerMeter));
+        tf_timeMontage.setText(UtilityFormat.getStringForTextField(timeMontage));
+        lb_montageCost.setText(UtilityFormat.getStringForLabel(montageCost));
+        lb_counterBattern.setText(UtilityFormat.getStringForLabel(counterBattern));
+        lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));
+        lb_productCost.setText(UtilityFormat.getStringForLabel(productCost));
+        lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
+
         cb_counterBattern.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             pricePerMeter = newValue.getPriceUnit();
             tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));

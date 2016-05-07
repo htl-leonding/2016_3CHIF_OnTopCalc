@@ -61,6 +61,10 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         length = new Worth(parameterController.findParameterPByShortTerm("LL"));
         lengthNoWaste = new Worth(parameterController.findParameterPByShortTerm("LDOV"));
 
+        lb_length.setText(UtilityFormat.getStringForLabel(length));
+        lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
+        lb_waste.setText(UtilityFormat.getStringForLabel(waste));
+
         tf_slatSpacing.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_slatSpacing, slatSpacing);
             calculate();

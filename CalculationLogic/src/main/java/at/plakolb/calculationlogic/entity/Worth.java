@@ -32,13 +32,16 @@ public class Worth implements Serializable {
         this();
         this.parameter = parameter;
         this.shortTerm = parameter.getShortTerm();
+        if (parameter.isEditable()) {
+            this.worth = parameter.getDefaultValue();
+        }
+
     }
 
     public Worth(Project project, ParameterP parameter, double worth) {
         this(parameter);
         this.worth = worth;
         setProject(project);
-
     }
 
     /**

@@ -101,6 +101,13 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         productCosts = new Worth(parameterController.findParameterPByShortTerm("KPLatVoll"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKLatVoll"));
 
+        lb_assemblingCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
+        lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+        lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
+        tf_assemblingDuration.setText(UtilityFormat.getStringForTextField(assemblingDuration));
+        tf_workCosts.setText(UtilityFormat.getStringForTextField(workCosts));
+
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPrice();
             calculate();

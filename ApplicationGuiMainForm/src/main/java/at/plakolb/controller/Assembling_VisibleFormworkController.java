@@ -96,6 +96,16 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GKSS"));
         workerCosts = new Worth(parameterController.findParameterPByShortTerm("KPSS"));
 
+        tf_AbatementPercent.setText(UtilityFormat.getStringForTextField(abatementPercent));
+        tf_AssemblingDuration.setText(UtilityFormat.getStringForTextField(assemblingDuration));
+        tf_PricePerSquare.setText(UtilityFormat.getStringForTextField(pricePerSquare));
+        tf_WorkerCosts.setText(UtilityFormat.getStringForTextField(workerCosts));
+        lb_AbatementArea.setText(UtilityFormat.getStringForLabel(abatementArea));
+        lb_AssemblingCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
+        lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(visibleFormwork));
+
         tf_PricePerSquare.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculate();
