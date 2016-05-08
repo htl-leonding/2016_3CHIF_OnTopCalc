@@ -109,6 +109,18 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         decimalFormat = new DecimalFormat("#.##");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
+        tf_Length.setText(UtilityFormat.getStringForTextField(length));
+        tf_Width.setText(UtilityFormat.getStringForTextField(width));
+        lb_BaseArea.setText(UtilityFormat.getStringForLabel(baseArea));
+        tf_Angle.setText(UtilityFormat.getStringForTextField(angle));
+        lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea));
+        tf_Eaves.setText(UtilityFormat.getStringForTextField(eaves));
+        tf_Ridge.setText(UtilityFormat.getStringForTextField(ridge));
+        tf_GableRight.setText(UtilityFormat.getStringForTextField(gableRight));
+        tf_GableLeft.setText(UtilityFormat.getStringForTextField(gableLeft));
+        lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge));
+        lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea));
+
         tf_Length.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             calculate(tf_Length, length);
         });

@@ -1,8 +1,12 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.calculationlogic.db.controller.AssemblyController;
+import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProductController;
+import at.plakolb.calculationlogic.entity.Assembly;
+import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
@@ -14,6 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -213,17 +219,38 @@ public class ProductListController implements Initializable {
                             delete.setTooltip(new Tooltip("Produkt löschen"));
                             delete.setOnMouseClicked((MouseEvent event) -> {
                                 try {
-                                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie das Produkt wirklich endgültig löschen. Vorsicht, dieser Vorgang kann nicht mehr rückgängig gemacht werden.",
-                                            ButtonType.YES, ButtonType.CANCEL);
-                                    alert.showAndWait();
-                                    if (alert.getResult() == ButtonType.YES) {
+                                    boolean isUsed = false;
+
+                                    for (Component component : new ComponentController().findAll()) {
+                                        if (component.getProduct() != null && component.getProduct().equals(tv_Products.getSelectionModel().getSelectedItem())) {
+                                            isUsed = true;
+                                        }
+                                    }
+
+                                    for (Assembly assembly : new AssemblyController().findAll()) {
+                                        if (assembly.getProduct() != null && assembly.getProduct().equals(tv_Products.getSelectionModel().getSelectedItem())) {
+                                            isUsed = true;
+                                        }
+                                    }
+
+                                    if (isUsed) {
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Vorsicht! Das ausgewählte Produkt wird bereits bei verschiedenen Bauteilen verwendet. Wenn Sie es jetzt fortfahren werden diese Bauteile auch gelöscht.",
+                                                ButtonType.YES, ButtonType.CANCEL);
+                                        alert.showAndWait();
+                                        if (alert.getResult() == ButtonType.YES) {
+                                            new ProductController().destroy(tv_Products.getSelectionModel().getSelectedItem().getId());
+                                            refreshTable();
+                                        }
+                                    } else {
                                         new ProductController().destroy(tv_Products.getSelectionModel().getSelectedItem().getId());
                                         refreshTable();
                                     }
+
                                 } catch (Exception ex) {
                                     Logging.getLogger().log(Level.SEVERE, "Couldn't delete product.", ex);
                                 }
-                            });
+                            }
+                            );
                             setGraphic(delete);
                             setText(null);
                         }
@@ -331,9 +358,9 @@ public class ProductListController implements Initializable {
      * Refreshes the Table View.
      */
     public void refreshTable() {
-        persistsProducts();
         filterList(ProductType.getProductType(mb_ProductTypesFilter.getText()));
         tv_Products.getColumns().get(0).setVisible(false);
         tv_Products.getColumns().get(0).setVisible(true);
+        persistsProducts();
     }
 }

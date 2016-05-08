@@ -77,6 +77,15 @@ public class Project_TransportController extends java.util.Observable implements
         abidanceCosts = new Worth(parameterController.findParameterPByShortTerm("KA"));
         totalCosts = new Worth(parameterController.findParameterPByShortTerm("GPT"));
 
+        tf_pkwMoney.setText(UtilityFormat.getStringForTextField(kilometerAllowance));
+        tf_pkwDistance.setText(UtilityFormat.getStringForTextField(distance));
+        tf_pkwDays.setText(UtilityFormat.getStringForTextField(days));
+        tf_lkwPrice.setText(UtilityFormat.getStringForTextField(pricePerHour));
+        tf_lkwDuration.setText(UtilityFormat.getStringForTextField(duration));
+        lb_PriceTransport.setText(UtilityFormat.getStringForLabel(transportCosts));
+        lb_PriceStay.setText(UtilityFormat.getStringForLabel(abidanceCosts));
+        lb_PriceComplete.setText(UtilityFormat.getStringForLabel(totalCosts));
+
         tf_pkwMoney.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_pkwMoney, kilometerAllowance);
             calculate();

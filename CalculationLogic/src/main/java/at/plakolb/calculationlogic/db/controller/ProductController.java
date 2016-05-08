@@ -2,6 +2,8 @@ package at.plakolb.calculationlogic.db.controller;
 
 import at.plakolb.calculationlogic.db.JpaUtils;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
+import at.plakolb.calculationlogic.entity.Assembly;
+import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.math.BigDecimal;
@@ -17,7 +19,7 @@ import javax.persistence.criteria.Root;
  * @author Kepplinger
  */
 public class ProductController {
-    
+
     EntityManager em;
 
     public ProductController() {
@@ -59,8 +61,31 @@ public class ProductController {
 
     public void destroy(Long id) throws NonexistentEntityException {
         try {
+            Product product = findProduct(id);
+
+            ComponentController componentController = new ComponentController();
+            AssemblyController assemblyController = new AssemblyController();
+
+            for (Component component : componentController.findAll()) {
+                for (Assembly assembly : assemblyController.findAll()) {
+                    if (assembly.getComponent().equals(component) || assembly.getComponent().getId().equals(component.getId())) {
+                        if (assembly.getId() != null) {
+                            new AssemblyController().destroy(assembly.getId());
+                        }
+                    }
+                }
+                if (component.getProduct() != null && component.getProduct().equals(product)) {
+                    componentController.destroy(component.getId());
+                }
+            }
+
+            for (Assembly assembly : assemblyController.findAll()) {
+                if (assembly.getProduct() != null && assembly.getProduct().equals(product)) {
+                    assemblyController.destroy(assembly.getId());
+                }
+            }
+
             em.getTransaction().begin();
-            Product product;
             try {
                 product = em.getReference(Product.class, id);
                 product.getId();
@@ -114,7 +139,7 @@ public class ProductController {
             em.clear();
         }
     }
-    
+
     public List<Product> findByProductTypeOrderByName(ProductType productType) {
         try {
             //Noch von Pilz Elisabeth
@@ -123,9 +148,8 @@ public class ProductController {
                     + "then to_number(regexp_substr(name,'[0-9]+')) else null end nulls last, name", Product.class).
                     setParameter(1, productType).
                     getResultList();
-            */
-            
-            
+             */
+
             if (productType == null) {
                 return null;
             }
@@ -140,7 +164,7 @@ public class ProductController {
 
     public Product findByName(String name) {
         try {
-            return  (Product) em.createNativeQuery("select * from Product p where p.name = ?", Product.class).
+            return (Product) em.createNativeQuery("select * from Product p where p.name = ?", Product.class).
                     setParameter(1, name).
                     getSingleResult();
         } finally {

@@ -192,8 +192,30 @@ public class ProjectController {
 
     public boolean delete(long projectId) {
         try {
+            WorthController worthController = new WorthController();
+            for (Worth worth : findProject(projectId).getWorths()) {
+                if (worth.getId() != null) {
+                    worthController.destroy(worth.getId());
+                }
+            }
+            
+            ComponentController componentController = new ComponentController();
+            for (Component component : componentController.findComponentsByProjectId(projectId)) {
+                if (component.getId() != null) {
+                    componentController.destroy(component.getId());
+                }
+            }
+            
+            AssemblyController assemblyController = new AssemblyController();
+            for (Assembly assembly : assemblyController.findAssembliesByProjectId(projectId)) {
+                if (assembly.getId() != null) {
+                    assemblyController.destroy(assembly.getId());
+                }
+            }
+
             em = JpaUtils.getEntityManager();
             em.getTransaction().begin();
+
             int i = em.createNativeQuery("delete from Project p where p.id = ?").
                     setParameter(1, projectId).executeUpdate();
             em.getTransaction().commit();

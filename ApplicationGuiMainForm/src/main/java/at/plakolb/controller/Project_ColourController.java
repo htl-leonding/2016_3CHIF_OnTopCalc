@@ -99,6 +99,17 @@ public class Project_ColourController implements Initializable {
         paintLiter = new Worth(parameterController.findParameterPByShortTerm("FML"));
         totalCost = new Worth(parameterController.findParameterPByShortTerm("GKFarbe"));
 
+        lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()) + " m²");
+        tf_ProfiHour.setText(UtilityFormat.getStringForTextField(profiHour));
+        tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(additionalColourFactor));
+        tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
+        tf_TimeOfPainting.setText(UtilityFormat.getStringForTextField(timeofPainting));
+        lb_MontageCost.setText(UtilityFormat.getStringForLabel(montageCost));
+        lb_PaintArea.setText(UtilityFormat.getStringForLabel(paintArea));
+        lb_PaintLiter.setText(UtilityFormat.getStringForLabel(paintLiter));
+        lb_ProductCost.setText(UtilityFormat.getStringForLabel(productCost));
+        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCost));
+
         tf_PricePerLiter.textProperty().addListener((observable, oldValue, newValue) -> {
             setPricePerLiter();
             calculate();

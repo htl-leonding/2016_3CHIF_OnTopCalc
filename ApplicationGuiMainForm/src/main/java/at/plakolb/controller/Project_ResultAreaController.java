@@ -170,76 +170,80 @@ public class Project_ResultAreaController extends Observable implements Initiali
     @FXML
     private void addTab(Event event) {
         try {
-            URL location = getClass().getResource("/fxml/Project_BaseAndRoofArea.fxml");
+            if (tabs != null) {
+                URL location = getClass().getResource("/fxml/Project_BaseAndRoofArea.fxml");
 
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(location);
-            fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
-            Parent fxmlNode = (Parent) fxmlLoader.load(location.openStream());
-            Project_BaseAndRoofAreaController controller = (Project_BaseAndRoofAreaController) fxmlLoader.getController();
-            controller.setID(getNextID());
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(location);
+                fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+                Parent fxmlNode = (Parent) fxmlLoader.load(location.openStream());
+                Project_BaseAndRoofAreaController controller = (Project_BaseAndRoofAreaController) fxmlLoader.getController();
+                controller.setID(getNextID());
 
-            addObserver(controller);
-            fxmlNode.setUserData(controller);
-            areaController.add(controller);
-            Tab newTab = new Tab("Grund- und Dachfläche", fxmlNode);
+                addObserver(controller);
+                fxmlNode.setUserData(controller);
 
-            newTab.setOnCloseRequest(value -> {
+                areaController.add(controller);
 
-                Tab actTab = (Tab) value.getSource();
-                Object o = actTab.getContent().getUserData();
-                if (o != null) {
-                    Project_BaseAndRoofAreaController ctrl = (Project_BaseAndRoofAreaController) o;
+                Tab newTab = new Tab("Grund- und Dachfläche", fxmlNode);
 
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Grund- und Dachflächenberechnung");
-                    alert.setHeaderText("Wollen Sie diesen Reiter wirklich löschen?");
-                    alert.getButtonTypes().clear();
-                    alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+                newTab.setOnCloseRequest(value -> {
 
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.YES) {
-                        Project project = ProjectViewController.getOpenedProject();
-                        if (project != null) {
-                            areaController.remove(o);
-                            calcArea();
-                        }
-                        //set closable for tabs
-                        if (tabs.size() > 3) {
-                            for (Tab tab : tabs) {
-                                tab.setClosable(true);
+                    Tab actTab = (Tab) value.getSource();
+                    Object o = actTab.getContent().getUserData();
+                    if (o != null) {
+                        Project_BaseAndRoofAreaController ctrl = (Project_BaseAndRoofAreaController) o;
+
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Grund- und Dachflächenberechnung");
+                        alert.setHeaderText("Wollen Sie diesen Reiter wirklich löschen?");
+                        alert.getButtonTypes().clear();
+                        alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == ButtonType.YES) {
+                            Project project = ProjectViewController.getOpenedProject();
+                            if (project != null) {
+                                areaController.remove(o);
+                                calcArea();
                             }
-                            tabs.get(0).setClosable(false);
+                            //set closable for tabs
+                            if (tabs.size() > 3) {
+                                for (Tab tab : tabs) {
+                                    tab.setClosable(true);
+                                }
+                                tabs.get(0).setClosable(false);
+                            } else {
+                                for (Tab tab : tabs) {
+                                    tab.setClosable(false);
+                                }
+                            }
                         } else {
-                            for (Tab tab : tabs) {
-                                tab.setClosable(false);
-                            }
+                            value.consume();
                         }
-                    } else {
-                        value.consume();
                     }
+                });
+                tabs.add(newTab);
+
+                tb_Roofarea.getSelectionModel().selectLast();
+
+                //set closable for tabs
+                if (tabs.size() >= 3) {
+                    for (Tab tab : tabs) {
+                        tab.setClosable(true);
+                    }
+                    tabs.get(0).setClosable(false);
+                } else if (tabs.size() == 2) {
+                    tabs.get(0).setClosable(false);
+                    tabs.get(1).setClosable(false);
                 }
-            });
-            tabs.add(newTab);
-            tb_Roofarea.getSelectionModel().selectLast();
 
-            //set closable for tabs
-            if (tabs.size() >= 3) {
-                for (Tab tab : tabs) {
-                    tab.setClosable(true);
+                setChanged();
+                notifyObservers();
+                if (event != null) {
+                    ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
                 }
-                tabs.get(0).setClosable(false);
-            } else if (tabs.size() == 2) {
-                tabs.get(0).setClosable(false);
-                tabs.get(1).setClosable(false);
             }
-
-            setChanged();
-            notifyObservers();
-            if (event != null) {
-                ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
-            }
-
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Couldn't add new tab.", ex);
         }
