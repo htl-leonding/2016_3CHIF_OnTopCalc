@@ -83,6 +83,9 @@
                   <ComboBox fx:id="cb_weeks" editable="true" layoutX="319.0" layoutY="29.0" prefHeight="25.0" prefWidth="54.0" promptText="1" />
                   <Label fx:id="lb_weekTXT" layoutX="380.0" layoutY="33.0" text="Wochen ist." />
                   <Label fx:id="lb_percentage" layoutX="153.0" layoutY="119.0" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="155.0" />
+                  <Label fx:id="lb_percentageRE" layoutX="428.0" layoutY="119.0" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0" />
+                  <ProgressIndicator fx:id="pgic_backupProgressRE" layoutX="448.0" layoutY="116.0" prefHeight="22.0" prefWidth="22.0" visible="false" AnchorPane.rightAnchor="65.0" />
+                  <Button id="smallBtnLettering" fx:id="bt_readBackup" layoutX="288.0" layoutY="113.0" mnemonicParsing="false" onAction="#readBackup" text="Sicherung wiederherstellen" AnchorPane.rightAnchor="95.0" />
                </children>
             </AnchorPane>
             <BorderPane layoutX="46.0" layoutY="311.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">

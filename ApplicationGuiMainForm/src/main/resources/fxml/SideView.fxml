@@ -20,7 +20,7 @@
       <Label id="parameter" layoutX="10.0" layoutY="237.0" onMouseClicked="#showParameter" prefHeight="23.0" prefWidth="148.0" text="Parameter" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="237.0" />
       <Label id="clients" layoutX="10.0" layoutY="287.0" onMouseClicked="#showClients" prefHeight="23.0" prefWidth="148.0" text="Auftraggeber" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="287.0" />
       <Label id="options" layoutX="10.0" layoutY="337.0" onMouseClicked="#showOptions" prefHeight="23.0" prefWidth="148.0" text="Optionen" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="337.0" />
-      <Label id="about" alignment="CENTER" layoutX="14.0" layoutY="459.0" onMouseClicked="#showMainForm" prefHeight="35.0" prefWidth="35.0" text="🏠" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+      <Label id="menu" alignment="CENTER" layoutX="14.0" layoutY="459.0" onMouseClicked="#showMainForm" prefHeight="35.0" prefWidth="120.0" text="Menü" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
    </children>
    <opaqueInsets>
       <Insets />

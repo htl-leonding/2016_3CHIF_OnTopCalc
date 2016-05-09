@@ -14,6 +14,8 @@ import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.BackUpDatabase;
+import at.plakolb.settings.SettingsController;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;

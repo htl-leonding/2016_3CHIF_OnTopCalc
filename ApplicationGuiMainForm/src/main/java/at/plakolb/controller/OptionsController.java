@@ -86,6 +86,14 @@ public class OptionsController implements Initializable, Observer {
     private static OptionsController controller;
     @FXML
     private Label lb_percentage;
+    @FXML
+    private Label lb_percentageRE;
+    @FXML
+    private ProgressIndicator pgic_backupProgressRE;
+    @FXML
+    private Button bt_readBackup;
+
+    private int backup = 0; //-1 Backup erstellen | 1 Backup wiederherstellen
 
     /**
      * Initializes the controller class.
@@ -321,6 +329,8 @@ public class OptionsController implements Initializable, Observer {
     private void createBackup(ActionEvent event) {
         pgic_backupProgress.setVisible(true);
         bt_createBackup.setDisable(true);
+        bt_readBackup.setDisable(true);
+        backup = -1;
 
         Thread t = new Thread(new Runnable() {
 
@@ -349,6 +359,8 @@ public class OptionsController implements Initializable, Observer {
                     pgic_backupProgress.setVisible(false);
                     bt_createBackup.setDisable(false);
                     lb_percentage.setVisible(false);
+                    bt_readBackup.setDisable(false);
+                    backup = 0;
                 });
             }
         }, "BackupCreatorThread");
@@ -358,11 +370,19 @@ public class OptionsController implements Initializable, Observer {
     @Override
     public void update(Observable o, Object arg) {
         Platform.runLater(() -> {
-            if (!lb_percentage.isVisible()) {
-                lb_percentage.setVisible(true);
-                lb_percentage.setText(String.format("%s%%", arg));
+            if (backup == -1) {
+                if (!lb_percentage.isVisible()) {
+                    lb_percentage.setVisible(true);
+                    lb_percentage.setText(String.format("%s%%", arg));
+                }
+                pgic_backupProgress.setVisible(true);
+            } else if (backup == 1) {
+                if (!lb_percentageRE.isVisible()) {
+                    lb_percentageRE.setVisible(true);
+                    lb_percentageRE.setText(String.format("%s%%", arg));
+                }
+                pgic_backupProgressRE.setVisible(true);
             }
-            pgic_backupProgress.setVisible(true);
         });
     }
 
@@ -372,5 +392,78 @@ public class OptionsController implements Initializable, Observer {
 
     public static OptionsController getInstance() {
         return controller;
+    }
+
+    String recoverPath = "";
+    
+    @FXML
+    private void readBackup(ActionEvent event) {
+        Alert deleteDBAlert = new Alert(Alert.AlertType.WARNING, "Die derzeitige Datenbank wird gelöscht!");
+        deleteDBAlert.getButtonTypes().clear();
+        deleteDBAlert.getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+        deleteDBAlert.showAndWait();
+        if (deleteDBAlert.getResult() == ButtonType.OK) {
+            pgic_backupProgressRE.setVisible(true);
+            bt_createBackup.setDisable(true);
+            bt_readBackup.setDisable(true);
+            backup = 1;
+
+            
+
+            BackUpDatabase backUpDatabase = new BackUpDatabase(SettingsController.getProperty("backupPath"));
+            backUpDatabase.addObserver(controller);
+
+            while (!new File(recoverPath).exists()) {
+                DirectoryChooser dc = new DirectoryChooser();
+                dc.setInitialDirectory(new File(SettingsController.getProperty("backupPath")));
+                dc.setTitle("OnTopCalc - Auswahl der Sicherung");
+                try {
+                    Stage stage = new Stage();
+                    stage.setResizable(false);
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                    File p = dc.showDialog(stage);
+                    if (p != null) {
+                        recoverPath = p.getAbsolutePath();
+                    }
+                } catch (Exception ex) {
+                    Logging.getLogger().log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+            Thread t = new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    int returnValue = backUpDatabase.imp(recoverPath);
+
+                    Platform.runLater(() -> {
+                        if (returnValue == 0) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Die Sicherung wurde erfolgreich wiederhergestellt!");
+                            alert.setHeaderText("Sicherung wiederhergestellt!");
+                            alert.setContentText("Die Sicherung wurde erfolgreich wiederhergestellt!");
+                            alert.showAndWait();
+                            SettingsController.setDateProperty("lastBackup", new Date());
+
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Die Sicherung konnte nicht wiederhergestellt werden!");
+                            alert.setHeaderText("Fehler");
+                            alert.setContentText("Die Sicherung konnte nicht wiederhergestellt werden!");
+                            alert.showAndWait();
+                        }
+                        updateData();
+                        pgic_backupProgressRE.setVisible(false);
+                        lb_percentageRE.setVisible(false);
+                        bt_createBackup.setDisable(false);
+                        bt_readBackup.setDisable(false);
+                        backup = 0;
+                    });
+                }
+            }, "BackupReaderThread");
+            t.start();
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -18,71 +19,65 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="675.0" prefWidth="1110.0" style="-fx-background-color: darkgrey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.MainFormController">
    <children>
-      <AnchorPane id="middlePane" layoutX="75.0" layoutY="75.0" prefHeight="517.0" prefWidth="906.0" stylesheets="@../styles/main.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="75.0">
+      <AnchorPane id="middlePane" layoutX="75.0" layoutY="75.0" stylesheets="@../styles/main.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="75.0">
          <children>
             <Label alignment="CENTER" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" text="Zimmerei Franz Plakolb" textAlignment="CENTER" textFill="#3c84ff" textOverrun="CLIP" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="Berlin Sans FB" size="48.0" />
                </font>
             </Label>
-            <GridPane alignment="CENTER" layoutX="158.0" layoutY="111.0" prefHeight="304.0" prefWidth="659.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="111.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="295.0" minWidth="268.0" prefWidth="283.0" />
-                <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="289.0" minWidth="250.0" prefWidth="274.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <HBox alignment="CENTER" layoutX="204.0" layoutY="132.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <AnchorPane GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                  <VBox spacing="5.0">
                      <children>
-                        <MenuButton id="openProject" fx:id="mb_openProjects" layoutX="-1.0" layoutY="9.0" mnemonicParsing="false" popupSide="RIGHT" stylesheets="@../styles/mainFormButton.css" text="Projekt öffnen">
+                        <MenuButton id="openProject" fx:id="mb_openProjects" alignment="BASELINE_LEFT" mnemonicParsing="false" popupSide="RIGHT" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Projekt öffnen">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </MenuButton>
+                        <Button id="bt_CreateProject" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#createNewProject" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Neues Projekt" textAlignment="RIGHT" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button id="bt_PrintProject" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#printProject" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Projekt drucken" textAlignment="RIGHT" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button id="bt_Parameter" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showParameter" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Parameter" textAlignment="RIGHT" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
                      </children>
-                  </AnchorPane>
-                  <Button id="bt_CreateProject" mnemonicParsing="false" onAction="#createNewProject" stylesheets="@../styles/mainFormButton.css" text="Neues Projekt" textAlignment="RIGHT" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button id="bt_PrintProject" mnemonicParsing="false" onAction="#printProject" stylesheets="@../styles/mainFormButton.css" text="Projekt drucken" textAlignment="RIGHT" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button id="bt_Parameter" mnemonicParsing="false" onAction="#showParameter" stylesheets="@../styles/mainFormButton.css" text="Parameter" textAlignment="RIGHT" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button id="bt_ShowProjects" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAllProjects" stylesheets="@../styles/mainFormButton.css" text="Projekte anzeigen" GridPane.columnIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button id="bt_ProductList" mnemonicParsing="false" onAction="#showProductList" stylesheets="@../styles/mainFormButton.css" text="Produktliste" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button id="bt_Customer" mnemonicParsing="false" onAction="#showClients" stylesheets="@../styles/mainFormButton.css" text="Auftraggeber" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button id="bt_Options" mnemonicParsing="false" onAction="#showOptions" stylesheets="@../styles/mainFormButton.css" text="Optionen" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Button id="bt_ShowProjects" alignment="BASELINE_LEFT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAllProjects" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Projekte anzeigen" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button id="bt_ProductList" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showProductList" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Produktliste" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button id="bt_Customer" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showClients" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Auftraggeber" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button id="bt_Options" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showOptions" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Optionen" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
                </children>
-            </GridPane>
+            </HBox>
             <Button id="aboutButton" alignment="CENTER" layoutX="725.0" layoutY="471.0" mnemonicParsing="false" onAction="#openAboutBox" stylesheets="@../styles/mainFormButton.css" text="?" textFill="#3c84ff" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <font>
                   <Font name="System Bold" size="14.0" />
