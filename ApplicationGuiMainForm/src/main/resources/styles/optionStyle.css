@@ -4,10 +4,11 @@
 */
 
 .textfieldPath{
-    -fx-background-color: derive(gray,80%);
+    -fx-background-color: derive(gray,95%);
     -fx-background-radius: 5px;
     -fx-border-color: derive(black,60%);
     -fx-border-radius: 5px;
+    -fx-prompt-text-fill: derive(black,60%);
 }
 .buttonChoosePath{
     -fx-background-color: white;
