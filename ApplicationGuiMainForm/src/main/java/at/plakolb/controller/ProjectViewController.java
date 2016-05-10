@@ -351,10 +351,12 @@ public class ProjectViewController extends Observable implements Initializable, 
         int idx = 0;
         for (Tab tab : tb_MainPane.getTabs()) {
             String text = tab.getText();
+            tab.getStyleClass().remove("changed");
             if (idx < modified.size() && modified.get(idx) == true) {
                 if (!text.contains("*")) {
                     tab.setText("*" + text);
                 }
+                tab.getStyleClass().add("changed");
             } else if (text.contains("*")) {
                 tab.setText(text.substring(1));
             }

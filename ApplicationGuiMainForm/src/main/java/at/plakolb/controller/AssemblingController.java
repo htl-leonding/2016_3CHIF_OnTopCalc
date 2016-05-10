@@ -62,9 +62,11 @@ public class AssemblingController implements Initializable,Observer {
         int idx = 0;
         for (Tab tab : tb_AssemblingPane.getTabs()) {
             String text = tab.getText();
+            tab.getStyleClass().remove("changed");
             if (idx < modified.size() && modified.get(idx) == true) {
                 if(!text.contains("*"))
                     tab.setText("*"+text);
+                tab.getStyleClass().add("changed");
             }
             else
             {
