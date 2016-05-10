@@ -99,6 +99,8 @@ public class Project_OverviewController implements Initializable {
     
     public void refreshValues(){
         
+        nettoCosts = 0;
+        
         nettoCosts += Project_ConstructionMaterialListController.getInstance().getTotalCosts();
         lb_WoodMaterial.setText(UtilityFormat.getStringForLabel(Project_ConstructionMaterialListController.getInstance().getMaterial()) + " €");
         lb_WoodWage.setText(UtilityFormat.getStringForLabel(Project_ConstructionMaterialListController.getInstance().getWage()) + " €");

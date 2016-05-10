@@ -111,7 +111,6 @@ public class ProjectController {
             em = JpaUtils.getEntityManager();
             TypedQuery<Project> query = em.createNamedQuery("Project.findAll", Project.class);
             List<Project> projects = query.getResultList();
-            System.out.println(projects);
             return projects;
         } finally {
             if (em != null) {

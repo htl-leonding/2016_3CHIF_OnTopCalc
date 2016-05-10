@@ -42,7 +42,6 @@ public class AssemblyControllerTest {
      */
     @Test
     public void testCreate() {
-        System.out.println("create");
         Assembly assembly = new Assembly(null, null, null, 10d, 100d);
         AssemblyController instance = new AssemblyController();
         instance.create(assembly);

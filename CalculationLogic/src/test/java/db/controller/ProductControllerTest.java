@@ -43,7 +43,6 @@ public class ProductControllerTest {
      */
     @Test
     public void testCreate() {
-        System.out.println("create Product");
         Product product = new Product("Test", 10.0, 100.0, 50.0, 5.1, null, ProductType.WOOD);
         ProductController instance = new ProductController();
         instance.create(product);
