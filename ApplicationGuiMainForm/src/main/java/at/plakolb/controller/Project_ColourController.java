@@ -200,7 +200,6 @@ public class Project_ColourController implements Initializable {
         component = new ComponentController().findColorByProjectId(ProjectViewController.getOpenedProject().getId());
 
         if (component != null) {
-            System.out.println(component.getComponentType());
             cb_Product.getSelectionModel().select(component.getProduct());
         } else {
             component = new Component();

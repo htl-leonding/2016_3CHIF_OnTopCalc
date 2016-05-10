@@ -42,7 +42,6 @@ public class UnitControllerTest {
      */
     @Test
     public void testCreate() {
-        System.out.println("create Unit");
         Unit unit = new Unit("km","Kilometer");
         UnitController instance = new UnitController();
         instance.create(unit);

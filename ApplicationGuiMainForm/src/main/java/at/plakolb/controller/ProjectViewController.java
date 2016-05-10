@@ -96,6 +96,8 @@ public class ProjectViewController extends Observable implements Initializable, 
         });
 
         tab_Colour.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            setChanged();
+            notifyObservers();
             Project_ColourController.getInstance().updateVisibleFormwork();
         });
 

@@ -42,7 +42,6 @@ public class CategoryControllerTest {
      */
     @Test
     public void testCreate() {
-        System.out.println("create");
         Category category = new Category("TS", "Test");
         CategoryController instance = new CategoryController();
         instance.create(category);

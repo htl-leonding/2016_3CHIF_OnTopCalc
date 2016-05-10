@@ -42,7 +42,6 @@ public class ClientControllerTest {
      */
     @Test
     public void testCreate_FindAll() {
-        System.out.println("create");
         Client client = new Client(
                 "Tester", "Teststraße",
                 "Testing", "0815", "0664555555", "test@mail.com");

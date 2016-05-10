@@ -119,7 +119,6 @@ public class Assembling_TiledRoofController extends Observable implements Initia
                     ? worthController.findWorthByShortTermAndProjectId("LDOV", project.getId()) : lengthNoWaste;
 
             tf_slatSpacing.setText(UtilityFormat.getStringForTextField(slatSpacing));
-            System.out.println(Assembling_BattensOrFullFormworkController.getInstance().getWastePercent());
             tf_waste.setText(UtilityFormat.getStringForTextField(Assembling_BattensOrFullFormworkController.getInstance().getWastePercent()));
 
             lb_length.setText(UtilityFormat.getStringForLabel(length));
