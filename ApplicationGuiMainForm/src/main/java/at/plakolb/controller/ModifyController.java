@@ -53,6 +53,9 @@ public class ModifyController extends Observable {
         assembling_sealingBand = false;
         assembling_counterBattens = false;
         assembling_battensOrFullFormwork = false;
+        
+        setChanged();
+        notifyObservers();
     }
 
     public List<Boolean> getModifiedList() {

@@ -76,8 +76,8 @@ public class ProjectViewController extends Observable implements Initializable, 
 
         if (projectOpened) {
             Project_InformationsController.getInstance().openProject(openedProject);
-            bt_Dismiss.setText("Änderungen verwerfen");
-            bt_Save.setText("Änderungen speichern");
+            bt_Dismiss.setText("Menü");
+            bt_Save.setText("Speichern");
         } else {
             openedProject = new Project();
         }
@@ -218,10 +218,7 @@ public class ProjectViewController extends Observable implements Initializable, 
             Project_ConstructionMaterialController.getInstance().persist();
 
             ModifyController.getInstance().reset();
-            configurateStage(false);
-            MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
-            openedProject = null;
         }
     }
 
