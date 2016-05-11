@@ -21,12 +21,12 @@
             </Label>
             <TableView fx:id="tv_ProjectList" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
               <columns>
-                <TableColumn fx:id="tc_Id" editable="false" maxWidth="600.0" minWidth="0.0" prefWidth="60.0" style="-fx-alignment: center;" text="ID" />
-                <TableColumn fx:id="tc_PrecalcId" editable="false" maxWidth="600.0" minWidth="0.0" prefWidth="112.0" style="-fx-alignment: center;" text="Vork. ID" />
-                  <TableColumn fx:id="tc_ProjectName" editable="false" maxWidth="2000.0" minWidth="0.0" prefWidth="186.0" style="-fx-alignment: center;" text="Projektname" />
-                  <TableColumn fx:id="tc_Type" editable="false" maxWidth="1100.0" minWidth="0.0" prefWidth="110.0" style="-fx-alignment: center;" text="Art" />
-                  <TableColumn fx:id="tc_RoofForm" editable="false" maxWidth="1100.0" minWidth="0.0" prefWidth="110.0" style="-fx-alignment: center;" text="Dachform" />
-                  <TableColumn fx:id="tc_Client" editable="false" maxWidth="1500.0" minWidth="0.0" prefWidth="150.0" style="-fx-alignment: center;" text="Auftraggeber" />
+                <TableColumn fx:id="tc_Id" editable="false" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: center;" text="ID" />
+                <TableColumn fx:id="tc_PrecalcId" editable="false" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: center;" text="Vork. ID" />
+                  <TableColumn fx:id="tc_ProjectName" editable="false" maxWidth="2000.0" minWidth="100.0" prefWidth="180.0" style="-fx-alignment: center;" text="Projektname" />
+                  <TableColumn fx:id="tc_Type" editable="false" maxWidth="1100.0" minWidth="100.0" prefWidth="110.0" style="-fx-alignment: center;" text="Art" />
+                  <TableColumn fx:id="tc_RoofForm" editable="false" maxWidth="1100.0" minWidth="100.0" prefWidth="110.0" style="-fx-alignment: center;" text="Dachform" />
+                  <TableColumn fx:id="tc_Client" editable="false" maxWidth="1500.0" minWidth="100.0" prefWidth="150.0" style="-fx-alignment: center;" text="Auftraggeber" />
                   <TableColumn fx:id="tc_action" maxWidth="107.0" minWidth="107.0" prefWidth="107.0" style="-fx-alignment: center;" />
               </columns>
                <columnResizePolicy>

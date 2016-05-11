@@ -59,7 +59,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label id="boldLettering" minHeight="54.0" prefHeight="54.0" prefWidth="185.0" text="Länge der Dachlatten ohne Verschnitt: " wrapText="true">
+                        <Label id="boldLettering" minHeight="54.0" prefHeight="54.0" prefWidth="231.0" text="Länge der Dachlatten ohne Verschnitt: " wrapText="true">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

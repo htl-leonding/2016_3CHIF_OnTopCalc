@@ -87,12 +87,12 @@
             </HBox>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#create" prefHeight="30.0" prefWidth="140.0" text="Erstellen">
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#create" prefHeight="30.0" prefWidth="140.0" text="Erstellen" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="140.0" text="Abbrechen">
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="140.0" text="Abbrechen" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />
                      </font>

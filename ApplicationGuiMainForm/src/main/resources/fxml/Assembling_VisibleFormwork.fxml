@@ -58,9 +58,9 @@
                               </VBox>
                               <VBox alignment="CENTER" spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Product" prefWidth="150.0" promptText="Produkt auswählen" />
-                                    <TextField fx:id="tf_PricePerSquare" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
-                                    <TextField fx:id="tf_AbatementPercent" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
+                                    <ComboBox fx:id="cb_Product" prefWidth="180.0" promptText="Produkt auswählen" />
+                                    <TextField fx:id="tf_PricePerSquare" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Preis in €" />
+                                    <TextField fx:id="tf_AbatementPercent" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_CENTER">
