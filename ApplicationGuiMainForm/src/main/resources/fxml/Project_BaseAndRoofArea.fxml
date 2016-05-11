@@ -251,7 +251,7 @@
                <children>
                   <AnchorPane prefWidth="1000.0">
                      <children>
-                        <VBox minWidth="264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <HBox>
                                  <children>

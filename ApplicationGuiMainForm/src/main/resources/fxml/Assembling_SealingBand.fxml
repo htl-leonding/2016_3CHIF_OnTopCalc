@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_SealingBandController">
    <children>
-      <VBox alignment="CENTER" layoutY="32.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
+      <VBox alignment="CENTER" layoutY="32.0" spacing="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Nageldichtband" textFill="#3c84ff">
                <font>
@@ -146,17 +146,17 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <Label id="boldLettering" minHeight="25.0" text="Kosten Produkt: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Kosten Produkt: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="boldLettering" minHeight="25.0" text="Kosten Montage: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Kosten Montage: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="boldLettering" minHeight="25.0" text="Gesamtkosten: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Gesamtkosten: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>

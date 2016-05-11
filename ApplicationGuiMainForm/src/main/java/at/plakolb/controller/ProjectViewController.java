@@ -220,7 +220,9 @@ public class ProjectViewController extends Observable implements Initializable, 
             Project_ConstructionMaterialController.getInstance().persist();
 
             ModifyController.getInstance().reset();
+            MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
             projectOpened = false;
+            openedProject = null;
         }
     }
 

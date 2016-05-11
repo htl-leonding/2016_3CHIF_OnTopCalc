@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_BattensOrFullFormworkController">
+<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_BattensOrFullFormworkController">
    <children>
       <VBox alignment="TOP_CENTER" layoutY="32.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
             <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Lattung/Vollschalung" textFill="#3c84ff">
                <font>
-                  <Font size="36.0" />
+                  <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
             <VBox fx:id="vbox_firstSelection" prefHeight="200.0" prefWidth="100.0">
@@ -59,7 +56,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="vbox_normal" visible="false">
+            <VBox fx:id="vbox_normal" spacing="20.0" visible="false">
                <children>
                   <HBox alignment="CENTER">
                      <children>

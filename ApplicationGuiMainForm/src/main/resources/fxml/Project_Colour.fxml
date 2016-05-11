@@ -103,7 +103,7 @@
                         </HBox>
                      </children>
                   </AnchorPane>
-                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0" HBox.hgrow="NEVER">
+                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="850.0" HBox.hgrow="NEVER">
                      <children>
                         <HBox spacing="5.0" AnchorPane.leftAnchor="0.0">
                            <children>
