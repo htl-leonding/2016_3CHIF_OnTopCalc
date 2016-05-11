@@ -28,17 +28,17 @@
                               <Font size="24.0" />
                            </font>
                         </MenuButton>
-                        <Button id="bt_CreateProject" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#createNewProject" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Neues Projekt" textAlignment="RIGHT" GridPane.rowIndex="1">
+                        <Button id="bt_CreateProject" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#createNewProject" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Neues Projekt" textAlignment="RIGHT">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_PrintProject" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#printProject" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Projekt drucken" textAlignment="RIGHT" GridPane.rowIndex="2">
+                        <Button id="bt_PrintProject" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#printProject" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Projekt drucken" textAlignment="RIGHT">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_Parameter" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showParameter" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Parameter" textAlignment="RIGHT" GridPane.rowIndex="3">
+                        <Button id="bt_Parameter" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showParameter" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Parameter" textAlignment="RIGHT">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -47,22 +47,22 @@
                   </VBox>
                   <VBox spacing="5.0">
                      <children>
-                        <Button id="bt_ShowProjects" alignment="BASELINE_LEFT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAllProjects" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Projekte anzeigen" GridPane.columnIndex="1">
+                        <Button id="bt_ShowProjects" alignment="BASELINE_LEFT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAllProjects" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Projekte anzeigen">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_ProductList" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showProductList" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Produktliste" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button id="bt_ProductList" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showProductList" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Produktliste">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_Customer" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showClients" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Auftraggeber" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button id="bt_Customer" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showClients" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Auftraggeber" textAlignment="RIGHT">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_Options" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showOptions" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Optionen" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button id="bt_Options" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showOptions" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Optionen" textAlignment="RIGHT">
                            <font>
                               <Font size="24.0" />
                            </font>
