@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -16,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_CounterBattenController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_CounterBattenController">
    <children>
       <VBox alignment="CENTER" layoutY="32.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -52,9 +47,9 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_counterBattern" minHeight="25.0" prefWidth="180.0" promptText="Produkt auswählen" />
-                                    <TextField fx:id="tf_pricePerMeter" minHeight="25.0" prefWidth="180.0" promptText="Preis in €" />
-                                    <TextField fx:id="tf_waste" minHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
+                                    <ComboBox fx:id="cb_counterBattern" minHeight="25.0" prefWidth="200.0" promptText="Produkt auswählen" />
+                                    <TextField fx:id="tf_pricePerMeter" minHeight="25.0" prefWidth="200.0" promptText="Preis in €" />
+                                    <TextField fx:id="tf_waste" minHeight="25.0" prefWidth="200.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_LEFT">
@@ -201,7 +196,7 @@
                      </columnResizePolicy>
                      <columns>
                         <TableColumn fx:id="cl_name" maxWidth="300.0" prefWidth="300.0" style="-fx-alignment: center;" text="Name" />
-                        <TableColumn fx:id="cl_dachsparrenLength" maxWidth="160.0" prefWidth="160.0" style="-fx-alignment: center;" text="Länge der Dachsparren" />
+                        <TableColumn fx:id="cl_dachsparrenLength" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" style="-fx-alignment: center;" text="Länge der Dachsparren" />
                      </columns>
                      <HBox.margin>
                         <Insets bottom="20.0" top="20.0" />

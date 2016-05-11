@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="570.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="570.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -47,74 +49,75 @@
                 </TableView>
                 <AnchorPane layoutX="20.0" layoutY="406.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
                     <children>
-                        <BorderPane layoutY="70.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                            <left>
-                                <Label text="Standard Sicherungs Speicherort:" BorderPane.alignment="CENTER">
-                                    <BorderPane.margin>
-                                        <Insets right="5.0" />
-                                    </BorderPane.margin>
-                                </Label>
-                            </left>
-                            <center>
-                                <TextField fx:id="tf_defaultBackupDirectory" editable="false" prefHeight="25.0" prefWidth="429.0" promptText="Standartspeicherort für Sicherungen" styleClass="textfieldPath" BorderPane.alignment="CENTER">
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </TextField>
-                            </center>
-                            <right>
-                                <Button fx:id="bt_chooseFileBackup" mnemonicParsing="false" styleClass="buttonChoosePath" text="🗁" BorderPane.alignment="CENTER">
-                                    <BorderPane.margin>
-                                        <Insets left="2.0" />
-                                    </BorderPane.margin>
-                                    <cursor>
-                                        <Cursor fx:constant="HAND" />
-                                    </cursor>
-                                </Button>
-                            </right>
-                        </BorderPane>
                         <Label id="boldLettering" text="Sicherung">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <Button id="smallBtnLettering" fx:id="bt_createBackup" layoutY="114.0" mnemonicParsing="false" onAction="#createBackup" text="Sicherung erstellen" />
-                        <ProgressIndicator fx:id="pgic_backupProgress" layoutX="122.0" layoutY="116.0" prefHeight="22.0" prefWidth="22.0" visible="false" />
-                        <CheckBox fx:id="cb_backUpStartCheck" layoutY="33.0" mnemonicParsing="false" text="Beim Start überprüfen ob die Letzte Sicherung älter als " />
-                        <ComboBox fx:id="cb_weeks" editable="true" layoutX="319.0" layoutY="29.0" prefHeight="25.0" prefWidth="54.0" promptText="1" />
-                        <Label fx:id="lb_weekTXT" layoutX="380.0" layoutY="33.0" text="Wochen ist." />
-                        <Label fx:id="lb_percentage" layoutX="153.0" layoutY="119.0" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="155.0" />
-                        <Label fx:id="lb_percentageRE" layoutX="428.0" layoutY="119.0" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="15.0" />
-                        <ProgressIndicator fx:id="pgic_backupProgressRE" layoutX="448.0" layoutY="116.0" prefHeight="22.0" prefWidth="22.0" visible="false" AnchorPane.rightAnchor="65.0" />
-                        <Button id="smallBtnLettering" fx:id="bt_readBackup" layoutX="288.0" layoutY="113.0" mnemonicParsing="false" onAction="#readBackup" text="Sicherung wiederherstellen" AnchorPane.rightAnchor="95.0" />
+                  <HBox layoutY="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                                <Label minHeight="27.0" text="Standard Sicherungs Speicherort:" />
+                                <TextField fx:id="tf_defaultBackupDirectory" editable="false" promptText="Standartspeicherort für Sicherungen" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                           <HBox.margin>
+                              <Insets left="5.0" right="2.0" />
+                           </HBox.margin>
+                                </TextField>
+                                <Button fx:id="bt_chooseFileBackup" mnemonicParsing="false" styleClass="buttonChoosePath" text="🗁">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </Button>
+                     </children>
+                  </HBox>
+                  <HBox layoutY="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <HBox spacing="3.0" HBox.hgrow="NEVER">
+                           <children>
+                                    <Button id="smallBtnLettering" fx:id="bt_createBackup" mnemonicParsing="false" onAction="#createBackup" text="Sicherung erstellen" />
+                                    <ProgressIndicator fx:id="pgic_backupProgress" prefHeight="22.0" prefWidth="22.0" visible="false" />
+                                    <Label fx:id="lb_percentage" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" />
+                           </children>
+                        </HBox>
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <HBox spacing="3.0" HBox.hgrow="NEVER">
+                           <children>
+                                    <Button id="smallBtnLettering" fx:id="bt_readBackup" mnemonicParsing="false" onAction="#readBackup" text="Sicherung wiederherstellen" />
+                                    <ProgressIndicator fx:id="pgic_backupProgressRE" prefHeight="22.0" prefWidth="22.0" visible="false" />
+                                    <Label fx:id="lb_percentageRE" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox layoutY="29.0" spacing="5.0">
+                     <children>
+                              <CheckBox fx:id="cb_backUpStartCheck" minHeight="27.0" mnemonicParsing="false" text="Beim Start überprüfen ob die Letzte Sicherung älter als" />
+                              <ComboBox fx:id="cb_weeks" editable="true" prefHeight="25.0" prefWidth="54.0" promptText="1" />
+                              <Label fx:id="lb_weekTXT" minHeight="27.0" text="Wochen ist." />
+                     </children>
+                  </HBox>
                     </children>
                 </AnchorPane>
-                <BorderPane layoutX="46.0" layoutY="311.0" prefHeight="30.0" prefWidth="200.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
-                    <left>
-                        <Label text="Standard PDF Speicherort:" BorderPane.alignment="CENTER">
-                            <BorderPane.margin>
-                                <Insets right="5.0" />
-                            </BorderPane.margin>
-                        </Label>
-                    </left>
-                    <center>
-                        <TextField fx:id="tf_defaultPDFDirectory" editable="false" prefHeight="25.0" prefWidth="466.0" promptText="Standartspeicherort für die PDFs" styleClass="textfieldPath" BorderPane.alignment="CENTER">
+            <HBox layoutX="20.0" layoutY="375.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
+               <children>
+                        <Label minHeight="27.0" text="Standard PDF Speicherort:" />
+                        <TextField fx:id="tf_defaultPDFDirectory" editable="false" prefHeight="25.0" promptText="Standartspeicherort für die PDFs" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
+                     <HBox.margin>
+                        <Insets left="5.0" right="2.0" />
+                     </HBox.margin>
                         </TextField>
-                    </center>
-                    <right>
-                        <Button fx:id="bt_chooseFilePDF" mnemonicParsing="false" styleClass="buttonChoosePath" text="Ordner auswählen" BorderPane.alignment="CENTER">
-                            <BorderPane.margin>
-                                <Insets left="2.0" />
-                            </BorderPane.margin>
+                        <Button fx:id="bt_chooseFilePDF" mnemonicParsing="false" styleClass="buttonChoosePath" text="Ordner auswählen">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                    </right>
-                </BorderPane>
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
     </center>

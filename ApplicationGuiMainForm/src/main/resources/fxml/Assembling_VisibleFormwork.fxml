@@ -19,12 +19,12 @@
             </Label>
             <HBox alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Dachvorsprung: ">
+                  <Label alignment="CENTER" contentDisplay="CENTER" minHeight="27.0" text="Dachvorsprung: ">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lb_RoofArea" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="0 m²">
+                  <Label fx:id="lb_RoofArea" alignment="CENTER" contentDisplay="CENTER" minHeight="27.0" text="0 m²">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -58,9 +58,9 @@
                               </VBox>
                               <VBox alignment="CENTER" spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Product" prefWidth="150.0" promptText="Produkt auswählen" />
-                                    <TextField fx:id="tf_PricePerSquare" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
-                                    <TextField fx:id="tf_AbatementPercent" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
+                                    <ComboBox fx:id="cb_Product" prefWidth="180.0" promptText="Produkt auswählen" />
+                                    <TextField fx:id="tf_PricePerSquare" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Preis in €" />
+                                    <TextField fx:id="tf_AbatementPercent" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_CENTER">
@@ -83,12 +83,12 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <Label id="boldLettering" text="Verschnitt: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Verschnitt: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="boldLettering" text="sicht. Schalung:">
+                                    <Label id="boldLettering" minHeight="27.0" text="sicht. Schalung:">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -97,12 +97,12 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Label id="normalLettering" fx:id="lb_AbatementArea" text="0 m²">
+                                    <Label id="normalLettering" fx:id="lb_AbatementArea" minHeight="27.0" text="0 m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" fx:id="lb_VisibleFormwork" text="0 m²">
+                                    <Label id="normalLettering" fx:id="lb_VisibleFormwork" minHeight="27.0" text="0 m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -157,17 +157,17 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <Label id="boldLettering" text="Kosten Produkt: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Kosten Produkt: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="boldLettering" text="Kosten Montage: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Kosten Montage: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="boldLettering" text="Gesamtkosten: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Gesamtkosten: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -176,17 +176,17 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Label id="normalLettering" fx:id="lb_ProductCosts" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_ProductCosts" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" fx:id="lb_AssemblingCosts" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_AssemblingCosts" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" fx:id="lb_TotalCosts" text="0 €">
+                                    <Label id="normalLettering" fx:id="lb_TotalCosts" minHeight="27.0" text="0 €">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

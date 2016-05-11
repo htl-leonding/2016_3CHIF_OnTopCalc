@@ -73,7 +73,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="boldLettering" text="Lattung oder Vollschalung" GridPane.rowIndex="7">
+                  <Label id="boldLettering" text="Lattung / Vollschalung" GridPane.rowIndex="7">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

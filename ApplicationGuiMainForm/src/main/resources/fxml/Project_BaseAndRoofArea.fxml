@@ -70,7 +70,7 @@
                                     </HBox>
                                     <HBox spacing="10.0">
                                        <children>
-                                          <Label id="boldLettering" text="Grundfläche: ">
+                                          <Label id="boldLettering" minHeight="27.0" text="Grundfläche: ">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
@@ -99,7 +99,7 @@
                                              </font>
                                           </Label>
                                           <TextField fx:id="tf_Angle" minHeight="25.0" prefHeight="25.0" prefWidth="142.0" promptText="Neigung in °" />
-                                          <Label id="UnitNotInText" text="°">
+                                          <Label id="UnitNotInText" minHeight="27.0" text="°">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -251,7 +251,7 @@
                <children>
                   <AnchorPane prefWidth="1000.0">
                      <children>
-                        <VBox minWidth="235.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <VBox minWidth="264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <HBox>
                                  <children>

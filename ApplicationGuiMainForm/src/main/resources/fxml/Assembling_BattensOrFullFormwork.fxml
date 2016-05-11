@@ -15,7 +15,7 @@
          <children>
             <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Lattung/Vollschalung" textFill="#3c84ff">
                <font>
-                  <Font name="Berlin Sans FB" size="36.0" />
+                  <Font size="36.0" />
                </font>
             </Label>
             <HBox alignment="CENTER">
@@ -63,10 +63,10 @@
                                     </VBox>
                                     <VBox spacing="2.0">
                                        <children>
-                                          <ComboBox fx:id="cb_product" prefWidth="150.0" promptText="Produkt auswählen" />
-                                          <TextField fx:id="tf_price" minHeight="25.0" prefWidth="150.0" promptText="Produktkosten (m²/Lfm)" />
-                                          <TextField fx:id="tf_workCosts" minHeight="25.0" prefWidth="150.0" promptText="Kosten in €/h" />
-                                          <TextField fx:id="tf_assemblingDuration" minHeight="25.0" prefWidth="150.0" promptText="Zeit in h" />
+                                          <ComboBox fx:id="cb_product" prefWidth="180.0" promptText="Produkt auswählen" />
+                                          <TextField fx:id="tf_price" minHeight="25.0" prefWidth="180.0" promptText="Produktkosten (m²/Lfm)" />
+                                          <TextField fx:id="tf_workCosts" minHeight="25.0" prefWidth="180.0" promptText="Kosten in €/h" />
+                                          <TextField fx:id="tf_assemblingDuration" minHeight="25.0" prefWidth="180.0" promptText="Zeit in h" />
                                        </children>
                                     </VBox>
                                     <VBox alignment="BOTTOM_LEFT">

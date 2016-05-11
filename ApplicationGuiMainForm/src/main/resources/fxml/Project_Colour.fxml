@@ -68,31 +68,31 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="143.0" promptText="Farbe auswählen" />
-                                    <TextField fx:id="tf_AdittionalColourFactor" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Faktor in m²" />
-                                    <TextField fx:id="tf_PricePerLiter" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Farbe in €/l" />
-                                    <TextField fx:id="tf_ProfiHour" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Kosten in €/h" />
-                                    <TextField fx:id="tf_TimeOfPainting" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Zeit in h" />
+                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Farbe auswählen" />
+                                    <TextField fx:id="tf_AdittionalColourFactor" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Faktor in m²" />
+                                    <TextField fx:id="tf_PricePerLiter" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Farbe in €/l" />
+                                    <TextField fx:id="tf_ProfiHour" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Kosten in €/h" />
+                                    <TextField fx:id="tf_TimeOfPainting" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Zeit in h" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_LEFT">
                                  <children>
-                                    <Label text="m²">
+                                    <Label minHeight="27.0" text="m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="€/l">
+                                    <Label minHeight="27.0" text="€/l">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="€/h">
+                                    <Label minHeight="27.0" text="€/h">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="h">
+                                    <Label minHeight="27.0" text="h">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

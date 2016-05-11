@@ -22,37 +22,37 @@
                <children>
                   <VBox alignment="CENTER_RIGHT">
                      <children>
-                        <Label prefHeight="30.0" text="ID: ">
+                        <Label minHeight="30.0" prefHeight="30.0" text="ID: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="30.0" text="Name: ">
+                        <Label minHeight="30.0" prefHeight="30.0" text="Name: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="30.0" text="Straße: ">
+                        <Label minHeight="30.0" prefHeight="30.0" text="Straße: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="30.0" text="Postleitzahl: ">
+                        <Label minHeight="30.0" prefHeight="30.0" text="Postleitzahl: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="30.0" text="Stadt/Ort: ">
+                        <Label minHeight="30.0" prefHeight="30.0" text="Stadt/Ort: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="30.0" text="Telefonnummer: ">
+                        <Label minHeight="30.0" prefHeight="30.0" text="Telefonnummer: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="30.0" text="E-Mail: ">
+                        <Label minHeight="30.0" prefHeight="30.0" text="E-Mail: ">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -61,17 +61,17 @@
                   </VBox>
                   <VBox maxWidth="1.7976931348623157E308" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="lb_Id" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="148.0" text="0" textAlignment="CENTER">
+                        <Label fx:id="lb_Id" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="29.0" text="0" textAlignment="CENTER">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tf_Name" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Name" />
-                        <TextField fx:id="tf_Street" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Straße" />
-                        <TextField fx:id="tf_Zipcode" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Postleitzahl" />
-                        <TextField fx:id="tf_City" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Wohnort" />
-                        <TextField fx:id="tf_Phonenumber" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Telefonnummer" />
-                        <TextField fx:id="tf_Email" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="E-Mail Adresse" />
+                        <TextField fx:id="tf_Name" minHeight="25.0" prefHeight="25.0" promptText="Name" />
+                        <TextField fx:id="tf_Street" minHeight="25.0" prefHeight="25.0" promptText="Straße" />
+                        <TextField fx:id="tf_Zipcode" minHeight="25.0" prefHeight="25.0" promptText="Postleitzahl" />
+                        <TextField fx:id="tf_City" minHeight="25.0" prefHeight="25.0" promptText="Wohnort" />
+                        <TextField fx:id="tf_Phonenumber" minHeight="25.0" prefHeight="25.0" promptText="Telefonnummer" />
+                        <TextField fx:id="tf_Email" minHeight="25.0" prefHeight="25.0" promptText="E-Mail Adresse" />
                      </children>
                   </VBox>
                </children>

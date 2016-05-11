@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="675.0" prefWidth="1110.0" style="-fx-background-color: darkgrey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.MainFormController">
+<AnchorPane fx:id="mainPane" prefHeight="675.0" prefWidth="1110.0" style="-fx-background-color: darkgrey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.MainFormController">
    <children>
       <AnchorPane id="middlePane" layoutX="75.0" layoutY="75.0" stylesheets="@../styles/main.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="75.0">
          <children>
@@ -54,22 +47,22 @@
                   </VBox>
                   <VBox spacing="5.0">
                      <children>
-                        <Button id="bt_ShowProjects" alignment="BASELINE_LEFT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAllProjects" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Projekte anzeigen" GridPane.columnIndex="1">
+                        <Button id="bt_ShowProjects" alignment="BASELINE_LEFT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showAllProjects" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Projekte anzeigen" GridPane.columnIndex="1">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_ProductList" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showProductList" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Produktliste" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button id="bt_ProductList" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showProductList" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Produktliste" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_Customer" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showClients" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Auftraggeber" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button id="bt_Customer" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showClients" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Auftraggeber" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button id="bt_Options" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showOptions" prefHeight="80.0" prefWidth="300.0" stylesheets="@../styles/mainFormButton.css" text="Optionen" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button id="bt_Options" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#showOptions" prefHeight="80.0" prefWidth="320.0" stylesheets="@../styles/mainFormButton.css" text="Optionen" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="24.0" />
                            </font>
