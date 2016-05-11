@@ -1,0 +1,16 @@
+/*	HTL Leonding	*//* 
+    Created on : 11.05.2016, 20:38:33
+    Author     : Andreas
+*/
+
+#add_Product{
+    -fx-graphic: url("../images/addProduct.png");
+}
+
+
+#create_ProductCreator{
+    -fx-graphic: url("../images/addProduct.png");
+}
+#cancel_ProductCreator{
+    -fx-graphic: url("../images/delete3.png");
+}

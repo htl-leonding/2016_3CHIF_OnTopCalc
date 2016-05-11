@@ -292,6 +292,7 @@ public class ProductListController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Produkt erstellen");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();
