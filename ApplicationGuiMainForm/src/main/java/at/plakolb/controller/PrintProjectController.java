@@ -34,6 +34,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.print.PrintService;
+
 /**
  * FXML Controller class
  *
@@ -83,7 +84,7 @@ public class PrintProjectController implements Initializable {
     java.io.File path;
     String lastPath;
     PrintService printService;
-    
+
     @FXML
     private CheckBox cb_openAfterCreation;
     @FXML
@@ -108,20 +109,20 @@ public class PrintProjectController implements Initializable {
         }
 
         tf_dateAndPosition.setText("Rohrbach, am " + UtilityFormat.getDateString(new Date()));
-        tf_dateAndPosition.textProperty().addListener((observable,oldvalue,newValue)->{
+        tf_dateAndPosition.textProperty().addListener((observable, oldvalue, newValue) -> {
             refreshPrintAbility();
         });
-        
+
         bt_createPDF.setTooltip(new Tooltip("PDF erstellen"));
         bt_createPDFAndPrint.setTooltip(new Tooltip("PDF erstellen und drucken"));
         bt_showLastPDF.setTooltip(new Tooltip("Letzte PDF anzeigen"));
-        
+
         File f = new File(SettingsController.getProperty("pdfPath"));
-        if(f.isDirectory()){
+        if (f.isDirectory()) {
             path = f;
             UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
         }
-        
+
         refreshPrintAbility();
     }
 
@@ -202,11 +203,12 @@ public class PrintProjectController implements Initializable {
             listPrint.add(cb_costView.isSelected());
 
             print.setListPrint(listPrint);
-            showPDF(print.createPDF(),cb_openAfterCreation.isSelected());
-            bt_showLastPDF.setDisable(false);
-            if (p) {
-                try {
+            showPDF(print.createPDF(), cb_openAfterCreation.isSelected());
+            bt_showLastPDF.setDisable(false);           
+            if (p) {              
+                try {                  
                     print.print(printService);
+                    System.out.println("8/8");
                 } catch (PrinterException | IOException ex) {
                     Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
                 }
@@ -216,15 +218,73 @@ public class PrintProjectController implements Initializable {
         }
     }
 
-    public void showPDF(String path,boolean allowed) {
+    public void showPDF(String path, boolean allowed) {
         lastPath = path;
-        if (Desktop.isDesktopSupported()&&allowed) {
+        try {
+            System.out.println(System.getProperty("os.name").toLowerCase());
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                if (Desktop.isDesktopSupported() && allowed) {
+                    Desktop.getDesktop().open(new File(path));
+                }
+            }
+            else{
+                executeOnOtherSystems(path, allowed);
+            }
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "ShowPDF method didn't work.", ex);
+        }
+
+    }
+    private boolean executeOnOtherSystems(String path,boolean isallowed){
+    if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+        System.out.println("Woof");
+                if (runCommand("kde-open", "%s", path)&&isallowed)return true;
+                if (runCommand("gnome-open", "%s", path)&&isallowed)return true;
+                if (runCommand("xdg-open", "%s", path)&&isallowed)return true;
+            }
+
+        else{
+            if(runCommand("open", "%s", path)&&isallowed) return true;
+        }
+    return false;
+    }
+        private boolean runCommand(String command, String args, String file) {
+        String[] parts = prepareCommand(command, args, file);
+
+        try {
+            Process p = Runtime.getRuntime().exec(parts);
+            if (p == null) return false;
+
             try {
-                Desktop.getDesktop().open(new File(path));
-            } catch (IOException ex) {
-                Logging.getLogger().log(Level.SEVERE, "ShowPDF method didn't work.", ex);
+                int retval = p.exitValue();
+                if (retval == 0) {
+                    return false;
+                } else {
+                    return false;
+                }
+            } catch (IllegalThreadStateException itse) {
+                return true;
+            }
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+
+    private static String[] prepareCommand(String command, String args, String file) {
+
+        List<String> parts = new ArrayList<String>();
+        parts.add(command);
+
+        if (args != null) {
+            for (String s : args.split(" ")) {
+                s = String.format(s, file); // put in the filename thing
+
+                parts.add(s.trim());
             }
         }
+
+        return parts.toArray(new String[parts.size()]);
     }
 
     @FXML
@@ -244,7 +304,7 @@ public class PrintProjectController implements Initializable {
         cb_visibleFormwork.setSelected(true);
         cb_woodmaterialAndConstruction.setSelected(true);
     }
-    
+
     @FXML
     private void deleteSelection(ActionEvent event) {
         cb_battens.setSelected(false);
@@ -265,6 +325,6 @@ public class PrintProjectController implements Initializable {
 
     @FXML
     private void showLastPDF(ActionEvent event) {
-        showPDF(lastPath,true);
+        showPDF(lastPath, true);
     }
 }
