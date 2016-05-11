@@ -2,8 +2,17 @@
     -fx-background-color: white;
         /*linear-gradient(from 00% 00% to 100% 0%, #BDBDBD 0%, white 100%);*/
 }
-.label:hover{
+.currentPage{
+    -fx-background-color: derive(lightgray,60%);
+    -fx-background-radius: 5px;
     -fx-font-weight:bold;
+}
+.transparentLabel{
+    -fx-border-color: transparent;
+}
+.menulabel:hover{
+    -fx-border-color: #3c84ff;
+    -fx-border-radius: 3px;
 }
 .label{
     -fx-font-size:18px;

@@ -26,8 +26,11 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -69,6 +72,10 @@ public class ClientsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
 
+        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"));
+        placeholder.setAlignment(Pos.CENTER);
+        tv_Clients.setPlaceholder(placeholder);
+        
         tc_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
         tc_City.setCellValueFactory(new PropertyValueFactory<>("city"));
         tc_Street.setCellValueFactory(new PropertyValueFactory<>("street"));

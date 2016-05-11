@@ -124,26 +124,41 @@ public class MainFormController implements Initializable {
     @FXML
     private void showParameter(ActionEvent event) {
         loadFxmlIntoPane("Parameter.fxml");
+        if(SideViewController.getInstance() != null){
+            SideViewController.getInstance().setCurrentPage(4);
+        }
     }
 
     @FXML
     private void showAllProjects(ActionEvent event) {
         loadFxmlIntoPane("AllProjects.fxml");
+        if(SideViewController.getInstance() != null){
+            SideViewController.getInstance().setCurrentPage(1);
+        }
     }
 
     @FXML
     private void showProductList(ActionEvent event) {
         loadFxmlIntoPane("ProductList.fxml");
+        if(SideViewController.getInstance() != null){
+            SideViewController.getInstance().setCurrentPage(3);
+        }
     }
 
     @FXML
     private void showClients(ActionEvent event) {
         loadFxmlIntoPane("Clients.fxml");
+        if(SideViewController.getInstance() != null){
+            SideViewController.getInstance().setCurrentPage(5);
+        }
     }
 
     @FXML
     private void showOptions(ActionEvent event) {
         loadFxmlIntoPane("Options.fxml");
+        if(SideViewController.getInstance() != null){
+            SideViewController.getInstance().setCurrentPage(6);
+        }
     }
 
     @FXML

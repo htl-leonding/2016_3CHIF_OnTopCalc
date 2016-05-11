@@ -15,10 +15,15 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -50,6 +55,10 @@ public class ParameterViewController implements Initializable {
         DecimalFormat decimalFormat = new DecimalFormat("#.####");
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
+        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"));
+        placeholder.setAlignment(Pos.CENTER);
+        tv_Prameter.setPlaceholder(placeholder);
+        
         tv_Prameter.setEditable(true);
 
         tc_LongTerm.setCellValueFactory(new PropertyValueFactory<>("longTerm"));

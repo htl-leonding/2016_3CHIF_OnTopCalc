@@ -16,10 +16,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -27,8 +29,11 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -70,6 +75,16 @@ public class AllProjectsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
+        Hyperlink lookInBin = new Hyperlink("Im Papierkorb nachsehen");
+        lookInBin.setOnAction((event)->{
+            MainFormController.getInstance().loadFxmlIntoPane("Options.fxml");
+        });
+        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"),lookInBin);
+        placeholder.setAlignment(Pos.CENTER);
+        tv_ProjectList.setPlaceholder(placeholder);
+        
         tc_Id.setCellValueFactory(new PropertyValueFactory<>("id"));
         tc_PrecalcId.setCellValueFactory(new PropertyValueFactory<>("preCalculation"));
         tc_ProjectName.setCellValueFactory(new PropertyValueFactory<>("projectName"));

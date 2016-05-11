@@ -232,7 +232,7 @@ public class ProjectViewController extends Observable implements Initializable, 
     @FXML
     private void dismiss(ActionEvent event) {
         if (ModifyController.getInstance().isModified()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind die sicher? Alle nichtgespeicherten Änderungen gehen verloren.",
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher? Alle nichtgespeicherten Änderungen gehen verloren.",
                     ButtonType.YES, ButtonType.CANCEL);
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
@@ -362,7 +362,7 @@ public class ProjectViewController extends Observable implements Initializable, 
             idx++;
         }
         if (ModifyController.getInstance().isModified()) {
-            bt_Save.getStyleClass().add("modified");
+            bt_Save.getStyleClass().add(0,"modified");
         } else {
             bt_Save.getStyleClass().remove("modified");
         }

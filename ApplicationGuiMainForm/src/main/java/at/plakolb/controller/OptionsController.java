@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -35,7 +36,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -104,6 +108,11 @@ public class OptionsController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = this;
+        
+        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"));
+        placeholder.setAlignment(Pos.CENTER);
+        tv_paperbin.setPlaceholder(placeholder);
+        
         cl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         cl_pname.setCellValueFactory(new PropertyValueFactory<>("projectName"));
         cl_client.setCellValueFactory(new PropertyValueFactory<>("client"));
