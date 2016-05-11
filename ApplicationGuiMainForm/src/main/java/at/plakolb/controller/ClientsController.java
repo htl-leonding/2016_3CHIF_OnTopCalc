@@ -100,7 +100,7 @@ public class ClientsController implements Initializable {
                             setText(null);
                         } else {
                             edit.setId("edit");
-                            delete.setId("delete");
+                            delete.setId("deleteFinal");
                             box.setId("box");
                             box.setSpacing(2);
                             box.setAlignment(Pos.CENTER);

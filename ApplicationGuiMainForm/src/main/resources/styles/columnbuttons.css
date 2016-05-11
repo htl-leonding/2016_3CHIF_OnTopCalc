@@ -23,7 +23,7 @@
     -fx-graphic: url("/images/interact.png")
 }
 #deleteFinal{
-    -fx-graphic: url("/images/delete.png")
+    -fx-graphic: url("/images/delete2.png")
 }
 #box{
     -fx-spacing:5;

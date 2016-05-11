@@ -1,0 +1,15 @@
+/*	HTL Leonding	*//* 
+    Created on : 11.05.2016, 14:30:04
+    Author     : Andreas
+*/
+
+.roofTypeButton{
+    -fx-border-color:transparent;
+    -fx-border-radius:5px;
+    -fx-border-width: 3px;
+}
+.roofTypeButton:hover{
+    -fx-background-color:rgba(255,255,255,150);
+    -fx-background-radius: 5px;
+    -fx-border-color:#3c84ff;
+}

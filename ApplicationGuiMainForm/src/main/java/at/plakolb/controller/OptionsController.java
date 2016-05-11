@@ -108,11 +108,11 @@ public class OptionsController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = this;
-        
-        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"));
+
+        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")), new Label("Keine Daten vorhanden"));
         placeholder.setAlignment(Pos.CENTER);
         tv_paperbin.setPlaceholder(placeholder);
-        
+
         cl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         cl_pname.setCellValueFactory(new PropertyValueFactory<>("projectName"));
         cl_client.setCellValueFactory(new PropertyValueFactory<>("client"));
@@ -404,7 +404,7 @@ public class OptionsController implements Initializable, Observer {
     }
 
     String recoverPath = "";
-    
+
     @FXML
     private void readBackup(ActionEvent event) {
         Alert deleteDBAlert = new Alert(Alert.AlertType.WARNING, "Die derzeitige Datenbank wird gelöscht!");
@@ -417,62 +417,61 @@ public class OptionsController implements Initializable, Observer {
             bt_readBackup.setDisable(true);
             backup = 1;
 
-            
-
             BackUpDatabase backUpDatabase = new BackUpDatabase(SettingsController.getProperty("backupPath"));
             backUpDatabase.addObserver(controller);
 
-            while (!new File(recoverPath).exists()) {
-                DirectoryChooser dc = new DirectoryChooser();
+            DirectoryChooser dc = new DirectoryChooser();
+            if (new File(SettingsController.getProperty("backupPath")).exists()) {
                 dc.setInitialDirectory(new File(SettingsController.getProperty("backupPath")));
-                dc.setTitle("OnTopCalc - Auswahl der Sicherung");
-                try {
-                    Stage stage = new Stage();
-                    stage.setResizable(false);
-                    stage.initModality(Modality.WINDOW_MODAL);
-                    stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-                    File p = dc.showDialog(stage);
-                    if (p != null) {
-                        recoverPath = p.getAbsolutePath();
-                    }
-                } catch (Exception ex) {
-                    Logging.getLogger().log(Level.SEVERE, null, ex);
-                }
-
             }
-
-            Thread t = new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    int returnValue = backUpDatabase.imp(recoverPath);
-
-                    Platform.runLater(() -> {
-                        if (returnValue == 0) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Die Sicherung wurde erfolgreich wiederhergestellt!");
-                            alert.setHeaderText("Sicherung wiederhergestellt!");
-                            alert.setContentText("Die Sicherung wurde erfolgreich wiederhergestellt!");
-                            alert.showAndWait();
-                            SettingsController.setDateProperty("lastBackup", new Date());
-
-                        } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Die Sicherung konnte nicht wiederhergestellt werden!");
-                            alert.setHeaderText("Fehler");
-                            alert.setContentText("Die Sicherung konnte nicht wiederhergestellt werden!");
-                            alert.showAndWait();
-                        }
-                        updateData();
-                        pgic_backupProgressRE.setVisible(false);
-                        lb_percentageRE.setVisible(false);
-                        bt_createBackup.setDisable(false);
-                        bt_readBackup.setDisable(false);
-                        backup = 0;
-                    });
+            dc.setTitle("OnTopCalc - Auswahl der Sicherung");
+            try {
+                Stage stage = new Stage();
+                stage.setResizable(false);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                File p = dc.showDialog(stage);
+                if (p != null) {
+                    recoverPath = p.getAbsolutePath();
                 }
-            }, "BackupReaderThread");
-            t.start();
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, null, ex);
+            }
+            if (new File(recoverPath).exists()) {
+
+                Thread t = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        int returnValue = backUpDatabase.imp(recoverPath);
+
+                        Platform.runLater(() -> {
+                            if (returnValue == 0) {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Die Sicherung wurde erfolgreich wiederhergestellt!");
+                                alert.setHeaderText("Sicherung wiederhergestellt!");
+                                alert.setContentText("Die Sicherung wurde erfolgreich wiederhergestellt!");
+                                alert.showAndWait();
+                                SettingsController.setDateProperty("lastBackup", new Date());
+
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Die Sicherung konnte nicht wiederhergestellt werden!");
+                                alert.setHeaderText("Fehler");
+                                alert.setContentText("Die Sicherung konnte nicht wiederhergestellt werden!");
+                                alert.showAndWait();
+                            }
+                            updateData();
+                            pgic_backupProgressRE.setVisible(false);
+                            lb_percentageRE.setVisible(false);
+                            bt_createBackup.setDisable(false);
+                            bt_readBackup.setDisable(false);
+                            backup = 0;
+                        });
+                    }
+                }, "BackupReaderThread");
+                t.start();
+            }
         }
     }
 }

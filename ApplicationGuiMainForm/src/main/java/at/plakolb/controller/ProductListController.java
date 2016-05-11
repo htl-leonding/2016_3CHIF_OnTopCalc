@@ -222,7 +222,7 @@ public class ProductListController implements Initializable {
                             setGraphic(null);
                             setText(null);
                         } else {
-                            delete.setId("delete");
+                            delete.setId("deleteFinal");
                             delete.setTooltip(new Tooltip("Produkt löschen"));
                             delete.setOnMouseClicked((MouseEvent event) -> {
                                 try {

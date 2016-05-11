@@ -34,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -81,6 +82,14 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
 
     Worth wastePercent;
     Component component;
+    @FXML
+    private VBox vbox_firstSelection;
+    @FXML
+    private VBox vb_brick;
+    @FXML
+    private VBox vb_sheet;
+    @FXML
+    private VBox vbox_normal;
 
     /**
      * Initializes the controller class.
@@ -133,6 +142,12 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
+            if (ProjectViewController.getOpenedProject().getRoofMaterial() != null 
+                    && !ProjectViewController.getOpenedProject().getRoofMaterial().equals("")) {
+                VBox box = (VBox) vbox_firstSelection.getParent();
+                box.getChildren().remove(vbox_firstSelection);
+                vbox_normal.setVisible(true);
+            }
             load();
         } else {
             String categoryString = loadedIndex == 0 ? "L" : "VS";
@@ -180,6 +195,18 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             String categoryString = newValue.intValue() == 0 ? "L" : "VS";
             component.setCategory(new CategoryController().findCategoryByShortTerm(categoryString));
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
+        });
+        vb_brick.setOnMouseClicked((event) -> {
+            VBox box = (VBox) vbox_firstSelection.getParent();
+            box.getChildren().remove(vbox_firstSelection);
+            vbox_normal.setVisible(true);
+            cb_roofType.getSelectionModel().select("Ziegeldach");
+        });
+        vb_sheet.setOnMouseClicked((event) -> {
+            VBox box = (VBox) vbox_firstSelection.getParent();
+            box.getChildren().remove(vbox_firstSelection);
+            vbox_normal.setVisible(true);
+            cb_roofType.getSelectionModel().select("Blechdach");
         });
 
         if (loadedIndex != -1) {
