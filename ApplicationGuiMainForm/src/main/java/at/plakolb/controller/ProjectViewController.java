@@ -367,10 +367,11 @@ public class ProjectViewController extends Observable implements Initializable, 
             }
             idx++;
         }
-        if (ModifyController.getInstance().isModified()) {
+
+        if (ModifyController.getInstance().isModified() && !bt_Save.getStyleClass().contains("modified")) {
             bt_Save.getStyleClass().add(0, "modified");
-        } else {
-            bt_Save.getStyleClass().remove("modified");
+        } else if(!ModifyController.getInstance().isModified() && bt_Save.getStyleClass().contains("modified")){
+            bt_Save.getStyleClass().removeAll("modified");
         }
     }
 

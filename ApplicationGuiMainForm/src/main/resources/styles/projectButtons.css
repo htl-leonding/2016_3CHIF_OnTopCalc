@@ -10,7 +10,6 @@
 .modified{
 	-fx-font-size: 18px;
 	-fx-font-weight: bold;
-	-fx-border-color: orange;
 }
 .bt_save{
 	-fx-graphic: url("../images/save3.png");
@@ -41,6 +40,10 @@
 }
 .changePage:hover{
 	-fx-border-color: derive(black,20%);
+}
+
+.changePage:pressed{
+    -fx-background-color: derive(lightgray,60%);
 }
 
 #bar{
