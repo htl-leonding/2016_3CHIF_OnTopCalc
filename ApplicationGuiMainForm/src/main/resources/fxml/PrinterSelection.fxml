@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="216.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller=".PrinterSelectionController">
+   <children>
+      <ComboBox layoutX="157.0" layoutY="175.0" onAction="#printerserviceChanged" prefHeight="25.0" prefWidth="262.0" promptText="Drucker auswählen" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="110.0" />
+      <HBox alignment="CENTER" layoutX="419.0" layoutY="313.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button fx:id="bt_ok" layoutX="419.0" layoutY="338.0" mnemonicParsing="false" onAction="#submit" prefWidth="100.0" text="OK" />
+            <Button fx:id="bt_cancel" cancelButton="true" layoutX="482.0" layoutY="313.0" mnemonicParsing="false" onAction="#cancel" prefWidth="100.0" text="Abbrechen" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="157.0" layoutY="261.0" spacing="5.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label layoutX="157.0" layoutY="278.0" text="Anzahl:" />
+            <ComboBox editable="true" layoutX="247.0" layoutY="261.0" onAction="#cntChanged" prefWidth="70.0" promptText="1" />
+         </children>
+      </HBox>
+      <ImageView fitHeight="150.0" fitWidth="64.0" layoutX="27.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <image>
+            <Image url="@../images/printer.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="195.0" layoutY="57.0" text="Druckassistent" textFill="#3c84ff" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

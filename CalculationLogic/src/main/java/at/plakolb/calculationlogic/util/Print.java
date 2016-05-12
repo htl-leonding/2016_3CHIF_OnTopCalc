@@ -134,10 +134,11 @@ public class Print {
         return absolutePath;
     }
 
-    public void print(PrintService service) throws PrinterException, IOException {
+    public void print(PrintService service,int copies) throws PrinterException, IOException {
         PDDocument doc = PDDocument.load(new File(absolutePath));
 
         PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintService(service);
         double cm = 72.0 / 2.54;
         PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
         attr.add(Chromaticity.MONOCHROME);
@@ -154,9 +155,8 @@ public class Print {
         Book book = new Book();
         book.append(new PDFPrintable(doc), pageFormat, doc.getNumberOfPages());
         job.setPageable(book);
-        if (job.printDialog(attr)) {
-            job.print(attr);
-        }
+        
+        job.print(attr);
     }
 
     private static void addEmptyLine(Paragraph paragraph, int number) {
