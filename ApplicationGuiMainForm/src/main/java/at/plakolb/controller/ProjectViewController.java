@@ -172,7 +172,7 @@ public class ProjectViewController extends Observable implements Initializable, 
             new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Projektnamen ein.").showAndWait();
         } else {
 
-            if (informations.getClientName().isEmpty()) {
+            if (informations.getClientName().isEmpty() && !projectOpened) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keinen Auftragsgebernamen eingegeben. Deshalb kann kein neuer Auftragsgeber erstellt werden. Möchten Sie fortfahren?",
                         ButtonType.YES, ButtonType.CANCEL);
                 alert.showAndWait();
@@ -212,6 +212,11 @@ public class ProjectViewController extends Observable implements Initializable, 
                 projectOpened = false;
             }
 
+            if (!projectOpened) {
+                bt_Dismiss.setText("Menü");
+                bt_Save.setText("Speichern");
+            }
+
             Project_ResultAreaController.getInstance().persist();
             Project_ConstructionMaterialListController.getInstance().persist();
             Project_TransportController.getInstance().persist();
@@ -220,9 +225,8 @@ public class ProjectViewController extends Observable implements Initializable, 
             Project_ConstructionMaterialController.getInstance().persist();
 
             ModifyController.getInstance().reset();
-            MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
-            projectOpened = false;
-            openedProject = null;
+            
+            projectOpened = true;
         }
     }
 
@@ -364,7 +368,7 @@ public class ProjectViewController extends Observable implements Initializable, 
             idx++;
         }
         if (ModifyController.getInstance().isModified()) {
-            bt_Save.getStyleClass().add(0,"modified");
+            bt_Save.getStyleClass().add(0, "modified");
         } else {
             bt_Save.getStyleClass().remove("modified");
         }
