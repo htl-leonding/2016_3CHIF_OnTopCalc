@@ -16,8 +16,10 @@
     -fx-border-color: #3c84ff;
     -fx-text-fill: #3c84ff;
     -fx-border-radius: 5px;
+    -fx-graphic: url("../images/open3.png");
 }
 .buttonChoosePath:hover{
     -fx-background-color: #3c84ff;
     -fx-text-fill: white;
+    -fx-graphic: url("../images/open4.png");
 }

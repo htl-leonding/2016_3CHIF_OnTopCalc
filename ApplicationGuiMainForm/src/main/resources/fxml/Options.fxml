@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -17,7 +25,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="570.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="570.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -54,7 +62,7 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                  <HBox layoutY="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <HBox alignment="CENTER" layoutY="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                                 <Label minHeight="27.0" text="Standard Sicherungs Speicherort:" />
                                 <TextField fx:id="tf_defaultBackupDirectory" editable="false" promptText="Standartspeicherort für Sicherungen" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
@@ -65,7 +73,7 @@
                               <Insets left="5.0" right="2.0" />
                            </HBox.margin>
                                 </TextField>
-                                <Button fx:id="bt_chooseFileBackup" mnemonicParsing="false" styleClass="buttonChoosePath" text="🗁">
+                                <Button fx:id="bt_chooseFileBackup" mnemonicParsing="false" styleClass="buttonChoosePath">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -100,7 +108,7 @@
                   </HBox>
                     </children>
                 </AnchorPane>
-            <HBox layoutX="20.0" layoutY="375.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
+            <HBox alignment="CENTER" layoutX="20.0" layoutY="375.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
                <children>
                         <Label minHeight="27.0" text="Standard PDF Speicherort:" />
                         <TextField fx:id="tf_defaultPDFDirectory" editable="false" prefHeight="25.0" promptText="Standartspeicherort für die PDFs" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
@@ -111,7 +119,7 @@
                         <Insets left="5.0" right="2.0" />
                      </HBox.margin>
                         </TextField>
-                        <Button fx:id="bt_chooseFilePDF" mnemonicParsing="false" styleClass="buttonChoosePath" text="Ordner auswählen">
+                        <Button fx:id="bt_chooseFilePDF" mnemonicParsing="false" styleClass="buttonChoosePath">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>

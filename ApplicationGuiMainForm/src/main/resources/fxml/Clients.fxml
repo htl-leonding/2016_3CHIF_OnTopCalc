@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -7,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -26,7 +30,7 @@
                   <TableColumn fx:id="tc_City" minWidth="80.0" prefWidth="100.0" style="-fx-alignment: center;" text="Stadt" />
                   <TableColumn fx:id="tc_ZipCode" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Postleitzahl" />
                   <TableColumn fx:id="tc_PhoneNumber" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Telefonnummer" />
-                  <TableColumn fx:id="tc_Projects" minWidth="80.0" prefWidth="100.0" style="-fx-alignment: center;" text="Pojekte" />
+                  <TableColumn fx:id="tc_Projects" minWidth="80.0" prefWidth="100.0" style="-fx-alignment: center;" text="Projekte" />
                   <TableColumn fx:id="tc_Buttons" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-alignment: center;" />
               </columns>
                <columnResizePolicy>

@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.KeyCode;
 
 /**
  * FXML Controller class
@@ -225,7 +226,7 @@ public class ProjectViewController extends Observable implements Initializable, 
             Project_ConstructionMaterialController.getInstance().persist();
 
             ModifyController.getInstance().reset();
-            
+
             projectOpened = true;
         }
     }
@@ -370,7 +371,7 @@ public class ProjectViewController extends Observable implements Initializable, 
 
         if (ModifyController.getInstance().isModified() && !bt_Save.getStyleClass().contains("modified")) {
             bt_Save.getStyleClass().add(0, "modified");
-        } else if(!ModifyController.getInstance().isModified() && bt_Save.getStyleClass().contains("modified")){
+        } else if (!ModifyController.getInstance().isModified() && bt_Save.getStyleClass().contains("modified")) {
             bt_Save.getStyleClass().removeAll("modified");
         }
     }
@@ -397,6 +398,15 @@ public class ProjectViewController extends Observable implements Initializable, 
                             event.consume();
                             break;
                     }
+                }
+            });
+            MainApp.getStage().getScene().setOnKeyPressed((event) -> {
+                if (event.isShortcutDown()) {
+                    if (event.getCode() == KeyCode.S) {
+                        saveProject(null);
+                    }
+                } else if (event.getCode() == KeyCode.ESCAPE) {
+                    dismiss(null);
                 }
             });
         } else {
