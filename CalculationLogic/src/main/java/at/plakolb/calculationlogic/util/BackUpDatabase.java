@@ -56,6 +56,9 @@ public class BackUpDatabase extends Observable {
     public BackUpDatabase(String path) {
         SimpleDateFormat sdf = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss");
         filename = "backup" + sdf.format(new Date());
+        if (path.isEmpty()) {
+            path = System.getProperty("user.home");
+        }
         endpath = path;
         em = JpaUtils.getEntityManager();
     }
@@ -201,7 +204,6 @@ public class BackUpDatabase extends Observable {
     }
 
     private void move() throws IOException, Exception {
-        String line = "";
         String dir = System.getProperty("user.dir");
 
         File result = new File(endpath + "/" + filename);

@@ -125,53 +125,53 @@ public class OptionsController implements Initializable, Observer {
 
         Callback<TableColumn<Project, String>, TableCell<Project, String>> cellFactory
                 = new Callback<TableColumn<Project, String>, TableCell<Project, String>>() {
+            @Override
+            public TableCell call(final TableColumn<Project, String> param) {
+                final TableCell<Project, String> cell = new TableCell<Project, String>() {
+
+                    final Label l_restore = new Label();
+                    final Label l_delFinal = new Label();
+                    final HBox box = new HBox(l_restore, l_delFinal);
+
                     @Override
-                    public TableCell call(final TableColumn<Project, String> param) {
-                        final TableCell<Project, String> cell = new TableCell<Project, String>() {
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            l_restore.setId("restore");
+                            l_delFinal.setId("deleteFinal");
+                            box.setId("box");
 
-                            final Label l_restore = new Label();
-                            final Label l_delFinal = new Label();
-                            final HBox box = new HBox(l_restore, l_delFinal);
+                            l_restore.setTooltip(new Tooltip("Projekt wiederherstellen"));
+                            l_delFinal.setTooltip(new Tooltip("Projekt entgültig löschen"));
 
-                            @Override
-                            public void updateItem(String item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setGraphic(null);
-                                    setText(null);
-                                } else {
-                                    l_restore.setId("restore");
-                                    l_delFinal.setId("deleteFinal");
-                                    box.setId("box");
-
-                                    l_restore.setTooltip(new Tooltip("Projekt wiederherstellen"));
-                                    l_delFinal.setTooltip(new Tooltip("Projekt entgültig löschen"));
-
-                                    l_restore.setOnMouseClicked(event -> {
-                                        Project project = getTableView().getItems().get(getIndex());
-                                        project.setDeletion(false);
-                                        try {
-                                            new ProjectController().edit(project);
-                                            updateData();
-                                        } catch (NonexistentEntityException ex) {
-                                            Logging.getLogger().log(Level.SEVERE, "Project couldn't be restored.", ex);
-                                        }
-                                        updateData();
-                                    });
-                                    l_delFinal.setOnMouseClicked(event -> {
-                                        Project p = getTableView().getItems().get(getIndex());
-                                        ProjectController c = new ProjectController();
-                                        c.delete(p.getId());
-                                        updateData();
-                                    });
-                                    setGraphic(box);
-                                    setText(null);
+                            l_restore.setOnMouseClicked(event -> {
+                                Project project = getTableView().getItems().get(getIndex());
+                                project.setDeletion(false);
+                                try {
+                                    new ProjectController().edit(project);
+                                    updateData();
+                                } catch (NonexistentEntityException ex) {
+                                    Logging.getLogger().log(Level.SEVERE, "Project couldn't be restored.", ex);
                                 }
-                            }
-                        };
-                        return cell;
+                                updateData();
+                            });
+                            l_delFinal.setOnMouseClicked(event -> {
+                                Project p = getTableView().getItems().get(getIndex());
+                                ProjectController c = new ProjectController();
+                                c.delete(p.getId());
+                                updateData();
+                            });
+                            setGraphic(box);
+                            setText(null);
+                        }
                     }
                 };
+                return cell;
+            }
+        };
 
         cl_options.setCellFactory(cellFactory);
 
@@ -189,7 +189,7 @@ public class OptionsController implements Initializable, Observer {
         });
         cb_weeks.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5", "6"));
         cb_weeks.setOnAction((event) -> {
-            int value = -1;
+            int value;
             try {
                 value = Integer.parseInt(cb_weeks.getValue());
             } catch (NumberFormatException e) {
@@ -336,6 +336,16 @@ public class OptionsController implements Initializable, Observer {
 
     @FXML
     private void createBackup(ActionEvent event) {
+
+        if (SettingsController.getProperty("backupPath").isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keine Sicherungs Speicherort angegeben. Die Sicherung wird in " + System.getProperty("user.home")
+                    + " gespeichert. Möchten Sie fortfahren.", ButtonType.CANCEL, ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult().equals(ButtonType.CANCEL)) {
+                return;
+            }
+        }
         pgic_backupProgress.setVisible(true);
         bt_createBackup.setDisable(true);
         bt_readBackup.setDisable(true);
@@ -433,6 +443,11 @@ public class OptionsController implements Initializable, Observer {
                 File p = dc.showDialog(stage);
                 if (p != null) {
                     recoverPath = p.getAbsolutePath();
+                } else {
+                    pgic_backupProgressRE.setVisible(false);
+                    bt_createBackup.setDisable(false);
+                    bt_readBackup.setDisable(false);
+                    return;
                 }
             } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, null, ex);
