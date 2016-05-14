@@ -1,0 +1,23 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+#AnchorPane{
+    -fx-background-color: derive(black,30%);
+}
+#loadingPage{
+    -fx-background-color: white;
+}
+
+#reload{
+    -fx-border-color:#3c84ff;
+    -fx-border-width:2px;
+    -fx-border-radius:5px;
+    
+    -fx-background-color:derive(black,50%);
+    -fx-background-radius:5px;
+    -fx-text-fill:white;
+}
+#reload:hover{
+    -fx-background-color:derive(black,30%);
+}
