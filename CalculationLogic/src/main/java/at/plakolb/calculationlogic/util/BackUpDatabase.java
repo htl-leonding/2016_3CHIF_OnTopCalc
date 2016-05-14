@@ -1,6 +1,18 @@
 /*	HTL Leonding	*/
 package at.plakolb.calculationlogic.util;
 
+import at.plakolb.calculationlogic.db.JpaUtils;
+import static at.plakolb.calculationlogic.db.JpaUtils.getEntityManager;
+import at.plakolb.calculationlogic.db.controller.CategoryController;
+import at.plakolb.calculationlogic.entity.Assembly;
+import at.plakolb.calculationlogic.entity.Category;
+import at.plakolb.calculationlogic.entity.Client;
+import at.plakolb.calculationlogic.entity.Component;
+import at.plakolb.calculationlogic.entity.ParameterP;
+import at.plakolb.calculationlogic.entity.Product;
+import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.entity.Worth;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,12 +29,16 @@ import java.util.logging.Logger;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -32,129 +48,136 @@ public class BackUpDatabase extends Observable {
 
     public static final String CRYPTOKEY = "L1FvSx1XCwAadVR4";
 
-    String filename;
-    String endpath;
+    private EntityManager em;
+    private String filename;
+    private String endpath;
     private static final String FILETYPE = ".OTCdb";
 
     public BackUpDatabase(String path) {
         SimpleDateFormat sdf = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss");
         filename = "backup" + sdf.format(new Date());
         endpath = path;
+        em = JpaUtils.getEntityManager();
     }
 
     public int exp() {
         try {
-            String user = "app";
-            String password = "app";
-            String jdbcURL = "jdbc:derby://localhost:1527/db";
-
             String dir = System.getProperty("user.dir");
-
-            Connection connection = DriverManager.getConnection(jdbcURL, user, password);
 
             setChanged();
             notifyObservers(5);
 
-            PreparedStatement ps1 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps1.setString(1, null);
-            ps1.setString(2, "ASSEMBLY");
-            ps1.setString(3, dir + "/ASSEMBLY" + FILETYPE);
-            ps1.setString(4, "%");
-            ps1.setString(5, null);
-            ps1.setString(6, null);
-            ps1.execute();
+            em.getTransaction().begin();
+
+            Query query1 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query1.setParameter(1, null);
+            query1.setParameter(2, "ASSEMBLY");
+            query1.setParameter(3, dir + "/ASSEMBLY" + FILETYPE);
+            query1.setParameter(4, "%");
+            query1.setParameter(5, null);
+            query1.setParameter(6, null);
+            query1.executeUpdate();
+
             setChanged();
             notifyObservers(15);
 
-            PreparedStatement ps2 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps2.setString(1, null);
-            ps2.setString(2, "CATEGORY");
-            ps2.setString(3, dir + "/CATEGORY" + FILETYPE);
-            ps2.setString(4, "%");
-            ps2.setString(5, null);
-            ps2.setString(6, null);
-            ps2.execute();
+            Query query2 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query2.setParameter(1, null);
+            query2.setParameter(2, "CATEGORY");
+            query2.setParameter(3, dir + "/CATEGORY" + FILETYPE);
+            query2.setParameter(4, "%");
+            query2.setParameter(5, null);
+            query2.setParameter(6, null);
+            query2.executeUpdate();
+
             setChanged();
             notifyObservers(25);
-            PreparedStatement ps3 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps3.setString(1, null);
-            ps3.setString(2, "COMPONENT");
-            ps3.setString(3, dir + "/COMPONENT" + FILETYPE);
-            ps3.setString(4, "%");
-            ps3.setString(5, null);
-            ps3.setString(6, null);
-            ps3.execute();
+
+            Query query3 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query3.setParameter(1, null);
+            query3.setParameter(2, "COMPONENT");
+            query3.setParameter(3, dir + "/COMPONENT" + FILETYPE);
+            query3.setParameter(4, "%");
+            query3.setParameter(5, null);
+            query3.setParameter(6, null);
+            query3.executeUpdate();
+
             setChanged();
             notifyObservers(35);
-            PreparedStatement ps4 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps4.setString(1, null);
-            ps4.setString(2, "PARAMETERP");
-            ps4.setString(3, dir + "/PARAMETERP" + FILETYPE);
-            ps4.setString(4, "%");
-            ps4.setString(5, null);
-            ps4.setString(6, null);
-            ps4.execute();
+
+            Query query4 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query4.setParameter(1, null);
+            query4.setParameter(2, "PARAMETERP");
+            query4.setParameter(3, dir + "/PARAMETERP" + FILETYPE);
+            query4.setParameter(4, "%");
+            query4.setParameter(5, null);
+            query4.setParameter(6, null);
+            query4.executeUpdate();
+
             setChanged();
             notifyObservers(45);
-            PreparedStatement ps5 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps5.setString(1, null);
-            ps5.setString(2, "PRODUCT");
-            ps5.setString(3, dir + "/PRODUCT" + FILETYPE);
-            ps5.setString(4, "%");
-            ps5.setString(5, null);
-            ps5.setString(6, null);
-            ps5.execute();
+
+            Query query5 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query5.setParameter(1, null);
+            query5.setParameter(2, "PRODUCT");
+            query5.setParameter(3, dir + "/PRODUCT" + FILETYPE);
+            query5.setParameter(4, "%");
+            query5.setParameter(5, null);
+            query5.setParameter(6, null);
+            query5.executeUpdate();
+
             setChanged();
             notifyObservers(55);
-            PreparedStatement ps6 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps6.setString(1, null);
-            ps6.setString(2, "PROJECT");
-            ps6.setString(3, dir + "/PROJECT" + FILETYPE);
-            ps6.setString(4, "%");
-            ps6.setString(5, null);
-            ps6.setString(6, null);
-            ps6.execute();
+
+            Query query6 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query6.setParameter(1, null);
+            query6.setParameter(2, "PROJECT");
+            query6.setParameter(3, dir + "/PROJECT" + FILETYPE);
+            query6.setParameter(4, "%");
+            query6.setParameter(5, null);
+            query6.setParameter(6, null);
+            query6.executeUpdate();
+
             setChanged();
             notifyObservers(65);
-            PreparedStatement ps7 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps7.setString(1, null);
-            ps7.setString(2, "UNIT");
-            ps7.setString(3, dir + "/UNIT" + FILETYPE);
-            ps7.setString(4, "%");
-            ps7.setString(5, null);
-            ps7.setString(6, null);
-            ps7.execute();
+
+            Query query7 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query7.setParameter(1, null);
+            query7.setParameter(2, "UNIT");
+            query7.setParameter(3, dir + "/UNIT" + FILETYPE);
+            query7.setParameter(4, "%");
+            query7.setParameter(5, null);
+            query7.setParameter(6, null);
+            query7.executeUpdate();
+
             setChanged();
             notifyObservers(75);
-            PreparedStatement ps8 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps8.setString(1, null);
-            ps8.setString(2, "WORTH");
-            ps8.setString(3, dir + "/WORTH" + FILETYPE);
-            ps8.setString(4, "%");
-            ps8.setString(5, null);
-            ps8.setString(6, null);
-            ps8.execute();
+
+            Query query8 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query8.setParameter(1, null);
+            query8.setParameter(2, "WORTH");
+            query8.setParameter(3, dir + "/WORTH" + FILETYPE);
+            query8.setParameter(4, "%");
+            query8.setParameter(5, null);
+            query8.setParameter(6, null);
+            query8.executeUpdate();
+
             setChanged();
             notifyObservers(85);
-            PreparedStatement ps9 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
-            ps9.setString(1, null);
-            ps9.setString(2, "CLIENT");
-            ps9.setString(3, dir + "/CLIENT" + FILETYPE);
-            ps9.setString(4, "%");
-            ps9.setString(5, null);
-            ps9.setString(6, null);
-            ps9.execute();
+
+            Query query9 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
+            query9.setParameter(1, null);
+            query9.setParameter(2, "CLIENT");
+            query9.setParameter(3, dir + "/CLIENT" + FILETYPE);
+            query9.setParameter(4, "%");
+            query9.setParameter(5, null);
+            query9.setParameter(6, null);
+            query9.executeUpdate();
+
             setChanged();
             notifyObservers(95);
+
+            em.getTransaction().commit();
 
             move();
 
@@ -170,6 +193,10 @@ public class BackUpDatabase extends Observable {
         } catch (Exception ex) {
             Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
             return -3;
+        } finally {
+            if (em != null) {
+                em.clear();
+            }
         }
     }
 
@@ -191,26 +218,25 @@ public class BackUpDatabase extends Observable {
             File unit = new File(dir + "/UNIT" + FILETYPE);
             File worth = new File(dir + "/WORTH" + FILETYPE);
 
-            encrypt(CRYPTOKEY, assembly, new File(dir + "/crypto" + assembly.getName()));
-            encrypt(CRYPTOKEY, category, new File(dir + "/crypto" + category.getName()));
-            encrypt(CRYPTOKEY, client, new File(dir + "/crypto" + client.getName()));
-            encrypt(CRYPTOKEY, component, new File(dir + "/crypto" + component.getName()));
-            encrypt(CRYPTOKEY, parameterp, new File(dir + "/crypto" + parameterp.getName()));
-            encrypt(CRYPTOKEY, product, new File(dir + "/crypto" + product.getName()));
-            encrypt(CRYPTOKEY, project, new File(dir + "/crypto" + project.getName()));
-            encrypt(CRYPTOKEY, unit, new File(dir + "/crypto" + unit.getName()));
-            encrypt(CRYPTOKEY, worth, new File(dir + "/crypto" + worth.getName()));
-
-            assembly = new File(dir + "/cryptoASSEMBLY" + FILETYPE);
-            category = new File(dir + "/cryptoCATEGORY" + FILETYPE);
-            client = new File(dir + "/cryptoCLIENT" + FILETYPE);
-            component = new File(dir + "/cryptoCOMPONENT" + FILETYPE);
-            parameterp = new File(dir + "/cryptoPARAMETERP" + FILETYPE);
-            product = new File(dir + "/cryptoPRODUCT" + FILETYPE);
-            project = new File(dir + "/cryptoPROJECT" + FILETYPE);
-            unit = new File(dir + "/cryptoUNIT" + FILETYPE);
-            worth = new File(dir + "/cryptoWORTH" + FILETYPE);
-
+//            encrypt(CRYPTOKEY, assembly, new File(dir + "/crypto" + assembly.getName()));
+//            encrypt(CRYPTOKEY, category, new File(dir + "/crypto" + category.getName()));
+//            encrypt(CRYPTOKEY, client, new File(dir + "/crypto" + client.getName()));
+//            encrypt(CRYPTOKEY, component, new File(dir + "/crypto" + component.getName()));
+//            encrypt(CRYPTOKEY, parameterp, new File(dir + "/crypto" + parameterp.getName()));
+//            encrypt(CRYPTOKEY, product, new File(dir + "/crypto" + product.getName()));
+//            encrypt(CRYPTOKEY, project, new File(dir + "/crypto" + project.getName()));
+//            encrypt(CRYPTOKEY, unit, new File(dir + "/crypto" + unit.getName()));
+//            encrypt(CRYPTOKEY, worth, new File(dir + "/crypto" + worth.getName()));
+//            assembly = new File(dir + "/cryptoASSEMBLY" + FILETYPE);
+//            category = new File(dir + "/cryptoCATEGORY" + FILETYPE);
+//            client = new File(dir + "/cryptoCLIENT" + FILETYPE);
+//            component = new File(dir + "/cryptoCOMPONENT" + FILETYPE);
+//            parameterp = new File(dir + "/cryptoPARAMETERP" + FILETYPE);
+//            product = new File(dir + "/cryptoPRODUCT" + FILETYPE);
+//            project = new File(dir + "/cryptoPROJECT" + FILETYPE);
+//            unit = new File(dir + "/cryptoUNIT" + FILETYPE);
+//            worth = new File(dir + "/cryptoWORTH" + FILETYPE);
+//
             assembly.renameTo(new File(result.getAbsolutePath() + "/ASSEMBLY" + FILETYPE));
             category.renameTo(new File(result.getAbsolutePath() + "/CATEGORY" + FILETYPE));
             client.renameTo(new File(result.getAbsolutePath() + "/CLIENT" + FILETYPE));
@@ -236,7 +262,7 @@ public class BackUpDatabase extends Observable {
             File project = new File(dir + "/PROJECT" + FILETYPE);
             File unit = new File(dir + "/UNIT" + FILETYPE);
             File worth = new File(dir + "/WORTH" + FILETYPE);
-            
+
             assembly.deleteOnExit();
             category.deleteOnExit();
             client.deleteOnExit();
@@ -246,140 +272,163 @@ public class BackUpDatabase extends Observable {
             project.deleteOnExit();
             unit.deleteOnExit();
             worth.deleteOnExit();
-            
 
-            decrypt(CRYPTOKEY, new File(path + "/" + assembly.getName()), assembly);
-            decrypt(CRYPTOKEY, new File(path + "/" + category.getName()), category);
-            decrypt(CRYPTOKEY, new File(path + "/" + client.getName()), client);
-            decrypt(CRYPTOKEY, new File(path + "/" + component.getName()), component);
-            decrypt(CRYPTOKEY, new File(path + "/" + parameterp.getName()), parameterp);
-            decrypt(CRYPTOKEY, new File(path + "/" + product.getName()), product);
-            decrypt(CRYPTOKEY, new File(path + "/" + project.getName()), project);
-            decrypt(CRYPTOKEY, new File(path + "/" + unit.getName()), unit);
-            decrypt(CRYPTOKEY, new File(path + "/" + worth.getName()), worth);
+            em.getTransaction().begin();
 
-            String user = "app";
-            String password = "app";
-            String jdbcURL = "jdbc:derby://localhost:1527/db";
-
-            Connection connection = DriverManager.getConnection(jdbcURL, user, password);
-
+//            decrypt(CRYPTOKEY, new File(path + "/" + assembly.getName()), assembly);
+//            decrypt(CRYPTOKEY, new File(path + "/" + category.getName()), category);
+//            decrypt(CRYPTOKEY, new File(path + "/" + client.getName()), client);
+//            decrypt(CRYPTOKEY, new File(path + "/" + component.getName()), component);
+//            decrypt(CRYPTOKEY, new File(path + "/" + parameterp.getName()), parameterp);
+//            decrypt(CRYPTOKEY, new File(path + "/" + product.getName()), product);
+//            decrypt(CRYPTOKEY, new File(path + "/" + project.getName()), project);
+//            decrypt(CRYPTOKEY, new File(path + "/" + unit.getName()), unit);
+//            decrypt(CRYPTOKEY, new File(path + "/" + worth.getName()), worth);
             setChanged();
             notifyObservers(5);
 
-            PreparedStatement ps1 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps1.setString(1, null);
-            ps1.setString(2, "ASSEMBLY");
-            ps1.setString(3, dir + "/ASSEMBLY"+FILETYPE);
-            ps1.setString(4, "%");
-            ps1.setString(5, null);
-            ps1.setString(6, null);
-            ps1.execute();
+            if (new File(path + "/" + assembly.getName()).length() != 0) {
+                Query query1 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query1.setParameter(1, null);
+                query1.setParameter(2, "ASSEMBLY");
+                query1.setParameter(3, path + "/ASSEMBLY" + FILETYPE);
+                query1.setParameter(4, "%");
+                query1.setParameter(5, null);
+                query1.setParameter(6, null);
+                query1.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(15);
 
-            PreparedStatement ps2 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps2.setString(1, null);
-            ps2.setString(2, "CATEGORY");
-            ps2.setString(3, dir + "/CATEGORY"+FILETYPE);
-            ps2.setString(4, "%");
-            ps2.setString(5, null);
-            ps2.setString(6, null);
-            ps2.execute();
+            if (new File(path + "/" + category.getName()).length() != 0) {
+                Query query2 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query2.setParameter(1, null);
+                query2.setParameter(2, "CATEGORY");
+                query2.setParameter(3, path + "/CATEGORY" + FILETYPE);
+                query2.setParameter(4, "%");
+                query2.setParameter(5, null);
+                query2.setParameter(6, null);
+                query2.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(25);
-            PreparedStatement ps3 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps3.setString(1, null);
-            ps3.setString(2, "COMPONENT");
-            ps3.setString(3, dir + "/COMPONENT"+FILETYPE);
-            ps3.setString(4, "%");
-            ps3.setString(5, null);
-            ps3.setString(6, null);
-            ps3.execute();
+
+            if (new File(path + "/" + component.getName()).length() != 0) {
+                Query query3 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query3.setParameter(1, null);
+                query3.setParameter(2, "COMPONENT");
+                query3.setParameter(3, path + "/COMPONENT" + FILETYPE);
+                query3.setParameter(4, "%");
+                query3.setParameter(5, null);
+                query3.setParameter(6, null);
+                query3.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(35);
-            PreparedStatement ps4 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps4.setString(1, null);
-            ps4.setString(2, "PARAMETERP");
-            ps4.setString(3, dir + "/PARAMETERP"+FILETYPE);
-            ps4.setString(4, "%");
-            ps4.setString(5, null);
-            ps4.setString(6, null);
-            ps4.execute();
+
+            if (new File(path + "/" + parameterp.getName()).length() != 0) {
+                Query query4 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query4.setParameter(1, null);
+                query4.setParameter(2, "PARAMETERP");
+                query4.setParameter(3, path + "/PARAMETERP" + FILETYPE);
+                query4.setParameter(4, "%");
+                query4.setParameter(5, null);
+                query4.setParameter(6, null);
+                query4.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(45);
-            PreparedStatement ps5 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps5.setString(1, null);
-            ps5.setString(2, "PRODUCT");
-            ps5.setString(3, dir + "/PRODUCT"+FILETYPE);
-            ps5.setString(4, "%");
-            ps5.setString(5, null);
-            ps5.setString(6, null);
-            ps5.execute();
+
+            if (new File(path + "/" + product.getName()).length() != 0) {
+                Query query5 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query5.setParameter(1, null);
+                query5.setParameter(2, "PRODUCT");
+                query5.setParameter(3, path + "/PRODUCT" + FILETYPE);
+                query5.setParameter(4, "%");
+                query5.setParameter(5, null);
+                query5.setParameter(6, null);
+                query5.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(55);
-            PreparedStatement ps6 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps6.setString(1, null);
-            ps6.setString(2, "PROJECT");
-            ps6.setString(3, dir + "/PROJECT"+FILETYPE);
-            ps6.setString(4, "%");
-            ps6.setString(5, null);
-            ps6.setString(6, null);
-            ps6.execute();
+
+            if (new File(path + "/" + project.getName()).length() != 0) {
+                Query query6 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query6.setParameter(1, null);
+                query6.setParameter(2, "PROJECT");
+                query6.setParameter(3, path + "/PROJECT" + FILETYPE);
+                query6.setParameter(4, "%");
+                query6.setParameter(5, null);
+                query6.setParameter(6, null);
+                query6.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(65);
-            PreparedStatement ps7 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps7.setString(1, null);
-            ps7.setString(2, "UNIT");
-            ps7.setString(3, dir + "/UNIT"+FILETYPE);
-            ps7.setString(4, "%");
-            ps7.setString(5, null);
-            ps7.setString(6, null);
-            ps7.execute();
+
+            if (new File(path + "/" + unit.getName()).length() != 0) {
+                Query query7 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query7.setParameter(1, null);
+                query7.setParameter(2, "UNIT");
+                query7.setParameter(3, path + "/UNIT" + FILETYPE);
+                query7.setParameter(4, "%");
+                query7.setParameter(5, null);
+                query7.setParameter(6, null);
+                query7.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(75);
-            PreparedStatement ps8 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps8.setString(1, null);
-            ps8.setString(2, "WORTH");
-            ps8.setString(3, dir + "/WORTH"+FILETYPE);
-            ps8.setString(4, "%");
-            ps8.setString(5, null);
-            ps8.setString(6, null);
-            ps8.execute();
+
+            if (new File(path + "/" + worth.getName()).length() != 0) {
+                Query query8 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query8.setParameter(1, null);
+                query8.setParameter(2, "WORTH");
+                query8.setParameter(3, path + "/WORTH" + FILETYPE);
+                query8.setParameter(4, "%");
+                query8.setParameter(5, null);
+                query8.setParameter(6, null);
+                query8.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(85);
-            PreparedStatement ps9 = connection.prepareStatement(
-                    "CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-            ps9.setString(1, null);
-            ps9.setString(2, "CLIENT");
-            ps9.setString(3, dir + "/CLIENT"+FILETYPE);
-            ps9.setString(4, "%");
-            ps9.setString(5, null);
-            ps9.setString(6, null);
-            ps9.execute();
+
+            if (new File(path + "/" + client.getName()).length() != 0) {
+                Query query9 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query9.setParameter(1, null);
+                query9.setParameter(2, "CLIENT");
+                query9.setParameter(3, path + "/CLIENT" + FILETYPE);
+                query9.setParameter(4, "%");
+                query9.setParameter(5, null);
+                query9.setParameter(6, null);
+                query9.executeUpdate();
+            }
+
             setChanged();
             notifyObservers(95);
 
             setChanged();
             notifyObservers(100);
+
+            em.getTransaction().commit();
             return 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
-        } catch (IOException ex) {
-            Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
-            return -2;
+//        } catch (IOException ex) {
+//            Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
+//            return -2;
         } catch (Exception ex) {
             Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
+        } finally {
+            refreshEntities();
+            if (em != null) {
+                em.clear();
+            }
         }
     }
 
@@ -403,20 +452,57 @@ public class BackUpDatabase extends Observable {
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(cipherMode, secretKey);
 
-            FileInputStream inputStream = new FileInputStream(inputFile);
-            byte[] inputBytes = new byte[(int) inputFile.length()];
-            inputStream.read(inputBytes);
-
-            byte[] outputBytes = cipher.doFinal(inputBytes);
-
-            FileOutputStream outputStream = new FileOutputStream(outputFile);
-            outputStream.write(outputBytes);
-
-            inputStream.close();
+            FileOutputStream outputStream;
+            try (FileInputStream inputStream = new FileInputStream(inputFile)) {
+                byte[] inputBytes = new byte[(int) inputFile.length()];
+                inputStream.read(inputBytes);
+                byte[] outputBytes = cipher.doFinal(inputBytes);
+                outputStream = new FileOutputStream(outputFile);
+                outputStream.write(outputBytes);
+            }
             outputStream.close();
 
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException ex) {
             throw new Exception("Error encrypting/decrypting file", ex);
         }
+    }
+
+    private void refreshEntities() {
+
+        em.createQuery("select a from Assembly a", Assembly.class).getResultList().stream().forEach((assembly) -> {
+            em.refresh(assembly);
+        });
+
+        em.createQuery("select c from Category c", Category.class).getResultList().stream().forEach((category) -> {
+            em.refresh(category);
+        });
+
+        em.createQuery("select c from Client c", Client.class).getResultList().stream().forEach((client) -> {
+            em.refresh(client);
+        });
+
+        em.createQuery("select c from Component c", Component.class).getResultList().stream().forEach((component) -> {
+            em.refresh(component);
+        });
+
+        em.createQuery("select p from ParameterP p", ParameterP.class).getResultList().stream().forEach((parameter) -> {
+            em.refresh(parameter);
+        });
+
+        em.createQuery("select p from Product p", Product.class).getResultList().stream().forEach((product) -> {
+            em.refresh(product);
+        });
+
+        em.createQuery("select p from Project p", Project.class).getResultList().stream().forEach((project) -> {
+            em.refresh(project);
+        });
+
+        em.createQuery("select u from Unit u", Unit.class).getResultList().stream().forEach((unit) -> {
+            em.refresh(unit);
+        });
+
+        em.createQuery("select w from Worth w", Worth.class).getResultList().stream().forEach((worth) -> {
+            em.refresh(worth);
+        });
     }
 }
