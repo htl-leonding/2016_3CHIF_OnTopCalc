@@ -392,14 +392,14 @@ public class OptionsController implements Initializable, Observer {
             if (backup == -1) {
                 if (!lb_percentage.isVisible()) {
                     lb_percentage.setVisible(true);
-                    lb_percentage.setText(String.format("%s%%", arg));
                 }
+                lb_percentage.setText(String.format("%s%%", arg));
                 pgic_backupProgress.setVisible(true);
             } else if (backup == 1) {
                 if (!lb_percentageRE.isVisible()) {
                     lb_percentageRE.setVisible(true);
-                    lb_percentageRE.setText(String.format("%s%%", arg));
                 }
+                lb_percentageRE.setText(String.format("%s%%", arg));
                 pgic_backupProgressRE.setVisible(true);
             }
         });

@@ -2,8 +2,6 @@
 package at.plakolb.calculationlogic.util;
 
 import at.plakolb.calculationlogic.db.JpaUtils;
-import static at.plakolb.calculationlogic.db.JpaUtils.getEntityManager;
-import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.entity.Assembly;
 import at.plakolb.calculationlogic.entity.Category;
 import at.plakolb.calculationlogic.entity.Client;
@@ -17,9 +15,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,9 +24,6 @@ import java.util.logging.Logger;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
-import java.util.List;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -82,7 +74,7 @@ public class BackUpDatabase extends Observable {
             query1.executeUpdate();
 
             setChanged();
-            notifyObservers(15);
+            notifyObservers(9);
 
             Query query2 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query2.setParameter(1, null);
@@ -94,7 +86,7 @@ public class BackUpDatabase extends Observable {
             query2.executeUpdate();
 
             setChanged();
-            notifyObservers(25);
+            notifyObservers(18);
 
             Query query3 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query3.setParameter(1, null);
@@ -106,7 +98,7 @@ public class BackUpDatabase extends Observable {
             query3.executeUpdate();
 
             setChanged();
-            notifyObservers(35);
+            notifyObservers(27);
 
             Query query4 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query4.setParameter(1, null);
@@ -118,7 +110,7 @@ public class BackUpDatabase extends Observable {
             query4.executeUpdate();
 
             setChanged();
-            notifyObservers(45);
+            notifyObservers(36);
 
             Query query5 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query5.setParameter(1, null);
@@ -130,7 +122,7 @@ public class BackUpDatabase extends Observable {
             query5.executeUpdate();
 
             setChanged();
-            notifyObservers(55);
+            notifyObservers(45);
 
             Query query6 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query6.setParameter(1, null);
@@ -142,7 +134,7 @@ public class BackUpDatabase extends Observable {
             query6.executeUpdate();
 
             setChanged();
-            notifyObservers(65);
+            notifyObservers(54);
 
             Query query7 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query7.setParameter(1, null);
@@ -154,7 +146,7 @@ public class BackUpDatabase extends Observable {
             query7.executeUpdate();
 
             setChanged();
-            notifyObservers(75);
+            notifyObservers(63);
 
             Query query8 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query8.setParameter(1, null);
@@ -166,7 +158,7 @@ public class BackUpDatabase extends Observable {
             query8.executeUpdate();
 
             setChanged();
-            notifyObservers(85);
+            notifyObservers(72);
 
             Query query9 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE (?,?,?,?,?,?)");
             query9.setParameter(1, null);
@@ -178,7 +170,7 @@ public class BackUpDatabase extends Observable {
             query9.executeUpdate();
 
             setChanged();
-            notifyObservers(95);
+            notifyObservers(81);
 
             em.getTransaction().commit();
 
@@ -286,8 +278,9 @@ public class BackUpDatabase extends Observable {
 //            decrypt(CRYPTOKEY, new File(path + "/" + project.getName()), project);
 //            decrypt(CRYPTOKEY, new File(path + "/" + unit.getName()), unit);
 //            decrypt(CRYPTOKEY, new File(path + "/" + worth.getName()), worth);
+
             setChanged();
-            notifyObservers(5);
+            notifyObservers(9);
 
             if (new File(path + "/" + assembly.getName()).length() != 0) {
                 Query query1 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -301,7 +294,7 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(15);
+            notifyObservers(18);
 
             if (new File(path + "/" + category.getName()).length() != 0) {
                 Query query2 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -315,7 +308,7 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(25);
+            notifyObservers(27);
 
             if (new File(path + "/" + component.getName()).length() != 0) {
                 Query query3 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -329,7 +322,7 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(35);
+            notifyObservers(36);
 
             if (new File(path + "/" + parameterp.getName()).length() != 0) {
                 Query query4 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -357,7 +350,7 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(55);
+            notifyObservers(54);
 
             if (new File(path + "/" + project.getName()).length() != 0) {
                 Query query6 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -371,7 +364,7 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(65);
+            notifyObservers(63);
 
             if (new File(path + "/" + unit.getName()).length() != 0) {
                 Query query7 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -385,7 +378,7 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(75);
+            notifyObservers(72);
 
             if (new File(path + "/" + worth.getName()).length() != 0) {
                 Query query8 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -399,7 +392,7 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(85);
+            notifyObservers(81);
 
             if (new File(path + "/" + client.getName()).length() != 0) {
                 Query query9 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -413,12 +406,13 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
-            notifyObservers(95);
+            notifyObservers(90);
+
+            em.getTransaction().commit();
 
             setChanged();
             notifyObservers(100);
 
-            em.getTransaction().commit();
             return 0;
 //        } catch (IOException ex) {
 //            Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
