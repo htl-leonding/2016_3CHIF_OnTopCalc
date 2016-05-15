@@ -143,6 +143,7 @@ public class OptionsController implements Initializable, Observer {
                             l_restore.setId("restore");
                             l_delFinal.setId("deleteFinal");
                             box.setId("box");
+                            box.setAlignment(Pos.CENTER);
 
                             l_restore.setTooltip(new Tooltip("Projekt wiederherstellen"));
                             l_delFinal.setTooltip(new Tooltip("Projekt entgültig löschen"));

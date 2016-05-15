@@ -74,17 +74,17 @@
                   </HBox>
                   <HBox layoutY="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <HBox spacing="3.0" HBox.hgrow="NEVER">
+                        <HBox spacing="5.0" HBox.hgrow="NEVER">
                            <children>
-                                    <Button id="smallBtnLettering" fx:id="bt_createBackup" mnemonicParsing="false" onAction="#createBackup" text="Sicherung erstellen" />
+                                    <Button id="smallBtnLettering" fx:id="bt_createBackup" mnemonicParsing="false" onAction="#createBackup" styleClass="buttonCreateBackup" text="Sicherung erstellen" />
                                     <ProgressIndicator fx:id="pgic_backupProgress" prefHeight="22.0" prefWidth="22.0" visible="false" />
                                     <Label fx:id="lb_percentage" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" />
                            </children>
                         </HBox>
                         <Pane HBox.hgrow="ALWAYS" />
-                        <HBox spacing="3.0" HBox.hgrow="NEVER">
+                        <HBox spacing="5.0" HBox.hgrow="NEVER">
                            <children>
-                                    <Button id="smallBtnLettering" fx:id="bt_readBackup" mnemonicParsing="false" onAction="#readBackup" text="Sicherung wiederherstellen" />
+                                    <Button id="smallBtnLettering" fx:id="bt_readBackup" minWidth="170.0" mnemonicParsing="false" onAction="#readBackup" styleClass="buttonImportBackup" text="Sicherung importieren" />
                                     <ProgressIndicator fx:id="pgic_backupProgressRE" prefHeight="22.0" prefWidth="22.0" visible="false" />
                                     <Label fx:id="lb_percentageRE" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" />
                            </children>

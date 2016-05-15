@@ -132,8 +132,8 @@ public class Project_ColourController implements Initializable {
         });
         cb_Product.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Product> observable, Product oldValue, Product newValue) -> {
             if (newValue != null) {
-                pricePerLiter = newValue.getPriceUnit();
-                tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
+                tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(newValue.getColorFactor()));
+                tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
             }
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });

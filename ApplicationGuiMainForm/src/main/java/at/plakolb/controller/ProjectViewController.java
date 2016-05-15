@@ -19,7 +19,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -171,12 +170,13 @@ public class ProjectViewController extends Observable implements Initializable, 
      * @param event
      */
     @FXML
-    private void saveProject(ActionEvent event) {
+    private boolean saveProject(ActionEvent event) {
         Project_InformationsController informations = Project_InformationsController.getInstance();
         Client client = null;
 
         if (informations.getProjectName().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Projektnamen ein.").showAndWait();
+            return false;
         } else {
 
             if (informations.getClientName().isEmpty() && !projectOpened) {
@@ -184,7 +184,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                         ButtonType.YES, ButtonType.CANCEL);
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.CANCEL) {
-                    return;
+                    return false;
                 }
             } else {
                 client = findClient(informations);
@@ -235,6 +235,7 @@ public class ProjectViewController extends Observable implements Initializable, 
 
             projectOpened = true;
         }
+        return true;
     }
 
     /**
@@ -395,10 +396,11 @@ public class ProjectViewController extends Observable implements Initializable, 
                     alert.showAndWait();
                     switch (alert.getResult().getText()) {
                         case "Speichern":
-                            saveProject(null);
+                            if (!saveProject(null)) {
+                                event.consume();
+                            }
                             break;
                         case "Nicht Speichern":
-                            dismiss(null);
                             break;
                         default:
                             event.consume();

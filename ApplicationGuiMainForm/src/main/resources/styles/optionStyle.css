@@ -23,3 +23,11 @@
     -fx-text-fill: white;
     -fx-graphic: url("../images/open4.png");
 }
+
+.buttonCreateBackup{
+    -fx-graphic: url("../images/backupIconSmall.png");
+}
+
+.buttonImportBackup{
+    -fx-graphic: url("../images/backupIcon2Small.png");
+}
