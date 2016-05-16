@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.MainApp;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -35,7 +36,7 @@ import javafx.stage.Stage;
 public class MainFormController implements Initializable {
 
     @FXML
-    private AnchorPane mainPane;    //container for the fxml files
+    private AnchorPane mainPane;
     private static MainFormController instance;
     @FXML
     private MenuButton mb_openProjects;
@@ -124,7 +125,7 @@ public class MainFormController implements Initializable {
     @FXML
     private void showParameter(ActionEvent event) {
         loadFxmlIntoPane("Parameter.fxml");
-        if(SideViewController.getInstance() != null){
+        if (SideViewController.getInstance() != null) {
             SideViewController.getInstance().setCurrentPage(4);
         }
     }
@@ -132,7 +133,7 @@ public class MainFormController implements Initializable {
     @FXML
     private void showAllProjects(ActionEvent event) {
         loadFxmlIntoPane("AllProjects.fxml");
-        if(SideViewController.getInstance() != null){
+        if (SideViewController.getInstance() != null) {
             SideViewController.getInstance().setCurrentPage(1);
         }
     }
@@ -140,7 +141,7 @@ public class MainFormController implements Initializable {
     @FXML
     private void showProductList(ActionEvent event) {
         loadFxmlIntoPane("ProductList.fxml");
-        if(SideViewController.getInstance() != null){
+        if (SideViewController.getInstance() != null) {
             SideViewController.getInstance().setCurrentPage(3);
         }
     }
@@ -148,7 +149,7 @@ public class MainFormController implements Initializable {
     @FXML
     private void showClients(ActionEvent event) {
         loadFxmlIntoPane("Clients.fxml");
-        if(SideViewController.getInstance() != null){
+        if (SideViewController.getInstance() != null) {
             SideViewController.getInstance().setCurrentPage(5);
         }
     }
@@ -156,7 +157,7 @@ public class MainFormController implements Initializable {
     @FXML
     private void showOptions(ActionEvent event) {
         loadFxmlIntoPane("Options.fxml");
-        if(SideViewController.getInstance() != null){
+        if (SideViewController.getInstance() != null) {
             SideViewController.getInstance().setCurrentPage(6);
         }
     }

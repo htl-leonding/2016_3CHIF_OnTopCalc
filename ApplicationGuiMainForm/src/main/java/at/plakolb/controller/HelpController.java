@@ -3,18 +3,14 @@ package at.plakolb.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Bindings;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.util.StringConverter;
-import javafx.util.converter.NumberStringConverter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -45,6 +41,8 @@ public class HelpController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,9 +71,6 @@ public class HelpController implements Initializable {
 
     private void controlDocument(Document document) {
         try {
-
-            System.out.println("Content changed");
-
             Element node = document.getElementById("wiki-content");
             NodeList childNodes = document.getElementsByTagName("body").item(0).getChildNodes();
 

@@ -415,19 +415,6 @@ public class ProjectViewController extends Observable implements Initializable, 
                     }
                 } else if (event.getCode() == KeyCode.ESCAPE) {
                     dismiss(null);
-                } else if (event.getCode() == KeyCode.F1) {
-                    try {
-                        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Help.fxml"));
-                        Scene scene = new Scene(root);
-                        Stage stage = new Stage();
-                        stage.setTitle("OnTopCalc - Hilfe");
-                        stage.setScene(scene);
-                        stage.initModality(Modality.WINDOW_MODAL);
-                        stage.initOwner(((Scene) event.getSource()).getWindow());
-                        stage.show();
-                    } catch (Exception ex) {
-                        Logging.getLogger().log(Level.SEVERE, "Couldn't open help view.", ex);
-                    }
                 }
             });
         } else {

@@ -1,6 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import at.plakolb.calculationlogic.db.JpaUtils;
 import at.plakolb.calculationlogic.db.controller.AssemblyController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.util.Logging;
@@ -18,8 +19,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -52,6 +51,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javax.persistence.EntityManager;
 
 /**
  * FXML Controller class
@@ -99,7 +99,7 @@ public class ProductListController implements Initializable {
         decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         tv_Products.setEditable(true);
-        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"));
+        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")), new Label("Keine Daten vorhanden"));
         placeholder.setAlignment(Pos.CENTER);
         tv_Products.setPlaceholder(placeholder);
 
@@ -227,15 +227,16 @@ public class ProductListController implements Initializable {
                             delete.setOnMouseClicked((MouseEvent event) -> {
                                 try {
                                     boolean isUsed = false;
-
+                                    Product product = tv_Products.getSelectionModel().getSelectedItem();
+                                    
                                     for (Component component : new ComponentController().findAll()) {
-                                        if (component.getProduct() != null && component.getProduct().equals(tv_Products.getSelectionModel().getSelectedItem())) {
+                                        if (component.getProduct() != null && component.getProduct().equals(product)) {
                                             isUsed = true;
                                         }
                                     }
 
                                     for (Assembly assembly : new AssemblyController().findAll()) {
-                                        if (assembly.getProduct() != null && assembly.getProduct().equals(tv_Products.getSelectionModel().getSelectedItem())) {
+                                        if (assembly.getProduct() != null && assembly.getProduct().equals(product)) {
                                             isUsed = true;
                                         }
                                     }
@@ -245,19 +246,19 @@ public class ProductListController implements Initializable {
                                                 ButtonType.YES, ButtonType.CANCEL);
                                         alert.showAndWait();
                                         if (alert.getResult() == ButtonType.YES) {
-                                            new ProductController().destroy(tv_Products.getSelectionModel().getSelectedItem().getId());
+                                            products.remove(product);
+                                            new ProductController().destroy(product.getId());
                                             refreshTable();
                                         }
                                     } else {
-                                        new ProductController().destroy(tv_Products.getSelectionModel().getSelectedItem().getId());
+                                        products.remove(product);
+                                        new ProductController().destroy(product.getId());
                                         refreshTable();
                                     }
-
                                 } catch (Exception ex) {
                                     Logging.getLogger().log(Level.SEVERE, "Couldn't delete product.", ex);
                                 }
-                            }
-                            );
+                            });
                             setGraphic(delete);
                             setText(null);
                         }
@@ -366,9 +367,9 @@ public class ProductListController implements Initializable {
      * Refreshes the Table View.
      */
     public void refreshTable() {
+        persistsProducts();
         filterList(ProductType.getProductType(mb_ProductTypesFilter.getText()));
         tv_Products.getColumns().get(0).setVisible(false);
         tv_Products.getColumns().get(0).setVisible(true);
-        persistsProducts();
     }
 }

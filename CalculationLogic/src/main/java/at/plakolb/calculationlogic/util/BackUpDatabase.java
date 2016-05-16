@@ -414,9 +414,6 @@ public class BackUpDatabase extends Observable {
             notifyObservers(100);
 
             return 0;
-//        } catch (IOException ex) {
-//            Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
-//            return -2;
         } catch (Exception ex) {
             Logger.getLogger(BackUpDatabase.class.getName()).log(Level.SEVERE, null, ex);
             return -1;

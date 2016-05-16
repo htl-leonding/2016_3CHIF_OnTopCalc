@@ -73,6 +73,9 @@ public class ProductCreatorController implements Initializable {
 
         String errorMessage = "";
 
+        if (cb_ProductType.getValue() == null) {
+            errorMessage += "Wählen Sie bitten einen Produkttyp aus.";
+        }
         if (tf_Name.getText().isEmpty()) {
             errorMessage += "Geben Sie bitte einen Namen ein.\n";
         }

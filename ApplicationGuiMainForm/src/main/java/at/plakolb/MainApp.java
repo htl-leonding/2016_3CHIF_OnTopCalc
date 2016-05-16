@@ -14,12 +14,18 @@ import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.Logging;
+import java.util.logging.Level;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -51,6 +57,27 @@ public class MainApp extends Application {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
         stage.setScene(scene);
         stage.show();
+
+        stage.getScene().setOnKeyPressed((new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.F1) {
+                    try {
+                        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Help.fxml"));
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setTitle("OnTopCalc - Hilfe");
+                        stage.setScene(scene);
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.initOwner(((Scene) event.getSource()).getWindow());
+                        stage.show();
+                    } catch (Exception ex) {
+                        Logging.getLogger().log(Level.SEVERE, "Couldn't open help view.", ex);
+                    }
+                }
+            }
+        }));
+
     }
 
     /**
