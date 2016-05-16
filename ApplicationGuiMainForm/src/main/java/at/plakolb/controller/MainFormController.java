@@ -1,7 +1,6 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.MainApp;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.entity.Project;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -181,6 +183,24 @@ public class MainFormController implements Initializable {
             stage.show();
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Couldn't open About.fxml.", ex);
+        }
+    }
+
+    @FXML
+    private void helpWindow(KeyEvent event) {
+        if (event.getCode() == KeyCode.F1) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/Help.fxml"));
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setTitle("OnTopCalc - Hilfe");
+                stage.setScene(scene);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                stage.show();
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "Couldn't open help view.", ex);
+            }
         }
     }
 }

@@ -7,9 +7,13 @@ import at.plakolb.calculationlogic.db.controller.UnitController;
 import at.plakolb.calculationlogic.entity.Product;
 import at.plakolb.calculationlogic.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.UtilityFormat;
+import static at.plakolb.calculationlogic.util.UtilityFormat.removeUnnecessaryCommas;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,6 +65,31 @@ public class ProductCreatorController implements Initializable {
         productTypes = FXCollections.observableArrayList(ProductType.values());
         cb_Unit.setItems(units);
         cb_ProductType.setItems(productTypes);
+
+        tf_ColorFactor.textProperty().addListener((observable, oldValue, newValue) -> {
+            tf_ColorFactor.setText(tf_ColorFactor.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_ColorFactor.setText(removeUnnecessaryCommas(tf_ColorFactor.getText()));
+        });
+        
+        tf_Height.textProperty().addListener((observable, oldValue, newValue) -> {
+            tf_Height.setText(tf_Height.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Height.setText(removeUnnecessaryCommas(tf_Height.getText()));
+        });
+        
+        tf_Length.textProperty().addListener((observable, oldValue, newValue) -> {
+            tf_Length.setText(tf_Length.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Length.setText(removeUnnecessaryCommas(tf_Length.getText()));
+        });
+        
+        tf_Width.textProperty().addListener((observable, oldValue, newValue) -> {
+            tf_Width.setText(tf_Width.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Width.setText(removeUnnecessaryCommas(tf_Width.getText()));
+        });
+        
+        tf_PriceUnit.textProperty().addListener((observable, oldValue, newValue) -> {
+            tf_PriceUnit.setText(tf_PriceUnit.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_PriceUnit.setText(removeUnnecessaryCommas(tf_PriceUnit.getText()));
+        });
     }
 
     /**

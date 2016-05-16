@@ -8,9 +8,12 @@
 }
 
 
-#create_ProductCreator{
+#create_Button{
     -fx-graphic: url("../images/addProduct.png");
 }
-#cancel_ProductCreator{
+#cancel_Button{
     -fx-graphic: url("../images/delete3.png");
+}
+#save_Button{
+    -fx-graphic: url("../images/save2.png");
 }
