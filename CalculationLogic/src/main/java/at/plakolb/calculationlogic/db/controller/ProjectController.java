@@ -7,11 +7,11 @@ import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Component;
 import at.plakolb.calculationlogic.entity.Project;
 import at.plakolb.calculationlogic.entity.Worth;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
@@ -139,7 +139,7 @@ public class ProjectController {
             }
             worthsNew = attachedWorthsNew;
             project.setWorths(worthsNew);
-            project.setLastUpdate(new Date());
+            project.setLastUpdate(LocalDateTime.now(Clock.systemDefaultZone()));
             project = em.merge(project);
             if (clientOld != null && !clientOld.equals(clientNew)) {
                 clientOld.getProjects().remove(project);
@@ -197,14 +197,14 @@ public class ProjectController {
                     worthController.destroy(worth.getId());
                 }
             }
-            
+
             ComponentController componentController = new ComponentController();
             for (Component component : componentController.findComponentsByProjectId(projectId)) {
                 if (component.getId() != null) {
                     componentController.destroy(component.getId());
                 }
             }
-            
+
             AssemblyController assemblyController = new AssemblyController();
             for (Assembly assembly : assemblyController.findAssembliesByProjectId(projectId)) {
                 if (assembly.getId() != null) {

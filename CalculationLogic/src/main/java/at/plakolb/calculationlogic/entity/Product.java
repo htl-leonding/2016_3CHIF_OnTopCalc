@@ -1,10 +1,14 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -40,11 +44,12 @@ public class Product implements Serializable {
     private Unit unit;
     @Enumerated(EnumType.STRING)
     private ProductType productType;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     public Product() {
-        creationDate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Product(String name, Double widthProduct, Double heightProduct, Double lengthProduct, Double priceUnit, Unit unit, ProductType productType) {
@@ -139,11 +144,11 @@ public class Product implements Serializable {
         this.colorFactor = colorFactor;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

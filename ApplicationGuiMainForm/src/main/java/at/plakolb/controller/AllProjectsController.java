@@ -8,11 +8,14 @@ import at.plakolb.calculationlogic.entity.Client;
 import at.plakolb.calculationlogic.entity.Project;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -159,20 +162,23 @@ public class AllProjectsController implements Initializable {
                                     Logging.getLogger().log(Level.SEVERE, "Couldn't open PrintProject.fxml.", ex);
                                 }
                             });
-                            costingP.setOnMouseClicked((MouseEvent event) -> {
-                                Project project = getTableView().getItems().get(getIndex());
-                                if (project.getPreCalculation() == null) {
-                                    long projectId = project.getId();
-                                    project.setId(null);
-                                    project.setPreCalculation(projectId);
-                                    project.setModeOfCalculation("Nachkalkulation");
-                                    project.setLastUpdate(new Date());
-                                    project.setCreationDate(new Date());
-                                    ProjectController projectController = new ProjectController();
-                                    projectController.createCosting(project, projectId);
-                                    updateData();
-                                } else {
-                                    new Alert(Alert.AlertType.ERROR, "Nachkalkulationen können nur von Vorkalkulationen erstellt werden.").showAndWait();
+                            costingP.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    Project project = getTableView().getItems().get(getIndex());
+                                    if (project.getPreCalculation() == null) {
+                                        long projectId = project.getId();
+                                        project.setId(null);
+                                        project.setPreCalculation(projectId);
+                                        project.setModeOfCalculation("Nachkalkulation");
+                                        project.setLastUpdate(LocalDateTime.now(Clock.systemDefaultZone()));
+                                        project.setCreationDate(LocalDateTime.now(Clock.systemDefaultZone()));
+                                        ProjectController projectController = new ProjectController();
+                                        projectController.createCosting(project, projectId);
+                                        updateData();
+                                    } else {
+                                        new Alert(Alert.AlertType.ERROR, "Nachkalkulationen können nur von Vorkalkulationen erstellt werden.").showAndWait();
+                                    }
                                 }
                             });
                             copyP.setOnMouseClicked((MouseEvent event) -> {
@@ -181,8 +187,8 @@ public class AllProjectsController implements Initializable {
                                 project.setId(null);
                                 project.setPreCalculation(project.getPreCalculation());
                                 project.setModeOfCalculation(project.getModeOfCalculation());
-                                project.setLastUpdate(new Date());
-                                project.setCreationDate(new Date());
+                                project.setLastUpdate(LocalDateTime.now(Clock.systemDefaultZone()));
+                                project.setCreationDate(LocalDateTime.now(Clock.systemDefaultZone()));
                                 ProjectController projectController = new ProjectController();
                                 projectController.copy(project, projectId);
                                 updateData();

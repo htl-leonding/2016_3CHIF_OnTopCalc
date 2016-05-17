@@ -1,8 +1,11 @@
 /*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,12 +29,12 @@ public class ParameterP implements Serializable {
     private Unit unit;
     private Double defaultValue;
     private boolean editable;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
-
+    private LocalDateTime creationDate;
 
     public ParameterP() {
-        creationDate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public ParameterP(String longTerm, String shortTerm, Unit unit, boolean editable) {
@@ -42,7 +45,7 @@ public class ParameterP implements Serializable {
         this.editable = editable;
     }
 
-    public ParameterP(String longTerm, String shortTerm, Unit unit, boolean editable,  Double defaultValue) {
+    public ParameterP(String longTerm, String shortTerm, Unit unit, boolean editable, Double defaultValue) {
         this();
         this.shortTerm = shortTerm;
         this.longTerm = longTerm;
@@ -50,7 +53,7 @@ public class ParameterP implements Serializable {
         this.defaultValue = defaultValue;
         this.editable = editable;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -82,7 +85,7 @@ public class ParameterP implements Serializable {
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
-    
+
     public String getFormatDefaultValue() {
         //return UtilityFormat.formatValueWithShortTerm(defaultValue, unit.getShortTerm());
         return "";
@@ -96,11 +99,11 @@ public class ParameterP implements Serializable {
         this.defaultValue = defaultValue;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

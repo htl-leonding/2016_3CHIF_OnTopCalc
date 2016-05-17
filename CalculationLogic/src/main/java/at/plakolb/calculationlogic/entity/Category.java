@@ -1,7 +1,11 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +21,7 @@ import javax.persistence.Temporal;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Category.findAll",
-                query = "select c from Category c")
+            query = "select c from Category c")
 })
 public class Category implements Serializable {
 
@@ -26,12 +30,12 @@ public class Category implements Serializable {
     private Long id;
     private String shortTerm;
     private String longTerm;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
-
+    private LocalDateTime creationDate;
 
     public Category() {
-        creationDate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Category(String longTerm, String shortTerm) {
@@ -63,16 +67,16 @@ public class Category implements Serializable {
     public void setShortTerm(String shortTerm) {
         this.shortTerm = shortTerm;
     }
-    
+
     public String getLongAndShortTerm() {
-        return longTerm + " (" + shortTerm + ")"; 
+        return longTerm + " (" + shortTerm + ")";
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -81,4 +85,3 @@ public class Category implements Serializable {
         return longTerm;
     }
 }
-

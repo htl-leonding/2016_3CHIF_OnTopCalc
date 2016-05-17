@@ -1,8 +1,12 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,34 +33,35 @@ public class Assembly implements Serializable {
     private Long id;
     @OneToOne
     private Product product;
-    @ManyToOne (cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Component component;
     @ManyToOne
     private Project project;
     private Double numberOfComponents;
     private Double price;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     public Assembly() {
-        creationDate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Assembly(Product product, Component component, Project project, Double number, Double price) {
         this();
-        this.product = product;    
+        this.product = product;
         this.numberOfComponents = number;
         this.price = price;
         setProject(project);
         setComponent(component);
-    }  
+    }
 
     public Component getComponent() {
         return component;
     }
 
     public final void setComponent(Component component) {
-        if(component != null) {
+        if (component != null) {
             component.getAssemblys().add(this);
         }
         this.component = component;
@@ -102,16 +107,16 @@ public class Assembly implements Serializable {
         this.price = price;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
- 
+
     @Override
     public String toString() {
         return "Assembly{" + "id=" + id + ", product=" + product + /*", component=" + component +*/ ", project=" + project + ", number=" + numberOfComponents + '}';
-    } 
+    }
 }

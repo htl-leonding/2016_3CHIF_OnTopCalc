@@ -1,10 +1,14 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,11 +53,12 @@ public class Component implements Serializable {
     private Project project;
     @OneToMany(mappedBy = "component", cascade = CascadeType.PERSIST)
     private List<Assembly> assemblys = new ArrayList<>();
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     public Component() {
-        creationDate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Component(String description, Double widthComponent, Double heightComponent, Double lengthComponent, Double priceComponent, Double numberOfProducts, Category category, Unit unit, Product product, Project project) {
@@ -218,11 +223,11 @@ public class Component implements Serializable {
         this.tailoringPricePerHour = tailoringPricePerHour;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -242,7 +247,7 @@ public class Component implements Serializable {
         }
         return name.substring(0, name.length() - 1);
     }
-    
+
     @Override
     public String toString() {
         return product.getFullName();

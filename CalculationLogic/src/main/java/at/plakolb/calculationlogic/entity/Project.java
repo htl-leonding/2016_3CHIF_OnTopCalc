@@ -1,9 +1,13 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,18 +43,20 @@ public class Project implements Serializable {
     private String modeOfCalculation;
     private String invoiceNumber;
     private String roofMaterial;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private LocalDateTime creationDate;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
     @OneToMany(mappedBy = "project")
     private List<Worth> worths = new ArrayList<>();
     @ManyToOne
     private Client client;
 
     public Project() {
-        creationDate = new Date();
-        lastUpdate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
+        lastUpdate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Project(
@@ -86,11 +92,11 @@ public class Project implements Serializable {
         this.constructionType = constructionType;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -118,11 +124,11 @@ public class Project implements Serializable {
         this.id = id;
     }
 
-    public Date getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

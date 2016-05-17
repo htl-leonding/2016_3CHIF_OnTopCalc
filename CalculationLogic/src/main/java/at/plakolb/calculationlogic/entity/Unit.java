@@ -1,7 +1,11 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +21,7 @@ import javax.persistence.Temporal;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Unit.findAll",
-                query = "select u from Unit u")
+            query = "select u from Unit u")
 })
 public class Unit implements Serializable {
 
@@ -26,12 +30,12 @@ public class Unit implements Serializable {
     private Long id;
     private String shortTerm;
     private String longTerm;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
-
+    private LocalDateTime creationDate;
 
     public Unit() {
-        creationDate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Unit(String longTerm, String shortTerm) {
@@ -64,14 +68,14 @@ public class Unit implements Serializable {
         this.shortTerm = shortTerm;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
-    } 
-    
+    }
+
     @Override
     public String toString() {
         return shortTerm;

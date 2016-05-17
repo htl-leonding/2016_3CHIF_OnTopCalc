@@ -1,8 +1,11 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 
 /**
@@ -20,12 +23,13 @@ public class Worth implements Serializable {
     @ManyToOne
     private ParameterP parameter;
     private double worth;
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private LocalDateTime creationDate;
     private String shortTerm;
 
     public Worth() {
-        creationDate = new Date();
+        creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Worth(ParameterP parameter) {
@@ -99,18 +103,11 @@ public class Worth implements Serializable {
         }
     }
 
-//    public String worthFormat() {
-//        return UtilityFormat.formatWorth(this);
-//    }
-//    
-//    public String worthFormatWithUnit() {
-//        return UtilityFormat.worthWithUnit(this);
-//    }
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

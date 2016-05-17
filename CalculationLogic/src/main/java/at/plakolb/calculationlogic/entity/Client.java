@@ -1,9 +1,13 @@
+/*	HTL Leonding	*/
 package at.plakolb.calculationlogic.entity;
 
+import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,12 +42,13 @@ public class Client implements Serializable {
     private String eMail;
     @OneToMany(mappedBy = "client")
     private List<Project> projects = new ArrayList<>();
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date creationDate;
+    private LocalDateTime creationDate;
     private String projectNumbers;  //Project ID String for the Table View
-    
+
     public Client() {
-        this.creationDate = new Date();
+        this.creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
     public Client(String name, String street, String city, String zipCode, String telephoneNumber, String eMail) {
@@ -55,7 +60,7 @@ public class Client implements Serializable {
         this.telephoneNumber = telephoneNumber;
         this.eMail = eMail;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -63,7 +68,7 @@ public class Client implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public String getCity() {
         return city;
     }
@@ -112,11 +117,11 @@ public class Client implements Serializable {
         this.zipCode = zipCode;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -127,7 +132,7 @@ public class Client implements Serializable {
     public void setEmail(String eMail) {
         this.eMail = eMail;
     }
-    
+
     public String getProjectNumbers() {
         projectNumbers = "";
         for (int i = 0; i < projects.size(); i++) {
@@ -138,10 +143,9 @@ public class Client implements Serializable {
         }
         return projectNumbers;
     }
-    
+
     @Override
     public String toString() {
         return name;
     }
 }
-
