@@ -17,14 +17,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -34,14 +40,15 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 
 /**
  * FXML Controller class
  *
  * @author Kepplinger
- */
+ */ 
 public class PrintProjectController implements Initializable {
-
+    static Stage stage;
     @FXML
     private ComboBox<Project> cb_projects;
 
@@ -206,12 +213,24 @@ public class PrintProjectController implements Initializable {
             showPDF(print.createPDF(), cb_openAfterCreation.isSelected());
             bt_showLastPDF.setDisable(false);           
             if (p) {              
-                try {                  
-                    print.print(printService);
-                    System.out.println("8/8");
-                } catch (PrinterException | IOException ex) {
-                    Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
-                }
+              try {  
+        if(PrintServiceLookup.lookupPrintServices(null, null).length<1){
+        new Alert(Alert.AlertType.ERROR,"Bitte fügen Sie einen Drucker hinzu!").showAndWait();
+        }
+        else{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PrinterSelection.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Print Assistent");
+            stage.setScene(new Scene(root1));  
+            stage.showAndWait();
+            PrinterSelectionController controller = (PrinterSelectionController)fxmlLoader.getController();
+                   print.print(controller.getPrintService(),Integer.parseInt(controller.getCopyAmount()));
+        }
+              } catch (IOException ex) {
+                   Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
+               }
             }
         } catch (DocumentException | FileNotFoundException ex) {
             Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
@@ -237,7 +256,6 @@ public class PrintProjectController implements Initializable {
     }
     private boolean executeOnOtherSystems(String path,boolean isallowed){
     if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
-        System.out.println("Woof");
                 if (runCommand("kde-open", "%s", path)&&isallowed)return true;
                 if (runCommand("gnome-open", "%s", path)&&isallowed)return true;
                 if (runCommand("xdg-open", "%s", path)&&isallowed)return true;
