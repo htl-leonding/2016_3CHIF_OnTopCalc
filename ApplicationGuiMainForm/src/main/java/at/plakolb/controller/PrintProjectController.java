@@ -228,7 +228,9 @@ public class PrintProjectController implements Initializable {
                         stage.setScene(new Scene(root1));
                         stage.showAndWait();
                         PrinterSelectionController controller = (PrinterSelectionController) fxmlLoader.getController();
-                        print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
+                        if (controller.getPrintService() != null) {
+                            print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
+                        }
                     }
                 } catch (IOException | PrinterException ex) {
                     Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);

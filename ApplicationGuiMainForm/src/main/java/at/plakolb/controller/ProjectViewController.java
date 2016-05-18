@@ -415,6 +415,10 @@ public class ProjectViewController extends Observable implements Initializable, 
                     }
                 } else if (event.getCode() == KeyCode.ESCAPE) {
                     dismiss(null);
+                } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
+                    selectNextTab(null);
+                } else if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
+                    selectPreviousTab(null);
                 }
             });
         } else {

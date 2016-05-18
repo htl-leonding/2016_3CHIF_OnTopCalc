@@ -198,17 +198,17 @@ public class ProjectController {
                 }
             }
 
-            ComponentController componentController = new ComponentController();
-            for (Component component : componentController.findComponentsByProjectId(projectId)) {
-                if (component.getId() != null) {
-                    componentController.destroy(component.getId());
-                }
-            }
-
             AssemblyController assemblyController = new AssemblyController();
             for (Assembly assembly : assemblyController.findAssembliesByProjectId(projectId)) {
                 if (assembly.getId() != null) {
                     assemblyController.destroy(assembly.getId());
+                }
+            }
+
+            ComponentController componentController = new ComponentController();
+            for (Component component : componentController.findComponentsByProjectId(projectId)) {
+                if (component.getId() != null) {
+                    componentController.destroy(component.getId());
                 }
             }
 

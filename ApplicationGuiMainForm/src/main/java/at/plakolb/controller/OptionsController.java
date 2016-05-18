@@ -176,7 +176,6 @@ public class OptionsController implements Initializable, Observer {
 
         cl_options.setCellFactory(cellFactory);
 
-        ///SICHERUNG und PDF
         tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
         tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
         UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, SettingsController.getProperty("backupPath"));
