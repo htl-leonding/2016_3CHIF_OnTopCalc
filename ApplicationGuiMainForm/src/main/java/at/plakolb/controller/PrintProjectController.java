@@ -34,6 +34,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -223,13 +224,16 @@ public class PrintProjectController implements Initializable {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PrinterSelection.fxml"));
                         Parent root1 = (Parent) fxmlLoader.load();
                         stage = new Stage();
-                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.initModality(Modality.WINDOW_MODAL);
                         stage.setTitle("Print Assistent");
                         stage.setScene(new Scene(root1));
+                        stage.initOwner(((Node) bt_showLastPDF).getScene().getWindow());
+                        stage.setResizable(false);
                         stage.showAndWait();
                         PrinterSelectionController controller = (PrinterSelectionController) fxmlLoader.getController();
                         if (controller.getPrintService() != null) {
                             print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
+                            new Alert(Alert.AlertType.INFORMATION,"Druckauftrag erfolgreich gesendet!",ButtonType.OK).showAndWait();
                         }
                     }
                 } catch (IOException | PrinterException ex) {

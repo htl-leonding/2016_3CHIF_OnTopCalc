@@ -138,6 +138,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             loadValuesFromDataBase();
         } else {
             component = new Component();
+            component.setDescription("SichtbareSchalung");
             component.setCategory(new CategoryController().findCategoryByShortTerm("SS"));
             component.setComponentType("Produkt");
         }
@@ -193,6 +194,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             cb_Product.getSelectionModel().select(component.getProduct());
         } else {
             component = new Component();
+            component.setDescription("SichtbareSchalung");
             component.setCategory(category);
             component.setComponentType("Produkt");
         }
