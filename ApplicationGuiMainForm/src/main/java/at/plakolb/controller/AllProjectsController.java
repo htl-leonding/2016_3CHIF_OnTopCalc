@@ -10,11 +10,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +40,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- * FXML Controller class
+ * In this view, all projects are displayed and they can be managed.
  *
  * @author Andreas
  */
@@ -65,29 +63,26 @@ public class AllProjectsController implements Initializable {
     @FXML
     private TableColumn tc_action;
 
-    private ObservableList<Project> projects;
-
     boolean doubleClickAvailable = true;
 
     /**
      * Initializes the controller class. Adds all projects from the database to
-     * the table view.
+     * the table view. Adds buttons to every project.
      *
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
+
         Hyperlink lookInBin = new Hyperlink("Im Papierkorb nachsehen");
-        lookInBin.setOnAction((event)->{
+        lookInBin.setOnAction((event) -> {
             MainFormController.getInstance().loadFxmlIntoPane("Options.fxml");
         });
-        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"),lookInBin);
+        VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")), new Label("Keine Daten vorhanden"), lookInBin);
         placeholder.setAlignment(Pos.CENTER);
         tv_ProjectList.setPlaceholder(placeholder);
-        
+
         tc_Id.setCellValueFactory(new PropertyValueFactory<>("id"));
         tc_PrecalcId.setCellValueFactory(new PropertyValueFactory<>("preCalculation"));
         tc_ProjectName.setCellValueFactory(new PropertyValueFactory<>("projectName"));
@@ -222,8 +217,6 @@ public class AllProjectsController implements Initializable {
     }
 
     public void updateData() {
-        tv_ProjectList.setItems(
-                FXCollections.observableArrayList(
-                        new ProjectController().findProjectsByDeletion(false)));
+        tv_ProjectList.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
     }
 }

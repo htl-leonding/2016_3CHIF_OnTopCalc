@@ -32,13 +32,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
+ * Over this view it's possible to calculate the counter battens.
  *
  * @author Kepplinger
  */
 public class Assembling_CounterBattenController implements Observer, Initializable {
 
     private static Assembling_CounterBattenController instance;
+
     @FXML
     private TextField tf_waste;
     @FXML
@@ -66,9 +67,9 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     @FXML
     private Label lb_lengthWaste;
 
+    private double pricePerMeter;
     private Worth lengthWaste;
     private Worth waste;
-    private double pricePerMeter;
     private Worth counterBattern;
     private Worth montageCost;
     private Worth productCost;
@@ -79,7 +80,8 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     private Component component;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and all worth objects. Also adds many
+     * change listeners to verify the user input.
      *
      * @param url
      * @param rb
@@ -143,7 +145,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
-            loadFromDb();
+            load();
         } else {
             component = new Component();
             component.setCategory(new CategoryController().findCategoryByShortTerm("KL"));
@@ -184,7 +186,10 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         return totalCost;
     }
 
-    public void loadFromDb() {
+    /**
+     * Loads all required values from the database into the view.
+     */
+    public void load() {
         WorthController worthController = new WorthController();
         Project openedProject = ProjectViewController.getOpenedProject();
         Category category = new CategoryController().findCategoryByShortTerm("KL");
@@ -224,6 +229,9 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         ModifyController.getInstance().setAssembling_counterBattens(Boolean.FALSE);
     }
 
+    /**
+     * Calculates all required values.
+     */
     public void calculate() {
         try {
             double sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
@@ -275,6 +283,9 @@ public class Assembling_CounterBattenController implements Observer, Initializab
 
     }
 
+    /**
+     * Persists all values from the view to the database.
+     */
     public void persist() {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
@@ -317,6 +328,12 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         }
     }
 
+    /**
+     * Refreshes the table view when the data has been changed.
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         tv_dachsparren.setItems(FXCollections.observableList(Project_ConstructionMaterialListController.getInstance().getRafterList()));

@@ -56,7 +56,7 @@ public class PrinterSelectionController implements Initializable {
     @FXML
     private void submit(ActionEvent event) {
         if (PrinterSelected) {
-            PrintProjectController.stage.hide();
+            PrintProjectController.getStage().hide();
         } else {
             new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie einen Drucker aus!").showAndWait();
         }
@@ -64,7 +64,7 @@ public class PrinterSelectionController implements Initializable {
 
     @FXML
     private void cancel(ActionEvent event) {
-        PrintProjectController.stage.hide();
+        PrintProjectController.getStage().hide();
     }
 
     @FXML

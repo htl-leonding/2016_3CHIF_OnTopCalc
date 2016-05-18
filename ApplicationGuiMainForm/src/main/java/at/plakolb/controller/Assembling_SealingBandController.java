@@ -33,13 +33,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
+ * Over this view it's possible to calculate the sealing band.
  *
  * @author Kepplinger
  */
 public class Assembling_SealingBandController implements Initializable, Observer {
 
     private static Assembling_SealingBandController instance;
+
     @FXML
     private TextField tf_blend;
     @FXML
@@ -70,10 +71,8 @@ public class Assembling_SealingBandController implements Initializable, Observer
     private double price;
 
     private Worth blend;
-
     private Worth workerCosts;
     private Worth duration;
-
     private Worth waste;
     private Worth sealingBand;
 
@@ -84,7 +83,8 @@ public class Assembling_SealingBandController implements Initializable, Observer
     private Component component;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and all worth objects. Also adds many
+     * change listeners to verify the user input.
      *
      * @param url
      * @param rb
@@ -195,6 +195,9 @@ public class Assembling_SealingBandController implements Initializable, Observer
         return totalCosts;
     }
 
+    /**
+     * Loads all required values from the database into the view.
+     */
     public void load() {
 
         Project project = ProjectViewController.getOpenedProject();
@@ -252,6 +255,9 @@ public class Assembling_SealingBandController implements Initializable, Observer
         }
     }
 
+    /**
+     * Calculates all required values.
+     */
     public void calculate() {
         try {
             //Verschnitt Nageldichtband
@@ -303,6 +309,9 @@ public class Assembling_SealingBandController implements Initializable, Observer
         component.setPriceComponent(price);
     }
 
+    /**
+     * Persists all values from the view to the database.
+     */
     public void persist() {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
@@ -344,6 +353,12 @@ public class Assembling_SealingBandController implements Initializable, Observer
         }
     }
 
+    /**
+     * Refreshes the table view when the data has been changed.
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         tv_rafter.setItems(FXCollections.observableArrayList(Project_ConstructionMaterialListController.getInstance().getRafterList()));

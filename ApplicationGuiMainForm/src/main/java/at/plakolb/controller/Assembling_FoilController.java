@@ -30,7 +30,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
+ * Over this view it's possible to calculate the foil.
+ *
  *
  * @author Kepplinger
  */
@@ -75,7 +76,8 @@ public class Assembling_FoilController implements Initializable, Observer {
     private Component component;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and all worth objects. Also adds many
+     * change listeners to verify the user input.
      *
      * @param url
      * @param rb
@@ -136,7 +138,7 @@ public class Assembling_FoilController implements Initializable, Observer {
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
-            loadValuesFromDatabase();
+            load();
         } else {
             component = new Component();
             component.setDescription("Folie");
@@ -178,7 +180,10 @@ public class Assembling_FoilController implements Initializable, Observer {
         return totalCosts;
     }
 
-    public void loadValuesFromDatabase() {
+    /**
+     * Loads all required values from the database into the view.
+     */
+    public void load() {
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
             WorthController worthController = new WorthController();
@@ -231,6 +236,9 @@ public class Assembling_FoilController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Calculates all required values.
+     */
     public void calculate() {
         try {
             //Fläche (mit Verschnitt) in m²
@@ -286,6 +294,9 @@ public class Assembling_FoilController implements Initializable, Observer {
         component.setPriceComponent(pricePerSquare);
     }
 
+    /**
+     * Persists all values from the view to the database.
+     */
     public void persist() {
         try {
             WorthController worthController = new WorthController();
@@ -327,6 +338,12 @@ public class Assembling_FoilController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Refreshes the roof area when values have been changed.
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         double ledgeAndRoofArea = Project_ResultAreaController.getInstance().getLedgeAndRoofArea();

@@ -21,13 +21,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
+ * Over this view it's possible to calculate the tiled roof. It's contained by
+ * the Assembling_BattensOrFullFormwork.fxml.
  *
  * @author Kepplinger
  */
 public class Assembling_TiledRoofController extends Observable implements Initializable, Observer {
 
     private static Assembling_TiledRoofController instance;
+
     @FXML
     private TextField tf_slatSpacing;
     @FXML
@@ -39,13 +41,14 @@ public class Assembling_TiledRoofController extends Observable implements Initia
     @FXML
     private Label lb_length;
 
-    Worth slatSpacing;
-    Worth waste;
-    Worth lengthNoWaste;
-    Worth length;
+    private Worth slatSpacing;
+    private Worth waste;
+    private Worth lengthNoWaste;
+    private Worth length;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and all worth objects. Also adds two
+     * change listeners to verify the user input.
      *
      * @param url
      * @param rb
@@ -79,32 +82,17 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         load();
     }
 
-    public void persist() {
-        WorthController wc = new WorthController();
-        Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(length.getWorth());
-        try {
-            if (!ProjectViewController.isProjectOpened() || slatSpacing.getProject() == null) {
-                slatSpacing.setProject(ProjectViewController.getOpenedProject());
-                waste.setProject(ProjectViewController.getOpenedProject());
-                lengthNoWaste.setProject(ProjectViewController.getOpenedProject());
-                length.setProject(ProjectViewController.getOpenedProject());
-
-                wc.create(slatSpacing);
-                wc.create(waste);
-                wc.create(lengthNoWaste);
-                wc.create(length);
-            } else {
-
-                wc.edit(slatSpacing);
-                wc.edit(waste);
-                wc.edit(lengthNoWaste);
-                wc.edit(length);
-            }
-        } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "Assembling_TiledRoofController: persist method didn't work.", ex);
-        }
+    public static Assembling_TiledRoofController getInstance() {
+        return instance;
     }
 
+    public Worth getLength() {
+        return length;
+    }
+
+    /**
+     * Loads all required values from the database into the view.
+     */
     public void load() {
         WorthController worthController = new WorthController();
         Project project = ProjectViewController.getOpenedProject();
@@ -129,6 +117,9 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         }
     }
 
+    /**
+     * Calculates all required values.
+     */
     public void calculate() {
         try {
             //Länge der Dachlatten ohne Verschnitt
@@ -157,16 +148,42 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         notifyObservers();
     }
 
-    public static Assembling_TiledRoofController getInstance() {
-        return instance;
+    /**
+     * Persists all values from the view to the database.
+     */
+    public void persist() {
+        WorthController wc = new WorthController();
+        Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(length.getWorth());
+        try {
+            if (!ProjectViewController.isProjectOpened() || slatSpacing.getProject() == null) {
+                slatSpacing.setProject(ProjectViewController.getOpenedProject());
+                waste.setProject(ProjectViewController.getOpenedProject());
+                lengthNoWaste.setProject(ProjectViewController.getOpenedProject());
+                length.setProject(ProjectViewController.getOpenedProject());
+
+                wc.create(slatSpacing);
+                wc.create(waste);
+                wc.create(lengthNoWaste);
+                wc.create(length);
+            } else {
+
+                wc.edit(slatSpacing);
+                wc.edit(waste);
+                wc.edit(lengthNoWaste);
+                wc.edit(length);
+            }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_TiledRoofController: persist method didn't work.", ex);
+        }
     }
 
+    /**
+     * Recalculates all values when something has changed.
+     * @param o
+     * @param arg 
+     */
     @Override
     public void update(Observable o, Object arg) {
         calculate();
-    }
-
-    public Worth getLength() {
-        return length;
     }
 }

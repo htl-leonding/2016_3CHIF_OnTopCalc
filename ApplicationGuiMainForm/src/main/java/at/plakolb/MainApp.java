@@ -38,7 +38,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         rootStage = stage;
 
-        //TEST DATA
+        //TEST DATA (temporarily)
         insertTestData();
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
@@ -60,6 +60,9 @@ public class MainApp extends Application {
         launch(args);
     }
 
+    /**
+     * Insert some test data for develpoing purpose.
+     */
     private void insertTestData() {
         at.plakolb.calculationlogic.db.controller.ClientController clientController = new ClientController();
         Client client1 = new Client("Mustermann", "Feldstraße", "Linz", "4020", "123456789", "max.m@mail.com");

@@ -16,13 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -42,7 +38,6 @@ import javafx.scene.control.Tooltip;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 
 /**
@@ -52,11 +47,11 @@ import javax.print.PrintServiceLookup;
  */
 public class PrintProjectController implements Initializable {
 
-    static Stage stage;
+    private static PrintProjectController instance;
+    private static Stage stage;
+
     @FXML
     private ComboBox<Project> cb_projects;
-
-    private static PrintProjectController instance;
     @FXML
     private CheckBox cb_mainInformations;
     @FXML
@@ -91,17 +86,15 @@ public class PrintProjectController implements Initializable {
     private Button bt_createPDF;
     @FXML
     private Button bt_createPDFAndPrint;
-
-    java.io.File path;
-    String lastPath;
-    PrintService printService;
-
     @FXML
     private CheckBox cb_openAfterCreation;
     @FXML
     private Button bt_showLastPDF;
     @FXML
     private CheckBox cb_Area;
+    
+    private java.io.File path;
+    private String lastPath;
 
     /**
      * Initializes the controller class.
@@ -136,11 +129,15 @@ public class PrintProjectController implements Initializable {
 
         refreshPrintAbility();
     }
-
+    
     public static PrintProjectController getInstance() {
         return instance;
     }
 
+    public static Stage getStage() {
+        return stage;
+    }
+    
     public void SetProject(Project project) {
         for (Project p : cb_projects.getItems()) {
             if (p.getId().equals(project.getId())) {
@@ -233,7 +230,7 @@ public class PrintProjectController implements Initializable {
                         PrinterSelectionController controller = (PrinterSelectionController) fxmlLoader.getController();
                         if (controller.getPrintService() != null) {
                             print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
-                            new Alert(Alert.AlertType.INFORMATION,"Druckauftrag erfolgreich gesendet!",ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.INFORMATION, "Druckauftrag erfolgreich gesendet!", ButtonType.OK).showAndWait();
                         }
                     }
                 } catch (IOException | PrinterException ex) {

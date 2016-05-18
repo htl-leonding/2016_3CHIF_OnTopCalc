@@ -29,11 +29,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
+ * Over this view it's possible to calculate the formwork.
  *
  * @author Kepplinger
  */
 public class Assembling_FormworkController implements Initializable, Observer {
+
+    private static Assembling_FormworkController instance;
 
     @FXML
     private ComboBox<Product> cb_Formwork;
@@ -58,8 +60,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
     @FXML
     private TextField tf_Blend;
 
-    private static Assembling_FormworkController instance;
-
     private double price;
     private double roofArea;
 
@@ -76,7 +76,8 @@ public class Assembling_FormworkController implements Initializable, Observer {
     private Component component;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and all worth objects. Also adds many
+     * change listeners to verify the user input.
      *
      * @param url
      * @param rb
@@ -134,7 +135,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
-            loadValuesFromDatabase();
+            load();
         } else {
             component = new Component();
             component.setDescription("Schalung");
@@ -177,9 +178,9 @@ public class Assembling_FormworkController implements Initializable, Observer {
     }
 
     /**
-     * Loads all existing worth objects from the database into the view.
+     * Loads all required values from the database into the view.
      */
-    public void loadValuesFromDatabase() {
+    public void load() {
         Project project = ProjectViewController.getOpenedProject();
         if (project != null) {
             WorthController worthController = new WorthController();
@@ -230,6 +231,9 @@ public class Assembling_FormworkController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Calculates all required values.
+     */
     public void calculate() {
 
         try {
@@ -308,6 +312,9 @@ public class Assembling_FormworkController implements Initializable, Observer {
         component.setPriceComponent(price);
     }
 
+    /**
+     * Persists all values from the view to the database.
+     */
     public void persist() {
         try {
             WorthController worthController = new WorthController();
@@ -349,6 +356,12 @@ public class Assembling_FormworkController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Refreshes the roof area when values have been changed.
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         roofArea = Project_ResultAreaController.getInstance().getRoofArea();

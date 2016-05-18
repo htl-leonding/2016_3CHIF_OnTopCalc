@@ -21,7 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
+ * Over this view it's possible to calculate the sheet roof. It's contained by
+ * the Assembling_BattensOrFullFormwork.fxml.
  *
  * @author Kepplinger
  */
@@ -41,7 +42,8 @@ public class Assembling_SheetRoofController extends Observable implements Initia
     Worth formwork;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and all worth objects. Also adds a
+     * change listener to verify the user input.
      *
      * @param url
      * @param rb
@@ -67,27 +69,17 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         load();
     }
 
-    public void persist() {
-        WorthController wc = new WorthController();
-        Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(formwork.getWorth());
-
-        try {
-            if (!ProjectViewController.isProjectOpened() || waste.getProject() == null) {
-                waste.setProject(ProjectViewController.getOpenedProject());
-                formwork.setProject(ProjectViewController.getOpenedProject());
-
-                wc.create(waste);
-                wc.create(formwork);
-            } else {
-
-                wc.edit(waste);
-                wc.edit(formwork);
-            }
-        } catch (Exception ex) {
-            Logging.getLogger().log(Level.SEVERE, "Assembling_SheetRoofController: persist method didn't work.", ex);
-        }
+    public static Assembling_SheetRoofController getInstance() {
+        return instance;
     }
 
+    public Worth getFormwork() {
+        return formwork;
+    }
+
+    /**
+     * Loads all required values from the database into the view.
+     */
     public void load() {
         lb_roofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getLedgeAndRoofAreaWorth()));
 
@@ -105,6 +97,9 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.FALSE);
     }
 
+    /**
+     * Calculates all required values.
+     */
     public void calculate() {
         try {
             //Verschnitt Vollschalung
@@ -128,17 +123,39 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         notifyObservers();
     }
 
-    public static Assembling_SheetRoofController getInstance() {
-        return instance;
+    /**
+     * Persists all values from the view to the database.
+     */
+    public void persist() {
+        WorthController wc = new WorthController();
+        Assembling_BattensOrFullFormworkController.getInstance().getComponent().setNumberOfProducts(formwork.getWorth());
+
+        try {
+            if (!ProjectViewController.isProjectOpened() || waste.getProject() == null) {
+                waste.setProject(ProjectViewController.getOpenedProject());
+                formwork.setProject(ProjectViewController.getOpenedProject());
+
+                wc.create(waste);
+                wc.create(formwork);
+            } else {
+
+                wc.edit(waste);
+                wc.edit(formwork);
+            }
+        } catch (Exception ex) {
+            Logging.getLogger().log(Level.SEVERE, "Assembling_SheetRoofController: persist method didn't work.", ex);
+        }
     }
 
+    /**
+     * Refreshes the roof area when values have been changed.
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         lb_roofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getLedgeAndRoofAreaWorth()));
         calculate();
-    }
-
-    public Worth getFormwork() {
-        return formwork;
     }
 }

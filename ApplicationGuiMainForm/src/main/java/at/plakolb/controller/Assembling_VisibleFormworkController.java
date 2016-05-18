@@ -30,7 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
+ * Over this view it's possible to calculate the visible formwork.
  *
  * @author Kepplinger
  */
@@ -75,7 +75,8 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     private Component component;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class and all worth objects. Also adds many
+     * change listeners to verify the user input.
      *
      * @param url
      * @param rb
@@ -135,7 +136,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
-            loadValuesFromDataBase();
+            load();
         } else {
             component = new Component();
             component.setDescription("SichtbareSchalung");
@@ -181,7 +182,10 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         return totalCosts;
     }
 
-    private void loadValuesFromDataBase() {
+    /**
+     * Loads all required values from the database into the view.
+     */
+    private void load() {
         ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
         Project openedProject = ProjectViewController.getOpenedProject();
@@ -222,6 +226,9 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.FALSE);
     }
 
+    /**
+     * Calculates all required values.
+     */
     private void calculate() {
         try {
             //Verschnittsfläche
@@ -276,6 +283,9 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         component.setPriceComponent(pricePerSquare);
     }
 
+    /**
+     * Persists all values from the view to the database.
+     */
     public void persist() {
         WorthController worthController = new WorthController();
         ComponentController componentController = new ComponentController();
@@ -318,6 +328,11 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         }
     }
 
+    /**
+     * Refreshes the values.
+     * @param o
+     * @param arg 
+     */
     @Override
     public void update(Observable o, Object arg) {
         double oldVal = Double.parseDouble(lb_VisibleFormwork.getText().substring(0, lb_VisibleFormwork.getText().length() - 3));
