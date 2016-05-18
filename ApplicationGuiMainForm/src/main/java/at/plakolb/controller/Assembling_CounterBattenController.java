@@ -196,6 +196,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
             cb_counterBattern.getSelectionModel().select(component.getProduct());
         } else {
             component = new Component();
+            component.setDescription("Konterlattung");
             component.setCategory(category);
             component.setComponentType("Produkt");
         }

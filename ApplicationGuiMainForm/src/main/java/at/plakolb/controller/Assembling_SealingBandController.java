@@ -156,6 +156,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
             load();
         } else {
             component = new Component();
+            component.setDescription("Nageldichtband");
             component.setCategory(new CategoryController().findCategoryByShortTerm("ND"));
             component.setComponentType("Produkt");
         }
@@ -212,6 +213,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
                 //tf_price.setText(UtilityFormat.getStringForLabel(component.getPriceComponent()));
             } else {
                 component = new Component();
+                component.setDescription("Nageldichtband");
                 component.setCategory(category);
                 component.setComponentType("Produkt");
             }

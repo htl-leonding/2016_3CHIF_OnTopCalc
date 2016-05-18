@@ -137,6 +137,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
             loadValuesFromDatabase();
         } else {
             component = new Component();
+            component.setDescription("Schalung");
             component.setCategory(new CategoryController().findCategoryByShortTerm("S"));
             component.setComponentType("Produkt");
         }
@@ -193,6 +194,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 cb_Formwork.getSelectionModel().select(component.getProduct());
             } else {
                 component = new Component();
+                component.setDescription("Schalung");
                 component.setCategory(category);
                 component.setComponentType("Produkt");
             }

@@ -139,6 +139,7 @@ public class Assembling_FoilController implements Initializable, Observer {
             loadValuesFromDatabase();
         } else {
             component = new Component();
+            component.setDescription("Folie");
             component.setCategory(new CategoryController().findCategoryByShortTerm("F"));
             component.setComponentType("Produkt");
         }
@@ -193,6 +194,7 @@ public class Assembling_FoilController implements Initializable, Observer {
                 tf_price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
             } else {
                 component = new Component();
+                component.setDescription("Folie");
                 component.setComponentType("Produkt");
                 component.setCategory(category);
             }

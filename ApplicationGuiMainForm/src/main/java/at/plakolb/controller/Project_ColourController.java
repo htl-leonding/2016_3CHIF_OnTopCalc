@@ -142,6 +142,7 @@ public class Project_ColourController implements Initializable {
             loadColourValues();
         } else {
             component = new Component();
+            component.setDescription("Farbe");
             component.setCategory(new CategoryController().findCategoryByShortTerm("X"));
             component.setComponentType("Produkt");
         }
@@ -203,6 +204,7 @@ public class Project_ColourController implements Initializable {
             cb_Product.getSelectionModel().select(component.getProduct());
         } else {
             component = new Component();
+            component.setDescription("Farbe");
             component.setComponentType(ProductType.COLOR.toString());
             component.setCategory(category);
         }
