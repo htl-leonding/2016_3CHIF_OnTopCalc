@@ -24,10 +24,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import javax.print.PrintService;
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -44,16 +43,16 @@ import org.apache.pdfbox.printing.PDFPrintable;
  */
 public class Print {
 
-    private static Font headFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-    private static Font normalFont = new Font(Font.FontFamily.TIMES_ROMAN, 10);
-    private static Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLDITALIC);
-    private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+    private static final Font HEADFONT = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+    private static final Font NORMALFONT = new Font(Font.FontFamily.TIMES_ROMAN, 10);
+    private static final Font BOLDFONT = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLDITALIC);
+    private static final Font SUBFONT = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
-    private String path;
+    private final String path;
+    private final Project project;
+    private final String city;
+    
     private String absolutePath;
-
-    private Project project;
-    private String city;
     private Document document;
 
     private List<Boolean> listPrint = new ArrayList<>();
@@ -64,9 +63,15 @@ public class Print {
         this.city = city;
     }
 
+    /**
+     * Creates a PDF file of a project. 
+     * 
+     * @return
+     * @throws DocumentException
+     * @throws FileNotFoundException 
+     */
     public String createPDF() throws DocumentException, FileNotFoundException {
-        SimpleDateFormat sdf = new SimpleDateFormat("_dd-MM-yyyy_HH-mm-ss");
-        String fileName = project.getProjectName().replace(" ", "_") + sdf.format(new Date()) + ".pdf";
+        String fileName = project.getProjectName().replace(" ", "_") + "_" + UtilityFormat.getDateTime(LocalDateTime.now()) + ".pdf";
         File file = new File(path + "/" + fileName);
         absolutePath = file.getAbsolutePath();
         System.out.println("Erstelle: " + file.toPath());
@@ -134,7 +139,7 @@ public class Print {
         return absolutePath;
     }
 
-    public void print(PrintService service,int copies) throws PrinterException, IOException {
+    public void print(PrintService service, int copies) throws PrinterException, IOException {
         PDDocument doc = PDDocument.load(new File(absolutePath));
 
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -155,7 +160,7 @@ public class Print {
         Book book = new Book();
         book.append(new PDFPrintable(doc), pageFormat, doc.getNumberOfPages());
         job.setPageable(book);
-        
+
         job.print(attr);
     }
 
@@ -173,9 +178,9 @@ public class Print {
         Paragraph paragraph = new Paragraph();
 
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph(client.getName(), normalFont));
-        paragraph.add(new Paragraph(client.getStreet(), normalFont));
-        paragraph.add(new Paragraph(client.getZipCode() + " " + client.getCity(), normalFont));
+        paragraph.add(new Paragraph(client.getName(), NORMALFONT));
+        paragraph.add(new Paragraph(client.getStreet(), NORMALFONT));
+        paragraph.add(new Paragraph(client.getZipCode() + " " + client.getCity(), NORMALFONT));
         paragraph.setAlignment(Element.ALIGN_LEFT);
         addEmptyLine(paragraph, 2);
         document.add(paragraph);
@@ -185,7 +190,7 @@ public class Print {
         Paragraph paragraph = new Paragraph();
 
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph(city, normalFont));
+        paragraph.add(new Paragraph(city, NORMALFONT));
         paragraph.setAlignment(Element.ALIGN_RIGHT);
         addEmptyLine(paragraph, 2);
         document.add(paragraph);
@@ -195,33 +200,32 @@ public class Print {
         Paragraph paragraph = new Paragraph();
 
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph(project.getProjectName(), headFont));
+        paragraph.add(new Paragraph(project.getProjectName(), HEADFONT));
         paragraph.setAlignment(Element.ALIGN_CENTER);
         document.add(paragraph);
     }
 
     private void addConstruction(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Allgemeine Informationen", subFont));
+        paragraph.add(new Paragraph("Allgemeine Informationen", SUBFONT));
 
         if (project.getCreationDate() != null) {
             paragraph.add(new Paragraph("Erstellt am: "
-                    + sdf.format(project.getCreationDate()), normalFont));
+                    + UtilityFormat.getDate(project.getCreationDate()), NORMALFONT));
         }
         if (project.getConstructionType() != null) {
             paragraph.add(new Paragraph("Konstruktionstyp: "
-                    + project.getConstructionType(), normalFont));
+                    + project.getConstructionType(), NORMALFONT));
         }
         if (project.getRoofForm() != null) {
             paragraph.add(new Paragraph("Dachform: "
-                    + project.getRoofForm(), normalFont));
+                    + project.getRoofForm(), NORMALFONT));
         }
         if (project.getDescription() != null) {
             paragraph.add(new Paragraph("Notiz:\n"
-                    + project.getDescription(), normalFont));
+                    + project.getDescription(), NORMALFONT));
         }
         document.add(paragraph);
     }
@@ -229,32 +233,32 @@ public class Print {
     private void addPreCut(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Grund- und Dachflächenermittlung", subFont));
+        paragraph.add(new Paragraph("Grund- und Dachflächenermittlung", SUBFONT));
 
         WorthController worthJpaController = new WorthController();
 
         Worth area = worthJpaController.findWorthByShortTermAndProjectId("A", project.getId());
         if (area != null) {
             paragraph.add(new Paragraph("Grundfläche: "
-                    + area.worthFormatWithUnit(), normalFont));
+                    + area.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth roofAreaWithoutRoofOverhang = worthJpaController.findWorthByShortTermAndProjectId("D", project.getId());
         if (roofAreaWithoutRoofOverhang != null) {
             paragraph.add(new Paragraph("Dachfläche "
-                    + roofAreaWithoutRoofOverhang.worthFormatWithUnit(), normalFont));
+                    + UtilityFormat.getStringForLabel(roofAreaWithoutRoofOverhang), NORMALFONT));
         }
 
         Worth roofOverhang = worthJpaController.findWorthByShortTermAndProjectId("DV", project.getId());
         if (roofOverhang != null) {
             paragraph.add(new Paragraph("Dachvorsprung "
-                    + roofOverhang.worthFormatWithUnit(), normalFont));
+                    + UtilityFormat.getStringForLabel(roofOverhang), NORMALFONT));
         }
 
         Worth roofArea = worthJpaController.findWorthByShortTermAndProjectId("DF", project.getId());
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachfläche mit Dachvorsprung: "
-                    + roofArea.worthFormatWithUnit(), normalFont));
+                    + UtilityFormat.getStringForLabel(roofArea), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -263,7 +267,7 @@ public class Print {
     private void addCubicMeter(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Holzmaterial für Konsruktion", subFont));
+        paragraph.add(new Paragraph("Holzmaterial für Konsruktion", SUBFONT));
         addEmptyLine(paragraph, -1);
 
         Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f, Font.BOLD);
@@ -304,19 +308,19 @@ public class Print {
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
                 table.addCell(new Phrase("" + component.getNumberOfProducts(), tableNormalFont));
                 table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getWidthComponent() / 100 * component.getHeightComponent() / 100
-                        * component.getLengthComponent() * component.getNumberOfProducts(), "m³"), normalFont));
+                        * component.getLengthComponent() * component.getNumberOfProducts(), "m³"), NORMALFONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), normalFont));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
 
                 table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(
                         component.getWidthComponent() / 100 * component.getHeightComponent() / 100
-                        * component.getLengthComponent() * component.getNumberOfProducts() * component.getPriceComponent(), "€"), normalFont));
+                        * component.getLengthComponent() * component.getNumberOfProducts() * component.getPriceComponent(), "€"), NORMALFONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours(), "h"), normalFont));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours(), "h"), NORMALFONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringPricePerHour(), "€"), normalFont));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringPricePerHour(), "€"), NORMALFONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours() * component.getTailoringPricePerHour(), "€"), normalFont));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours() * component.getTailoringPricePerHour(), "€"), NORMALFONT));
             }
         }
         paragraph.add(table);
@@ -344,7 +348,7 @@ public class Print {
         Worth priceTotal = worthJpaController.findWorthByShortTermAndProjectId("GKV", project.getId());
         if (priceTotal != null) {
             paragraph.add(new Paragraph("Gesamtpreis: "
-                    + priceTotal.worthFormatWithUnit(), normalFont));
+                    + priceTotal.worthFormatWithUnit(), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -362,69 +366,69 @@ public class Print {
                 "Produkt", category.getId());
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), subFont));
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
-            paragraph.add(new Paragraph("Schalung", subFont));
+            paragraph.add(new Paragraph("Schalung", SUBFONT));
         }
 
         WorthController worthJpaController = new WorthController();
         Worth roofArea = worthJpaController.findWorthByShortTermAndProjectId("D", project.getId());
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachfläche: "
-                    + roofArea.worthFormatWithUnit(), normalFont));
+                    + roofArea.worthFormatWithUnit(), NORMALFONT));
         }
 
         if (component != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), normalFont));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VSP", project.getId());
         if (abatementPercent != null) {
             paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
-                    + abatementPercent.worthFormatWithUnit(), normalFont));
+                    + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth abatementFormwork = worthJpaController.findWorthByShortTermAndProjectId("VS", project.getId());
         if (abatementFormwork != null) {
             paragraph.add(new Paragraph("Verschnitt: "
-                    + abatementFormwork.worthFormatWithUnit(), normalFont));
+                    + abatementFormwork.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth formwork = worthJpaController.findWorthByShortTermAndProjectId("S", project.getId());
         if (formwork != null) {
             paragraph.add(new Paragraph("Schalung: "
-                    + formwork.worthFormatWithUnit(), normalFont));
+                    + formwork.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPS", project.getId());
         if (worthCosts != null) {
             paragraph.add(new Paragraph("Kosten Montage pro Stunde: "
-                    + worthCosts.worthFormatWithUnit(), normalFont));
+                    + worthCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTime = worthJpaController.findWorthByShortTermAndProjectId("ZPS", project.getId());
         if (worthTime != null) {
             paragraph.add(new Paragraph("Zeit für Montage: "
-                    + worthTime.worthFormatWithUnit(), normalFont));
+                    + worthTime.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthProductCosts = worthJpaController.findWorthByShortTermAndProjectId("SPROK", project.getId());
         if (worthProductCosts != null) {
             paragraph.add(new Paragraph("Produkt Kosten: "
-                    + worthProductCosts.worthFormatWithUnit(), normalFont));
+                    + worthProductCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthMontage = worthJpaController.findWorthByShortTermAndProjectId("KMS", project.getId());
         if (worthMontage != null) {
             paragraph.add(new Paragraph("Montage Kosten: "
-                    + worthMontage.worthFormatWithUnit(), normalFont));
+                    + worthMontage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTotal = worthJpaController.findWorthByShortTermAndProjectId("GKS", project.getId());
         if (worthTotal != null) {
             paragraph.add(new Paragraph("Gesamtkosten Schalung: "
-                    + worthTotal.worthFormatWithUnit(), normalFont));
+                    + worthTotal.worthFormatWithUnit(), NORMALFONT));
         }
         document.add(paragraph);
     }
@@ -440,69 +444,69 @@ public class Print {
                 "Produkt", category.getId());
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), subFont));
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
-            paragraph.add(new Paragraph("Sichtbare Schalung", subFont));
+            paragraph.add(new Paragraph("Sichtbare Schalung", SUBFONT));
         }
 
         WorthController worthJpaController = new WorthController();
         Worth roofArea = worthJpaController.findWorthByShortTermAndProjectId("DV", project.getId());
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachvorsprung: "
-                    + roofArea.worthFormatWithUnit(), normalFont));
+                    + roofArea.worthFormatWithUnit(), NORMALFONT));
         }
 
         if (component != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), normalFont));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VSSP", project.getId());
         if (abatementPercent != null) {
             paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
-                    + abatementPercent.worthFormatWithUnit(), normalFont));
+                    + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth abatementFormwork = worthJpaController.findWorthByShortTermAndProjectId("VSS", project.getId());
         if (abatementFormwork != null) {
             paragraph.add(new Paragraph("Verschnitt: "
-                    + abatementFormwork.worthFormatWithUnit(), normalFont));
+                    + abatementFormwork.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth visableFormwork = worthJpaController.findWorthByShortTermAndProjectId("SS", project.getId());
         if (visableFormwork != null) {
             paragraph.add(new Paragraph("Sichtbare Schalung: "
-                    + visableFormwork.worthFormatWithUnit(), normalFont));
+                    + visableFormwork.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPSS", project.getId());
         if (worthCosts != null) {
             paragraph.add(new Paragraph("Kosten Montage pro Stunde: "
-                    + worthCosts.worthFormatWithUnit(), normalFont));
+                    + worthCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTime = worthJpaController.findWorthByShortTermAndProjectId("ZPSS", project.getId());
         if (worthTime != null) {
             paragraph.add(new Paragraph("Zeit für Montage: "
-                    + worthTime.worthFormatWithUnit(), normalFont));
+                    + worthTime.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthProductCosts = worthJpaController.findWorthByShortTermAndProjectId("SSPROK", project.getId());
         if (worthProductCosts != null) {
             paragraph.add(new Paragraph("Produkt Kosten: "
-                    + worthProductCosts.worthFormatWithUnit(), normalFont));
+                    + worthProductCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthMontage = worthJpaController.findWorthByShortTermAndProjectId("KMSS", project.getId());
         if (worthMontage != null) {
             paragraph.add(new Paragraph("Montage Kosten: "
-                    + worthMontage.worthFormatWithUnit(), normalFont));
+                    + worthMontage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTotal = worthJpaController.findWorthByShortTermAndProjectId("GKSS", project.getId());
         if (worthTotal != null) {
             paragraph.add(new Paragraph("Gesamtkosten Schalung: "
-                    + worthTotal.worthFormatWithUnit(), normalFont));
+                    + worthTotal.worthFormatWithUnit(), NORMALFONT));
         }
         document.add(paragraph);
     }
@@ -518,9 +522,9 @@ public class Print {
                 "Produkt", category.getId());
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), subFont));
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
-            paragraph.add(new Paragraph("Folie", subFont));
+            paragraph.add(new Paragraph("Folie", SUBFONT));
         }
 
         WorthController worthJpaController = new WorthController();
@@ -528,60 +532,60 @@ public class Print {
 
         if (roofArea != null) {
             paragraph.add(new Paragraph("Dachfläche mit Dachvorsprung: "
-                    + roofArea.worthFormatWithUnit(), normalFont));
+                    + roofArea.worthFormatWithUnit(), NORMALFONT));
         }
 
         if (component != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), normalFont));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("FUEP", project.getId());
         if (abatementPercent != null) {
             paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
-                    + abatementPercent.worthFormatWithUnit(), normalFont));
+                    + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth abatementFoil = worthJpaController.findWorthByShortTermAndProjectId("FUE", project.getId());
         if (abatementFoil != null) {
             paragraph.add(new Paragraph("Verschnitt: "
-                    + abatementFoil.worthFormatWithUnit(), normalFont));
+                    + abatementFoil.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth foil = worthJpaController.findWorthByShortTermAndProjectId("F", project.getId());
         if (foil != null) {
             paragraph.add(new Paragraph("Folie: "
-                    + foil.worthFormatWithUnit(), normalFont));
+                    + foil.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPF", project.getId());
         if (worthCosts != null) {
             paragraph.add(new Paragraph("Kosten Montage pro Stunde: "
-                    + worthCosts.worthFormatWithUnit(), normalFont));
+                    + worthCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTime = worthJpaController.findWorthByShortTermAndProjectId("ZPF", project.getId());
         if (worthTime != null) {
             paragraph.add(new Paragraph("Zeit für Montage: "
-                    + worthTime.worthFormatWithUnit(), normalFont));
+                    + worthTime.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthProductCosts = worthJpaController.findWorthByShortTermAndProjectId("KProF", project.getId());
         if (worthProductCosts != null) {
             paragraph.add(new Paragraph("Produkt Kosten: "
-                    + worthProductCosts.worthFormatWithUnit(), normalFont));
+                    + worthProductCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthMontage = worthJpaController.findWorthByShortTermAndProjectId("KMF", project.getId());
         if (worthMontage != null) {
             paragraph.add(new Paragraph("Montage Kosten: "
-                    + worthMontage.worthFormatWithUnit(), normalFont));
+                    + worthMontage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTotal = worthJpaController.findWorthByShortTermAndProjectId("GKF", project.getId());
         if (worthTotal != null) {
             paragraph.add(new Paragraph("Gesamtkosten Schalung: "
-                    + worthTotal.worthFormatWithUnit(), normalFont));
+                    + worthTotal.worthFormatWithUnit(), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -598,10 +602,10 @@ public class Print {
                 "Produkt", category.getId());
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), subFont));
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph(
-                    "Nageldichtband", subFont));
+                    "Nageldichtband", SUBFONT));
         }
         addEmptyLine(paragraph, -1);
         PdfPTable table = new PdfPTable(new float[]{6f, 3.5f});
@@ -635,60 +639,60 @@ public class Print {
         Worth total = worthJpaController.findWorthByShortTermAndProjectId("LD", project.getId());
         if (total != null) {
             paragraph.add(new Paragraph("Summe: "
-                    + total.worthFormatWithUnit(), normalFont));
+                    + total.worthFormatWithUnit(), NORMALFONT));
         }
 
         if (component != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), normalFont));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VDP", project.getId());
         if (abatementPercent != null) {
             paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
-                    + abatementPercent.worthFormatWithUnit(), normalFont));
+                    + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth abatementSealingTape = worthJpaController.findWorthByShortTermAndProjectId("DP", project.getId());
         if (abatementSealingTape != null) {
             paragraph.add(new Paragraph("Verschnitt: "
-                    + abatementSealingTape.worthFormatWithUnit(), normalFont));
+                    + abatementSealingTape.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth sealingTape = worthJpaController.findWorthByShortTermAndProjectId("ND", project.getId());
         if (sealingTape != null) {
             paragraph.add(new Paragraph("Nageldichtband: "
-                    + sealingTape.worthFormatWithUnit(), normalFont));
+                    + sealingTape.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPD", project.getId());
         if (worthCosts != null) {
             paragraph.add(new Paragraph("Kosten Montage pro Stunde: "
-                    + worthCosts.worthFormatWithUnit(), normalFont));
+                    + worthCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTime = worthJpaController.findWorthByShortTermAndProjectId("ZPD", project.getId());
         if (worthTime != null) {
             paragraph.add(new Paragraph("Zeit für Montage: "
-                    + worthTime.worthFormatWithUnit(), normalFont));
+                    + worthTime.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthProductCosts = worthJpaController.findWorthByShortTermAndProjectId("KProD", project.getId());
         if (worthProductCosts != null) {
             paragraph.add(new Paragraph("Produkt Kosten: "
-                    + worthProductCosts.worthFormatWithUnit(), normalFont));
+                    + worthProductCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthMontage = worthJpaController.findWorthByShortTermAndProjectId("KMonD", project.getId());
         if (worthMontage != null) {
             paragraph.add(new Paragraph("Montage Kosten: "
-                    + worthMontage.worthFormatWithUnit(), normalFont));
+                    + worthMontage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTotal = worthJpaController.findWorthByShortTermAndProjectId("GKND", project.getId());
         if (worthTotal != null) {
             paragraph.add(new Paragraph("Gesamtkosten Nageldichtband: "
-                    + worthTotal.worthFormatWithUnit(), normalFont));
+                    + worthTotal.worthFormatWithUnit(), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -705,9 +709,9 @@ public class Print {
                 "Produkt", category.getId());
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), subFont));
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
-            paragraph.add(new Paragraph("Konterlattung", subFont));
+            paragraph.add(new Paragraph("Konterlattung", SUBFONT));
         }
         addEmptyLine(paragraph, -1);
         PdfPTable table = new PdfPTable(new float[]{6f, 3.5f});
@@ -740,61 +744,61 @@ public class Print {
 
         if (total != null) {
             paragraph.add(new Paragraph("Summe: "
-                    + total.worthFormatWithUnit(), normalFont));
+                    + total.worthFormatWithUnit(), NORMALFONT));
         }
 
         if (component != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), normalFont));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VKLP", project.getId());
 
         if (abatementPercent != null) {
             paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
-                    + abatementPercent.worthFormatWithUnit(), normalFont));
+                    + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth abatementCounterBatten = worthJpaController.findWorthByShortTermAndProjectId("VKL", project.getId());
         if (abatementCounterBatten != null) {
             paragraph.add(new Paragraph("Verschnitt: "
-                    + abatementCounterBatten.worthFormatWithUnit(), normalFont));
+                    + abatementCounterBatten.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth counterBatten = worthJpaController.findWorthByShortTermAndProjectId("KL", project.getId());
         if (counterBatten != null) {
             paragraph.add(new Paragraph("Konterlattung: "
-                    + counterBatten.worthFormatWithUnit(), normalFont));
+                    + counterBatten.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPKL", project.getId());
         if (worthCosts != null) {
             paragraph.add(new Paragraph("Kosten Montage pro Stunde: "
-                    + worthCosts.worthFormatWithUnit(), normalFont));
+                    + worthCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTime = worthJpaController.findWorthByShortTermAndProjectId("ZPKL", project.getId());
         if (worthTime != null) {
             paragraph.add(new Paragraph("Zeit für Montage: "
-                    + worthTime.worthFormatWithUnit(), normalFont));
+                    + worthTime.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthProductCosts = worthJpaController.findWorthByShortTermAndProjectId("KProKL", project.getId());
         if (worthProductCosts != null) {
             paragraph.add(new Paragraph("Produkt Kosten: "
-                    + worthProductCosts.worthFormatWithUnit(), normalFont));
+                    + worthProductCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthMontage = worthJpaController.findWorthByShortTermAndProjectId("KMonKL", project.getId());
         if (worthMontage != null) {
             paragraph.add(new Paragraph("Montage Kosten: "
-                    + worthMontage.worthFormatWithUnit(), normalFont));
+                    + worthMontage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTotal = worthJpaController.findWorthByShortTermAndProjectId("GKKL", project.getId());
         if (worthTotal != null) {
             paragraph.add(new Paragraph("Gesamtkosten Konterlattung: "
-                    + worthTotal.worthFormatWithUnit(), normalFont));
+                    + worthTotal.worthFormatWithUnit(), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -822,14 +826,14 @@ public class Print {
         }
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), subFont));
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
-            paragraph.add(new Paragraph("Lattung oder Vollschalung", subFont));
+            paragraph.add(new Paragraph("Lattung oder Vollschalung", SUBFONT));
         }
 
         if (project.getRoofMaterial() != null) {
             paragraph.add(new Paragraph("Art: "
-                    + project.getRoofMaterial(), normalFont));
+                    + project.getRoofMaterial(), NORMALFONT));
         }
 
         WorthController worthJpaController = new WorthController();
@@ -837,93 +841,93 @@ public class Print {
             Worth worthSlatSpacing = worthJpaController.findWorthByShortTermAndProjectId("LA", project.getId());
             if (worthSlatSpacing != null) {
                 paragraph.add(new Paragraph("Lattenabstand in cm: "
-                        + worthSlatSpacing.worthFormatWithUnit(), normalFont));
+                        + worthSlatSpacing.worthFormatWithUnit(), NORMALFONT));
             }
 
             Worth worthAbatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VLVP", project.getId());
             if (worthAbatementPercent != null) {
                 paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
-                        + worthAbatementPercent.worthFormatWithUnit(), normalFont));
+                        + worthAbatementPercent.worthFormatWithUnit(), NORMALFONT));
             }
 
             Worth worthLengthOfTheBattens = worthJpaController.findWorthByShortTermAndProjectId("LDOV", project.getId());
             if (worthLengthOfTheBattens != null) {
                 paragraph.add(new Paragraph("Länge der Dachlatten ohne Verschnitt: "
-                        + worthLengthOfTheBattens.worthFormatWithUnit(), normalFont));
+                        + worthLengthOfTheBattens.worthFormatWithUnit(), NORMALFONT));
             }
 
             Worth worthAbatementBatten = worthJpaController.findWorthByShortTermAndProjectId("VL", project.getId());
             if (worthAbatementBatten != null) {
                 paragraph.add(new Paragraph("Verschnitt: "
-                        + worthAbatementBatten.worthFormatWithUnit(), normalFont));
+                        + worthAbatementBatten.worthFormatWithUnit(), NORMALFONT));
             }
 
             Worth worthFullFormwork = worthJpaController.findWorthByShortTermAndProjectId("LL", project.getId());
             if (worthFullFormwork != null) {
                 paragraph.add(new Paragraph("Länge der Dachlatten: "
-                        + worthFullFormwork.worthFormatWithUnit(), normalFont));
+                        + worthFullFormwork.worthFormatWithUnit(), NORMALFONT));
             }
         } else {
             Worth worthAbatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VLVP", project.getId());
             if (worthAbatementPercent != null) {
                 paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
-                        + worthAbatementPercent.worthFormatWithUnit(), normalFont));
+                        + worthAbatementPercent.worthFormatWithUnit(), NORMALFONT));
             }
 
             Worth worthRoofArea = worthJpaController.findWorthByShortTermAndProjectId("DF", project.getId());
             if (worthRoofArea != null) {
                 paragraph.add(new Paragraph("Dachfläche: "
-                        + worthRoofArea.worthFormatWithUnit(), normalFont));
+                        + worthRoofArea.worthFormatWithUnit(), NORMALFONT));
             }
 
             Worth worthAbatementFullFormwork = worthJpaController.findWorthByShortTermAndProjectId("VVS", project.getId());
             if (worthAbatementFullFormwork != null) {
                 paragraph.add(new Paragraph("Verschnitt: "
-                        + worthAbatementFullFormwork.worthFormatWithUnit(), normalFont));
+                        + worthAbatementFullFormwork.worthFormatWithUnit(), NORMALFONT));
             }
 
             Worth worthFullFormwork = worthJpaController.findWorthByShortTermAndProjectId("VollS", project.getId());
             if (worthFullFormwork != null) {
                 paragraph.add(new Paragraph("Vollschalung: "
-                        + worthFullFormwork.worthFormatWithUnit(), normalFont));
+                        + worthFullFormwork.worthFormatWithUnit(), NORMALFONT));
             }
         }
         if (component != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), normalFont));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPLV", project.getId());
         if (worthCosts != null) {
             paragraph.add(new Paragraph("Kosten Montage pro Stunde: "
-                    + worthCosts.worthFormatWithUnit(), normalFont));
+                    + worthCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthProductCosts = worthJpaController.findWorthByShortTermAndProjectId("KPLatVoll", project.getId());
         if (worthProductCosts
                 != null) {
             paragraph.add(new Paragraph("Produkt Kosten: "
-                    + worthProductCosts.worthFormatWithUnit(), normalFont));
+                    + worthProductCosts.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthTime = worthJpaController.findWorthByShortTermAndProjectId("ZPLV", project.getId());
         if (worthTime
                 != null) {
             paragraph.add(new Paragraph("Zeit für Montage: "
-                    + worthTime.worthFormatWithUnit(), normalFont));
+                    + worthTime.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthMontage = worthJpaController.findWorthByShortTermAndProjectId("KMLatVoll", project.getId());
         if (worthMontage
                 != null) {
             paragraph.add(new Paragraph("Montage Kosten: "
-                    + worthMontage.worthFormatWithUnit(), normalFont));
+                    + worthMontage.worthFormatWithUnit(), NORMALFONT));
         }
         Worth worthTotal = worthJpaController.findWorthByShortTermAndProjectId("GKLatVoll", project.getId());
         if (worthTotal
                 != null) {
             paragraph.add(new Paragraph("Gesamtkosten Konterlattung: "
-                    + worthTotal.worthFormatWithUnit(), normalFont));
+                    + worthTotal.worthFormatWithUnit(), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -932,7 +936,7 @@ public class Print {
     private void addMaterialAssembly(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Material für Montage", subFont));
+        paragraph.add(new Paragraph("Material für Montage", SUBFONT));
         addEmptyLine(paragraph, -1);
         WorthController worthJpaController = new WorthController();
 
@@ -940,7 +944,7 @@ public class Print {
 
         if (allAroundPrice != null) {
             paragraph.add(new Paragraph("Gesamtpreis: "
-                    + allAroundPrice.worthFormatWithUnit(), normalFont));
+                    + allAroundPrice.worthFormatWithUnit(), NORMALFONT));
         }
 
         AssemblyController assemblyJpaController = new AssemblyController();
@@ -980,14 +984,14 @@ public class Print {
     private void addColor(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Farbe", subFont));
+        paragraph.add(new Paragraph("Farbe", SUBFONT));
 
         ComponentController componentJpaController = new ComponentController();
         Component color = componentJpaController.findColorByProjectId(project.getId());
 
         if (color != null) {
             paragraph.add(new Paragraph("Farbe: "
-                    + color.getProduct().getName(), normalFont));
+                    + color.getProduct().getName(), NORMALFONT));
         }
 
         WorthController worthJpaController = new WorthController();
@@ -995,54 +999,54 @@ public class Print {
         Worth colorFactor = worthJpaController.findWorthByShortTermAndProjectId("FK", project.getId());
         if (colorFactor != null) {
             paragraph.add(new Paragraph("Farbfaktor: "
-                    + colorFactor.worthFormatWithUnit(), normalFont));
+                    + colorFactor.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth requiredColorMeter = worthJpaController.findWorthByShortTermAndProjectId("FMM", project.getId());
         if (requiredColorMeter != null) {
             paragraph.add(new Paragraph("Benötigte Farbe in m²: "
-                    + requiredColorMeter.worthFormatWithUnit(), normalFont));
+                    + requiredColorMeter.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth requiredColorLiter = worthJpaController.findWorthByShortTermAndProjectId("FML", project.getId());
         if (requiredColorLiter != null) {
             paragraph.add(new Paragraph("Benötigte Farbe in l: "
-                    + requiredColorLiter.worthFormatWithUnit(), normalFont));
+                    + requiredColorLiter.worthFormatWithUnit(), NORMALFONT));
         }
 
         addEmptyLine(paragraph, 1);
 
         if (color != null) {
             paragraph.add(new Paragraph("Preis Farbe pro Liter: "
-                    + UtilityFormat.formatValueWithShortTerm(color.getPriceComponent(), "€"), normalFont));
+                    + UtilityFormat.formatValueWithShortTerm(color.getPriceComponent(), "€"), NORMALFONT));
         }
 
         Worth timeColor = worthJpaController.findWorthByShortTermAndProjectId("ZPFA", project.getId());
         if (timeColor != null) {
             paragraph.add(new Paragraph("Zeit für Montage: "
-                    + timeColor.worthFormatWithUnit(), normalFont));
+                    + timeColor.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth priceColor = worthJpaController.findWorthByShortTermAndProjectId("PMFP", project.getId());
         if (priceColor != null) {
             paragraph.add(new Paragraph("Preis für Montage: "
-                    + priceColor.worthFormatWithUnit(), normalFont));
+                    + priceColor.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthProductCosts = worthJpaController.findWorthByShortTermAndProjectId("KPFarbe", project.getId());
         if (worthProductCosts != null) {
             paragraph.add(new Paragraph("Farbe Produkt Kosten: "
-                    + worthProductCosts.worthFormatWithUnit(), normalFont));
+                    + worthProductCosts.worthFormatWithUnit(), NORMALFONT));
         }
         Worth worthMontage = worthJpaController.findWorthByShortTermAndProjectId("KMFarbe", project.getId());
         if (worthMontage != null) {
             paragraph.add(new Paragraph("Montage Kosten: "
-                    + worthMontage.worthFormatWithUnit(), normalFont));
+                    + worthMontage.worthFormatWithUnit(), NORMALFONT));
         }
         Worth worthTotal = worthJpaController.findWorthByShortTermAndProjectId("GKFarbe", project.getId());
         if (worthTotal != null) {
             paragraph.add(new Paragraph("Gesamtkosten Farbe: "
-                    + worthTotal.worthFormatWithUnit(), normalFont));
+                    + worthTotal.worthFormatWithUnit(), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -1051,7 +1055,7 @@ public class Print {
     private void addCarriage(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Transport", subFont));
+        paragraph.add(new Paragraph("Transport", SUBFONT));
 
         WorthController worthJpaController = new WorthController();
 
@@ -1059,55 +1063,55 @@ public class Print {
 
         if (kilometreAllowance != null) {
             paragraph.add(new Paragraph("Kilometergeld: "
-                    + kilometreAllowance.worthFormatWithUnit(), normalFont));
+                    + kilometreAllowance.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth distanceCarriage = worthJpaController.findWorthByShortTermAndProjectId("ET", project.getId());
 
         if (distanceCarriage != null) {
             paragraph.add(new Paragraph("Entfernung: "
-                    + distanceCarriage.worthFormatWithUnit(), normalFont));
+                    + distanceCarriage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth worthDays = worthJpaController.findWorthByShortTermAndProjectId("TA", project.getId());
         if (worthDays != null) {
             paragraph.add(new Paragraph("Tage: "
-                    + worthDays.worthFormatWithUnit(), normalFont));
+                    + worthDays.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth priceCarriage = worthJpaController.findWorthByShortTermAndProjectId("PLS", project.getId());
 
         if (priceCarriage != null) {
             paragraph.add(new Paragraph("Preis LKW/Stunde: "
-                    + priceCarriage.worthFormatWithUnit(), normalFont));
+                    + priceCarriage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth durationCarriage = worthJpaController.findWorthByShortTermAndProjectId("DT", project.getId());
 
         if (durationCarriage != null) {
             paragraph.add(new Paragraph("Dauer: "
-                    + durationCarriage.worthFormatWithUnit(), normalFont));
+                    + durationCarriage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth kilometrePriceCarriage = worthJpaController.findWorthByShortTermAndProjectId("KT", project.getId());
 
         if (kilometrePriceCarriage != null) {
             paragraph.add(new Paragraph("Kosten Transport: "
-                    + kilometrePriceCarriage.worthFormatWithUnit(), normalFont));
+                    + kilometrePriceCarriage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth durationPriceCarriage = worthJpaController.findWorthByShortTermAndProjectId("KA", project.getId());
 
         if (durationPriceCarriage != null) {
             paragraph.add(new Paragraph("Kosten Aufenthalt: "
-                    + durationPriceCarriage.worthFormatWithUnit(), normalFont));
+                    + durationPriceCarriage.worthFormatWithUnit(), NORMALFONT));
         }
 
         Worth allRoundPriceCarriage = worthJpaController.findWorthByShortTermAndProjectId("GPT", project.getId());
 
         if (allRoundPriceCarriage != null) {
             paragraph.add(new Paragraph("Gesamtpreis Transport: "
-                    + allRoundPriceCarriage.worthFormatWithUnit(), normalFont));
+                    + allRoundPriceCarriage.worthFormatWithUnit(), NORMALFONT));
         }
 
         document.add(paragraph);
@@ -1116,7 +1120,7 @@ public class Print {
     private void addMaterialCostList(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Material- und Kostenliste", subFont));
+        paragraph.add(new Paragraph("Material- und Kostenliste", SUBFONT));
         addEmptyLine(paragraph, -1);
         ComponentController componentJpaController = new ComponentController();
         java.util.List<Component> listComponents = componentJpaController.findComponentsByProjectIdOrderById(project.getId());
@@ -1169,7 +1173,7 @@ public class Print {
     private void addSummary(Document document, Project project) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph("Kosten Übersicht", subFont));
+        paragraph.add(new Paragraph("Kosten Übersicht", SUBFONT));
         addEmptyLine(paragraph, -1);
         PdfPTable table = new PdfPTable(new float[]{6, 4.5f, 4.5f, 4.5f});
         table.setWidthPercentage(100f);

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -46,8 +48,9 @@ import javax.print.PrintServiceLookup;
  * FXML Controller class
  *
  * @author Kepplinger
- */ 
+ */
 public class PrintProjectController implements Initializable {
+
     static Stage stage;
     @FXML
     private ComboBox<Project> cb_projects;
@@ -115,7 +118,7 @@ public class PrintProjectController implements Initializable {
             cb_projects.getSelectionModel().select(0);
         }
 
-        tf_dateAndPosition.setText("Rohrbach, am " + UtilityFormat.getDateString(new Date()));
+        tf_dateAndPosition.setText("Rohrbach, am " + UtilityFormat.getDate(LocalDateTime.now()));
         tf_dateAndPosition.textProperty().addListener((observable, oldvalue, newValue) -> {
             refreshPrintAbility();
         });
@@ -211,26 +214,25 @@ public class PrintProjectController implements Initializable {
 
             print.setListPrint(listPrint);
             showPDF(print.createPDF(), cb_openAfterCreation.isSelected());
-            bt_showLastPDF.setDisable(false);           
-            if (p) {              
-              try {  
-        if(PrintServiceLookup.lookupPrintServices(null, null).length<1){
-        new Alert(Alert.AlertType.ERROR,"Bitte fügen Sie einen Drucker hinzu!").showAndWait();
-        }
-        else{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PrinterSelection.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Print Assistent");
-            stage.setScene(new Scene(root1));  
-            stage.showAndWait();
-            PrinterSelectionController controller = (PrinterSelectionController)fxmlLoader.getController();
-                   print.print(controller.getPrintService(),Integer.parseInt(controller.getCopyAmount()));
-        }
-              } catch (IOException ex) {
-                   Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
-               }
+            bt_showLastPDF.setDisable(false);
+            if (p) {
+                try {
+                    if (PrintServiceLookup.lookupPrintServices(null, null).length < 1) {
+                        new Alert(Alert.AlertType.ERROR, "Bitte fügen Sie einen Drucker hinzu!").showAndWait();
+                    } else {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PrinterSelection.fxml"));
+                        Parent root1 = (Parent) fxmlLoader.load();
+                        stage = new Stage();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.setTitle("Print Assistent");
+                        stage.setScene(new Scene(root1));
+                        stage.showAndWait();
+                        PrinterSelectionController controller = (PrinterSelectionController) fxmlLoader.getController();
+                        print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
+                    }
+                } catch (IOException | PrinterException ex) {
+                    Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
+                }
             }
         } catch (DocumentException | FileNotFoundException ex) {
             Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
@@ -245,8 +247,7 @@ public class PrintProjectController implements Initializable {
                 if (Desktop.isDesktopSupported() && allowed) {
                     Desktop.getDesktop().open(new File(path));
                 }
-            }
-            else{
+            } else {
                 executeOnOtherSystems(path, allowed);
             }
         } catch (IOException ex) {
@@ -254,24 +255,32 @@ public class PrintProjectController implements Initializable {
         }
 
     }
-    private boolean executeOnOtherSystems(String path,boolean isallowed){
-    if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
-                if (runCommand("kde-open", "%s", path)&&isallowed)return true;
-                if (runCommand("gnome-open", "%s", path)&&isallowed)return true;
-                if (runCommand("xdg-open", "%s", path)&&isallowed)return true;
-            }
 
-        else{
-            if(runCommand("open", "%s", path)&&isallowed) return true;
+    private boolean executeOnOtherSystems(String path, boolean isallowed) {
+        if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
+            if (runCommand("kde-open", "%s", path) && isallowed) {
+                return true;
+            }
+            if (runCommand("gnome-open", "%s", path) && isallowed) {
+                return true;
+            }
+            if (runCommand("xdg-open", "%s", path) && isallowed) {
+                return true;
+            }
+        } else if (runCommand("open", "%s", path) && isallowed) {
+            return true;
         }
-    return false;
+        return false;
     }
-        private boolean runCommand(String command, String args, String file) {
+
+    private boolean runCommand(String command, String args, String file) {
         String[] parts = prepareCommand(command, args, file);
 
         try {
             Process p = Runtime.getRuntime().exec(parts);
-            if (p == null) return false;
+            if (p == null) {
+                return false;
+            }
 
             try {
                 int retval = p.exitValue();
@@ -287,7 +296,6 @@ public class PrintProjectController implements Initializable {
             return false;
         }
     }
-
 
     private static String[] prepareCommand(String command, String args, String file) {
 

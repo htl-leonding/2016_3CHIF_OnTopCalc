@@ -3,8 +3,8 @@ package at.plakolb.calculationlogic.util;
 import at.plakolb.calculationlogic.entity.Worth;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,48 +14,9 @@ import javafx.scene.text.Text;
 
 /**
  *
- * @author Elisabeth
+ * @author Kepplinger
  */
 public class UtilityFormat {
-
-    public static String worthWithTwoDecimalPlaces(double d) {
-        if (d <= 0.001 && d != 0) {
-            return ("" + d).replaceAll(".", ",");
-        }
-        DecimalFormat twoDForm = new DecimalFormat("0.00");
-        return twoDForm.format(d).replaceAll(",", ".");
-    }
-
-    public static String worthWithThreeDecimalPlaces(double d) {
-        DecimalFormat twoDForm = new DecimalFormat("0.000");
-        return twoDForm.format(d).replaceAll(",", ".");
-    }
-
-    public static String worthWithDecimalPattern(String pattern, double d) {
-        if (d <= 0.001 && d != 0) {
-            return ("" + d).replaceAll(",", ".");
-        }
-        if (pattern == null) {
-            return worthWithTwoDecimalPlaces(d);
-        }
-        DecimalFormat twoDForm = new DecimalFormat(pattern);
-        return twoDForm.format(d).replaceAll(",", ".");
-    }
-
-    public static String formatValueWithShortTerm(double worth, String shortTerm) {
-        String decimalPlaces = "m³".equals(shortTerm) ? "0.000" : "0.00";
-        return worthWithDecimalPattern(decimalPlaces, worth);
-    }
-
-    public static String formatWorth(Worth worth) {
-        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "0.00";
-        return worthWithDecimalPattern(decimalPlaces, worth.getWorth());
-    }
-
-    public static String worthWithUnit(Worth worth) {
-        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "0.00";
-        return worthWithDecimalPattern(decimalPlaces, worth.getWorth()) + " " + worth.getParameter().getUnit().getShortTerm();
-    }
 
     /**
      * Parses a double into a formatted String.
@@ -127,13 +88,6 @@ public class UtilityFormat {
         return getStringForLabel(worth.getWorth()) + " " + worth.getParameter().getUnit().getShortTerm();
     }
 
-    public static String getDateString(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return String.format("%02d.%02d.%d", calendar.get(Calendar.DATE),
-                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
-    }
-
     /**
      * Parses a double into a formatted String, which has 2 decimals and fits
      * into a table column.
@@ -157,33 +111,33 @@ public class UtilityFormat {
         }
     }
 
-    public static String twoDecimalPlaces(double decimal) {
-        DecimalFormat twoDForm = new DecimalFormat("0.00");
-        return twoDForm.format(decimal);
-    }
-
+    /**
+     * Formats the path that it can fit into the textfield.
+     *
+     * @param textField
+     * @param original
+     */
     public static void setCutTextForTextField(TextField textField, String original) {
         if (!original.isEmpty()) {
             try {
-            original = original.replace("\\", "/");//Darf nicht replaceAll sein aufgrund des Backslashes!
-            textField.setTooltip(new Tooltip(original));
-            Text text = new Text(original);
-            text.setFont(textField.getFont());
-            String[] splittedPath = original.split("/");
+                original = original.replace("\\", "/");
+                textField.setTooltip(new Tooltip(original));
+                Text text = new Text(original);
+                text.setFont(textField.getFont());
+                String[] splittedPath = original.split("/");
 
-            double width = textField.getWidth() == 0 ? textField.getPrefWidth() : textField.getWidth();
-            if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
-                text.setText(splittedPath.length > 3 ? String.format("%s/%s/.../%s",
-                        splittedPath[0],
-                        splittedPath[1],
-                        splittedPath[splittedPath.length - 1]) : "../" + splittedPath[splittedPath.length - 1]);
+                double width = textField.getWidth() == 0 ? textField.getPrefWidth() : textField.getWidth();
                 if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
-                    text.setText("../" + splittedPath[splittedPath.length - 1]);
+                    text.setText(splittedPath.length > 3 ? String.format("%s/%s/.../%s",
+                            splittedPath[0],
+                            splittedPath[1],
+                            splittedPath[splittedPath.length - 1]) : "../" + splittedPath[splittedPath.length - 1]);
+                    if (text.getLayoutBounds().getWidth() + textField.getPadding().getLeft() + textField.getPadding().getRight() + 2d > width) {
+                        text.setText("../" + splittedPath[splittedPath.length - 1]);
+                    }
                 }
-            }
-            textField.setText(text.getText());
+                textField.setText(text.getText());
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
@@ -265,5 +219,78 @@ public class UtilityFormat {
             }
         }
         return newString;
+    }
+
+    /**
+     * Returns a String from a LocalDateTime object containing the current date
+     * and the current time.
+     *
+     * @param dateTime
+     * @return
+     */
+    public static String getDate(LocalDateTime dateTime) {
+        return dateTime.getDayOfMonth() + "."
+                + dateTime.getMonth().getDisplayName(TextStyle.SHORT, Locale.GERMAN) + "."
+                + dateTime.getYear();
+    }
+
+    /**
+     * Returns a String from a LocalDateTime object containing the current date
+     * and the current time.
+     *
+     * @param dateTime
+     * @return
+     */
+    public static String getDateTime(LocalDateTime dateTime) {
+        return dateTime.getDayOfMonth() + "_"
+                + String.format("%02d", dateTime.getMonthValue()) + "_"
+                + dateTime.getYear() + "_"
+                + dateTime.getHour() + "-"
+                + dateTime.getMinute() + "-"
+                + dateTime.getSecond();
+    }
+
+    public static String worthWithTwoDecimalPlaces(double d) {
+        if (d <= 0.001 && d != 0) {
+            return ("" + d).replace(".", ",");
+        }
+        DecimalFormat twoDForm = new DecimalFormat("0.00");
+        return twoDForm.format(d).replaceAll(",", ".");
+    }
+
+    public static String worthWithThreeDecimalPlaces(double d) {
+        DecimalFormat twoDForm = new DecimalFormat("0.000");
+        return twoDForm.format(d).replace(",", ".");
+    }
+
+    public static String worthWithDecimalPattern(String pattern, double d) {
+        if (d <= 0.001 && d != 0) {
+            return ("" + d).replace(",", ".");
+        }
+        if (pattern == null) {
+            return worthWithTwoDecimalPlaces(d);
+        }
+        DecimalFormat twoDForm = new DecimalFormat(pattern);
+        return twoDForm.format(d).replace(",", ".");
+    }
+
+    public static String formatValueWithShortTerm(double worth, String shortTerm) {
+        String decimalPlaces = "m³".equals(shortTerm) ? "0.000" : "0.00";
+        return worthWithDecimalPattern(decimalPlaces, worth);
+    }
+
+    public static String formatWorth(Worth worth) {
+        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "0.00";
+        return worthWithDecimalPattern(decimalPlaces, worth.getWorth());
+    }
+
+    public static String worthWithUnit(Worth worth) {
+        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "0.00";
+        return worthWithDecimalPattern(decimalPlaces, worth.getWorth()) + " " + worth.getParameter().getUnit().getShortTerm();
+    }
+
+    public static String twoDecimalPlaces(double decimal) {
+        DecimalFormat twoDForm = new DecimalFormat("0.00");
+        return twoDForm.format(decimal);
     }
 }
