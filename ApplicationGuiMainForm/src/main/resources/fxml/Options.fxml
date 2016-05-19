@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -57,7 +64,7 @@
                   <HBox alignment="CENTER" layoutY="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                                 <Label minHeight="27.0" text="Standard Sicherungs Speicherort:" />
-                                <TextField fx:id="tf_defaultBackupDirectory" editable="false" promptText="Standartspeicherort für Sicherungen" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="tf_defaultBackupDirectory" editable="false" promptText="Standardspeicherort für Sicherungen" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -103,7 +110,7 @@
             <HBox alignment="CENTER" layoutX="20.0" layoutY="375.0" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
                <children>
                         <Label minHeight="27.0" text="Standard PDF Speicherort:" />
-                        <TextField fx:id="tf_defaultPDFDirectory" editable="false" prefHeight="25.0" promptText="Standartspeicherort für die PDFs" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="tf_defaultPDFDirectory" editable="false" prefHeight="25.0" promptText="Standardspeicherort für die PDFs" styleClass="textfieldPath" HBox.hgrow="ALWAYS">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
