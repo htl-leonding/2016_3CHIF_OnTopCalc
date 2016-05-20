@@ -1,3 +1,5 @@
 *.jar
 */ApplicationGuiMainForm/target/**
 */CalculationLogic/target/**
+*/ApplicationGuiMainForm/out/**
+*/CalculationLogic/out/**
