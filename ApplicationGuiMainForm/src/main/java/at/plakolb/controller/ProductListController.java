@@ -175,9 +175,8 @@ public class ProductListController implements Initializable {
         tc_PriceUnit.setOnEditCommit((CellEditEvent<Product, String> event) -> {
             String price = "";
             Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
-            if (event.getNewValue().length() >= 2) {
-                price = event.getNewValue().substring(0, event.getNewValue().length() - 2);
-            }
+            price = event.getNewValue();
+
             product.setPriceUnit(Double.parseDouble(price));
             refreshTable();
         });

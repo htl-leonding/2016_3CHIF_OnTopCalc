@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="216.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrinterSelectionController">
+<AnchorPane id="AnchorPane" prefHeight="216.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrinterSelectionController">
    <children>
       <ComboBox fx:id="cb_choosPrinter" layoutX="157.0" layoutY="175.0" onAction="#printerserviceChanged" prefHeight="25.0" prefWidth="262.0" promptText="Drucker auswählen" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="110.0" />
       <HBox alignment="CENTER" layoutX="419.0" layoutY="313.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

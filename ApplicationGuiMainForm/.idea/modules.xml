@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ApplicationGUIMainForm.iml" filepath="$PROJECT_DIR$/ApplicationGUIMainForm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../CalculationLogic/CalculationLogic.iml" filepath="$PROJECT_DIR$/../CalculationLogic/CalculationLogic.iml" />
     </modules>
   </component>
 </project>

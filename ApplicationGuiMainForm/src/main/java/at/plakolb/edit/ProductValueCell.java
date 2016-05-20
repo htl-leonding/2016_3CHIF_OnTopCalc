@@ -77,7 +77,7 @@ public class ProductValueCell extends TableCell<Product, String> {
         textField.setPrefWidth(this.getWidth() - 5);
 
         textField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            textField.setText(textField.getText().replace(",", ".").replaceAll("[^\\d.]", ""));
             textField.setText(UtilityFormat.removeUnnecessaryCommas(textField.getText()));
         });
 
