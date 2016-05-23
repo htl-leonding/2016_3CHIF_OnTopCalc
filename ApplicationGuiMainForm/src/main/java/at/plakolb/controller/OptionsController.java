@@ -1,20 +1,14 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
-import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.db.entity.Project;
+import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.util.BackUpDatabase;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+import at.plakolb.main.MainApp;
 import at.plakolb.settings.SettingsController;
-import java.io.File;
-import java.net.URL;
-import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,18 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,6 +27,14 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import java.io.File;
+import java.net.URL;
+import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 /**
  * FXML Controller class
@@ -231,8 +222,10 @@ public class OptionsController implements Initializable, Observer {
                 if (p != null) {
                     UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, p.getAbsolutePath());
                 } else {
-                    tf_defaultBackupDirectory.setText("");
-                    tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    if (!new File(tf_defaultBackupDirectory.getText()).exists()) {
+                        tf_defaultBackupDirectory.setText("");
+                        tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    }
                 }
             } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, null, ex);
@@ -252,8 +245,10 @@ public class OptionsController implements Initializable, Observer {
                 if (p != null) {
                     UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, p.getAbsolutePath());
                 } else {
-                    tf_defaultPDFDirectory.setText("");
-                    tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    if (!new File(tf_defaultPDFDirectory.getText()).exists()) {
+                        tf_defaultPDFDirectory.setText("");
+                        tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    }
                 }
             } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, null, ex);
@@ -273,8 +268,10 @@ public class OptionsController implements Initializable, Observer {
                 if (p != null) {
                     UtilityFormat.setCutTextForTextField(tf_defaultBackupDirectory, p.getAbsolutePath());
                 } else {
-                    tf_defaultBackupDirectory.setText("");
-                    tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    if (!new File(tf_defaultBackupDirectory.getText()).exists()) {
+                        tf_defaultBackupDirectory.setText("");
+                        tf_defaultBackupDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    }
                 }
             } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, null, ex);
@@ -294,8 +291,10 @@ public class OptionsController implements Initializable, Observer {
                 if (p != null) {
                     UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, p.getAbsolutePath());
                 } else {
-                    tf_defaultPDFDirectory.setText("");
-                    tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    if (!new File(tf_defaultPDFDirectory.getText()).exists()) {
+                        tf_defaultPDFDirectory.setText("");
+                        tf_defaultPDFDirectory.setTooltip(new Tooltip("Kein Standardordner ausgewählt"));
+                    }
                 }
             } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, null, ex);
@@ -485,6 +484,17 @@ public class OptionsController implements Initializable, Observer {
                 }, "BackupReaderThread");
                 t.start();
             }
+        }
+    }
+
+    public void revertAll(ActionEvent actionEvent) throws Exception {
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Das Programm wird auf die Werkseinstellungen zurückgesetzt!\nDabei gehen alle ungesicherten Daten verloren!\n\nMöchten Sie fortfahren?");
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(ButtonType.NO, ButtonType.YES);
+        alert.showAndWait();
+        if (alert.getResult().equals(ButtonType.YES)) {
+            SettingsController.setProperty("firstrun", "true");
+            MainApp.getInstance().startApplication(MainApp.getStage());
         }
     }
 }

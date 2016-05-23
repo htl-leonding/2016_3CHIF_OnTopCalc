@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="509.0" prefWidth="641.0" style="-fx-background-color: darkgrey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.FirstRunController">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="10.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label text="OnTopCalc" textFill="#3c84ff" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <VBox fx:id="vb_mainContent" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lb_" text="Willkommen!" textFill="#3c84ff">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="bt_start" mnemonicParsing="false" onAction="#init" style="-fx-background-color: white; -fx-background-radius: 5px; -fx-border-color: #3c84ff; -fx-border-radius: 5px; -fx-border-width: 2px;" text="Programm einrichten">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <ProgressIndicator fx:id="pi_indicator" prefHeight="30.0" visible="false">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </ProgressIndicator>
+               </children>
+            </VBox>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+               <image>
+                  <Image url="@../images/htlLeonding.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
