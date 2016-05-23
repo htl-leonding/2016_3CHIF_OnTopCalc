@@ -82,6 +82,7 @@ public class MainFormController implements Initializable {
                 loadFxmlIntoPane("Options.fxml");
                 OptionsController.getInstance().createBackup();
             });
+            hl_lastBackup.setVisible(true);
         }
     }
 
