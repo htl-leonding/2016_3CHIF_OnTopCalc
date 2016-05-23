@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_TiledRoofController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_TiledRoofController">
    <children>
       <VBox spacing="40.0">
          <children>
@@ -59,7 +59,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label id="boldLettering" minHeight="54.0" prefHeight="54.0" prefWidth="185.0" text="Länge der Dachlatten ohne Verschnitt: " wrapText="true">
+                        <Label id="boldLettering" minHeight="54.0" prefHeight="54.0" prefWidth="233.0" text="Länge der Dachlatten ohne Verschnitt: " wrapText="true">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

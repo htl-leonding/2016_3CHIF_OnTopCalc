@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_MaterialAndCostController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_MaterialAndCostController">
    <children>
       <VBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -19,16 +19,16 @@
             </Label>
             <HBox alignment="CENTER">
                <children>
-                  <TableView fx:id="tv_Materials" prefHeight="350.0">
+                  <TableView fx:id="tv_Materials" prefHeight="350.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css">
                     <columns>
                       <TableColumn fx:id="tc_Category" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Kategorie" />
                       <TableColumn fx:id="tc_Component" minWidth="160.0" prefWidth="160.0" style="-fx-alignment: center;" text="Bauteil" />
-                        <TableColumn fx:id="tc_Width" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Breite in cm" />
+                        <TableColumn fx:id="tc_Width" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Breite in cm" />
                         <TableColumn fx:id="tc_Height" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Höhe in cm" />
                         <TableColumn fx:id="tc_Length" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Länge in m" />
                         <TableColumn fx:id="tc_Amount" minWidth="70.0" prefWidth="70.0" style="-fx-alignment: center;" text="Anzahl" />
                         <TableColumn fx:id="tc_Unit" minWidth="70.0" prefWidth="70.0" style="-fx-alignment: center;" text="Einheit" />
-                        <TableColumn fx:id="tc_PricePerUnit" minWidth="90.0" prefWidth="90.0" style="-fx-alignment: center;" text="Preis/Einheit" />
+                        <TableColumn fx:id="tc_PricePerUnit" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Preis/Einheit" />
                         <TableColumn fx:id="tc_TotalCosts" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Gesamtpreis" />
                     </columns>
                   </TableView>

@@ -8,19 +8,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_SheetRoofController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_SheetRoofController">
    <children>
       <VBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox spacing="5.0">
                <children>
-                  <Label id="normalLettering" text="Verschnitt: ">
+                  <Label id="normalLettering" minHeight="27.0" text="Verschnitt: ">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="tf_wastePercent" promptText="Verschnitt in %" />
-                  <Label id="normalLettering" text="\%">
+                  <Label id="normalLettering" minHeight="27.0" text="\%">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -31,17 +31,17 @@
                <children>
                   <VBox>
                      <children>
-                        <Label id="boldLettering" text="Verschnitt: ">
+                        <Label id="boldLettering" minHeight="27.0" text="Verschnitt: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label id="boldLettering" text="Dachfläche: ">
+                        <Label id="boldLettering" minHeight="27.0" text="Dachfläche: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label id="boldLettering" prefHeight="27.0" prefWidth="134.0" text="Vollschalung: " wrapText="true">
+                        <Label id="boldLettering" minHeight="27.0" prefHeight="27.0" text="Vollschalung: " wrapText="true">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -50,17 +50,17 @@
                   </VBox>
                   <VBox>
                      <children>
-                        <Label id="normalLettering" fx:id="lb_waste" prefHeight="27.0" prefWidth="89.0" text="0 m">
+                        <Label id="normalLettering" fx:id="lb_waste" minHeight="27.0" prefHeight="27.0" text="0 m">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label id="normalLettering" fx:id="lb_roofArea" prefHeight="27.0" prefWidth="89.0" text="0 m²">
+                        <Label id="normalLettering" fx:id="lb_roofArea" minHeight="27.0" prefHeight="27.0" text="0 m²">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label id="normalLettering" fx:id="lb_formwork" prefHeight="27.0" prefWidth="89.0" text="0 m²">
+                        <Label id="normalLettering" fx:id="lb_formwork" minHeight="27.0" prefHeight="27.0" text="0 m²">
                            <font>
                               <Font size="18.0" />
                            </font>

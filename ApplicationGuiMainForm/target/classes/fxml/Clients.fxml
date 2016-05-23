@@ -25,12 +25,12 @@
             </Label>
             <TableView fx:id="tv_Clients" layoutX="15.0" layoutY="44.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0">
               <columns>
-                <TableColumn fx:id="tc_Name" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Name" />
-                <TableColumn fx:id="tc_Street" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Straße" />
-                  <TableColumn fx:id="tc_City" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Stadt" />
-                  <TableColumn fx:id="tc_ZipCode" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Postleitzahl" />
-                  <TableColumn fx:id="tc_PhoneNumber" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Telefonnummer" />
-                  <TableColumn fx:id="tc_Projects" minWidth="0.0" prefWidth="100.0" style="-fx-alignment: center;" text="Pojekte" />
+                <TableColumn fx:id="tc_Name" minWidth="80.0" prefWidth="100.0" style="-fx-alignment: center;" text="Name" />
+                <TableColumn fx:id="tc_Street" minWidth="80.0" prefWidth="100.0" style="-fx-alignment: center;" text="Straße" />
+                  <TableColumn fx:id="tc_City" minWidth="80.0" prefWidth="100.0" style="-fx-alignment: center;" text="Stadt" />
+                  <TableColumn fx:id="tc_ZipCode" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Postleitzahl" />
+                  <TableColumn fx:id="tc_PhoneNumber" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Telefonnummer" />
+                  <TableColumn fx:id="tc_Projects" minWidth="80.0" prefWidth="100.0" style="-fx-alignment: center;" text="Projekte" />
                   <TableColumn fx:id="tc_Buttons" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" style="-fx-alignment: center;" />
               </columns>
                <columnResizePolicy>

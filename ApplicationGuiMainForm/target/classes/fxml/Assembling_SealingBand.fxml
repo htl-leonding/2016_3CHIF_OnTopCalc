@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_SealingBandController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_SealingBandController">
    <children>
-      <VBox alignment="CENTER" layoutY="32.0" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
+      <VBox alignment="CENTER" layoutY="32.0" spacing="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" text="Nageldichtband" textFill="#3c84ff">
                <font>
@@ -47,9 +47,9 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_product" prefWidth="180.0" promptText="Produkt auswählen" />
-                                    <TextField fx:id="tf_priceLinearMeter" minHeight="25.0" prefWidth="180.0" promptText="Preis in €" />
-                                    <TextField fx:id="tf_blend" minHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
+                                    <ComboBox fx:id="cb_product" prefWidth="200.0" promptText="Produkt auswählen" />
+                                    <TextField fx:id="tf_priceLinearMeter" minHeight="25.0" prefWidth="200.0" promptText="Preis in €" />
+                                    <TextField fx:id="tf_blend" minHeight="25.0" prefWidth="200.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_LEFT">
@@ -146,17 +146,17 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <Label id="boldLettering" minHeight="25.0" text="Kosten Produkt: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Kosten Produkt: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="boldLettering" minHeight="25.0" text="Kosten Montage: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Kosten Montage: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="boldLettering" minHeight="25.0" text="Gesamtkosten: ">
+                                    <Label id="boldLettering" minHeight="27.0" text="Gesamtkosten: ">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font>
@@ -190,10 +190,10 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <TableView fx:id="tv_rafter" layoutX="151.0" layoutY="319.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" HBox.hgrow="NEVER">
+                  <TableView fx:id="tv_rafter" layoutX="151.0" layoutY="319.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" HBox.hgrow="NEVER">
                     <columns>
                       <TableColumn fx:id="cl_name" maxWidth="300.0" prefWidth="300.0" style="-fx-alignment: center;" text="Name" />
-                      <TableColumn fx:id="cl_length" maxWidth="160.0" prefWidth="160.0" style="-fx-alignment: center;" text="Länge der Dachsparren" />
+                      <TableColumn fx:id="cl_length" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" style="-fx-alignment: center;" text="Länge der Dachsparren" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -8,19 +8,100 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="500.0" prefWidth="225.0" styleClass="sideview" stylesheets="@../styles/sideview.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.SideViewController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="500.0" prefWidth="283.0" styleClass="sideview" stylesheets="@../styles/sideview.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.SideViewController">
    <children>
-      <Label id="showProjects" layoutX="10.0" layoutY="37.0" onMouseClicked="#showAllProjects" prefHeight="23.0" prefWidth="148.0" text="Projekte anzeigen" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="37.0">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets></Label>
-      <Label id="newProject" layoutX="10.0" layoutY="87.0" onMouseClicked="#createNewProject" prefHeight="23.0" prefWidth="148.0" text="Neues Projekt" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="87.0" />
-      <Label id="printProject" layoutX="10.0" layoutY="137.0" onMouseClicked="#printProject" prefHeight="23.0" prefWidth="148.0" text="Projekte drucken" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="137.0" />
-      <Label id="productList" layoutX="10.0" layoutY="187.0" onMouseClicked="#showProductList" prefHeight="23.0" prefWidth="148.0" text="Produktliste" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="187.0" />
-      <Label id="parameter" layoutX="10.0" layoutY="237.0" onMouseClicked="#showParameter" prefHeight="23.0" prefWidth="148.0" text="Parameter" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="237.0" />
-      <Label id="clients" layoutX="10.0" layoutY="287.0" onMouseClicked="#showClients" prefHeight="23.0" prefWidth="148.0" text="Auftraggeber" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="287.0" />
-      <Label id="options" layoutX="10.0" layoutY="337.0" onMouseClicked="#showOptions" prefHeight="23.0" prefWidth="148.0" text="Optionen" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="337.0" />
-      <Label id="about" alignment="CENTER" layoutX="14.0" layoutY="459.0" onMouseClicked="#showMainForm" prefHeight="35.0" prefWidth="35.0" text="🏠" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+      <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="37.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
+         <children>
+            <Label id="showProjects" fx:id="lb_showProjects" layoutX="10.0" layoutY="37.0" onMouseClicked="#showAllProjects" prefWidth="900.0" text="Projekte anzeigen" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="37.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+            </Label>
+            <Label id="newProject" fx:id="lb_newProject" layoutX="10.0" layoutY="87.0" onMouseClicked="#createNewProject" prefWidth="900.0" text="Neues Projekt" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="87.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+            </Label>
+            <Label id="printProject" layoutX="10.0" layoutY="137.0" onMouseClicked="#printProject" prefWidth="900.0" text="Projekte drucken" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="137.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+            </Label>
+            <Label id="productList" fx:id="lb_produktList" layoutX="10.0" layoutY="187.0" onMouseClicked="#showProductList" prefWidth="900.0" text="Produktliste" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="187.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+            </Label>
+            <Label id="parameter" fx:id="lb_parameter" layoutX="10.0" layoutY="237.0" onMouseClicked="#showParameter" prefWidth="900.0" text="Parameter" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="237.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+            </Label>
+            <Label id="clients" fx:id="lb_clients" layoutX="10.0" layoutY="287.0" onMouseClicked="#showClients" prefWidth="900.0" text="Auftraggeber" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="287.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+            </Label>
+            <Label id="options" fx:id="lb_options" layoutX="10.0" layoutY="337.0" onMouseClicked="#showOptions" prefWidth="900.0" text="Optionen" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="337.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+            </Label>
+         </children>
+      </VBox>
+      <Label id="menu" alignment="CENTER" layoutX="14.0" layoutY="459.0" onMouseClicked="#showMainForm" prefHeight="35.0" prefWidth="120.0" text="Menü" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
    </children>
    <opaqueInsets>
       <Insets />

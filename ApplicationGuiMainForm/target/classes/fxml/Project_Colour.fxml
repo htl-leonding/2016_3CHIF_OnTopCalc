@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="373.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ColourController">
+<AnchorPane prefHeight="373.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ColourController">
    <children>
       <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -68,31 +68,31 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="143.0" promptText="Farbe auswählen" />
-                                    <TextField fx:id="tf_AdittionalColourFactor" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Faktor in m²" />
-                                    <TextField fx:id="tf_PricePerLiter" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Farbe in €/l" />
-                                    <TextField fx:id="tf_ProfiHour" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Kosten in €/h" />
-                                    <TextField fx:id="tf_TimeOfPainting" minHeight="25.0" prefHeight="25.0" prefWidth="120.0" promptText="Zeit in h" />
+                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Farbe auswählen" />
+                                    <TextField fx:id="tf_AdittionalColourFactor" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Faktor in m²" />
+                                    <TextField fx:id="tf_PricePerLiter" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Farbe in €/l" />
+                                    <TextField fx:id="tf_ProfiHour" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Kosten in €/h" />
+                                    <TextField fx:id="tf_TimeOfPainting" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Zeit in h" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_LEFT">
                                  <children>
-                                    <Label text="m²">
+                                    <Label minHeight="27.0" text="m²">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="€/l">
+                                    <Label minHeight="27.0" text="€/l">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="€/h">
+                                    <Label minHeight="27.0" text="€/h">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="h">
+                                    <Label minHeight="27.0" text="h">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -103,7 +103,7 @@
                         </HBox>
                      </children>
                   </AnchorPane>
-                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0" HBox.hgrow="NEVER">
+                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="850.0" HBox.hgrow="NEVER">
                      <children>
                         <HBox spacing="5.0" AnchorPane.leftAnchor="0.0">
                            <children>

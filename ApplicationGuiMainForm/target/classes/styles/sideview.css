@@ -1,41 +1,52 @@
 .sideview {
-    -fx-background-color: 
-        linear-gradient(from 00% 00% to 100% 0%, #BDBDBD 0%, white 100%);
+    -fx-background-color: white;
+        /*linear-gradient(from 00% 00% to 100% 0%, #BDBDBD 0%, white 100%);*/
 }
-.label:hover{
+.currentPage{
+    -fx-background-color: derive(lightgray,60%);
+    -fx-background-radius: 5px;
     -fx-font-weight:bold;
+}
+.transparentLabel{
+    -fx-border-color: transparent;
+}
+.menulabel:hover{
+    -fx-border-color: #3c84ff;
+    -fx-border-radius: 3px;
 }
 .label{
     -fx-font-size:18px;
 }
 
 #showProjects{
-    -fx-graphic: url("../images/showAll.png");
+    -fx-graphic: url("../images/showAll2.png");
 }
 #newProject{
-    -fx-graphic: url("../images/new.png");
+    -fx-graphic: url("../images/new2.png");
 }
 #printProject{
-    -fx-graphic: url("../images/printer.png");
+    -fx-graphic: url("../images/printer0.png");
 }
 #productList{
-    -fx-graphic: url("../images/box.png");
+    -fx-graphic: url("../images/box2.png");
 }
 #parameter{
-    -fx-graphic: url("../images/parameter.png");
+    -fx-graphic: url("../images/parameter2.png");
 }
 #clients{
-    -fx-graphic: url("../images/client.png");
+    -fx-graphic: url("../images/client2.png");
 }
 #options{
-    -fx-graphic: url("../images/option.png");
+    -fx-graphic: url("../images/option2.png");
 }
-#about{
+#menu{
+	-fx-graphic: url("../images/menu.png");
 	-fx-font-weight: bold;
 	-fx-font-size: 24px;
 }
-#about:hover{
-	-fx-background-color: #3c84ff;
-	-fx-background-radius: 100%;
+#menu:hover{
+	-fx-background-color: derive(#3c84ff,10%);
+	-fx-graphic: url("../images/menu2.png");
+	-fx-background-radius: 5px;
 	-fx-text-fill:whitesmoke;
 }

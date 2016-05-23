@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_TransportController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_TransportController">
    <children>
       <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -52,9 +52,9 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <TextField fx:id="tf_pkwMoney" minHeight="25.0" prefHeight="25.0" prefWidth="121.0" promptText="Kilometergeld in  €" />
-                                    <TextField fx:id="tf_pkwDistance" minHeight="25.0" prefHeight="25.0" prefWidth="121.0" promptText="Enternung in km" />
-                                    <TextField fx:id="tf_pkwDays" minHeight="25.0" prefHeight="25.0" prefWidth="121.0" promptText="Tage" />
+                                    <TextField fx:id="tf_pkwMoney" minHeight="25.0" prefHeight="25.0" prefWidth="130.0" promptText="Kilometergeld in  €" />
+                                    <TextField fx:id="tf_pkwDistance" minHeight="25.0" prefHeight="25.0" prefWidth="130.0" promptText="Enternung in km" />
+                                    <TextField fx:id="tf_pkwDays" minHeight="25.0" prefHeight="25.0" prefWidth="130.0" promptText="Tage" />
                                  </children>
                               </VBox>
                               <VBox>
@@ -108,8 +108,8 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <TextField fx:id="tf_lkwPrice" minHeight="25.0" prefHeight="25.0" prefWidth="121.0" promptText="Kosten in €/h" />
-                                    <TextField fx:id="tf_lkwDuration" minHeight="25.0" prefHeight="25.0" prefWidth="121.0" promptText="Dauer in h" />
+                                    <TextField fx:id="tf_lkwPrice" minHeight="25.0" prefHeight="25.0" prefWidth="130.0" promptText="Kosten in €/h" />
+                                    <TextField fx:id="tf_lkwDuration" minHeight="25.0" prefHeight="25.0" prefWidth="130.0" promptText="Dauer in h" />
                                  </children>
                               </VBox>
                               <VBox>

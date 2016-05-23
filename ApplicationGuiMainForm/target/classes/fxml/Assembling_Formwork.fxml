@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" stylesheets="@../styles/mainStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_FormworkController">
+<AnchorPane id="AnchorPane" stylesheets="@../styles/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_FormworkController">
    <children>
       <VBox alignment="CENTER" layoutY="32.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -58,9 +58,9 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Formwork" prefWidth="150.0" promptText="Produkt auswählen" />
-                                    <TextField fx:id="tf_Price" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Preis in €" />
-                                    <TextField fx:id="tf_Blend" minHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Verschnitt in %" />
+                                    <ComboBox fx:id="cb_Formwork" prefWidth="180.0" promptText="Produkt auswählen" />
+                                    <TextField fx:id="tf_Price" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Preis in €" />
+                                    <TextField fx:id="tf_Blend" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
                                  </children>
                               </VBox>
                               <VBox alignment="BOTTOM_CENTER" minHeight="25.0">
