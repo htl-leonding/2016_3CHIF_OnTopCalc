@@ -4,7 +4,7 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
-import at.plakolb.calculationlogic.entity.Client;
+import at.plakolb.calculationlogic.db.entity.Client;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;

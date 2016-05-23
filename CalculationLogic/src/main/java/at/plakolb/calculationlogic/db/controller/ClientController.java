@@ -2,8 +2,8 @@ package at.plakolb.calculationlogic.db.controller;
 
 import at.plakolb.calculationlogic.db.JpaUtils;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
-import at.plakolb.calculationlogic.entity.Client;
-import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.db.entity.Client;
+import at.plakolb.calculationlogic.db.entity.Project;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

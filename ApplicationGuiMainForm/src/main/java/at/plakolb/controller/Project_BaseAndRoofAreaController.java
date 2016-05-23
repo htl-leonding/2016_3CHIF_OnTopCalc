@@ -4,7 +4,7 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
-import at.plakolb.calculationlogic.entity.Worth;
+import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;

@@ -2,15 +2,15 @@
 package at.plakolb.calculationlogic.util;
 
 import at.plakolb.calculationlogic.db.JpaUtils;
-import at.plakolb.calculationlogic.entity.Assembly;
-import at.plakolb.calculationlogic.entity.Category;
-import at.plakolb.calculationlogic.entity.Client;
-import at.plakolb.calculationlogic.entity.Component;
-import at.plakolb.calculationlogic.entity.ParameterP;
-import at.plakolb.calculationlogic.entity.Product;
-import at.plakolb.calculationlogic.entity.Project;
-import at.plakolb.calculationlogic.entity.Unit;
-import at.plakolb.calculationlogic.entity.Worth;
+import at.plakolb.calculationlogic.db.entity.Assembly;
+import at.plakolb.calculationlogic.db.entity.Category;
+import at.plakolb.calculationlogic.db.entity.Client;
+import at.plakolb.calculationlogic.db.entity.Component;
+import at.plakolb.calculationlogic.db.entity.ParameterP;
+import at.plakolb.calculationlogic.db.entity.Product;
+import at.plakolb.calculationlogic.db.entity.Project;
+import at.plakolb.calculationlogic.db.entity.Unit;
+import at.plakolb.calculationlogic.db.entity.Worth;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

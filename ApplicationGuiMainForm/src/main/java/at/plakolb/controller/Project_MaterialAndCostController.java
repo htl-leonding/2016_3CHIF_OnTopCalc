@@ -1,8 +1,8 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.entity.Component;
-import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.db.entity.Component;
+import at.plakolb.calculationlogic.db.entity.Unit;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

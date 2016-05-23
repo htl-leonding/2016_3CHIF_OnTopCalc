@@ -4,7 +4,7 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
-import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.util.BackUpDatabase;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.settings.SettingsController;

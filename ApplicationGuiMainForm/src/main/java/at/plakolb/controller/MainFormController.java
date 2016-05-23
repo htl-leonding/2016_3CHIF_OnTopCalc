@@ -3,7 +3,7 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
-import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.settings.SettingsController;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

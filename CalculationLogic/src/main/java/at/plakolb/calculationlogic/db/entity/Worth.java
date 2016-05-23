@@ -1,15 +1,15 @@
 /*	HTL Leonding	*/
-package at.plakolb.calculationlogic.entity;
+package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+
 import java.io.Serializable;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 
 /**
- *
  * @author Kepplinger
  */
 @Entity
@@ -35,11 +35,12 @@ public class Worth implements Serializable {
     public Worth(ParameterP parameter) {
         this();
         this.parameter = parameter;
-        this.shortTerm = parameter.getShortTerm();
-        if (parameter.isEditable()) {
-            this.worth = parameter.getDefaultValue();
+        if (parameter != null) {
+            this.shortTerm = parameter.getShortTerm();
+            if (parameter.isEditable()) {
+                this.worth = parameter.getDefaultValue();
+            }
         }
-
     }
 
     public Worth(Project project, ParameterP parameter, double worth) {
@@ -49,12 +50,11 @@ public class Worth implements Serializable {
     }
 
     /**
-     *
      * @param project
      * @param parameter
      * @param worth
      * @param shortTerm Falls ein Index verwendet wird, ändert sich der
-     * shortTerm zB von N zu N1
+     *                  shortTerm zB von N zu N1
      */
     public Worth(Project project, ParameterP parameter, double worth, String shortTerm) {
         this();

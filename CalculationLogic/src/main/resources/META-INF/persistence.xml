@@ -3,17 +3,17 @@
   <persistence-unit name="calculationPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter</class>
-    <class>at.plakolb.calculationlogic.entity.Product</class>
-    <class>at.plakolb.calculationlogic.entity.Worth</class>
-    <class>at.plakolb.calculationlogic.entity.ParameterP</class>
-    <class>at.plakolb.calculationlogic.entity.Project</class>
-    <class>at.plakolb.calculationlogic.entity.Client</class>
-    <class>at.plakolb.calculationlogic.entity.Component</class>
-    <class>at.plakolb.calculationlogic.entity.Category</class>
-    <class>at.plakolb.calculationlogic.entity.Unit</class>
-    <class>at.plakolb.calculationlogic.entity.Assembly</class>
+    <class>at.plakolb.calculationlogic.db.entity.Product</class>
+    <class>at.plakolb.calculationlogic.db.entity.Worth</class>
+    <class>at.plakolb.calculationlogic.db.entity.ParameterP</class>
+    <class>at.plakolb.calculationlogic.db.entity.Project</class>
+    <class>at.plakolb.calculationlogic.db.entity.Client</class>
+    <class>at.plakolb.calculationlogic.db.entity.Component</class>
+    <class>at.plakolb.calculationlogic.db.entity.Category</class>
+    <class>at.plakolb.calculationlogic.db.entity.Unit</class>
+    <class>at.plakolb.calculationlogic.db.entity.Assembly</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\database\db;create=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:.\database\db;create=true"/>
       <property name="javax.persistence.jdbc.user" value="app"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.password" value="app"/>

@@ -1,5 +1,5 @@
 /*	HTL Leonding	*/
-package at.plakolb.calculationlogic.entity;
+package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;

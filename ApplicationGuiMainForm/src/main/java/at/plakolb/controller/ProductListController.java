@@ -5,10 +5,10 @@ import at.plakolb.calculationlogic.db.controller.AssemblyController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProductController;
-import at.plakolb.calculationlogic.entity.Assembly;
-import at.plakolb.calculationlogic.entity.Component;
-import at.plakolb.calculationlogic.entity.Product;
-import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.db.entity.Assembly;
+import at.plakolb.calculationlogic.db.entity.Component;
+import at.plakolb.calculationlogic.db.entity.Product;
+import at.plakolb.calculationlogic.db.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.edit.ProductNameCell;
@@ -50,7 +50,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javax.persistence.EntityManager;
 
 /**
  * FXML Controller class

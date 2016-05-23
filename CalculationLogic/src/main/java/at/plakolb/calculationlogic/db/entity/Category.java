@@ -1,5 +1,5 @@
 /*	HTL Leonding	*/
-package at.plakolb.calculationlogic.entity;
+package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
@@ -10,48 +10,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
 /**
  *
- * @author Andreas
+ * @author Kepplinger
  */
 @Entity
-public class ParameterP implements Serializable {
+@NamedQueries({
+    @NamedQuery(name = "Category.findAll",
+            query = "select c from Category c")
+})
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String shortTerm;
     private String longTerm;
-    @OneToOne
-    private Unit unit;
-    private Double defaultValue;
-    private boolean editable;
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private LocalDateTime creationDate;
 
-    public ParameterP() {
+    public Category() {
         creationDate = LocalDateTime.now(Clock.systemDefaultZone());
     }
 
-    public ParameterP(String longTerm, String shortTerm, Unit unit, boolean editable) {
+    public Category(String longTerm, String shortTerm) {
         this();
         this.shortTerm = shortTerm;
         this.longTerm = longTerm;
-        this.unit = unit;
-        this.editable = editable;
-    }
-
-    public ParameterP(String longTerm, String shortTerm, Unit unit, boolean editable, Double defaultValue) {
-        this();
-        this.shortTerm = shortTerm;
-        this.longTerm = longTerm;
-        this.unit = unit;
-        this.defaultValue = defaultValue;
-        this.editable = editable;
     }
 
     public Long getId() {
@@ -78,25 +68,8 @@ public class ParameterP implements Serializable {
         this.shortTerm = shortTerm;
     }
 
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    public String getFormatDefaultValue() {
-        //return UtilityFormat.formatValueWithShortTerm(defaultValue, unit.getShortTerm());
-        return "";
-    }
-
-    public Double getDefaultValue() {
-        return defaultValue;
-    }
-
-    public void setDefaultValue(Double defaultValue) {
-        this.defaultValue = defaultValue;
+    public String getLongAndShortTerm() {
+        return longTerm + " (" + shortTerm + ")";
     }
 
     public LocalDateTime getCreationDate() {
@@ -107,16 +80,8 @@ public class ParameterP implements Serializable {
         this.creationDate = creationDate;
     }
 
-    public boolean isEditable() {
-        return editable;
-    }
-
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }
-
     @Override
     public String toString() {
-        return "Parameter{" + "id=" + id + ", shortTerm=" + shortTerm + ", longTerm=" + longTerm + ", unit=" + unit + '}';
+        return longTerm;
     }
 }

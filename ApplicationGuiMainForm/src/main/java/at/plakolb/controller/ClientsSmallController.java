@@ -2,7 +2,7 @@
 package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ClientController;
-import at.plakolb.calculationlogic.entity.Client;
+import at.plakolb.calculationlogic.db.entity.Client;
 import java.net.URL;
 import java.util.Observable;
 import java.util.ResourceBundle;

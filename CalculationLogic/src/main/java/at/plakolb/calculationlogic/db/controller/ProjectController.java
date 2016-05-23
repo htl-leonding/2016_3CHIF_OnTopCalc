@@ -2,11 +2,11 @@ package at.plakolb.calculationlogic.db.controller;
 
 import at.plakolb.calculationlogic.db.JpaUtils;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
-import at.plakolb.calculationlogic.entity.Assembly;
-import at.plakolb.calculationlogic.entity.Client;
-import at.plakolb.calculationlogic.entity.Component;
-import at.plakolb.calculationlogic.entity.Project;
-import at.plakolb.calculationlogic.entity.Worth;
+import at.plakolb.calculationlogic.db.entity.Assembly;
+import at.plakolb.calculationlogic.db.entity.Client;
+import at.plakolb.calculationlogic.db.entity.Component;
+import at.plakolb.calculationlogic.db.entity.Project;
+import at.plakolb.calculationlogic.db.entity.Worth;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -3,8 +3,8 @@ package at.plakolb.controller;
 
 import at.plakolb.edit.ParameterCell;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
-import at.plakolb.calculationlogic.entity.ParameterP;
-import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.db.entity.ParameterP;
+import at.plakolb.calculationlogic.db.entity.Unit;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import java.net.URL;
 import java.text.DecimalFormat;

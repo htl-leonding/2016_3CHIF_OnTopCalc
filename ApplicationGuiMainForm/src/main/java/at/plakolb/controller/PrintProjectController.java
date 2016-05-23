@@ -3,7 +3,7 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
-import at.plakolb.calculationlogic.entity.Project;
+import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.util.Print;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.settings.SettingsController;

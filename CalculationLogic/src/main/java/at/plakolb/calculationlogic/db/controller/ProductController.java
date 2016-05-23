@@ -2,9 +2,9 @@ package at.plakolb.calculationlogic.db.controller;
 
 import at.plakolb.calculationlogic.db.JpaUtils;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
-import at.plakolb.calculationlogic.entity.Assembly;
-import at.plakolb.calculationlogic.entity.Component;
-import at.plakolb.calculationlogic.entity.Product;
+import at.plakolb.calculationlogic.db.entity.Assembly;
+import at.plakolb.calculationlogic.db.entity.Component;
+import at.plakolb.calculationlogic.db.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import java.math.BigDecimal;
 import java.util.List;

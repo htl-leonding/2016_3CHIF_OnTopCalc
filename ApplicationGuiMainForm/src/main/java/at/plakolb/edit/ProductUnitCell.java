@@ -2,8 +2,8 @@
 package at.plakolb.edit;
 
 import at.plakolb.calculationlogic.db.controller.UnitController;
-import at.plakolb.calculationlogic.entity.Product;
-import at.plakolb.calculationlogic.entity.Unit;
+import at.plakolb.calculationlogic.db.entity.Product;
+import at.plakolb.calculationlogic.db.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.controller.ProductListController;
 import javafx.beans.value.ObservableValue;

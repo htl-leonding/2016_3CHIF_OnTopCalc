@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.edit;
 
-import at.plakolb.calculationlogic.entity.Component;
+import at.plakolb.calculationlogic.db.entity.Component;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;

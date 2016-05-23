@@ -1,6 +1,6 @@
 package at.plakolb.calculationlogic.util;
 
-import at.plakolb.calculationlogic.entity.Worth;
+import at.plakolb.calculationlogic.db.entity.Worth;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;

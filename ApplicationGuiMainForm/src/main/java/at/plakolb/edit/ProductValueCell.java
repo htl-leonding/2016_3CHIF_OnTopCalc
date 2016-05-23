@@ -1,7 +1,7 @@
 /*	HTL Leonding	*/
 package at.plakolb.edit;
 
-import at.plakolb.calculationlogic.entity.Product;
+import at.plakolb.calculationlogic.db.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import javafx.beans.value.ObservableValue;
