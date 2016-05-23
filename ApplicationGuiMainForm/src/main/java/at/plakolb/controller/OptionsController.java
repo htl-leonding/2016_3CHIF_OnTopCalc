@@ -52,6 +52,8 @@ import javafx.util.Callback;
  */
 public class OptionsController implements Initializable, Observer {
 
+    private static OptionsController controller;
+
     @FXML
     private TableColumn<Project, Integer> cl_id;
     @FXML
@@ -64,8 +66,6 @@ public class OptionsController implements Initializable, Observer {
     private TableColumn<Project, Integer> cl_client;
     @FXML
     private TableView<Project> tv_paperbin;
-
-    private Tooltip tooltip;
     @FXML
     private TableColumn cl_options;
     @FXML
@@ -86,8 +86,6 @@ public class OptionsController implements Initializable, Observer {
     private TextField tf_defaultPDFDirectory;
     @FXML
     private Button bt_chooseFilePDF;
-
-    private static OptionsController controller;
     @FXML
     private Label lb_percentage;
     @FXML
