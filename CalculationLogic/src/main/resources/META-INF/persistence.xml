@@ -13,7 +13,7 @@
     <class>at.plakolb.calculationlogic.db.entity.Unit</class>
     <class>at.plakolb.calculationlogic.db.entity.Assembly</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:.\database\db;create=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:./database/db;create=true"/>
       <property name="javax.persistence.jdbc.user" value="app"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.password" value="app"/>

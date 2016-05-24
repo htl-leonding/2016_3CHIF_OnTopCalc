@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -19,13 +11,16 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="570.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="695.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -48,7 +43,7 @@
                               <Font name="System Bold" size="18.0" />
                           </font>
                       </Label>
-                      <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" prefHeight="197.0" prefWidth="620.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
+                      <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
                           <columns>
                               <TableColumn fx:id="cl_id" maxWidth="120.0" minWidth="15.0" prefWidth="75.0" style="-fx-aglinment: center;" text="ID" />
                               <TableColumn fx:id="cl_pname" maxWidth="500.0" minWidth="100.0" prefWidth="110.0" text="Projektname" />
@@ -90,18 +85,28 @@
                   </HBox>
                </children>
             </VBox>
-            <Button mnemonicParsing="false" onAction="#revertAll" text="Alles zurücksetzen">
+            <HBox alignment="CENTER">
                <VBox.margin>
-                  <Insets left="145.0" />
+                  <Insets />
                </VBox.margin>
-               <graphic>
-                  <ImageView>
-                     <image>
-                        <Image url="@../images/interact.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+               <children>
+                  <Button minWidth="200.0" mnemonicParsing="false" onAction="#revertAll" text="Alles zurücksetzen">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@../images/interact.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
                 <AnchorPane layoutX="20.0" layoutY="406.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
                     <children>
                         <Label id="boldLettering" text="Sicherung">
@@ -131,7 +136,10 @@
                      <children>
                         <HBox spacing="5.0" HBox.hgrow="NEVER">
                            <children>
-                                    <Button id="smallBtnLettering" fx:id="bt_createBackup" mnemonicParsing="false" onAction="#createBackup" styleClass="buttonCreateBackup" text="Sicherung erstellen" />
+                                    <Button id="smallBtnLettering" fx:id="bt_createBackup" mnemonicParsing="false" onAction="#createBackup" styleClass="buttonCreateBackup" text="Sicherung erstellen">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Button>
                                     <ProgressIndicator fx:id="pgic_backupProgress" prefHeight="22.0" prefWidth="22.0" visible="false" />
                                     <Label fx:id="lb_percentage" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" />
                            </children>
@@ -139,7 +147,10 @@
                         <Pane HBox.hgrow="ALWAYS" />
                         <HBox spacing="5.0" HBox.hgrow="NEVER">
                            <children>
-                                    <Button id="smallBtnLettering" fx:id="bt_readBackup" minWidth="170.0" mnemonicParsing="false" onAction="#readBackup" styleClass="buttonImportBackup" text="Sicherung importieren" />
+                                    <Button id="smallBtnLettering" fx:id="bt_readBackup" minWidth="170.0" mnemonicParsing="false" onAction="#readBackup" styleClass="buttonImportBackup" text="Sicherung importieren">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Button>
                                     <ProgressIndicator fx:id="pgic_backupProgressRE" prefHeight="22.0" prefWidth="22.0" visible="false" />
                                     <Label fx:id="lb_percentageRE" prefHeight="17.0" prefWidth="42.0" text="0%" visible="false" />
                            </children>
@@ -156,6 +167,12 @@
                     </children>
                 </AnchorPane>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </VBox>
    </center>
 </BorderPane>
