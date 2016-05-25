@@ -27,41 +27,57 @@ public class FirstRunController {
     public VBox vb_mainContent;
 
     public void init(ActionEvent actionEvent) {
-        bt_start.setText("Beenden");
-        bt_start.setOnAction((event -> {
-            Platform.exit();
-        }));
-        pi_indicator.setVisible(true);
-        Label info = new Label("Einstellungen werden zurückgesetzt");
-        info.setStyle("-fx-font-weight: bold");
-        vb_mainContent.getChildren().add(info);
-        SettingsController.setProperty("remindBackupWeeks","3");
-        SettingsController.setProperty("remindBackup","false");
-        SettingsController.setProperty("lastBackup","01-01-2016");
-        SettingsController.setProperty("backupPath","");
-        SettingsController.setProperty("pdfPath","");
-        SettingsController.setProperty("firstrun","false");
-        info.setText("Datenbank wird initialisiert");
+        Thread t = new Thread(new Runnable() {
+            Label info = null;
 
-        //TEST DATA (temporarily)
-        insertTestData();
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    bt_start.setText("Beenden");
+                    bt_start.setOnAction((t -> {
+                        SettingsController.setProperty("firstrun", "true");
+                        Platform.exit();
+                    }));
+                    pi_indicator.setVisible(true);
+                    info = new Label("Einstellungen werden zurückgesetzt");
+                    info.setStyle("-fx-font-weight: bold");
+                    vb_mainContent.getChildren().add(info);
+                });
 
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
-            Scene scene = new Scene(root);
+                SettingsController.resetProperties();
+                SettingsController.setProperty("firstrun", "true");
 
-            scene.getStylesheets().add("/styles/main.css");
+                Platform.runLater(() -> {
+                    info.setText("Datenbank wird initialisiert");
+                });
 
-            MainApp.getStage().setTitle("OnTopCalc");
-            MainApp.getStage().getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
-            MainApp.getStage().setScene(scene);
-            MainApp.getStage().setResizable(true);
-            MainApp.getStage().centerOnScreen();
-            MainApp.getStage().show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                //TEST DATA (temporarily)
+                insertTestData();
+
+                Platform.runLater(() -> {
+                    Parent root = null;
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
+                        Scene scene = new Scene(root);
+
+                        scene.getStylesheets().add("/styles/main.css");
+
+                        MainApp.getStage().setTitle("OnTopCalc");
+                        MainApp.getStage().getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
+                        MainApp.getStage().setScene(scene);
+                        MainApp.getStage().setResizable(true);
+                        MainApp.getStage().centerOnScreen();
+                        MainApp.getStage().show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+
     }
 
     /**

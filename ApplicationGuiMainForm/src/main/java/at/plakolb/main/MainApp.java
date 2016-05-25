@@ -11,14 +11,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import sun.applet.Main;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 
 public class MainApp extends Application {
 
     private static Stage rootStage;
-    private static MainApp singelton;
 
     public static Stage getStage() {
         return rootStage;
@@ -30,18 +32,6 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        singelton = this;
-        startApplication(stage);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public void startApplication(Stage stage) throws Exception {
         rootStage = stage;
 
         Parent root = null;
@@ -67,7 +57,29 @@ public class MainApp extends Application {
         stage.centerOnScreen();
         stage.show();
     }
-    public static MainApp getInstance(){
-        return singelton;
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    public static void restart() {
+        StringBuilder cmd = new StringBuilder();
+        cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
+        for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
+            cmd.append(jvmArg + " ");
+        }
+        cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
+        cmd.append(Window.class.getName()).append(" ");
+
+        try {
+            Runtime.getRuntime().exec(cmd.toString());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
 }

@@ -90,4 +90,13 @@ public class SettingsController {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         setProperty(property, sdf.format(date));
     }
+
+    public static void resetProperties(){
+        SettingsController.setProperty("remindBackupWeeks", "3");
+        SettingsController.setProperty("remindBackup", "false");
+        SettingsController.setProperty("lastBackup", "01-01-2016");
+        SettingsController.setProperty("backupPath", "");
+        SettingsController.setProperty("pdfPath", "");
+        SettingsController.setProperty("firstrun", "true");
+    }
 }
