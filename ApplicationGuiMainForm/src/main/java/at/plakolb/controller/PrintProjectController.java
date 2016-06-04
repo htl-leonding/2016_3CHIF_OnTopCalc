@@ -35,6 +35,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,6 +50,11 @@ public class PrintProjectController implements Initializable {
 
     private static PrintProjectController instance;
     private static Stage stage;
+    public VBox selectedViews;
+    public VBox selectedViewsContainer;
+    public Button bt_toggleSelectedViews;
+    public VBox printButtons;
+    public VBox container;
 
     @FXML
     private ComboBox<Project> cb_projects;
@@ -105,6 +111,8 @@ public class PrintProjectController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        selectedViewsContainer.getChildren().remove(selectedViews);
+
         cb_projects.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
         if (cb_projects.getItems().isEmpty()) {
             cb_projects.setPromptText("Es sind keine Projekte zum Drucken vorhanden.");
@@ -355,5 +363,21 @@ public class PrintProjectController implements Initializable {
     @FXML
     private void showLastPDF(ActionEvent event) {
         showPDF(lastPath, true);
+    }
+
+    public void toggleSelectedViews(ActionEvent actionEvent) {
+        if(selectedViewsContainer.getChildren().contains(selectedViews)){
+            selectedViewsContainer.getChildren().remove(selectedViews);
+            bt_toggleSelectedViews.setTooltip(new Tooltip("Anzeigen"));
+            bt_toggleSelectedViews.getStyleClass().remove("viewsEye2");
+            bt_toggleSelectedViews.getStyleClass().add("viewsEye");
+            container.getChildren().add(printButtons);
+        }else {
+            selectedViewsContainer.getChildren().add(selectedViews);
+            bt_toggleSelectedViews.setTooltip(new Tooltip("Verbergen"));
+            bt_toggleSelectedViews.getStyleClass().add("viewsEye2");
+            bt_toggleSelectedViews.getStyleClass().remove("viewsEye");
+            container.getChildren().remove(printButtons);
+        }
     }
 }

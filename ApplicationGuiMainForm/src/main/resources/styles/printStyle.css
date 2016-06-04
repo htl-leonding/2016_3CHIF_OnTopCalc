@@ -42,3 +42,15 @@
     -fx-background-color:#3c84ff;
     -fx-text-fill: whitesmoke;
 }
+.viewsEye{
+    -fx-graphic:  url("../images/eye.png");
+}
+.viewsEye2{
+    -fx-graphic:  url("../images/eye2.png");
+}
+.viewsEye:hover{
+    -fx-graphic:  url("../images/eyeh.png");
+}
+.viewsEye2:hover{
+    -fx-graphic:  url("../images/eyeh2.png");
+}

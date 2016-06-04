@@ -27,7 +27,7 @@
                   <String fx:value="transparentLabel" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Alle aktuellen Projekte verwalten"/>
+                  <Tooltip text="Alle aktuellen Projekte verwalten" />
                </tooltip>
             </Label>
             <Label id="newProject" fx:id="lb_newProject" layoutX="10.0" layoutY="87.0" onMouseClicked="#createNewProject" prefWidth="900.0" text="Neues Projekt" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="87.0">
@@ -42,7 +42,7 @@
                   <String fx:value="transparentLabel" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Ein neues Projekt erstellen"/>
+                  <Tooltip text="Ein neues Projekt erstellen" />
                </tooltip>
             </Label>
             <Label id="printProject" layoutX="10.0" layoutY="137.0" onMouseClicked="#printProject" prefWidth="900.0" text="Projekte drucken" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="137.0">
@@ -57,7 +57,7 @@
                   <String fx:value="transparentLabel" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Ein Projekt drucken"/>
+                  <Tooltip text="Ein Projekt drucken" />
                </tooltip>
             </Label>
             <Label id="productList" fx:id="lb_produktList" layoutX="10.0" layoutY="187.0" onMouseClicked="#showProductList" prefWidth="900.0" text="Produktliste" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="187.0">
@@ -72,7 +72,7 @@
                   <String fx:value="transparentLabel" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Alle Produkte anzeigen und bearbeiten"/>
+                  <Tooltip text="Alle Produkte anzeigen und bearbeiten" />
                </tooltip>
             </Label>
             <Label id="parameter" fx:id="lb_parameter" layoutX="10.0" layoutY="237.0" onMouseClicked="#showParameter" prefWidth="900.0" text="Parameter" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="237.0">
@@ -87,7 +87,7 @@
                   <String fx:value="transparentLabel" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Parameter anpassen"/>
+                  <Tooltip text="Parameter anpassen" />
                </tooltip>
             </Label>
             <Label id="clients" fx:id="lb_clients" layoutX="10.0" layoutY="287.0" onMouseClicked="#showClients" prefWidth="900.0" text="Auftraggeber" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="287.0">
@@ -102,10 +102,10 @@
                   <String fx:value="transparentLabel" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Auftraggeber bearbeiten"/>
+                  <Tooltip text="Auftraggeber bearbeiten" />
                </tooltip>
             </Label>
-            <Label id="options" fx:id="lb_options" layoutX="10.0" layoutY="337.0" onMouseClicked="#showOptions" prefWidth="900.0" text="Optionen" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="337.0">
+            <Label id="statistic" fx:id="lb_statistic" layoutX="10.0" layoutY="337.0" onMouseClicked="#showStatistik" prefWidth="900.0" text="Statistik" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="337.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
@@ -117,14 +117,26 @@
                   <String fx:value="transparentLabel" />
                </styleClass>
                <tooltip>
-                  <Tooltip text="Papierkorb und allgemeine Einstellungen"/>
+                  <Tooltip text="Statistiken" />
+               </tooltip>
+            </Label>
+            <Label id="options" fx:id="lb_options" onMouseClicked="#showOptions" prefWidth="900.0" text="Optionen">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <styleClass>
+                  <String fx:value="menulabel" />
+                  <String fx:value="transparentLabel" />
+               </styleClass>
+               <tooltip>
+                  <Tooltip text="Papierkorb und allgemeine Einstellungen" />
                </tooltip>
             </Label>
          </children>
       </VBox>
-      <Label id="menu" alignment="CENTER" layoutX="14.0" layoutY="459.0" onMouseClicked="#showMainForm" prefHeight="35.0" prefWidth="120.0" text="Menü" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" >
+      <Label id="menu" alignment="CENTER" layoutX="14.0" layoutY="459.0" onMouseClicked="#showMainForm" prefHeight="35.0" prefWidth="120.0" text="Menü" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
          <tooltip>
-            <Tooltip text="Zum Hauptbildschirm zurückkehren"/>
+            <Tooltip text="Zum Hauptbildschirm zurückkehren" />
          </tooltip>
       </Label>
    </children>

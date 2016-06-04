@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -13,9 +19,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="777.0" prefWidth="573.0" stylesheets="@../styles/printStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
-    <left>
-      <VBox prefHeight="755.0" prefWidth="573.0" spacing="5.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" stylesheets="@../styles/printStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
+    <top>
+        <Label alignment="CENTER" text="Projekt drucken" textFill="#3c84ff" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="Berlin Sans FB" size="36.0" />
+            </font>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+        </Label>
+    </top>
+   <center>
+      <VBox fx:id="container" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="CENTER" spacing="10.0">
                <children>
@@ -38,14 +54,26 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="410.0" prefWidth="523.0">
+            <VBox fx:id="selectedViewsContainer" prefHeight="410.0" prefWidth="523.0">
                <children>
-                      <Label id="boldLettering" layoutY="80.0" text="Gewählte Ansichten werden gedruckt" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
-                          <font>
-                              <Font name="System Bold" size="18.0" />
-                          </font>
-                      </Label>
-                      <VBox layoutY="107.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                  <HBox spacing="10.0">
+                     <children>
+                            <Label id="boldLettering" layoutY="80.0" text="Gewählte Ansichten werden gedruckt" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+                                <font>
+                                    <Font name="System Bold" size="18.0" />
+                                </font>
+                            </Label>
+                        <Button fx:id="bt_toggleSelectedViews" alignment="CENTER" mnemonicParsing="false" onAction="#toggleSelectedViews" style="-fx-background-color: transparent;" styleClass="viewsEye">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                      <VBox fx:id="selectedViews" layoutY="107.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                           <children>
                               <CheckBox id="chbLettering" fx:id="cb_mainInformations" alignment="CENTER" mnemonicParsing="false" selected="true" text="Allgemeine Informationen">
                                   <padding>
@@ -179,54 +207,48 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </VBox>
-            <HBox alignment="CENTER" spacing="5.0" stylesheets="@../styles/printStyle.css">
+            <VBox fx:id="printButtons">
                <children>
-                      <Button id="createpdf" fx:id="bt_createPDF" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="137.0" layoutY="522.0" mnemonicParsing="false" onAction="#createPDF" prefHeight="76.0" prefWidth="45.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0">
-                          <font>
+                  <HBox alignment="CENTER" spacing="5.0" stylesheets="@../styles/printStyle.css">
+                     <children>
+                            <Button id="createpdf" fx:id="bt_createPDF" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="137.0" layoutY="522.0" mnemonicParsing="false" onAction="#createPDF" prefHeight="76.0" prefWidth="45.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0">
+                                <font>
+                                    <Font size="18.0" />
+                                </font>
+                            </Button>
+                        <Button id="print" fx:id="bt_createPDFAndPrint" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="294.0" layoutY="522.0" mnemonicParsing="false" onAction="#print" prefHeight="78.0" prefWidth="16.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="25.0">
+                           <font>
                               <Font size="18.0" />
-                          </font>
-                      </Button>
-                  <Button id="print" fx:id="bt_createPDFAndPrint" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="294.0" layoutY="522.0" mnemonicParsing="false" onAction="#print" prefHeight="78.0" prefWidth="16.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="25.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <AnchorPane>
+                     <children>
+                        <Button id="showPDF" fx:id="bt_showLastPDF" disable="true" layoutX="284.0" mnemonicParsing="false" onAction="#showLastPDF" styleClass="printButton" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </Button>
+                        <CheckBox fx:id="cb_openAfterCreation" layoutY="15.0" mnemonicParsing="false" text="PDF nach dem Erstellen öffnen" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="160.0">
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </CheckBox>
+                     </children>
+                  </AnchorPane>
                </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </HBox>
-            <AnchorPane>
-               <children>
-                  <Button id="showPDF" fx:id="bt_showLastPDF" disable="true" layoutX="284.0" mnemonicParsing="false" onAction="#showLastPDF" styleClass="printButton" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
-                  </Button>
-                  <CheckBox fx:id="cb_openAfterCreation" layoutY="15.0" mnemonicParsing="false" text="PDF nach dem Erstellen öffnen" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="160.0">
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
-                  </CheckBox>
-               </children>
-            </AnchorPane>
+            </VBox>
          </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </VBox>
-    </left>
-    <top>
-        <Label alignment="CENTER" text="Projekt drucken" textFill="#3c84ff" BorderPane.alignment="CENTER">
-            <font>
-                <Font name="Berlin Sans FB" size="36.0" />
-            </font>
-            <padding>
-                <Insets top="10.0" />
-            </padding>
-        </Label>
-    </top>
+   </center>
 </BorderPane>

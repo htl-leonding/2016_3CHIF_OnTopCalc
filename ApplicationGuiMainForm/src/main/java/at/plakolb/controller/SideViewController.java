@@ -5,6 +5,8 @@ import at.plakolb.calculationlogic.util.Logging;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +29,9 @@ public class SideViewController implements Initializable {
 
     private static SideViewController controller;
     private static int selectedPage = -1;
+
+    @FXML
+    public Label lb_statistic;
     @FXML
     private Label lb_showProjects;
     @FXML
@@ -113,6 +118,12 @@ public class SideViewController implements Initializable {
         selectedPage = -1;
         MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
     }
+
+    @FXML
+    public void showStatistik(Event event) {
+        selectedPage = 7;
+        MainFormController.getInstance().loadFxmlIntoPane("Statistics.fxml");
+    }
     
     public void selectCurrentPage(){
         switch (selectedPage) {
@@ -130,6 +141,9 @@ public class SideViewController implements Initializable {
                 break;
             case 6:
                 lb_options.getStyleClass().add("currentPage");
+                break;
+            case 7:
+                lb_statistic.getStyleClass().add("currentPage");
                 break;
             default:
                 break;
