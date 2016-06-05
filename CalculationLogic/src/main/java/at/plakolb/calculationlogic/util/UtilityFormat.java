@@ -229,8 +229,8 @@ public class UtilityFormat {
      * @return
      */
     public static String getDate(LocalDateTime dateTime) {
-        return dateTime.getDayOfMonth() + "."
-                + dateTime.getMonth().getDisplayName(TextStyle.SHORT, Locale.GERMAN) + "."
+        return dateTime.getDayOfMonth() + ". "
+                + dateTime.getMonth().getDisplayName(TextStyle.FULL, Locale.GERMAN) + " "
                 + dateTime.getYear();
     }
 

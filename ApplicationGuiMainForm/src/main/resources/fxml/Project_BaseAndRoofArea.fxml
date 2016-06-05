@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_BaseAndRoofAreaController">
+<AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_BaseAndRoofAreaController">
    <children>
       <VBox alignment="CENTER" layoutY="66.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -251,7 +251,7 @@
                <children>
                   <AnchorPane prefWidth="1000.0">
                      <children>
-                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <VBox minWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <HBox>
                                  <children>

@@ -8,6 +8,7 @@ import at.plakolb.calculationlogic.util.Print;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.settings.SettingsController;
 import com.itextpdf.text.DocumentException;
+
 import java.awt.Desktop;
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -39,6 +41,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import javax.print.PrintServiceLookup;
 
 /**
@@ -98,7 +101,7 @@ public class PrintProjectController implements Initializable {
     private Button bt_showLastPDF;
     @FXML
     private CheckBox cb_Area;
-    
+
     private java.io.File path;
     private String lastPath;
 
@@ -137,7 +140,7 @@ public class PrintProjectController implements Initializable {
 
         refreshPrintAbility();
     }
-    
+
     public static PrintProjectController getInstance() {
         return instance;
     }
@@ -145,7 +148,7 @@ public class PrintProjectController implements Initializable {
     public static Stage getStage() {
         return stage;
     }
-    
+
     public void SetProject(Project project) {
         for (Project p : cb_projects.getItems()) {
             if (p.getId().equals(project.getId())) {
@@ -173,10 +176,15 @@ public class PrintProjectController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             File p = dc.showDialog(stage);
+
             if (p != null) {
                 path = p;
             }
-            UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
+
+            if (path != null) {
+                UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
+            }
+
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, null, ex);
         } finally {
@@ -366,18 +374,18 @@ public class PrintProjectController implements Initializable {
     }
 
     public void toggleSelectedViews(ActionEvent actionEvent) {
-        if(selectedViewsContainer.getChildren().contains(selectedViews)){
+        if (selectedViewsContainer.getChildren().contains(selectedViews)) {
             selectedViewsContainer.getChildren().remove(selectedViews);
             bt_toggleSelectedViews.setTooltip(new Tooltip("Anzeigen"));
             bt_toggleSelectedViews.getStyleClass().remove("viewsEye2");
             bt_toggleSelectedViews.getStyleClass().add("viewsEye");
-            container.getChildren().add(printButtons);
-        }else {
+            ((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
+        } else {
             selectedViewsContainer.getChildren().add(selectedViews);
             bt_toggleSelectedViews.setTooltip(new Tooltip("Verbergen"));
             bt_toggleSelectedViews.getStyleClass().add("viewsEye2");
             bt_toggleSelectedViews.getStyleClass().remove("viewsEye");
-            container.getChildren().remove(printButtons);
+            ((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
         }
     }
 }

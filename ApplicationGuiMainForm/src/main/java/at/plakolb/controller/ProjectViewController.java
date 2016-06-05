@@ -7,12 +7,14 @@ import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.entity.Client;
 import at.plakolb.calculationlogic.db.entity.Project;
+
 import java.net.URL;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -408,8 +410,6 @@ public class ProjectViewController extends Observable implements Initializable, 
                     if (event.getCode() == KeyCode.S) {
                         saveProject(null);
                     }
-                } else if (event.getCode() == KeyCode.ESCAPE) {
-                    dismiss(null);
                 } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
                     selectNextTab(null);
                 } else if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) {
