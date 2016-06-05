@@ -31,8 +31,6 @@ public class SideViewController implements Initializable {
     private static int selectedPage = -1;
 
     @FXML
-    public Label lb_statistic;
-    @FXML
     private Label lb_showProjects;
     @FXML
     private Label lb_newProject;
@@ -119,12 +117,6 @@ public class SideViewController implements Initializable {
         MainFormController.getInstance().loadFxmlIntoPane("MainForm.fxml");
     }
 
-    @FXML
-    public void showStatistik(Event event) {
-        selectedPage = 7;
-        MainFormController.getInstance().loadFxmlIntoPane("Statistics.fxml");
-    }
-    
     public void selectCurrentPage(){
         switch (selectedPage) {
             case 1:
@@ -141,9 +133,6 @@ public class SideViewController implements Initializable {
                 break;
             case 6:
                 lb_options.getStyleClass().add("currentPage");
-                break;
-            case 7:
-                lb_statistic.getStyleClass().add("currentPage");
                 break;
             default:
                 break;

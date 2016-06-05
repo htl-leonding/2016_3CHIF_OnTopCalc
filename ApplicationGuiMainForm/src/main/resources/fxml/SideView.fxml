@@ -105,21 +105,6 @@
                   <Tooltip text="Auftraggeber bearbeiten" />
                </tooltip>
             </Label>
-            <Label id="statistic" fx:id="lb_statistic" layoutX="10.0" layoutY="337.0" onMouseClicked="#showStatistik" prefWidth="900.0" text="Statistik" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="337.0">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </VBox.margin>
-               <styleClass>
-                  <String fx:value="menulabel" />
-                  <String fx:value="transparentLabel" />
-               </styleClass>
-               <tooltip>
-                  <Tooltip text="Statistiken" />
-               </tooltip>
-            </Label>
             <Label id="options" fx:id="lb_options" onMouseClicked="#showOptions" prefWidth="900.0" text="Optionen">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
