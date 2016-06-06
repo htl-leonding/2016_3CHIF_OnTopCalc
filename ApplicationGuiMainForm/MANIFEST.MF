@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: kepplinger
+Build-Jdk: 1.8.0_91
+Main-Class: at.plakolb.main.MainApp
+Class-Path: dependency-jars/CalculationLogic-1.0-SNAPSHOT.jar dependen
+ cy-jars/derby-10.12.1.1.jar dependency-jars/derbyclient-10.12.1.1.jar
+  dependency-jars/javax.persistence-2.1.1.jar dependency-jars/eclipsel
+ ink-2.6.3.jar dependency-jars/commonj.sdo-2.1.1.jar dependency-jars/v
+ alidation-api-1.1.0.Final.jar dependency-jars/javax.json-1.0.4.jar de
+ pendency-jars/itextpdf-5.5.9.jar dependency-jars/pdfbox-2.0.1.jar dep
+ endency-jars/fontbox-2.0.1.jar dependency-jars/commons-logging-1.2.jar
+
