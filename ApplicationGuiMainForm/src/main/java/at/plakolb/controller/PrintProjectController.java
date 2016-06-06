@@ -5,6 +5,7 @@ import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.util.Print;
+import at.plakolb.calculationlogic.util.PrintInformationException;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.settings.SettingsController;
 import com.itextpdf.text.DocumentException;
@@ -253,8 +254,13 @@ public class PrintProjectController implements Initializable {
                     Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
                 }
             }
-        } catch (DocumentException | FileNotFoundException ex) {
+        } catch (DocumentException | FileNotFoundException | PrintInformationException ex) {
             Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
+            new Alert(Alert.AlertType.ERROR,ex.getLocalizedMessage(),ButtonType.OK).showAndWait();
+        }
+        catch (Exception ex){
+            Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
+            new Alert(Alert.AlertType.ERROR,ex.getLocalizedMessage(),ButtonType.OK).showAndWait();
         }
     }
 

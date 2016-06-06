@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -48,6 +49,7 @@ public class Component implements Serializable {
     @OneToOne
     private Unit unit;
     @OneToOne
+    @NotNull
     private Product product;
     @ManyToOne
     private Project project;
@@ -245,7 +247,8 @@ public class Component implements Serializable {
                 name += heightComponent + "/";
             }
         }
-        return name.substring(0, name.length() - 1);
+
+        return name.substring(0, name.length() - 1); //TODO Was ist wenn Produkt = null?
     }
 
     @Override

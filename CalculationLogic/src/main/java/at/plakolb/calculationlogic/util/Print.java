@@ -15,6 +15,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
@@ -34,11 +35,11 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Chromaticity;
 import javax.print.attribute.standard.JobName;
 import javax.print.attribute.standard.MediaSizeName;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPrintable;
 
 /**
- *
  * @author Andreas
  */
 public class Print {
@@ -51,7 +52,7 @@ public class Print {
     private final String path;
     private final Project project;
     private final String city;
-    
+
     private String absolutePath;
     private Document document;
 
@@ -64,13 +65,13 @@ public class Print {
     }
 
     /**
-     * Creates a PDF file of a project. 
-     * 
+     * Creates a PDF file of a project.
+     *
      * @return
      * @throws DocumentException
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
      */
-    public String createPDF() throws DocumentException, FileNotFoundException {
+    public String createPDF() throws DocumentException, FileNotFoundException, PrintInformationException {
         String fileName = project.getProjectName().replace(" ", "_") + "_" + UtilityFormat.getDateTime(LocalDateTime.now()) + ".pdf";
         File file = new File(path + "/" + fileName);
         absolutePath = file.getAbsolutePath();
@@ -174,16 +175,20 @@ public class Print {
         }
     }
 
-    private static void addClient(Document document, Client client) throws DocumentException {
+    private static void addClient(Document document, Client client) throws DocumentException, PrintInformationException {
         Paragraph paragraph = new Paragraph();
 
         addEmptyLine(paragraph, 1);
-        paragraph.add(new Paragraph(client.getName(), NORMALFONT));
-        paragraph.add(new Paragraph(client.getStreet(), NORMALFONT));
-        paragraph.add(new Paragraph(client.getZipCode() + " " + client.getCity(), NORMALFONT));
-        paragraph.setAlignment(Element.ALIGN_LEFT);
-        addEmptyLine(paragraph, 2);
-        document.add(paragraph);
+        if (client.getName() != null && client.getStreet() != null && client.getZipCode() != null && client.getCity() != null) {
+            paragraph.add(new Paragraph(client.getName(), NORMALFONT));
+            paragraph.add(new Paragraph(client.getStreet(), NORMALFONT));
+            paragraph.add(new Paragraph(client.getZipCode() + " " + client.getCity(), NORMALFONT));
+            paragraph.setAlignment(Element.ALIGN_LEFT);
+            addEmptyLine(paragraph, 2);
+            document.add(paragraph);
+        } else
+            throw new PrintInformationException("Auftraggeber hat keinen Namen");
+
     }
 
     private static void addCity(Document document, String city) throws DocumentException {
@@ -196,13 +201,16 @@ public class Print {
         document.add(paragraph);
     }
 
-    private static void addTitle(Document document, Project project) throws DocumentException {
+    private static void addTitle(Document document, Project project) throws DocumentException, PrintInformationException {
         Paragraph paragraph = new Paragraph();
 
         addEmptyLine(paragraph, 1);
+        if(project.getProjectName()!=null){
         paragraph.add(new Paragraph(project.getProjectName(), HEADFONT));
         paragraph.setAlignment(Element.ALIGN_CENTER);
-        document.add(paragraph);
+        document.add(paragraph);}else{
+            throw new PrintInformationException("Kein Projektname vorhanden");
+        }
     }
 
     private void addConstruction(Document document, Project project) throws DocumentException {
@@ -314,7 +322,7 @@ public class Print {
 
                 table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(
                         component.getWidthComponent() / 100 * component.getHeightComponent() / 100
-                        * component.getLengthComponent() * component.getNumberOfProducts() * component.getPriceComponent(), "€"), NORMALFONT));
+                                * component.getLengthComponent() * component.getNumberOfProducts() * component.getPriceComponent(), "€"), NORMALFONT));
 
                 table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours(), "h"), NORMALFONT));
 
@@ -366,7 +374,7 @@ public class Print {
                 "Produkt", category.getId());
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT)); //TODO IndexOutOFRange bei substring! name ist null!!??
         } else {
             paragraph.add(new Paragraph("Schalung", SUBFONT));
         }
