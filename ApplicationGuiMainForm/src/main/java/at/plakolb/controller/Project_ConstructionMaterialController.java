@@ -252,10 +252,6 @@ public class Project_ConstructionMaterialController implements Initializable {
             componentList.add(Assembling_BattensOrFullFormworkController.getInstance().getComponent());
         }
 
-//      würde keinen Sinn machen TODO      
-//        if (Project_ColourController.getInstance().getComponent().getProduct() != null) {
-//            componentList.add(Project_ColourController.getInstance().getComponent());
-//        }
         cb_Component.setItems(FXCollections.observableArrayList(componentList));
 
         if (cb_Component.getItems().isEmpty()) {

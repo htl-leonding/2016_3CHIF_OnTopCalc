@@ -183,7 +183,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                 if (alert.getResult() == ButtonType.CANCEL) {
                     return false;
                 }
-            } else {
+            } else if (!informations.getClientName().isEmpty()) {
                 client = findClient(informations);
             }
 

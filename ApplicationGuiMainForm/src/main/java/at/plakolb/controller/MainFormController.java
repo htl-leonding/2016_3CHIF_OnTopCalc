@@ -7,6 +7,8 @@ import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.settings.SettingsController;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -74,10 +76,10 @@ public class MainFormController implements Initializable {
 
         mb_openProjects.getItems().addAll(items);
 
-        if (SettingsController.getBooleanProperty("remindBackup") == true && SettingsController.getDateProperty("lastBackup").getTime()
-                + Integer.valueOf(SettingsController.getProperty("remindBackupWeeks")) * 604800000 <= new Date().getTime()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            hl_lastBackup.setText("Die letzte Sicherung wurde am " + sdf.format(SettingsController.getDateProperty("lastBackup")) + " erstellt. Erstellen Sie jetzt eine Sicherung!");
+        LocalDate lastBackup = SettingsController.getDateProperty("lastBackup");
+
+        if (SettingsController.getBooleanProperty("remindBackup") == true && lastBackup.plusWeeks(Long.parseLong(SettingsController.getProperty("remindBackupWeeks"))).isBefore(LocalDate.now())) {
+            hl_lastBackup.setText("Die letzte Sicherung wurde am " + lastBackup.getDayOfMonth() + "." + lastBackup.getMonthValue() + "." + lastBackup.getYear() + " erstellt. Erstellen Sie jetzt eine Sicherung!");
             hl_lastBackup.setOnAction((event) -> {
                 loadFxmlIntoPane("Options.fxml");
                 OptionsController.getInstance().createBackup();
@@ -102,7 +104,7 @@ public class MainFormController implements Initializable {
     public void loadFxmlIntoPane(String fxmlURL) {
         try {
             mainPane.getChildren().clear();
-            mainPane.getChildren().add((Node) FXMLLoader.load(getClass().getResource("/fxml/" + fxmlURL)));
+            mainPane.getChildren().add(FXMLLoader.load(getClass().getResource("/fxml/" + fxmlURL)));
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Couldn't load fxml file into pane.", ex);
         }

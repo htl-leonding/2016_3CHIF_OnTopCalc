@@ -4,6 +4,7 @@ package at.plakolb.main;
 import at.plakolb.calculationlogic.db.controller.*;
 import at.plakolb.calculationlogic.db.entity.*;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.settings.SettingsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import sun.applet.Main;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.logging.Level;
 
 public class MainApp extends Application {
 
@@ -76,9 +78,8 @@ public class MainApp extends Application {
 
         try {
             Runtime.getRuntime().exec(cmd.toString());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logging.getLogger().log(Level.SEVERE, "Application couldn't be restarted.", ex);
         }
         System.exit(0);
     }

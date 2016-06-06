@@ -129,7 +129,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         });
         tc_Length.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
         tc_Length.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
-            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Component component = event.getTableView().getItems().get(event.getTablePosition().getRow());
             if (!event.getNewValue().equals("")) {
                 component.setLengthComponent(Double.parseDouble(event.getNewValue()));
             } else {

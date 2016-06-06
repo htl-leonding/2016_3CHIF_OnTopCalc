@@ -14,12 +14,14 @@ import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -272,7 +274,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         ParameterController parameterController = new ParameterController();
         Project project = ProjectViewController.getOpenedProject();
 
-        if (project != null) {
+        if (project != null && cb_product != null) {
 
             workCosts = (worthController.findWorthByShortTermAndProjectId("KPLV", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("KPLV", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KPLV"));
@@ -325,9 +327,11 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             int index = cb_roofType.getSelectionModel().getSelectedIndex();
             //Produktkosten
             //Alte Formel-ID: KProdLV
-            productCosts.setWorth(price * (index == 0 ? Assembling_TiledRoofController.getInstance().getLength().getWorth()
-                    : Assembling_SheetRoofController.getInstance().getFormwork().getWorth()));
-            lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+            if (Assembling_SheetRoofController.getInstance() != null) {
+                productCosts.setWorth(price * (index == 0 ? Assembling_TiledRoofController.getInstance().getLength().getWorth()
+                        : Assembling_SheetRoofController.getInstance().getFormwork().getWorth()));
+                lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
+            }
 
             //Montagekosten
             //Alte Formel-ID: KMLV
@@ -347,27 +351,29 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
 
         Product product = cb_product.getSelectionModel().getSelectedItem();
 
-        if (product != null) {
-            component.setDescription(product.getName());
-            component.setLengthComponent(product.getLengthProduct());
-            component.setWidthComponent(product.getWidthProduct());
-            component.setHeightComponent(product.getHeightProduct());
-            component.setProduct(product);
-            component.setUnit(product.getUnit());
-        } else {
-            component.setDescription(title.getText());
-            component.setLengthComponent(null);
-            component.setWidthComponent(null);
-            component.setHeightComponent(null);
-            component.setProduct(null);
-            component.setUnit(null);
-        }
-        component.setPriceComponent(price);
+        if (Assembling_SheetRoofController.getInstance() != null) {
+            if (product != null) {
+                component.setDescription(product.getName());
+                component.setLengthComponent(product.getLengthProduct());
+                component.setWidthComponent(product.getWidthProduct());
+                component.setHeightComponent(product.getHeightProduct());
+                component.setProduct(product);
+                component.setUnit(product.getUnit());
+            } else {
+                component.setDescription(title.getText());
+                component.setLengthComponent(null);
+                component.setWidthComponent(null);
+                component.setHeightComponent(null);
+                component.setProduct(null);
+                component.setUnit(null);
+            }
+            component.setPriceComponent(price);
 
-        if (cb_roofType.getSelectionModel().getSelectedIndex() == 0) {
-            component.setNumberOfProducts(Assembling_TiledRoofController.getInstance().getLength().getWorth());
-        } else {
-            component.setNumberOfProducts(Assembling_SheetRoofController.getInstance().getFormwork().getWorth());
+            if (cb_roofType.getSelectionModel().getSelectedIndex() == 0) {
+                component.setNumberOfProducts(Assembling_TiledRoofController.getInstance().getLength().getWorth());
+            } else {
+                component.setNumberOfProducts(Assembling_SheetRoofController.getInstance().getFormwork().getWorth());
+            }
         }
     }
 

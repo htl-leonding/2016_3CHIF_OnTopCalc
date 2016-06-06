@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Properties;
 
@@ -81,9 +83,9 @@ public class SettingsController {
         return getProperty(property).equals("true");
     }
 
-    public static Date getDateProperty(String property) {
-        String[] dateTXT = getProperty("lastBackup").split("-");
-        return new Date(Integer.valueOf(dateTXT[2])-1900, Integer.valueOf(dateTXT[1]), Integer.valueOf(dateTXT[0]));
+    public static LocalDate getDateProperty(String property) {
+        String[] dateTXT = getProperty(property).split("-");
+        return LocalDate.of(Integer.valueOf(dateTXT[2]), Integer.valueOf(dateTXT[1]), Integer.valueOf(dateTXT[0]));
     }
 
     public static void setDateProperty(String property, Date date) {
