@@ -290,6 +290,7 @@ public class ProductListController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Produkt erstellen");
             stage.setScene(scene);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
             stage.setResizable(false);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());

@@ -45,7 +45,7 @@ public class FirstRunController {
                 });
 
                 SettingsController.resetProperties();
-                SettingsController.setProperty("firstrun", "true");
+                SettingsController.setProperty("firstrun", "false");
 
                 Platform.runLater(() -> {
                     info.setText("Datenbank wird initialisiert");

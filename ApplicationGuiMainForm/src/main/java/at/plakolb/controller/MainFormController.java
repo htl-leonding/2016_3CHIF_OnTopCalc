@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -114,6 +115,7 @@ public class MainFormController implements Initializable {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle("Projekt drucken");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
@@ -193,6 +195,7 @@ public class MainFormController implements Initializable {
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
                 stage.setTitle("OnTopCalc - Hilfe");
+                stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
                 stage.setScene(scene);
                 stage.initModality(Modality.WINDOW_MODAL);
                 stage.initOwner(((Node) event.getSource()).getScene().getWindow());

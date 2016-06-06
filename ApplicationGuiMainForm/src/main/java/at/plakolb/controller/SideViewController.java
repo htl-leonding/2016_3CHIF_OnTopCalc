@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -66,6 +67,7 @@ public class SideViewController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Projekt drucken");
             stage.setScene(scene);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();

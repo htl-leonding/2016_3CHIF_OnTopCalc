@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -237,6 +238,7 @@ public class Project_InformationsController implements Initializable, Observer {
             Stage stage = new Stage();
             stage.setTitle("Auftraggeber");
             stage.setScene(scene);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();

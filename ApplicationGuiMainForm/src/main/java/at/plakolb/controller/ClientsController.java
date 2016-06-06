@@ -116,6 +116,7 @@ public class ClientsController implements Initializable {
                                     Stage stage = new Stage();
                                     stage.setTitle("Auftraggeber editieren");
                                     stage.setScene(scene);
+                                    stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
                                     stage.initModality(Modality.WINDOW_MODAL);
                                     stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                                     stage.show();
@@ -160,6 +161,7 @@ public class ClientsController implements Initializable {
                         Stage stage = new Stage();
                         stage.setTitle("Auftraggeber editieren");
                         stage.setScene(scene);
+                        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
                         stage.initModality(Modality.WINDOW_MODAL);
                         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
                         stage.show();
