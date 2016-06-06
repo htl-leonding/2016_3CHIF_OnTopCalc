@@ -36,6 +36,9 @@
 #clients{
     -fx-graphic: url("../images/client2.png");
 }
+#statistic{
+    -fx-graphic: url("../images/statistic2.png");
+}
 #options{
     -fx-graphic: url("../images/option2.png");
 }

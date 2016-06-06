@@ -8,6 +8,7 @@ import at.plakolb.calculationlogic.util.Print;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.settings.SettingsController;
 import com.itextpdf.text.DocumentException;
+
 import java.awt.Desktop;
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -35,9 +37,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import javax.print.PrintServiceLookup;
 
 /**
@@ -49,6 +53,11 @@ public class PrintProjectController implements Initializable {
 
     private static PrintProjectController instance;
     private static Stage stage;
+    public VBox selectedViews;
+    public VBox selectedViewsContainer;
+    public Button bt_toggleSelectedViews;
+    public VBox printButtons;
+    public VBox container;
 
     @FXML
     private ComboBox<Project> cb_projects;
@@ -92,7 +101,7 @@ public class PrintProjectController implements Initializable {
     private Button bt_showLastPDF;
     @FXML
     private CheckBox cb_Area;
-    
+
     private java.io.File path;
     private String lastPath;
 
@@ -105,6 +114,8 @@ public class PrintProjectController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
+        selectedViewsContainer.getChildren().remove(selectedViews);
+
         cb_projects.setItems(FXCollections.observableArrayList(new ProjectController().findProjectsByDeletion(false)));
         if (cb_projects.getItems().isEmpty()) {
             cb_projects.setPromptText("Es sind keine Projekte zum Drucken vorhanden.");
@@ -129,7 +140,7 @@ public class PrintProjectController implements Initializable {
 
         refreshPrintAbility();
     }
-    
+
     public static PrintProjectController getInstance() {
         return instance;
     }
@@ -137,7 +148,7 @@ public class PrintProjectController implements Initializable {
     public static Stage getStage() {
         return stage;
     }
-    
+
     public void SetProject(Project project) {
         for (Project p : cb_projects.getItems()) {
             if (p.getId().equals(project.getId())) {
@@ -165,10 +176,15 @@ public class PrintProjectController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             File p = dc.showDialog(stage);
+
             if (p != null) {
                 path = p;
             }
-            UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
+
+            if (path != null) {
+                UtilityFormat.setCutTextForTextField(tf_path, path.getAbsolutePath());
+            }
+
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, null, ex);
         } finally {
@@ -355,5 +371,21 @@ public class PrintProjectController implements Initializable {
     @FXML
     private void showLastPDF(ActionEvent event) {
         showPDF(lastPath, true);
+    }
+
+    public void toggleSelectedViews(ActionEvent actionEvent) {
+        if (selectedViewsContainer.getChildren().contains(selectedViews)) {
+            selectedViewsContainer.getChildren().remove(selectedViews);
+            bt_toggleSelectedViews.setTooltip(new Tooltip("Anzeigen"));
+            bt_toggleSelectedViews.getStyleClass().remove("viewsEye2");
+            bt_toggleSelectedViews.getStyleClass().add("viewsEye");
+            ((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
+        } else {
+            selectedViewsContainer.getChildren().add(selectedViews);
+            bt_toggleSelectedViews.setTooltip(new Tooltip("Verbergen"));
+            bt_toggleSelectedViews.getStyleClass().add("viewsEye2");
+            bt_toggleSelectedViews.getStyleClass().remove("viewsEye");
+            ((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
+        }
     }
 }

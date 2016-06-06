@@ -494,7 +494,7 @@ public class OptionsController implements Initializable, Observer {
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
             SettingsController.setProperty("firstrun", "true");
-            MainApp.getInstance().startApplication(MainApp.getStage());
+            MainApp.restart();
         }
     }
 }

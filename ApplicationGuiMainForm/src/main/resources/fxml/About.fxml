@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="470.0" prefHeight="480.0" prefWidth="470.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="470.0" prefHeight="480.0" prefWidth="470.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.AboutController">
     <content>
         <VBox>
             <children>
@@ -41,7 +41,7 @@
                               <Font name="Berlin Sans FB" size="16.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" prefWidth="1000.0" text="Version: 2.0.0">
+                        <Label fx:id="lb_version" alignment="CENTER" prefWidth="1000.0" text="Version: ">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
