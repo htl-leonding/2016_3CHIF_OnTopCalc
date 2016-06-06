@@ -79,7 +79,7 @@ public class ProjectViewController extends Observable implements Initializable, 
 
         if (projectOpened) {
             Project_InformationsController.getInstance().openProject(openedProject);
-            bt_Dismiss.setText("Menü");
+            bt_Dismiss.setText("Abbrechen");
             bt_Save.setText("Speichern");
         } else {
             openedProject = new Project();
@@ -167,7 +167,7 @@ public class ProjectViewController extends Observable implements Initializable, 
      * @param event
      */
     @FXML
-    private boolean saveProject(ActionEvent event) {
+    public boolean saveProject(ActionEvent event) {
         Project_InformationsController informations = Project_InformationsController.getInstance();
         Client client = null;
 
