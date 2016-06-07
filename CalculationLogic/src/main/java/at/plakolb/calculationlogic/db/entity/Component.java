@@ -246,9 +246,9 @@ public class Component implements Serializable {
             if (heightComponent != null) {
                 name += heightComponent + "/";
             }
+            return name.substring(0, name.length() - 1);
         }
-
-        return name.substring(0, name.length() - 1); //TODO Was ist wenn Produkt = null?
+        return "";
     }
 
     @Override

@@ -205,10 +205,11 @@ public class Print {
         Paragraph paragraph = new Paragraph();
 
         addEmptyLine(paragraph, 1);
-        if(project.getProjectName()!=null){
-        paragraph.add(new Paragraph(project.getProjectName(), HEADFONT));
-        paragraph.setAlignment(Element.ALIGN_CENTER);
-        document.add(paragraph);}else{
+        if (project.getProjectName() != null) {
+            paragraph.add(new Paragraph(project.getProjectName(), HEADFONT));
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            document.add(paragraph);
+        } else {
             throw new PrintInformationException("Kein Projektname vorhanden");
         }
     }
@@ -374,7 +375,7 @@ public class Print {
                 "Produkt", category.getId());
 
         if (component != null) {
-            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT)); //TODO IndexOutOFRange bei substring! name ist null!!??
+            paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph("Schalung", SUBFONT));
         }
@@ -997,7 +998,7 @@ public class Print {
         ComponentController componentJpaController = new ComponentController();
         Component color = componentJpaController.findColorByProjectId(project.getId());
 
-        if (color != null) {
+        if (color != null && color.getProduct() != null) {
             paragraph.add(new Paragraph("Farbe: "
                     + color.getProduct().getName(), NORMALFONT));
         }
@@ -1162,7 +1163,8 @@ public class Print {
 
         for (Component component : listComponents) {
             table.addCell(new Phrase(component.getDescription(), tableNormalFont));
-            table.addCell(new Phrase(component.getProduct().getName(), tableNormalFont));
+            if (component.getProduct() != null)
+                table.addCell(new Phrase(component.getProduct().getName(), tableNormalFont));
             table.addCell(new Phrase(component.getCategory() == null ? "" : component.getCategory().getLongAndShortTerm(), tableNormalFont));
             table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getWidthComponent() == null ? 0 : component.getWidthComponent()), tableNormalFont));
             table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getHeightComponent() == null ? 0 : component.getHeightComponent()), tableNormalFont));
