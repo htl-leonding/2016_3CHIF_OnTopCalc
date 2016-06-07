@@ -2,16 +2,20 @@
 package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.util.ComboBoxPrintService;
+
 import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+
+import at.plakolb.settings.SettingsController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 
@@ -29,6 +33,8 @@ public class PrinterSelectionController implements Initializable {
     @FXML
     private ComboBox<String> cb_copieCount;
 
+    private boolean cancled;
+
     /**
      * Initializes the controller class.
      *
@@ -44,7 +50,7 @@ public class PrinterSelectionController implements Initializable {
             cb_choosPrinter.getItems().add(new ComboBoxPrintService(printService));
         });
 
-        cb_copieCount.setValue("1");
+        cb_copieCount.setValue(SettingsController.getProperty("printCopies"));
         cb_copieCount.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5"));
     }
 
@@ -55,15 +61,18 @@ public class PrinterSelectionController implements Initializable {
 
     @FXML
     private void submit(ActionEvent event) {
-        if (PrinterSelected) {
+        if (PrinterSelected && CopiesSelected) {
             PrintProjectController.getStage().hide();
-        } else {
+        } else if (!PrinterSelected) {
             new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie einen Drucker aus!").showAndWait();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie die Anzahl der Kopien aus!").showAndWait();
         }
     }
 
     @FXML
     private void cancel(ActionEvent event) {
+        cancled = true;
         PrintProjectController.getStage().hide();
     }
 
@@ -71,11 +80,11 @@ public class PrinterSelectionController implements Initializable {
     private void cntChanged(ActionEvent event) {
         try {
             Integer.parseInt(cb_copieCount.getValue());
-        } catch (NumberFormatException e) {
+            CopiesSelected = true;
+        } catch (NumberFormatException ex) {
+            CopiesSelected = false;
             new Alert(Alert.AlertType.ERROR, "Bitte Übergeben Sie einen numerischen Wert!").showAndWait();
-
         }
-        CopiesSelected = true;
     }
 
     public PrintService getPrintService() {
@@ -84,5 +93,9 @@ public class PrinterSelectionController implements Initializable {
 
     public String getCopyAmount() {
         return cb_copieCount.getValue();
+    }
+
+    public boolean isCancled() {
+        return cancled;
     }
 }

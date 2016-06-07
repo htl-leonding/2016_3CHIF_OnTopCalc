@@ -245,9 +245,11 @@ public class PrintProjectController implements Initializable {
                         stage.setResizable(false);
                         stage.showAndWait();
                         PrinterSelectionController controller = (PrinterSelectionController) fxmlLoader.getController();
-                        if (controller.getPrintService() != null) {
-                            print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
-                            new Alert(Alert.AlertType.INFORMATION, "Druckauftrag erfolgreich gesendet!", ButtonType.OK).showAndWait();
+                        if (!controller.isCancled()) {
+                            if (controller.getPrintService() != null) {
+                                print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
+                                new Alert(Alert.AlertType.INFORMATION, "Druckauftrag erfolgreich gesendet!", ButtonType.OK).showAndWait();
+                            }
                         }
                     }
                 } catch (IOException | PrinterException ex) {
@@ -256,11 +258,10 @@ public class PrintProjectController implements Initializable {
             }
         } catch (DocumentException | FileNotFoundException | PrintInformationException ex) {
             Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
-            new Alert(Alert.AlertType.ERROR,ex.getLocalizedMessage(),ButtonType.OK).showAndWait();
-        }
-        catch (Exception ex){
+            new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
+        } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
-            new Alert(Alert.AlertType.ERROR,ex.getLocalizedMessage(),ButtonType.OK).showAndWait();
+            new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
         }
     }
 
@@ -385,13 +386,13 @@ public class PrintProjectController implements Initializable {
             bt_toggleSelectedViews.setTooltip(new Tooltip("Anzeigen"));
             bt_toggleSelectedViews.getStyleClass().remove("viewsEye2");
             bt_toggleSelectedViews.getStyleClass().add("viewsEye");
-            ((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
+            ((Node) actionEvent.getSource()).getScene().getWindow().sizeToScene();
         } else {
             selectedViewsContainer.getChildren().add(selectedViews);
             bt_toggleSelectedViews.setTooltip(new Tooltip("Verbergen"));
             bt_toggleSelectedViews.getStyleClass().add("viewsEye2");
             bt_toggleSelectedViews.getStyleClass().remove("viewsEye");
-            ((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
+            ((Node) actionEvent.getSource()).getScene().getWindow().sizeToScene();
         }
     }
 }

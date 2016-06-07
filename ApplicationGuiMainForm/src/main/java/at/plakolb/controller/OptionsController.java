@@ -30,10 +30,7 @@ import javafx.util.Callback;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -85,6 +82,8 @@ public class OptionsController implements Initializable, Observer {
     private ProgressIndicator pgic_backupProgressRE;
     @FXML
     private Button bt_readBackup;
+    @FXML
+    public ComboBox<String> cb_defaultCopies;
 
     private int backup = 0; //-1 Backup erstellen | 1 Backup wiederherstellen
 
@@ -325,6 +324,9 @@ public class OptionsController implements Initializable, Observer {
                 UtilityFormat.setCutTextForTextField(tf_defaultPDFDirectory, tf_defaultPDFDirectory.getTooltip().getText());
             }
         });
+
+
+        cb_defaultCopies.setValue(SettingsController.getProperty("printCopies"));
     }
 
     public void updateData() {
@@ -495,6 +497,17 @@ public class OptionsController implements Initializable, Observer {
         if (alert.getResult().equals(ButtonType.YES)) {
             SettingsController.setProperty("firstrun", "true");
             MainApp.restart();
+        }
+    }
+
+    public void setDefaultPrintCopies(ActionEvent actionEvent) {
+        try{
+            Integer.parseInt(cb_defaultCopies.getValue());
+            SettingsController.setProperty("printCopies",cb_defaultCopies.getValue());
+        }
+        catch (NumberFormatException ex){
+            cb_defaultCopies.setValue(SettingsController.getProperty("printCopies"));
+            new Alert(Alert.AlertType.ERROR,"Bitte geben Sie einen numerischen Wert ein.").showAndWait();
         }
     }
 }
