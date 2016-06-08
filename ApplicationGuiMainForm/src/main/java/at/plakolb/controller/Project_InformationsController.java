@@ -24,6 +24,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -60,6 +61,8 @@ public class Project_InformationsController implements Initializable, Observer {
     public ListView<String> lv_RoofForm;
     @FXML
     public Label lb_Id;
+    @FXML
+    public ImageView iv_calcualtionType;
     @FXML
     private Label lb_typeOfCalculation;
     @FXML
@@ -200,6 +203,12 @@ public class Project_InformationsController implements Initializable, Observer {
     public void openProject(Project project) {
         lb_Id.setText(String.valueOf(project.getId()));
         lb_typeOfCalculation.setText(project.getModeOfCalculation());
+        if(project.getModeOfCalculation().equals("Vorkalkulation")){
+            iv_calcualtionType.setImage(new Image("/images/forward.png"));
+        }
+        else {
+            iv_calcualtionType.setImage(new Image("/images/backward.png"));
+        }
         tf_ProjectName.setText(project.getProjectName());
         tf_Description.setText(project.getDescription());
         tf_InvoiceNumber.setText(project.getInvoiceNumber());

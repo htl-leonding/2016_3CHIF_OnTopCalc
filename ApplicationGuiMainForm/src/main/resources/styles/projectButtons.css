@@ -50,3 +50,18 @@
 	/* linear-gradient(#ffffff  0%, lightgrey  20%, lightgrey 80%, lightgrey 100%)*/
 	-fx-background-color:linear-gradient(lightgrey  0%, derive(lightgrey,60%) 5%,derive(lightgrey,65%) 7%);
 }
+
+.ownListView .list-cell:filled:selected:focused,
+.ownListView .list-cell:filled:selected {
+    -fx-background-color: derive(#0A65BF,30%);
+    -fx-text-fill: white;
+}
+
+.ownListView .list-cell:even { /* <=== changed to even */
+    -fx-background-color: white;
+}
+
+.ownListView .list-cell:filled:hover {
+    -fx-background-color: derive(#0A65BF,60%);
+    -fx-text-fill: white;
+}

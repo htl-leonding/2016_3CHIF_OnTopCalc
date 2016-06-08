@@ -16,11 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" onKeyPressed="#helpWindow" prefHeight="675.0" prefWidth="1110.0" style="-fx-background-color: darkgrey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.MainFormController">
+<AnchorPane fx:id="mainPane" minHeight="600.0" minWidth="790.0" onKeyPressed="#helpWindow" prefHeight="675.0" prefWidth="1110.0" style="-fx-background-color: darkgrey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.MainFormController">
    <children>
       <AnchorPane id="middlePane" layoutX="75.0" layoutY="75.0" stylesheets="@../styles/main.css" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="75.0">
          <children>
-            <Label alignment="CENTER" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" text="Zimmerei Franz Plakolb" textAlignment="CENTER" textFill="#3c84ff" textOverrun="CLIP" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label alignment="CENTER" layoutY="36.0" minHeight="-Infinity" minWidth="-Infinity" text="OnTopCalc" textAlignment="CENTER" textFill="#3c84ff" textOverrun="CLIP" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="Berlin Sans FB" size="48.0" />
                </font>

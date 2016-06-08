@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
@@ -62,11 +69,20 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label id="normalLettering" fx:id="lb_typeOfCalculation" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" minHeight="27.0" prefHeight="27.0" text="Vorkalkulation" VBox.vgrow="ALWAYS">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
+                                    <HBox alignment="CENTER" spacing="5.0">
+                                       <children>
+                                          <Label id="normalLettering" fx:id="lb_typeOfCalculation" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" minHeight="27.0" prefHeight="27.0" text="Vorkalkulation" VBox.vgrow="ALWAYS">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView fx:id="iv_calcualtionType" fitHeight="150.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/forward.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
                                     <TextField fx:id="tf_ProjectName" minHeight="25.0" promptText="Projektname">
                                        <VBox.margin>
                                           <Insets top="2.0" />
@@ -132,10 +148,17 @@
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
-                                          <Button id="smallBtnLettering" fx:id="bt_NewClient" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="25.0" mnemonicParsing="false" onAction="#newClient" text="Neuer Auftraggeber">
+                                          <Button id="smallBtnLettering" fx:id="bt_NewClient" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="25.0" mnemonicParsing="false" onAction="#newClient" prefHeight="30.0" text="Neuer Auftraggeber">
                                              <VBox.margin>
                                                 <Insets top="5.0" />
                                              </VBox.margin>
+                                             <graphic>
+                                                <ImageView>
+                                                   <image>
+                                                      <Image url="@../images/addTab.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
                                           </Button>
                                        </children>
                                     </VBox>
@@ -151,6 +174,13 @@
                                              <VBox.margin>
                                                 <Insets top="5.0" />
                                              </VBox.margin>
+                                             <graphic>
+                                                <ImageView>
+                                                   <image>
+                                                      <Image url="@../images/search.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
                                           </Button>
                                        </children>
                                     </VBox>
@@ -174,12 +204,12 @@
                      <children>
                         <Label id="normalLettering" alignment="CENTER" layoutX="14.0" layoutY="14.0" text="Konstruktion festlegen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <GridPane layoutX="14.0" layoutY="43.0" prefHeight="121.0" prefWidth="392.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
                            <children>
-                              <ListView fx:id="lv_ConstructionType" prefHeight="103.0" prefWidth="204.0" GridPane.rowIndex="1">
+                              <ListView fx:id="lv_ConstructionType" prefHeight="103.0" prefWidth="204.0" styleClass="ownListView" GridPane.rowIndex="1">
                                  <items>
                                     <FXCollections fx:factory="observableArrayList">
                                        <String fx:value="Carport" />
@@ -190,7 +220,7 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </GridPane.margin>
                               </ListView>
-                              <ListView fx:id="lv_RoofForm" prefHeight="103.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <ListView fx:id="lv_RoofForm" prefHeight="103.0" prefWidth="204.0" styleClass="ownListView" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <items>
                                     <FXCollections fx:factory="observableArrayList">
                                        <String fx:value="Pultdach" />
