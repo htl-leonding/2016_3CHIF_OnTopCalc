@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
@@ -339,6 +340,7 @@ public class OptionsController implements Initializable, Observer {
         if (SettingsController.getProperty("backupPath").isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keine Sicherungs Speicherort angegeben. Die Sicherung wird in " + System.getProperty("user.home")
                     + " gespeichert. Möchten Sie fortfahren.", ButtonType.CANCEL, ButtonType.OK);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
 
             if (alert.getResult().equals(ButtonType.CANCEL)) {
@@ -364,6 +366,7 @@ public class OptionsController implements Initializable, Observer {
                         alert.setTitle("Die Sicherung wurde erfolgreich erstellt!");
                         alert.setHeaderText("Sicherung erstellt");
                         alert.setContentText("Die Sicherung wurde erfolgreich erstellt!");
+                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                         alert.showAndWait();
                         SettingsController.setDateProperty("lastBackup", new Date());
 
@@ -372,6 +375,7 @@ public class OptionsController implements Initializable, Observer {
                         alert.setTitle("Es konnte keine Sicherung erstellt werden!");
                         alert.setHeaderText("Fehler");
                         alert.setContentText("Es konnte keine Sicherung erstellt werden!");
+                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                         alert.showAndWait();
                     }
                     pgic_backupProgress.setVisible(false);
@@ -501,13 +505,14 @@ public class OptionsController implements Initializable, Observer {
     }
 
     public void setDefaultPrintCopies(ActionEvent actionEvent) {
-        try{
+        try {
             Integer.parseInt(cb_defaultCopies.getValue());
-            SettingsController.setProperty("printCopies",cb_defaultCopies.getValue());
-        }
-        catch (NumberFormatException ex){
+            SettingsController.setProperty("printCopies", cb_defaultCopies.getValue());
+        } catch (NumberFormatException ex) {
             cb_defaultCopies.setValue(SettingsController.getProperty("printCopies"));
-            new Alert(Alert.AlertType.ERROR,"Bitte geben Sie einen numerischen Wert ein.").showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen numerischen Wert ein.");
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         }
     }
 }

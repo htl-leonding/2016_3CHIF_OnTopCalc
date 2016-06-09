@@ -196,6 +196,12 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        return projectName + (modeOfCalculation!=null&&!modeOfCalculation.isEmpty()?String.format(" (%s)",modeOfCalculation.charAt(0)):"");
+
+        if (getModeOfCalculation().equals("Vorkalkulation")){
+            return projectName + " (Vorkalk.)";
+        }
+        else {
+            return projectName + " (Nachkalk.)";
+        }
     }
 }

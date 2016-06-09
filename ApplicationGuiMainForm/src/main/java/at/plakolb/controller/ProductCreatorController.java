@@ -9,6 +9,7 @@ import at.plakolb.calculationlogic.db.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 
 import static at.plakolb.calculationlogic.util.UtilityFormat.removeUnnecessaryCommas;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,7 +23,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
@@ -69,22 +72,22 @@ public class ProductCreatorController implements Initializable {
             tf_ColorFactor.setText(tf_ColorFactor.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_ColorFactor.setText(removeUnnecessaryCommas(tf_ColorFactor.getText()));
         });
-        
+
         tf_Height.textProperty().addListener((observable, oldValue, newValue) -> {
             tf_Height.setText(tf_Height.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_Height.setText(removeUnnecessaryCommas(tf_Height.getText()));
         });
-        
+
         tf_Length.textProperty().addListener((observable, oldValue, newValue) -> {
             tf_Length.setText(tf_Length.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_Length.setText(removeUnnecessaryCommas(tf_Length.getText()));
         });
-        
+
         tf_Width.textProperty().addListener((observable, oldValue, newValue) -> {
             tf_Width.setText(tf_Width.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_Width.setText(removeUnnecessaryCommas(tf_Width.getText()));
         });
-        
+
         tf_PriceUnit.textProperty().addListener((observable, oldValue, newValue) -> {
             tf_PriceUnit.setText(tf_PriceUnit.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             tf_PriceUnit.setText(removeUnnecessaryCommas(tf_PriceUnit.getText()));
@@ -151,7 +154,9 @@ public class ProductCreatorController implements Initializable {
             ProductListController.getInstance().refreshTable();
             ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
         } else {
-            new Alert(AlertType.ERROR, errorMessage).showAndWait();
+            Alert alert = new Alert(AlertType.ERROR, errorMessage);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         }
     }
 

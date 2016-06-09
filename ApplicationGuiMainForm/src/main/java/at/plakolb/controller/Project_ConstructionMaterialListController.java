@@ -13,6 +13,7 @@ import at.plakolb.calculationlogic.db.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.edit.ComponentValueCell;
+
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -38,6 +40,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 /**
@@ -259,6 +262,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                 if (Project_ConstructionMaterialController.getInstance().getAssemblyCount() > 0) {
                                     alert = new Alert(Alert.AlertType.CONFIRMATION, "Wenn Sie dieses Material löschen, werden auch alle dazugehörigen Produkte gelöscht:\n" + getBelongings(tv_Materials.getSelectionModel().getSelectedItem()) + ".\nMöchten Sie troztdem fortfahren?",
                                             ButtonType.YES, ButtonType.CANCEL);
+                                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                                     alert.showAndWait();
                                     if (alert.getResult() == ButtonType.YES) {
                                         Project_ConstructionMaterialController.getInstance().deleteRelativeAssemblies(tv_Materials.getSelectionModel().getSelectedItem());
@@ -278,6 +282,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                 } else {
                                     alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten?",
                                             ButtonType.YES, ButtonType.CANCEL);
+                                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                                     alert.showAndWait();
 
                                     if (alert.getResult() == ButtonType.YES) {
@@ -348,7 +353,9 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         try {
             if (tf_Amount.getText().isEmpty() || Double.parseDouble(tf_Amount.getText()) <= 0) {
-                new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine gültige Zahl ein, die größer als 0 ist.").showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine gültige Zahl ein, die größer als 0 ist.");
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                alert.showAndWait();
             } else {
                 Component component = new Component(product.getFullName(),
                         product.getWidthProduct(),
@@ -373,7 +380,9 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                 ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
             }
         } catch (NumberFormatException ex) {
-            new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur Zahlen enthalten").showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Die Anzahl darf nur Zahlen enthalten");
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         }
 
         refreshTable();

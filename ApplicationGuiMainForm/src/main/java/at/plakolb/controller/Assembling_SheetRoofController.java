@@ -7,11 +7,13 @@ import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 
 /**
  * Over this view it's possible to calculate the sheet roof. It's contained by
@@ -114,7 +117,9 @@ public class Assembling_SheetRoofController extends Observable implements Initia
 
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
-                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK);
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                alert.showAndWait();
                 Logging.getLogger().log(Level.SEVERE, "Assembling_SheetRoofController: calculate method didn't work", ex);
             }
         }

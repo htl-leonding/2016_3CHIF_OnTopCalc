@@ -221,7 +221,7 @@
                               <Insets left="100.0" />
                            </HBox.margin>
                         </Button>
-                        <CheckBox fx:id="cb_openAfterCreation" alignment="CENTER" layoutY="15.0" mnemonicParsing="false" text="PDF nach dem Erstellen öffnen" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                        <CheckBox fx:id="cb_openAfterCreation" alignment="CENTER" layoutY="15.0" mnemonicParsing="false" selected="true" text="PDF nach dem Erstellen öffnen" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                            <HBox.margin>
                               <Insets left="100.0" />
                            </HBox.margin>

@@ -20,12 +20,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 
 /**
  * FXML Controller class
@@ -198,6 +196,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
                         alert.setTitle("Grund- und Dachflächenberechnung");
                         alert.setHeaderText("Wollen Sie diesen Reiter wirklich löschen?");
                         alert.getButtonTypes().clear();
+                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
                         alert.getButtonTypes().addAll(ButtonType.YES, ButtonType.NO);
 
                         Optional<ButtonType> result = alert.showAndWait();

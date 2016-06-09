@@ -6,13 +6,14 @@ import at.plakolb.calculationlogic.util.UtilityFormat;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 
 /**
- *
  * @author Kepplinger
  */
 public class ParameterCell extends TableCell<ParameterP, String> {
@@ -68,7 +69,7 @@ public class ParameterCell extends TableCell<ParameterP, String> {
             textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
             textField.setText(UtilityFormat.removeUnnecessaryCommas(textField.getText()));
         });
-        
+
         textField.setOnKeyReleased((KeyEvent t) -> {
             if (t.getCode() == KeyCode.ENTER) {
                 if (textField.getText().isEmpty()) {
@@ -80,7 +81,9 @@ public class ParameterCell extends TableCell<ParameterP, String> {
                     Double.parseDouble(textField.getText());
                 } catch (NumberFormatException e) {
                     cancelEdit();
-                    new Alert(Alert.AlertType.ERROR, "Die eingegbene Zahl ist nicht im richtigen Format.").showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Die eingegbene Zahl ist nicht im richtigen Format.");
+                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                    alert.showAndWait();
                     return;
                 }
                 commitEdit(textField.getText());

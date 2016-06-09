@@ -7,13 +7,14 @@ import at.plakolb.calculationlogic.util.UtilityFormat;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 
 /**
- *
  * @author Kepplinger
  */
 public class ProductValueCell extends TableCell<Product, String> {
@@ -89,14 +90,18 @@ public class ProductValueCell extends TableCell<Product, String> {
                         textField.setText(textField.getText().replace(",", "."));
                         double number = Double.parseDouble(textField.getText());
                         if (getTableColumn().getId().equals("tc_PriceUnit") && number < 0) {
-                            new Alert(Alert.AlertType.ERROR, "Der Preis darf nicht negativ sein.").showAndWait();
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis darf nicht negativ sein.");
+                            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                            alert.showAndWait();
                         }
                         if (!getTableColumn().getId().equals("tc_PriceUnit") && UtilityFormat.getStringForTableColumn(number).equals("0")) {
                             textField.setText("");
                         }
                     } catch (NumberFormatException ex) {
                         cancelEdit();
-                        new Alert(Alert.AlertType.ERROR, "Die eingegbene Zahl ist nicht im richtigen Format.").showAndWait();
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Die eingegbene Zahl ist nicht im richtigen Format.");
+                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                        alert.showAndWait();
                         return;
                     }
                 }

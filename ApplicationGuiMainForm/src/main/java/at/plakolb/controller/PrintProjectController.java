@@ -31,13 +31,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
@@ -62,6 +57,8 @@ public class PrintProjectController implements Initializable {
 
     @FXML
     private ComboBox<Project> cb_projects;
+    @FXML
+    private CheckBox cb_Area;
     @FXML
     private CheckBox cb_mainInformations;
     @FXML
@@ -100,8 +97,7 @@ public class PrintProjectController implements Initializable {
     private CheckBox cb_openAfterCreation;
     @FXML
     private Button bt_showLastPDF;
-    @FXML
-    private CheckBox cb_Area;
+
 
     private java.io.File path;
     private String lastPath;
@@ -114,6 +110,7 @@ public class PrintProjectController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         instance = this;
         selectedViewsContainer.getChildren().remove(selectedViews);
 
@@ -163,7 +160,11 @@ public class PrintProjectController implements Initializable {
 
     @FXML
     private void print(ActionEvent event) {
-        createPDF(true);
+        try {
+            createPDF(true);
+        } catch (FileNotFoundException ex) {
+            Logging.getLogger().log(Level.WARNING, "File not found Warning.", ex);
+        }
     }
 
     @FXML
@@ -205,10 +206,14 @@ public class PrintProjectController implements Initializable {
 
     @FXML
     private void createPDF(ActionEvent event) {
-        createPDF(false);
+        try {
+            createPDF(false);
+        } catch (FileNotFoundException ex) {
+            Logging.getLogger().log(Level.WARNING, "File not found Warning.", ex);
+        }
     }
 
-    public void createPDF(boolean p) {
+    public void createPDF(boolean p) throws FileNotFoundException {
         Print print = new Print(path.getAbsolutePath(), cb_projects.getSelectionModel().getSelectedItem(), tf_dateAndPosition.getText());
         try {
             List<Boolean> listPrint = new ArrayList<>();
@@ -228,12 +233,18 @@ public class PrintProjectController implements Initializable {
             listPrint.add(cb_costView.isSelected());
 
             print.setListPrint(listPrint);
-            showPDF(print.createPDF(), cb_openAfterCreation.isSelected());
+
+            if (cb_openAfterCreation.isSelected() && !p) {
+                showPDF(print.createPDF());
+            }
+
             bt_showLastPDF.setDisable(false);
             if (p) {
                 try {
                     if (PrintServiceLookup.lookupPrintServices(null, null).length < 1) {
-                        new Alert(Alert.AlertType.ERROR, "Bitte fügen Sie einen Drucker hinzu!").showAndWait();
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte fügen Sie einen Drucker hinzu!");
+                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                        alert.showAndWait();
                     } else {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PrinterSelection.fxml"));
                         Parent root1 = (Parent) fxmlLoader.load();
@@ -248,7 +259,9 @@ public class PrintProjectController implements Initializable {
                         if (!controller.isCancled()) {
                             if (controller.getPrintService() != null) {
                                 print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
-                                new Alert(Alert.AlertType.INFORMATION, "Druckauftrag erfolgreich gesendet!", ButtonType.OK).showAndWait();
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Druckauftrag erfolgreich gesendet!", ButtonType.OK);
+                                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                                alert.showAndWait();
                             }
                         }
                     }
@@ -258,23 +271,26 @@ public class PrintProjectController implements Initializable {
             }
         } catch (DocumentException | FileNotFoundException | PrintInformationException ex) {
             Logging.getLogger().log(Level.SEVERE, "PDF konnte nicht erstellt werden", ex);
-            new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
-            new Alert(Alert.AlertType.ERROR, "PDF konnte nicht erstellt werden", ButtonType.OK).showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "PDF konnte nicht erstellt werden", ButtonType.OK);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         }
     }
 
-    public void showPDF(String path, boolean allowed) {
+    public void showPDF(String path) {
         lastPath = path;
         try {
-            System.out.println(System.getProperty("os.name").toLowerCase());
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                if (Desktop.isDesktopSupported() && allowed) {
+                if (Desktop.isDesktopSupported()) {
                     Desktop.getDesktop().open(new File(path));
                 }
             } else {
-                executeOnOtherSystems(path, allowed);
+                executeOnOtherSystems(path);
             }
         } catch (IOException ex) {
             Logging.getLogger().log(Level.SEVERE, "ShowPDF method didn't work.", ex);
@@ -282,18 +298,18 @@ public class PrintProjectController implements Initializable {
 
     }
 
-    private boolean executeOnOtherSystems(String path, boolean isallowed) {
+    private boolean executeOnOtherSystems(String path) {
         if (!System.getProperty("os.name").toLowerCase().contains("mac")) {
-            if (runCommand("kde-open", "%s", path) && isallowed) {
+            if (runCommand("kde-open", "%s", path)) {
                 return true;
             }
-            if (runCommand("gnome-open", "%s", path) && isallowed) {
+            if (runCommand("gnome-open", "%s", path)) {
                 return true;
             }
-            if (runCommand("xdg-open", "%s", path) && isallowed) {
+            if (runCommand("xdg-open", "%s", path)) {
                 return true;
             }
-        } else if (runCommand("open", "%s", path) && isallowed) {
+        } else if (runCommand("open", "%s", path)) {
             return true;
         }
         return false;
@@ -377,7 +393,7 @@ public class PrintProjectController implements Initializable {
 
     @FXML
     private void showLastPDF(ActionEvent event) {
-        showPDF(lastPath, true);
+        showPDF(lastPath);
     }
 
     public void toggleSelectedViews(ActionEvent actionEvent) {

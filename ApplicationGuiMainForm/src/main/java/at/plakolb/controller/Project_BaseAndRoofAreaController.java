@@ -6,6 +6,7 @@ import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -14,12 +15,14 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 
 /**
  * FXML Controller class
@@ -218,8 +221,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     /**
      * Transforms the textfield String into a calculable number and saves it
      * into the worth Object. After that, all areas gets calclutated.
-     *
-     * @param event
      */
     private void calculate(TextField textField, Worth worth) {
         if (!isCalculating) {
@@ -231,7 +232,9 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 if (textField.equals(tf_Angle)) {
                     if (parseDouble(textField.getText()) >= 90) {
                         textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
-                        new Alert(Alert.AlertType.ERROR, "Der Winkel darf nicht größer wie 90° sein.").showAndWait();
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Der Winkel darf nicht größer wie 90° sein.");
+                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                        alert.showAndWait();
                     }
                 }
 
@@ -251,7 +254,9 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 Project_ResultAreaController.getInstance().calcArea();
 
             } catch (NumberFormatException e) {
-                new Alert(Alert.AlertType.ERROR, "Fehlerhafte Eingabe").showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Fehlerhafte Eingabe");
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                alert.showAndWait();
                 textField.setText("");
             } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, "Project_BaseAndRoofAreaController: calculate method didn't work.", ex);
@@ -318,7 +323,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 worthController.edit(ridge);
                 worthController.edit(gableRight);
                 worthController.edit(gableLeft);
-
             }
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Project_BaseAndRoofAreaController: persist method didn't work.", ex);

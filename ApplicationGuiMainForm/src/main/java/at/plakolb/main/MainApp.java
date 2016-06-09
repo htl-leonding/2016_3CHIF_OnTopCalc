@@ -36,7 +36,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         rootStage = stage;
 
-        Parent root = null;
+        Parent root;
 
         if(SettingsController.getBooleanProperty("firstrun")){
             root = FXMLLoader.load(getClass().getResource("/fxml/FirstRun.fxml"));

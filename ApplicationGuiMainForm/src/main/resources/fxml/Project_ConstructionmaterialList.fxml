@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" stylesheets="@../styles/columnbuttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialListController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialListController">
    <children>
       <VBox alignment="CENTER" layoutX="-14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -59,14 +60,13 @@
                      <children>
                         <GridPane alignment="CENTER" maxWidth="992.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                            <columnConstraints>
-                              <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="42.0" prefWidth="470.0" />
-                              <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="7.0" prefWidth="90.0" />
+                              <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="37.0" prefWidth="380.0" />
+                              <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="13.0" prefWidth="180.0" />
                               <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
                               <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
                               <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
                               <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="12.0" prefWidth="90.0" />
-                              <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" percentWidth="4.0" prefWidth="32.0" />
+                              <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="13.0" prefWidth="90.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
@@ -175,4 +175,8 @@
          </children>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@../styles/columnbuttons.css" />
+      <URL value="@../styles/tableViewFonts.css" />
+   </stylesheets>
 </AnchorPane>

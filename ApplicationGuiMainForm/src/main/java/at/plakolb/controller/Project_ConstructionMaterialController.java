@@ -35,6 +35,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 /**
@@ -169,6 +170,7 @@ public class Project_ConstructionMaterialController implements Initializable {
                             deletionLabel.setOnMouseClicked(event -> {
                                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten? Vorsicht, der Löschvorgang kann nicht mehr rückgängig gemacht werden.",
                                         ButtonType.YES, ButtonType.CANCEL);
+                                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
                                 alert.showAndWait();
                                 if (alert.getResult() == ButtonType.YES) {
                                     try {
@@ -303,7 +305,9 @@ public class Project_ConstructionMaterialController implements Initializable {
             ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
             refreshListView();
         } else {
-            new Alert(Alert.AlertType.ERROR, errorMessage).showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, errorMessage);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         }
     }
 

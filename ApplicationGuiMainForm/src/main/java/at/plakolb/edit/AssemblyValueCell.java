@@ -6,13 +6,14 @@ import at.plakolb.calculationlogic.util.UtilityFormat;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 
 /**
- *
  * @author Kepplinger
  */
 public class AssemblyValueCell extends TableCell<Assembly, String> {
@@ -81,7 +82,9 @@ public class AssemblyValueCell extends TableCell<Assembly, String> {
                     }
                 } catch (NumberFormatException ex) {
                     cancelEdit();
-                    new Alert(Alert.AlertType.ERROR, "Ungültige Eingabe!").showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Ungültige Eingabe!");
+                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                    alert.showAndWait();
                     return;
                 }
 

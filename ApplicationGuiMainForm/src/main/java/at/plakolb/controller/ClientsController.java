@@ -30,6 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -130,6 +131,7 @@ public class ClientsController implements Initializable {
                                 try {
                                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Auftraggeber wirklich endgültig löschen. Vorsicht, dieser Vorgang kann nicht mehr rückgängig gemacht werden.",
                                             ButtonType.YES, ButtonType.CANCEL);
+                                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
                                     alert.showAndWait();
                                     if (alert.getResult() == ButtonType.YES) {
                                         new ClientController().delete(tv_Clients.getSelectionModel().getSelectedItem().getId());

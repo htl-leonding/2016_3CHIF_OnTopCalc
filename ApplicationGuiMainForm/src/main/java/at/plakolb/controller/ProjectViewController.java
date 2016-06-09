@@ -20,12 +20,9 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Region;
 
 /**
  * FXML Controller class
@@ -172,13 +169,16 @@ public class ProjectViewController extends Observable implements Initializable, 
         Client client = null;
 
         if (informations.getProjectName().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Projektnamen ein.").showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Projektnamen ein.");
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
             return false;
         } else {
 
             if (informations.getClientName().isEmpty() && !projectOpened) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keinen Auftragsgebernamen eingegeben. Deshalb kann kein neuer Auftragsgeber erstellt werden. Möchten Sie fortfahren?",
                         ButtonType.YES, ButtonType.CANCEL);
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.CANCEL) {
                     return false;
@@ -245,6 +245,7 @@ public class ProjectViewController extends Observable implements Initializable, 
         if (ModifyController.getInstance().isModified()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher? Alle nichtgespeicherten Änderungen gehen verloren.",
                     ButtonType.YES, ButtonType.CANCEL);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                 ModifyController.getInstance().reset();
@@ -390,6 +391,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                     alert.getButtonTypes().add(new ButtonType("Speichern"));
                     alert.getButtonTypes().add(new ButtonType("Nicht Speichern"));
                     alert.getButtonTypes().add(ButtonType.CANCEL);
+                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                     alert.showAndWait();
                     switch (alert.getResult().getText()) {
                         case "Speichern":

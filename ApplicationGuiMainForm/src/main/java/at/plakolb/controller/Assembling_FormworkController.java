@@ -14,11 +14,13 @@ import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +29,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 
 /**
  * Over this view it's possible to calculate the formwork.
@@ -155,7 +158,9 @@ public class Assembling_FormworkController implements Initializable, Observer {
         if (tf_Price.getText().isEmpty()) {
             this.price = 0;
         } else if (Double.valueOf(tf_Price.getText()) < 0) {
-            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         } else {
             this.price = Double.valueOf(tf_Price.getText());
         }
@@ -286,7 +291,9 @@ public class Assembling_FormworkController implements Initializable, Observer {
 
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
-                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK);
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                alert.showAndWait();
                 Logging.getLogger().log(Level.SEVERE, "Assembling_FormworkController: calculate method didn't work.", ex);
             }
         }

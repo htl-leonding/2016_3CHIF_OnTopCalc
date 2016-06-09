@@ -36,6 +36,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
@@ -231,7 +232,9 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         if (tf_price.getText().isEmpty()) {
             this.price = 0;
         } else if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
-            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK).showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         } else {
             this.price = Double.valueOf(tf_price.getText());
         }
@@ -344,7 +347,9 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
-                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK);
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                alert.showAndWait();
                 Logging.getLogger().log(Level.SEVERE, "Assembling_BattensOrFullFormworkController: caluclate method didn't work.", ex);
             }
         }
@@ -400,6 +405,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             alert.getButtonTypes().clear();
             alert.getButtonTypes().add(ButtonType.YES);
             alert.getButtonTypes().add(ButtonType.NO);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
             if (cb_roofType.getSelectionModel().getSelectedIndex() == 0) {

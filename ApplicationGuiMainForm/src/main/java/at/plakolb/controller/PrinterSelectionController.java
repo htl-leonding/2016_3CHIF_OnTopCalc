@@ -15,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
@@ -64,9 +66,13 @@ public class PrinterSelectionController implements Initializable {
         if (PrinterSelected && CopiesSelected) {
             PrintProjectController.getStage().hide();
         } else if (!PrinterSelected) {
-            new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie einen Drucker aus!").showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie einen Drucker aus!");
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie die Anzahl der Kopien aus!").showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte wählen Sie die Anzahl der Kopien aus!");
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         }
     }
 
@@ -83,7 +89,9 @@ public class PrinterSelectionController implements Initializable {
             CopiesSelected = true;
         } catch (NumberFormatException ex) {
             CopiesSelected = false;
-            new Alert(Alert.AlertType.ERROR, "Bitte Übergeben Sie einen numerischen Wert!").showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte Übergeben Sie einen numerischen Wert!");
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         }
     }
 

@@ -14,11 +14,13 @@ import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -30,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 
 /**
  * Over this view it's possible to calculate the counter battens.
@@ -164,7 +167,9 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         if (tf_pricePerMeter.getText().isEmpty()) {
             this.pricePerMeter = 0;
         } else if (tf_pricePerMeter.getText().isEmpty() || Double.valueOf(tf_pricePerMeter.getText()) < 0) {
-            new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerMeter + "\"", ButtonType.OK).showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerMeter + "\"", ButtonType.OK);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
         } else {
             this.pricePerMeter = Double.valueOf(tf_pricePerMeter.getText());
         }
@@ -256,7 +261,9 @@ public class Assembling_CounterBattenController implements Observer, Initializab
             lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
-                new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK).showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK);
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                alert.showAndWait();
                 Logging.getLogger().log(Level.SEVERE, "Assembling_CounterBattenController: calculate method didn't work.", ex);
             }
         }

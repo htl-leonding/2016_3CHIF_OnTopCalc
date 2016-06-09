@@ -5,11 +5,13 @@ import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.db.entity.Client;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
@@ -78,24 +81,6 @@ public class ClientModifierController implements Initializable {
     }
 
     /**
-     * Deletes the opened client permanentley.
-     *
-     * @param event
-     * @throws NonexistentEntityException
-     */
-    @FXML
-    private void deleteClient(ActionEvent event) throws NonexistentEntityException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Auftraggeber wirklich endgültig löschen. Vorsicht, dieser Vorgang kann nicht mehr rückgängig gemacht werden.",
-                ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            new ClientController().delete(openedClient.getId());
-            ClientsController.getInstance().refreshTable();
-            ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
-        }
-    }
-
-    /**
      * Saves all the changes that were made.
      *
      * @param event
@@ -104,15 +89,19 @@ public class ClientModifierController implements Initializable {
     private void save(ActionEvent event) {
 
         if (tf_Name.getText().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Namen ein.").showAndWait();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Namen ein.");
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
+            return;
         } else if (!tf_Email.getText().isEmpty()) {
             String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
             Matcher matcher = Pattern.compile(regex).matcher(tf_Email.getText());
 
             if (!matcher.matches()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Die eingegeben E-Mail Adresse ist nicht korrekt.\nMöchten Sie trotzdem fortfahren.",
                         ButtonType.YES, ButtonType.CANCEL);
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.CANCEL) {
                     return;

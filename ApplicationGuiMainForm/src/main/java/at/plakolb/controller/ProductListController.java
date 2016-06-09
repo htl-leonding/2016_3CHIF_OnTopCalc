@@ -46,6 +46,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -241,6 +242,7 @@ public class ProductListController implements Initializable {
                                     if (isUsed) {
                                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Vorsicht! Das ausgewählte Produkt wird bereits bei verschiedenen Bauteilen verwendet. Wenn Sie es jetzt fortfahren werden diese Bauteile auch gelöscht.",
                                                 ButtonType.YES, ButtonType.CANCEL);
+                                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
                                         alert.showAndWait();
                                         if (alert.getResult() == ButtonType.YES) {
                                             products.remove(product);

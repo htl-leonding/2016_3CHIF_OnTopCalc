@@ -34,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -172,7 +173,9 @@ public class AllProjectsController implements Initializable {
                                         projectController.createCosting(project, projectId);
                                         updateData();
                                     } else {
-                                        new Alert(Alert.AlertType.ERROR, "Nachkalkulationen können nur von Vorkalkulationen erstellt werden.").showAndWait();
+                                        Alert alert = new Alert(Alert.AlertType.ERROR, "Nachkalkulationen können nur von Vorkalkulationen erstellt werden.");
+                                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
+                                        alert.showAndWait();
                                     }
                                 }
                             });
