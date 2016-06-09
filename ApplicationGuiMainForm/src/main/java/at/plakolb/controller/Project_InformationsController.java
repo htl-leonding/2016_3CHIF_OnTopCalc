@@ -120,6 +120,14 @@ public class Project_InformationsController implements Initializable, Observer {
         tf_ZipCode.textProperty().addListener((observable,oldValue, newValue)-> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
+
+        lv_ConstructionType.getSelectionModel().selectedItemProperty().addListener((event)->{
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+        lv_RoofForm.getSelectionModel().selectedItemProperty().addListener((event)->{
+            ModifyController.getInstance().setProject_information(Boolean.TRUE);
+        });
+
     }
 
     public static Project_InformationsController getInstance() {

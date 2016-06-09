@@ -57,7 +57,7 @@ public class MainFormController implements Initializable {
 
         //Adds the five most recent used projects.
         for (int i = 0; i < Math.min(5, projects.size()); i++) {
-            MenuItem menuItem = new MenuItem(projects.get(i).getProjectName());
+            MenuItem menuItem = new MenuItem(projects.get(i).toString());
             menuItem.setOnAction(eventHandler -> {
                 ProjectViewController.openProject(projectController.findLastFiveProjects().get(items.indexOf(menuItem)));
                 loadFxmlIntoPane("ProjectView.fxml");

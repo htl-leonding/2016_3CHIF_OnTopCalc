@@ -311,7 +311,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                 worthController.create(gableRight);
                 worthController.create(gableLeft);
             } else {
-
                 worthController.edit(length);
                 worthController.edit(width);
                 worthController.edit(angle);

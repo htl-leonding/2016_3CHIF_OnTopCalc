@@ -257,11 +257,11 @@ public class PrintProjectController implements Initializable {
                 }
             }
         } catch (DocumentException | FileNotFoundException | PrintInformationException ex) {
-            Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
+            Logging.getLogger().log(Level.SEVERE, "PDF konnte nicht erstellt werden", ex);
             new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "CreatePDF method didn't work.", ex);
-            new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK).showAndWait();
+            new Alert(Alert.AlertType.ERROR, "PDF konnte nicht erstellt werden", ButtonType.OK).showAndWait();
         }
     }
 
