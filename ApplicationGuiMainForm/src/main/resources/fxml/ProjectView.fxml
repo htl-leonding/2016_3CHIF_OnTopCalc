@@ -24,7 +24,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button id="btnLettering" fx:id="bt_Dismiss" alignment="CENTER" mnemonicParsing="false" onAction="#dismiss" prefWidth="160.0" text="Abbrechen">
+            <Button id="btnLettering" fx:id="bt_Dismiss" alignment="CENTER" minWidth="160.0" mnemonicParsing="false" onAction="#dismiss" text="Abbrechen">
                <font>
                   <Font size="18.0" />
                </font>
@@ -36,7 +36,7 @@
                   <String fx:value="mainButton" />
                </styleClass>
             </Button>
-            <Button id="btnLettering" fx:id="bt_Prev" disable="true" mnemonicParsing="false" onAction="#selectPreviousTab" text="Zurück" GridPane.columnIndex="1">
+            <Button id="btnLettering" fx:id="bt_Prev" disable="true" minWidth="120.0" mnemonicParsing="false" onAction="#selectPreviousTab" text="Zurück" GridPane.columnIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
@@ -48,7 +48,7 @@
                   <String fx:value="changePage" />
                </styleClass>
             </Button>
-            <Button id="btnLettering" fx:id="bt_Next" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#selectNextTab" text="Weiter" GridPane.columnIndex="2">
+            <Button id="btnLettering" fx:id="bt_Next" contentDisplay="RIGHT" minWidth="120.0" mnemonicParsing="false" onAction="#selectNextTab" text="Weiter" GridPane.columnIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
@@ -60,7 +60,7 @@
                   <String fx:value="changePage" />
                </styleClass>
             </Button>
-            <Button id="btnLettering" fx:id="bt_Save" alignment="CENTER" mnemonicParsing="false" onAction="#saveProject" prefWidth="160.0" text="Erstellen" GridPane.columnIndex="3">
+            <Button id="btnLettering" fx:id="bt_Save" alignment="CENTER" minWidth="160.0" mnemonicParsing="false" onAction="#saveProject" text="Erstellen" GridPane.columnIndex="3">
                <font>
                   <Font size="18.0" />
                </font>

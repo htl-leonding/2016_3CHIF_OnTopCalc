@@ -1,0 +1,7 @@
+.table-view .column-header{
+    -fx-font-size: 13px;
+}
+
+.table-cell {
+    -fx-font-size: 11px;
+}

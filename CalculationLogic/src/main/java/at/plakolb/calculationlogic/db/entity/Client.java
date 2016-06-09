@@ -27,7 +27,6 @@ import javax.persistence.Temporal;
     @NamedQuery(name = "Client.findAll",
             query = "select c from Client c")
 })
-@Table(name = "CLIENT")
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;

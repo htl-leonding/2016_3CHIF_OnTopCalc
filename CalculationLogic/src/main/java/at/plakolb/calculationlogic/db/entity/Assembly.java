@@ -2,6 +2,7 @@
 package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
+
 import java.io.Serializable;
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -18,13 +19,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
- *
  * @author Kepplinger
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Assembly.findAll",
-            query = "select a from Assembly a")
+        @NamedQuery(name = "Assembly.findAll",
+                query = "select a from Assembly a")
 })
 public class Assembly implements Serializable {
 

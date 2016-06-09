@@ -211,7 +211,7 @@ public class Project_InformationsController implements Initializable, Observer {
     public void openProject(Project project) {
         lb_Id.setText(String.valueOf(project.getId()));
         lb_typeOfCalculation.setText(project.getModeOfCalculation());
-        if(project.getModeOfCalculation().equals("Vorkalkulation")){
+        if(project.getModeOfCalculation().equals("Vorkalkulation") ){
             iv_calcualtionType.setImage(new Image("/images/forward.png"));
         }
         else {

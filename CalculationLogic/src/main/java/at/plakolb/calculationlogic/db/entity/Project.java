@@ -28,7 +28,6 @@ import javax.persistence.Temporal;
     @NamedQuery(name = "Project.findAll",
             query = "select p from Project p")
 })
-@Table(name = "PROJECT")
 public class Project implements Serializable {
 
     @Id
@@ -165,6 +164,9 @@ public class Project implements Serializable {
     }
 
     public String getModeOfCalculation() {
+        if (modeOfCalculation == null){
+            modeOfCalculation = "Vorkalkulation";
+        }
         return modeOfCalculation;
     }
 
