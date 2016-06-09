@@ -194,6 +194,6 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        return projectName;
+        return projectName + (modeOfCalculation!=null&&!modeOfCalculation.isEmpty()?String.format(" (%s)",modeOfCalculation.charAt(0)):"");
     }
 }

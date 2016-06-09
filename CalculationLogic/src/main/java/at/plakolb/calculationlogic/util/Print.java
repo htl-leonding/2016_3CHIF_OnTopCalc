@@ -387,7 +387,7 @@ public class Print {
                     + roofArea.worthFormatWithUnit(), NORMALFONT));
         }
 
-        if (component != null) {
+        if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
                     + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
@@ -465,7 +465,7 @@ public class Print {
                     + roofArea.worthFormatWithUnit(), NORMALFONT));
         }
 
-        if (component != null) {
+        if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
                     + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
@@ -530,7 +530,7 @@ public class Print {
         Component component = componentJpaController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                 "Produkt", category.getId());
 
-        if (component != null) {
+        if (component != null && !component.getFullNameProduct().isEmpty()) {
             paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph("Folie", SUBFONT));
@@ -544,7 +544,7 @@ public class Print {
                     + roofArea.worthFormatWithUnit(), NORMALFONT));
         }
 
-        if (component != null) {
+        if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
                     + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
@@ -610,7 +610,7 @@ public class Print {
         Component component = componentJpaController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                 "Produkt", category.getId());
 
-        if (component != null) {
+        if (component != null && !component.getFullNameProduct().isEmpty()) {
             paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph(
@@ -651,7 +651,7 @@ public class Print {
                     + total.worthFormatWithUnit(), NORMALFONT));
         }
 
-        if (component != null) {
+        if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
                     + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
@@ -717,7 +717,7 @@ public class Print {
         Component component = componentJpaController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                 "Produkt", category.getId());
 
-        if (component != null) {
+        if (component != null && !component.getFullNameProduct().isEmpty()) {
             paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph("Konterlattung", SUBFONT));
@@ -756,7 +756,7 @@ public class Print {
                     + total.worthFormatWithUnit(), NORMALFONT));
         }
 
-        if (component != null) {
+        if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
                     + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
@@ -834,7 +834,7 @@ public class Print {
                     "Produkt", category.getId());
         }
 
-        if (component != null) {
+        if (component != null && !component.getFullNameProduct().isEmpty()) {
             paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph("Lattung oder Vollschalung", SUBFONT));
@@ -901,7 +901,7 @@ public class Print {
                         + worthFullFormwork.worthFormatWithUnit(), NORMALFONT));
             }
         }
-        if (component != null) {
+        if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
                     + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
         }
@@ -959,34 +959,47 @@ public class Print {
         AssemblyController assemblyJpaController = new AssemblyController();
         List<Assembly> listAssembly = assemblyJpaController.findAssembliesByProjectId(project.getId());
 
-        Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 10f, Font.BOLD);
-        Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 10f);
-
-        PdfPTable table = new PdfPTable(new float[]{5f, 3.5f, 3.5f, 4, 4});
-
-        table.setWidthPercentage(100f);
-
-        table.addCell(
-                new Phrase("Produkt", tableHeaderFont));
-        table.addCell(
-                new Phrase("Anzahl", tableHeaderFont));
-        table.addCell(
-                new Phrase("Preis in €", tableHeaderFont));
-        table.addCell(
-                new Phrase("Bauteil", tableHeaderFont));
-        table.addCell(
-                new Phrase("Gesamtpreis Produkt in €", tableHeaderFont));
-
+        boolean hasContent = false;
         for (Assembly assembly : listAssembly) {
-            table.addCell(new Phrase(assembly.getProduct() == null ? "" : assembly.getProduct().getName(), tableNormalFont));
-            table.addCell(new Phrase("" + assembly.getNumberOfComponents(), tableNormalFont));
-            table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(assembly.getPrice()), tableNormalFont));
-            table.addCell(new Phrase(assembly.getComponent() == null ? "" : assembly.getComponent().getDescription(), tableNormalFont));
-            double allAroundPriceD = assembly.getPrice() * assembly.getNumberOfComponents();
-            table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(allAroundPriceD), tableNormalFont));
+            if (assembly.getProduct() != null) {
+                hasContent = true;
+                break;
+            }
         }
 
-        paragraph.add(table);
+        if (hasContent) {
+
+            Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 10f, Font.BOLD);
+            Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 10f);
+
+            PdfPTable table = new PdfPTable(new float[]{5f, 3.5f, 3.5f, 4, 4});
+
+            table.setWidthPercentage(100f);
+
+            table.addCell(
+                    new Phrase("Produkt", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Anzahl", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Preis in €", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Bauteil", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Gesamtpreis Produkt in €", tableHeaderFont));
+
+            for (Assembly assembly : listAssembly) {
+                table.addCell(new Phrase(assembly.getProduct() == null ? "" : assembly.getProduct().getName(), tableNormalFont));
+                table.addCell(new Phrase("" + assembly.getNumberOfComponents(), tableNormalFont));
+                table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(assembly.getPrice()), tableNormalFont));
+                table.addCell(new Phrase(assembly.getComponent() == null ? "" : assembly.getComponent().getDescription(), tableNormalFont));
+                double allAroundPriceD = assembly.getPrice() * assembly.getNumberOfComponents();
+                table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(allAroundPriceD), tableNormalFont));
+            }
+
+            paragraph.add(table);
+        } else {
+            paragraph.add(new Paragraph("Keine Materialen vorhanden",NORMALFONT));
+        }
         document.add(paragraph);
     }
 
@@ -1025,7 +1038,7 @@ public class Print {
 
         addEmptyLine(paragraph, 1);
 
-        if (color != null) {
+        if (color != null && color.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis Farbe pro Liter: "
                     + UtilityFormat.formatValueWithShortTerm(color.getPriceComponent(), "€"), NORMALFONT));
         }
@@ -1134,49 +1147,70 @@ public class Print {
         ComponentController componentJpaController = new ComponentController();
         java.util.List<Component> listComponents = componentJpaController.findComponentsByProjectIdOrderById(project.getId());
 
-        Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 9f, Font.BOLD);
-        Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 9f);
-
-        PdfPTable table = new PdfPTable(new float[]{4.5f, 4.5f, 4, 2, 2, 2, 2, 2, 2, 3});
-        table.setWidthPercentage(100f);
-
-        table.addCell(
-                new Phrase("Bauteil", tableHeaderFont));
-        table.addCell(
-                new Phrase("Produkt", tableHeaderFont));
-        table.addCell(
-                new Phrase("Kategorie", tableHeaderFont));
-        table.addCell(
-                new Phrase("Breite in cm", tableHeaderFont));
-        table.addCell(
-                new Phrase("Höhe in cm", tableHeaderFont));
-        table.addCell(
-                new Phrase("Länge in m", tableHeaderFont));
-        table.addCell(
-                new Phrase("Preis/Einheit", tableHeaderFont));
-        table.addCell(
-                new Phrase("Einheit", tableHeaderFont));
-        table.addCell(
-                new Phrase("Anzahl", tableHeaderFont));
-        table.addCell(
-                new Phrase("Gesamtpreis", tableHeaderFont));
-
+        boolean hasContent = false;
         for (Component component : listComponents) {
-            table.addCell(new Phrase(component.getDescription(), tableNormalFont));
-            if (component.getProduct() != null)
-                table.addCell(new Phrase(component.getProduct().getName(), tableNormalFont));
-            table.addCell(new Phrase(component.getCategory() == null ? "" : component.getCategory().getLongAndShortTerm(), tableNormalFont));
-            table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getWidthComponent() == null ? 0 : component.getWidthComponent()), tableNormalFont));
-            table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getHeightComponent() == null ? 0 : component.getHeightComponent()), tableNormalFont));
-            table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getLengthComponent() == null ? 0 : component.getLengthComponent()), tableNormalFont));
-            table.addCell(new Phrase(component.getUnit() == null ? "" : component.getUnit().getShortTerm(), tableNormalFont));
-            table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getPriceComponent() == null ? 0 : component.getPriceComponent()), tableNormalFont));
-            table.addCell(new Phrase(component.getNumberOfProducts() == null ? "0" : "" + component.getNumberOfProducts(), tableNormalFont));
-            double allAroundPrice = component.getPriceComponent() * component.getNumberOfProducts();
-            table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(allAroundPrice), tableNormalFont));
+            if (component.getProduct() != null) {
+                hasContent = true;
+                break;
+            }
         }
 
-        paragraph.add(table);
+        if (hasContent) {
+            Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 9f, Font.BOLD);
+            Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 9f);
+
+            PdfPTable table = new PdfPTable(new float[]{4.5f, 4.5f, 4, 2, 2, 2, 2, 2, 2, 3});
+            table.setWidthPercentage(100f);
+
+            table.addCell(
+                    new Phrase("Bauteil", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Produkt", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Kategorie", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Breite in cm", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Höhe in cm", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Länge in m", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Preis/Einheit", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Einheit", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Anzahl", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Gesamtpreis", tableHeaderFont));
+
+
+            for (Component component : listComponents) {
+                if (component.getProduct() != null) {
+                    table.addCell(new Phrase(component.getDescription(), tableNormalFont));
+                    if (component.getProduct() != null)
+                        table.addCell(new Phrase(component.getProduct().getName(), tableNormalFont));
+                    else
+                        table.addCell(new Phrase("-"));
+                    table.addCell(new Phrase(component.getCategory() == null ? "" : component.getCategory().getLongAndShortTerm(), tableNormalFont));
+                    table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getWidthComponent() == null ? 0 : component.getWidthComponent()), tableNormalFont));
+                    table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getHeightComponent() == null ? 0 : component.getHeightComponent()), tableNormalFont));
+                    table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getLengthComponent() == null ? 0 : component.getLengthComponent()), tableNormalFont));
+                    table.addCell(new Phrase(component.getUnit() == null ? "" : component.getUnit().getShortTerm(), tableNormalFont));
+                    table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(component.getPriceComponent() == null ? 0 : component.getPriceComponent()), tableNormalFont));
+                    table.addCell(new Phrase(component.getNumberOfProducts() == null ? "0" : "" + component.getNumberOfProducts(), tableNormalFont));
+                    if (component.getPriceComponent() != null && component.getNumberOfProducts() != null) {
+                        double allAroundPrice = component.getPriceComponent() * component.getNumberOfProducts();
+                        table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(allAroundPrice), tableNormalFont));
+                    } else {
+                        table.addCell(new Phrase("-", tableNormalFont));
+                    }
+                }
+            }
+
+            paragraph.add(table);
+        } else {
+            paragraph.add(new Paragraph("Keine Produkte vorhanden", NORMALFONT));
+        }
         document.add(paragraph);
     }
 
