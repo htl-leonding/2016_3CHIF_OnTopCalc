@@ -181,6 +181,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
             alert.showAndWait();
         } else {
             this.price = Double.valueOf(tf_priceLinearMeter.getText());
+            component.setPriceComponent(price);
         }
     }
 
@@ -216,9 +217,11 @@ public class Assembling_SealingBandController implements Initializable, Observer
                     "Produkt", category.getId());
 
             if (component != null) {
+                Double componentPrice = component.getPriceComponent();
                 cb_product.getSelectionModel().select(component.getProduct());
-                //Bin mir nicht sicher ob das so richtig ist (Keppi) TODO
-                //tf_price.setText(UtilityFormat.getStringForLabel(component.getPriceComponent()));
+                if (componentPrice != null) {
+                    tf_priceLinearMeter.setText(UtilityFormat.getStringForTextField(componentPrice));
+                }
             } else {
                 component = new Component();
                 component.setDescription("Nageldichtband");

@@ -198,10 +198,10 @@ public class Project implements Serializable {
     public String toString() {
 
         if (getModeOfCalculation().equals("Vorkalkulation")){
-            return projectName + " (Vorkalk.)";
+            return projectName + " (V)";
         }
         else {
-            return projectName + " (Nachkalk.)";
+            return projectName + " (N)";
         }
     }
 }

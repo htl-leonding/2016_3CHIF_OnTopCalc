@@ -83,6 +83,10 @@ public class ProjectViewController extends Observable implements Initializable, 
         }
 
         tab_Montage.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_MaterialAndCostController.getInstance().refreshTableView();
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_OverviewController.getInstance().refreshValues();
             setChanged();
             notifyObservers();
         });
@@ -92,6 +96,12 @@ public class ProjectViewController extends Observable implements Initializable, 
         });
 
         tab_MaterialCosts.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_MaterialAndCostController.getInstance().refreshTableView();
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_OverviewController.getInstance().refreshValues();
+            setChanged();
+            notifyObservers();
             Project_MaterialAndCostController.getInstance().refreshTableView();
         });
 
@@ -389,7 +399,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                     alert.setContentText("Möchten Sie die Änderungen speichern?");
                     alert.getButtonTypes().clear();
                     alert.getButtonTypes().add(new ButtonType("Speichern"));
-                    alert.getButtonTypes().add(new ButtonType("Nicht Speichern"));
+                    alert.getButtonTypes().add(new ButtonType("Verwerfen"));
                     alert.getButtonTypes().add(ButtonType.CANCEL);
                     alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                     alert.showAndWait();
@@ -399,7 +409,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                                 event.consume();
                             }
                             break;
-                        case "Nicht Speichern":
+                        case "Verwerfen":
                             break;
                         default:
                             event.consume();

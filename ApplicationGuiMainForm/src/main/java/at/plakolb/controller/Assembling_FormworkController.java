@@ -163,6 +163,7 @@ public class Assembling_FormworkController implements Initializable, Observer {
             alert.showAndWait();
         } else {
             this.price = Double.valueOf(tf_Price.getText());
+            component.setPriceComponent(price);
         }
     }
 
@@ -196,14 +197,20 @@ public class Assembling_FormworkController implements Initializable, Observer {
             component = componentController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                     "Produkt", category.getId());
 
+
             if (component != null) {
+                Double componentPrice = component.getPriceComponent();
                 cb_Formwork.getSelectionModel().select(component.getProduct());
+                if (componentPrice != null) {
+                    tf_Price.setText(UtilityFormat.getStringForTextField(componentPrice));
+                }
             } else {
                 component = new Component();
                 component.setDescription("Schalung");
                 component.setCategory(category);
                 component.setComponentType("Produkt");
             }
+
 
             waste = (worthController.findWorthByShortTermAndProjectId("VS", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("VS", project.getId()) : waste;

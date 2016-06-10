@@ -115,7 +115,6 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         lb_totalCost.setText(UtilityFormat.getStringForLabel(totalCost));
 
         cb_counterBattern.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
-            pricePerMeter = newValue.getPriceUnit();
             tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
         });
         tf_pricePerMeter.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -172,6 +171,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
             alert.showAndWait();
         } else {
             this.pricePerMeter = Double.valueOf(tf_pricePerMeter.getText());
+            component.setPriceComponent(pricePerMeter);
         }
     }
 
@@ -203,7 +203,11 @@ public class Assembling_CounterBattenController implements Observer, Initializab
                 "Produkt", category.getId());
 
         if (component != null) {
+            Double componentPrice = component.getPriceComponent();
             cb_counterBattern.getSelectionModel().select(component.getProduct());
+            if (componentPrice != null) {
+                tf_pricePerMeter.setText(UtilityFormat.getStringForTextField(componentPrice));
+            }
         } else {
             component = new Component();
             component.setDescription("Konterlattung");

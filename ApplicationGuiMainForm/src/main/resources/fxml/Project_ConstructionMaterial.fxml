@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" stylesheets="@../styles/columnbuttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialController">
+<AnchorPane id="AnchorPane" stylesheets="@../styles/columnbuttons.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialController">
    <children>
       <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -40,17 +40,20 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <AnchorPane maxWidth="1024.0">
+                  <AnchorPane maxWidth="1024.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <TableView fx:id="tv_Assembly" prefHeight="300.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css">
+                        <TableView fx:id="tv_Assembly" maxWidth="1024.0" prefHeight="300.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                           <columns>
-                            <TableColumn fx:id="tc_Product" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Produkt" />
-                            <TableColumn fx:id="tc_Amount" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" style="-fx-alignment: center;" text="Anzahl" />
-                              <TableColumn fx:id="tc_Price" maxWidth="100.0" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Produktpreis €" />
-                              <TableColumn fx:id="tc_Component" minWidth="150.0" prefWidth="150.0" style="-fx-alignment: center;" text="Bauteil" />
+                            <TableColumn fx:id="tc_Product" maxWidth="1000.0" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Produkt" />
+                            <TableColumn fx:id="tc_Amount" maxWidth="200.0" minWidth="70.0" prefWidth="70.0" style="-fx-alignment: center;" text="Anzahl" />
+                              <TableColumn fx:id="tc_Price" maxWidth="200.0" minWidth="140.0" prefWidth="140.0" style="-fx-alignment: center;" text="Produktpreis €" />
+                              <TableColumn fx:id="tc_Component" maxWidth="1000.0" minWidth="150.0" prefWidth="150.0" style="-fx-alignment: center;" text="Bauteil" />
                               <TableColumn fx:id="tc_TotalPrice" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" style="-fx-alignment: center;" text="Gesamtpreis des Produkts" />
                               <TableColumn fx:id="tc_Button" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" style="-fx-alignment: center;" text=" " />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                      </children>
                   </AnchorPane>

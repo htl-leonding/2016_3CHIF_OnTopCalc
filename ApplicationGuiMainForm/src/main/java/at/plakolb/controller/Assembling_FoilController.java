@@ -111,6 +111,10 @@ public class Assembling_FoilController implements Initializable, Observer {
         tf_time.setText(UtilityFormat.getStringForTextField(assemblingDuration));
         tf_workerCosts.setText(UtilityFormat.getStringForTextField(workerCosts));
 
+        cb_Product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
+            tf_price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
+        });
+
         tf_price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculate();
@@ -133,10 +137,6 @@ public class Assembling_FoilController implements Initializable, Observer {
             UtilityFormat.setWorthFromTextField(tf_workerCosts, workerCosts);
             calculate();
             ModifyController.getInstance().setAssembling_foil(Boolean.TRUE);
-        });
-
-        cb_Product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
-            tf_price.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -169,6 +169,7 @@ public class Assembling_FoilController implements Initializable, Observer {
             alert.showAndWait();
         } else {
             this.pricePerSquare = Double.valueOf(tf_price.getText());
+            component.setPriceComponent(pricePerSquare);
         }
     }
 
@@ -199,8 +200,11 @@ public class Assembling_FoilController implements Initializable, Observer {
                     "Produkt", category.getId());
 
             if (component != null) {
+                Double componentPrice = component.getPriceComponent();
                 cb_Product.getSelectionModel().select(component.getProduct());
-                tf_price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
+                if (componentPrice != null) {
+                    tf_price.setText(UtilityFormat.getStringForTextField(componentPrice));
+                }
             } else {
                 component = new Component();
                 component.setDescription("Folie");

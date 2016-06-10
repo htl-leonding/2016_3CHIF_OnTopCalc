@@ -105,7 +105,6 @@ public class Project_ColourController implements Initializable {
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()) + " m²");
         tf_ProfiHour.setText(UtilityFormat.getStringForTextField(profiHour));
         tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(additionalColourFactor));
-        tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
         tf_TimeOfPainting.setText(UtilityFormat.getStringForTextField(timeofPainting));
         lb_MontageCost.setText(UtilityFormat.getStringForLabel(montageCost));
         lb_PaintArea.setText(UtilityFormat.getStringForLabel(paintArea));
@@ -113,32 +112,32 @@ public class Project_ColourController implements Initializable {
         lb_ProductCost.setText(UtilityFormat.getStringForLabel(productCost));
         lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCost));
 
-        tf_PricePerLiter.textProperty().addListener((observable, oldValue, newValue) -> {
-            setPricePerLiter();
-            calculate();
-            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
-        });
-        tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
-            UtilityFormat.setWorthFromTextField(tf_ProfiHour, profiHour);
-            calculate();
-            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
-        });
-        tf_AdittionalColourFactor.textProperty().addListener((observable, oldValue, newValue) -> {
-            UtilityFormat.setWorthFromTextField(tf_AdittionalColourFactor, additionalColourFactor);
-            calculate();
-            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
-        });
-        tf_TimeOfPainting.textProperty().addListener((observable, oldValue, newValue) -> {
-            UtilityFormat.setWorthFromTextField(tf_TimeOfPainting, timeofPainting);
-            calculate();
-            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
-        });
         cb_Product.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Product> observable, Product oldValue, Product newValue) -> {
             if (newValue != null) {
                 tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(newValue.getColorFactor()));
                 tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
             }
-            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
+            calculate();
+        });
+
+        tf_PricePerLiter.textProperty().addListener((observable, oldValue, newValue) -> {
+            setPricePerLiter();
+            calculate();
+        });
+
+        tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_ProfiHour, profiHour);
+            calculate();
+        });
+
+        tf_AdittionalColourFactor.textProperty().addListener((observable, oldValue, newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_AdittionalColourFactor, additionalColourFactor);
+            calculate();
+        });
+
+        tf_TimeOfPainting.textProperty().addListener((observable, oldValue, newValue) -> {
+            UtilityFormat.setWorthFromTextField(tf_TimeOfPainting, timeofPainting);
+            calculate();
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -167,6 +166,7 @@ public class Project_ColourController implements Initializable {
             alert.showAndWait();
         } else {
             this.pricePerLiter = Double.valueOf(tf_PricePerLiter.getText());
+            component.setPriceComponent(pricePerLiter);
         }
     }
 
@@ -206,7 +206,11 @@ public class Project_ColourController implements Initializable {
         component = new ComponentController().findColorByProjectId(ProjectViewController.getOpenedProject().getId());
 
         if (component != null) {
+            Double componentPrice = component.getPriceComponent();
             cb_Product.getSelectionModel().select(component.getProduct());
+            if (componentPrice != null) {
+                tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(componentPrice));
+            }
         } else {
             component = new Component();
             component.setDescription("Farbe");
@@ -217,7 +221,6 @@ public class Project_ColourController implements Initializable {
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork()) + " m²");
         tf_ProfiHour.setText(UtilityFormat.getStringForTextField(profiHour));
         tf_AdittionalColourFactor.setText(UtilityFormat.getStringForTextField(additionalColourFactor));
-        tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(pricePerLiter));
         tf_TimeOfPainting.setText(UtilityFormat.getStringForTextField(timeofPainting));
         lb_MontageCost.setText(UtilityFormat.getStringForLabel(montageCost));
         lb_PaintArea.setText(UtilityFormat.getStringForLabel(paintArea));
@@ -279,6 +282,8 @@ public class Project_ColourController implements Initializable {
 
         component.setPriceComponent(pricePerLiter);
         component.setNumberOfProducts(paintLiter.getWorth());
+
+        ModifyController.getInstance().setProject_colour(Boolean.TRUE);
     }
 
     public void persist() {

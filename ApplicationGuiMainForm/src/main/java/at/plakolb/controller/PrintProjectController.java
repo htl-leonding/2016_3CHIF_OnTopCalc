@@ -160,11 +160,7 @@ public class PrintProjectController implements Initializable {
 
     @FXML
     private void print(ActionEvent event) {
-        try {
-            createPDF(true);
-        } catch (FileNotFoundException ex) {
-            Logging.getLogger().log(Level.WARNING, "File not found Warning.", ex);
-        }
+        createPDF(true);
     }
 
     @FXML
@@ -206,14 +202,10 @@ public class PrintProjectController implements Initializable {
 
     @FXML
     private void createPDF(ActionEvent event) {
-        try {
-            createPDF(false);
-        } catch (FileNotFoundException ex) {
-            Logging.getLogger().log(Level.WARNING, "File not found Warning.", ex);
-        }
+        createPDF(false);
     }
 
-    public void createPDF(boolean p) throws FileNotFoundException {
+    public void createPDF(boolean p) {
         Print print = new Print(path.getAbsolutePath(), cb_projects.getSelectionModel().getSelectedItem(), tf_dateAndPosition.getText());
         try {
             List<Boolean> listPrint = new ArrayList<>();
@@ -269,9 +261,14 @@ public class PrintProjectController implements Initializable {
                     Logging.getLogger().log(Level.SEVERE, "Print method didn't work.", ex);
                 }
             }
-        } catch (DocumentException | FileNotFoundException | PrintInformationException ex) {
-            Logging.getLogger().log(Level.SEVERE, "PDF konnte nicht erstellt werden", ex);
+        } catch (DocumentException | PrintInformationException ex) {
+            Logging.getLogger().log(Level.SEVERE, "Couldn't create PDF file.", ex);
             Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.showAndWait();
+        } catch (FileNotFoundException ex) {
+            Logging.getLogger().log(Level.INFO, "File not found.", ex);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "PDF konnte nicht erstellt werden. Stellen Sie sicher, dass Sie Zugriffsrechte für den angegebenen Pfad besitzen.", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } catch (Exception ex) {

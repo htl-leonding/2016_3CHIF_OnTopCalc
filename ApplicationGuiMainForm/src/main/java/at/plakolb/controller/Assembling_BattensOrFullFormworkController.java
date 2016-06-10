@@ -237,6 +237,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             alert.showAndWait();
         } else {
             this.price = Double.valueOf(tf_price.getText());
+            component.setPriceComponent(price);
         }
     }
 
@@ -304,8 +305,11 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             component = new ComponentController().findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(), "Produkt", category.getId());
 
             if (component != null) {
+                Double componentPrice = component.getPriceComponent();
                 cb_product.getSelectionModel().select(component.getProduct());
-                tf_price.setText(UtilityFormat.getStringForTextField(component.getPriceComponent()));
+                if (componentPrice != null) {
+                    tf_price.setText(UtilityFormat.getStringForTextField(componentPrice));
+                }
             } else {
                 component = new Component();
                 component.setComponentType("Produkt");
@@ -328,6 +332,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     public void calculate() {
         try {
             int index = cb_roofType.getSelectionModel().getSelectedIndex();
+
             //Produktkosten
             //Alte Formel-ID: KProdLV
             if (Assembling_SheetRoofController.getInstance() != null) {

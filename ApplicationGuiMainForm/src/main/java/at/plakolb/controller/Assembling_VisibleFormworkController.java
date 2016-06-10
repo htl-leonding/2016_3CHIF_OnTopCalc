@@ -110,6 +110,10 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
         lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(visibleFormwork));
 
+        cb_Product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
+            tf_PricePerSquare.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
+        });
+
         tf_PricePerSquare.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             setPricePerSquare();
             calculate();
@@ -132,10 +136,6 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             UtilityFormat.setWorthFromTextField(tf_WorkerCosts, workerCosts);
             calculate();
             ModifyController.getInstance().setAssembling_visibleFormwork(Boolean.TRUE);
-        });
-
-        cb_Product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
-            tf_PricePerSquare.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -172,6 +172,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
             alert.showAndWait();
         } else {
             this.pricePerSquare = Double.valueOf(tf_PricePerSquare.getText());
+            component.setPriceComponent(pricePerSquare);
         }
     }
 
@@ -200,7 +201,11 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
                 "Produkt", category.getId());
 
         if (component != null) {
+            Double componentPrice = component.getPriceComponent();
             cb_Product.getSelectionModel().select(component.getProduct());
+            if (componentPrice != null) {
+                tf_PricePerSquare.setText(UtilityFormat.getStringForTextField(componentPrice));
+            }
         } else {
             component = new Component();
             component.setDescription("SichtbareSchalung");
