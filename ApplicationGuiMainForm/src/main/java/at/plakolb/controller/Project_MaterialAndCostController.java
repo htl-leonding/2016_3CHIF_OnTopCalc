@@ -112,7 +112,7 @@ public class Project_MaterialAndCostController implements Initializable {
 
         tc_TotalCosts.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getProduct() != null && param.getValue().getNumberOfProducts() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getNumberOfProducts() * param.getValue().getProduct().getPriceUnit()) + " €");
+                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getNumberOfProducts() * param.getValue().getPriceComponent()) + " €");
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }

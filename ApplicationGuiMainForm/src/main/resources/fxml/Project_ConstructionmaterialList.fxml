@@ -54,9 +54,9 @@
                               </TableView>
                               <GridPane alignment="CENTER" maxWidth="1280.0">
                                  <columnConstraints>
-                                    <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="37.0" prefWidth="380.0" />
-                                    <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="13.0" prefWidth="180.0" />
-                                    <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
+                                    <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="0.0" percentWidth="33.0" prefWidth="380.0" />
+                                    <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="24.0" prefWidth="180.0" />
+                                    <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="2.0" prefWidth="90.0" />
                                     <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
                                     <ColumnConstraints halignment="CENTER" minWidth="0.0" percentWidth="9.0" prefWidth="90.0" />
                                     <ColumnConstraints halignment="RIGHT" minWidth="0.0" percentWidth="12.0" prefWidth="90.0" />

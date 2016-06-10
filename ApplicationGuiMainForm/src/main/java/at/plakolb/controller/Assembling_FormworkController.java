@@ -211,7 +211,6 @@ public class Assembling_FormworkController implements Initializable, Observer {
                 component.setComponentType("Produkt");
             }
 
-
             waste = (worthController.findWorthByShortTermAndProjectId("VS", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("VS", project.getId()) : waste;
             formwork = (worthController.findWorthByShortTermAndProjectId("S", project.getId()) != null)

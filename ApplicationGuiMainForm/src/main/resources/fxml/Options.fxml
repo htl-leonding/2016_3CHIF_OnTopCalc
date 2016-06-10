@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="695.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
@@ -38,14 +38,14 @@
                         <Font name="Berlin Sans FB" size="25.0" />
                     </font>
                 </Label>
-                <VBox layoutX="15.0" layoutY="60.0">
+                <VBox layoutX="15.0" layoutY="60.0" VBox.vgrow="ALWAYS">
                     <children>
                         <Label id="boldLettering" layoutX="15.0" layoutY="73.0" text="Papierkorb" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="60.0">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0">
+                        <TableView fx:id="tv_paperbin" layoutX="51.0" layoutY="115.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="cl_id" maxWidth="120.0" minWidth="15.0" prefWidth="75.0" style="-fx-aglinment: center;" text="ID" />
                                 <TableColumn fx:id="cl_pname" maxWidth="500.0" minWidth="100.0" prefWidth="110.0" text="Projektname" />

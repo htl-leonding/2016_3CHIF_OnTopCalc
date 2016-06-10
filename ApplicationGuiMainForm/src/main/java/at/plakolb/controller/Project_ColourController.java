@@ -118,26 +118,31 @@ public class Project_ColourController implements Initializable {
                 tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(newValue.getPriceUnit()));
             }
             calculate();
+            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
 
         tf_PricePerLiter.textProperty().addListener((observable, oldValue, newValue) -> {
             setPricePerLiter();
             calculate();
+            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
 
         tf_ProfiHour.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_ProfiHour, profiHour);
             calculate();
+            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
 
         tf_AdittionalColourFactor.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_AdittionalColourFactor, additionalColourFactor);
             calculate();
+            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
 
         tf_TimeOfPainting.textProperty().addListener((observable, oldValue, newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_TimeOfPainting, timeofPainting);
             calculate();
+            ModifyController.getInstance().setProject_colour(Boolean.TRUE);
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -146,7 +151,7 @@ public class Project_ColourController implements Initializable {
             component = new Component();
             component.setDescription("Farbe");
             component.setCategory(new CategoryController().findCategoryByShortTerm("X"));
-            component.setComponentType("Produkt");
+            component.setComponentType(ProductType.COLOR.toString());
         }
     }
 
@@ -203,7 +208,8 @@ public class Project_ColourController implements Initializable {
         montageCost = (worthController.findWorthByShortTermAndProjectId("KMFarbe", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("KMFarbe", openedProject.getId()) : montageCost;
 
         Category category = new CategoryController().findCategoryByShortTerm("X");
-        component = new ComponentController().findColorByProjectId(ProjectViewController.getOpenedProject().getId());
+        component = new ComponentController().findComponentByProjectIdAndComponentTypeAndCategoryId(ProjectViewController.getOpenedProject().getId(),
+                ProductType.COLOR.toString(),category.getId());
 
         if (component != null) {
             Double componentPrice = component.getPriceComponent();
@@ -212,6 +218,7 @@ public class Project_ColourController implements Initializable {
                 tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(componentPrice));
             }
         } else {
+            System.out.println("new Component");
             component = new Component();
             component.setDescription("Farbe");
             component.setComponentType(ProductType.COLOR.toString());
@@ -282,8 +289,6 @@ public class Project_ColourController implements Initializable {
 
         component.setPriceComponent(pricePerLiter);
         component.setNumberOfProducts(paintLiter.getWorth());
-
-        ModifyController.getInstance().setProject_colour(Boolean.TRUE);
     }
 
     public void persist() {
@@ -312,7 +317,6 @@ public class Project_ColourController implements Initializable {
                 worthController.create(totalCost);
                 componentController.create(component);
             } else {
-
                 worthController.edit(profiHour);
                 worthController.edit(additionalColourFactor);
                 worthController.edit(timeofPainting);
@@ -334,7 +338,6 @@ public class Project_ColourController implements Initializable {
         if (oldVal != newVal && ModifyController.getInstance().getAssembling() == true
                 && !(tf_AdittionalColourFactor.getText().isEmpty() || tf_PricePerLiter.getText().isEmpty())) {
             ModifyController.getInstance().setProject_colour(Boolean.TRUE);
-
         }
         lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(newVal) + " m²");
         calculate();
