@@ -149,8 +149,8 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         }
 
         try {
-            tiledRoof = (Node) FXMLLoader.load(getClass().getResource("/fxml/Assembling_TiledRoof.fxml"));
-            sheetRoof = (Node) FXMLLoader.load(getClass().getResource("/fxml/Assembling_SheetRoof.fxml"));
+            tiledRoof = FXMLLoader.load(getClass().getResource("/fxml/Assembling_TiledRoof.fxml"));
+            sheetRoof = FXMLLoader.load(getClass().getResource("/fxml/Assembling_SheetRoof.fxml"));
         } catch (IOException ex) {
             Logging.getLogger().log(Level.SEVERE, "Couldn't open Assembling_TiledRoof.fxml and Assembling_SheetRoof.fxml", ex);
         }
@@ -212,17 +212,17 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     }
 
     private void setPrice() {
-        tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_price.setText(tf_price.getText().replace('.',',').replaceAll("[^\\d,]", ""));
         tf_price.setText(UtilityFormat.removeUnnecessaryCommas(tf_price.getText()));
 
         if (tf_price.getText().isEmpty()) {
             this.price = 0;
-        } else if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+        } else if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText().replace(',','.')) < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
-            this.price = Double.valueOf(tf_price.getText());
+            this.price = Double.valueOf(tf_price.getText().replace(',','.'));
             component.setPriceComponent(price);
         }
     }

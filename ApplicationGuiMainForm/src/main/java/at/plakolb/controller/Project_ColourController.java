@@ -14,9 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
@@ -51,8 +48,6 @@ public class Project_ColourController implements Initializable {
     @FXML
     private Label lb_TotalCosts;
 
-    private DecimalFormat decimalFormat;
-
     private Worth additionalColourFactor;
     private Worth timeofPainting;
     private double pricePerLiter;
@@ -74,9 +69,6 @@ public class Project_ColourController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-
-        decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         cb_Product.setItems(FXCollections.observableArrayList(new ProductController().findByProductTypeOrderByName(ProductType.COLOR)));
         ParameterController parameterController = new ParameterController();
@@ -147,17 +139,17 @@ public class Project_ColourController implements Initializable {
     }
 
     public void setPricePerLiter() {
-        tf_PricePerLiter.setText(tf_PricePerLiter.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_PricePerLiter.setText(tf_PricePerLiter.getText().replace('.',',').replaceAll("[^\\d,]", ""));
         tf_PricePerLiter.setText(UtilityFormat.removeUnnecessaryCommas(tf_PricePerLiter.getText()));
 
         if (tf_PricePerLiter.getText().isEmpty()) {
             this.pricePerLiter = 0;
-        } else if (tf_PricePerLiter.getText().isEmpty() || Double.valueOf(tf_PricePerLiter.getText()) < 0) {
+        } else if (tf_PricePerLiter.getText().isEmpty() || Double.valueOf(tf_PricePerLiter.getText().replace(',','.')) < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerLiter + "\"", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
-            this.pricePerLiter = Double.valueOf(tf_PricePerLiter.getText());
+            this.pricePerLiter = Double.valueOf(tf_PricePerLiter.getText().replace(',','.'));
             component.setPriceComponent(pricePerLiter);
         }
     }
@@ -318,7 +310,7 @@ public class Project_ColourController implements Initializable {
     }
 
     public void updateVisibleFormwork() {
-        double oldVal = Double.parseDouble(lb_VisibleFormwork.getText().substring(0, lb_VisibleFormwork.getText().length() - 3));
+        double oldVal = Double.parseDouble(lb_VisibleFormwork.getText().substring(0, lb_VisibleFormwork.getText().length() - 3).replace(',','.'));
         double newVal = Assembling_VisibleFormworkController.getInstance().getVisibleFormwork();
         if (oldVal != newVal && ModifyController.getInstance().getAssembling() == true
                 && !(tf_AdittionalColourFactor.getText().isEmpty() || tf_PricePerLiter.getText().isEmpty())) {

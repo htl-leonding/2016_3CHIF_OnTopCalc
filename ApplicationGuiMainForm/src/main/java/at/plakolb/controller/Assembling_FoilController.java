@@ -145,17 +145,17 @@ public class Assembling_FoilController implements Initializable, Observer {
     }
 
     public void setPricePerSquare() {
-        tf_price.setText(tf_price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_price.setText(tf_price.getText().replace('.',',').replaceAll("[^\\d,]", ""));
         tf_price.setText(UtilityFormat.removeUnnecessaryCommas(tf_price.getText()));
 
         if (tf_price.getText().isEmpty()) {
             this.pricePerSquare = 0;
-        } else if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText()) < 0) {
+        } else if (tf_price.getText().isEmpty() || Double.valueOf(tf_price.getText().replace(',','.')) < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerSquare + "\"", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
-            this.pricePerSquare = Double.valueOf(tf_price.getText());
+            this.pricePerSquare = Double.valueOf(tf_price.getText().replace(',','.'));
             component.setPriceComponent(pricePerSquare);
         }
     }

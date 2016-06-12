@@ -21,9 +21,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -53,8 +50,6 @@ public class ParameterViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        DecimalFormat decimalFormat = new DecimalFormat("#.####");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")),new Label("Keine Daten vorhanden"));
         placeholder.setAlignment(Pos.CENTER);
@@ -73,8 +68,8 @@ public class ParameterViewController implements Initializable {
         });
         tc_DefaultValue.setCellFactory((TableColumn<ParameterP, String> param) -> new ParameterCell());
         tc_DefaultValue.setOnEditCommit((CellEditEvent<ParameterP, String> event) -> {
-            ParameterP parameter = ((ParameterP) event.getTableView().getItems().get(event.getTablePosition().getRow()));
-            parameter.setDefaultValue(Double.parseDouble(event.getNewValue()));
+            ParameterP parameter = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            parameter.setDefaultValue(Double.parseDouble(event.getNewValue().replace(',','.')));
             refreshTable();
         });
 

@@ -133,12 +133,11 @@ public class Assembling_SealingBandController implements Initializable, Observer
             ModifyController.getInstance().setAssembling_sealingBand(Boolean.TRUE);
         });
 
-        cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            return new ReadOnlyObjectWrapper<>(param.getValue().getDescription());
-        });
-        cl_length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent())) + " m");
-        });
+        cl_name.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) ->
+                new ReadOnlyObjectWrapper<>(param.getValue().getDescription()));
+
+        cl_length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) ->
+                new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent())) + " m"));
 
         if (ProjectViewController.getOpenedProject() != null) {
             load();
@@ -155,17 +154,17 @@ public class Assembling_SealingBandController implements Initializable, Observer
     }
 
     private void setPricePerLinearMeter() {
-        tf_priceLinearMeter.setText(tf_priceLinearMeter.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_priceLinearMeter.setText(tf_priceLinearMeter.getText().replace('.',',').replaceAll("[^\\d,]", ""));
         tf_priceLinearMeter.setText(UtilityFormat.removeUnnecessaryCommas(tf_priceLinearMeter.getText()));
 
         if (tf_priceLinearMeter.getText().isEmpty()) {
             this.price = 0;
-        } else if (tf_priceLinearMeter.getText().isEmpty() || Double.valueOf(tf_priceLinearMeter.getText()) < 0) {
+        } else if (tf_priceLinearMeter.getText().isEmpty() || Double.valueOf(tf_priceLinearMeter.getText().replace(',','.')) < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
-            this.price = Double.valueOf(tf_priceLinearMeter.getText());
+            this.price = Double.valueOf(tf_priceLinearMeter.getText().replace(',','.'));
             component.setPriceComponent(price);
         }
     }

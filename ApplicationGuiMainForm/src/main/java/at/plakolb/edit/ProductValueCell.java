@@ -43,7 +43,7 @@ public class ProductValueCell extends TableCell<Product, String> {
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setText((String) getItem());
+        setText(getItem());
         setGraphic(null);
     }
 
@@ -78,7 +78,7 @@ public class ProductValueCell extends TableCell<Product, String> {
         textField.setPrefWidth(this.getWidth() - 5);
 
         textField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            textField.setText(textField.getText().replace(",", ".").replaceAll("[^\\d.]", ""));
+            textField.setText(textField.getText().replace('.', ',').replaceAll("[^\\d,]", ""));
             textField.setText(UtilityFormat.removeUnnecessaryCommas(textField.getText()));
         });
 
@@ -87,8 +87,8 @@ public class ProductValueCell extends TableCell<Product, String> {
 
                 if (!(!getTableColumn().getId().equals("tc_PriceUnit") && textField.getText().isEmpty())) {
                     try {
-                        textField.setText(textField.getText().replace(",", "."));
-                        double number = Double.parseDouble(textField.getText());
+                        textField.setText(textField.getText().replace('.', ','));
+                        double number = Double.parseDouble(textField.getText().replace(',', '.'));
                         if (getTableColumn().getId().equals("tc_PriceUnit") && number < 0) {
                             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis darf nicht negativ sein.");
                             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));

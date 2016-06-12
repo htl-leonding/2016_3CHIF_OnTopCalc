@@ -68,27 +68,27 @@ public class ProductCreatorController implements Initializable {
         cb_ProductType.setItems(productTypes);
 
         tf_ColorFactor.textProperty().addListener((observable, oldValue, newValue) -> {
-            tf_ColorFactor.setText(tf_ColorFactor.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_ColorFactor.setText(tf_ColorFactor.getText().replace('.',',').replaceAll("[^\\d,]", ""));
             tf_ColorFactor.setText(removeUnnecessaryCommas(tf_ColorFactor.getText()));
         });
 
         tf_Height.textProperty().addListener((observable, oldValue, newValue) -> {
-            tf_Height.setText(tf_Height.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Height.setText(tf_Height.getText().replace('.',',').replaceAll("[^\\d,]", ""));
             tf_Height.setText(removeUnnecessaryCommas(tf_Height.getText()));
         });
 
         tf_Length.textProperty().addListener((observable, oldValue, newValue) -> {
-            tf_Length.setText(tf_Length.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Length.setText(tf_Length.getText().replace('.',',').replaceAll("[^\\d,]", ""));
             tf_Length.setText(removeUnnecessaryCommas(tf_Length.getText()));
         });
 
         tf_Width.textProperty().addListener((observable, oldValue, newValue) -> {
-            tf_Width.setText(tf_Width.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Width.setText(tf_Width.getText().replace('.',',').replaceAll("[^\\d,]", ""));
             tf_Width.setText(removeUnnecessaryCommas(tf_Width.getText()));
         });
 
         tf_PriceUnit.textProperty().addListener((observable, oldValue, newValue) -> {
-            tf_PriceUnit.setText(tf_PriceUnit.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_PriceUnit.setText(tf_PriceUnit.getText().replace('.',',').replaceAll("[^\\d,]", ""));
             tf_PriceUnit.setText(removeUnnecessaryCommas(tf_PriceUnit.getText()));
         });
     }
@@ -115,7 +115,7 @@ public class ProductCreatorController implements Initializable {
             errorMessage += "Der Preis darf nicht negativ sein.";
         } else {
             try {
-                Double.parseDouble(tf_PriceUnit.getText());
+                Double.parseDouble(tf_PriceUnit.getText().replace(',','.'));
             } catch (NumberFormatException e) {
                 errorMessage += "Der Preis hat ein ungültiges Format.\n";
             }
@@ -130,17 +130,17 @@ public class ProductCreatorController implements Initializable {
                     product.setWidthProduct(null);
                     product.setHeightProduct(null);
                     product.setLengthProduct(null);
-                    product.setColorFactor(tryParseDouble(tf_ColorFactor.getText()));
-                    product.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
+                    product.setColorFactor(tryParseDouble(tf_ColorFactor.getText().replace(',','.')));
+                    product.setPriceUnit(tryParseDouble(tf_PriceUnit.getText().replace(',','.')));
                     product.setUnit(cb_Unit.getValue());
                     product.setProductType(cb_ProductType.getValue());
                 } else {
                     product.setName(tf_Name.getText());
-                    product.setWidthProduct(tryParseDouble(tf_Width.getText()));
-                    product.setHeightProduct(tryParseDouble(tf_Height.getText()));
-                    product.setLengthProduct(tryParseDouble(tf_Length.getText()));
+                    product.setWidthProduct(tryParseDouble(tf_Width.getText().replace(',','.')));
+                    product.setHeightProduct(tryParseDouble(tf_Height.getText().replace(',','.')));
+                    product.setLengthProduct(tryParseDouble(tf_Length.getText().replace(',','.')));
                     product.setColorFactor(null);
-                    product.setPriceUnit(tryParseDouble(tf_PriceUnit.getText()));
+                    product.setPriceUnit(tryParseDouble(tf_PriceUnit.getText().replace(',','.')));
                     product.setUnit(cb_Unit.getValue());
                     product.setProductType(cb_ProductType.getValue());
                 }

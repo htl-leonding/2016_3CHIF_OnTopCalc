@@ -15,9 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -74,7 +71,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
     private Worth ledgeAndRoofArea;
 
     private boolean isCalculating;
-    private DecimalFormat decimalFormat;
 
     private int id;
 
@@ -107,9 +103,6 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         gableLeft = new Worth(parameterController.findParameterPByShortTerm("dl"));
         ledge = new Worth(parameterController.findParameterPByShortTerm("DV"));
         ledgeAndRoofArea = new Worth(parameterController.findParameterPByShortTerm("DF"));
-
-        decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         tf_Length.setText(UtilityFormat.getStringForTextField(length));
         tf_Width.setText(UtilityFormat.getStringForTextField(width));
@@ -225,11 +218,11 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         if (!isCalculating) {
             try {
                 isCalculating = true;
-                textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+                textField.setText(textField.getText().replace('.',',').replaceAll("[^\\d,]", ""));
                 textField.setText(UtilityFormat.removeUnnecessaryCommas(textField.getText()));
 
                 if (textField.equals(tf_Angle)) {
-                    if (parseDouble(textField.getText()) >= 90) {
+                    if (parseDouble(textField.getText().replace(',','.')) >= 90) {
                         textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Der Winkel darf nicht größer wie 90° sein.");
                         alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
@@ -237,7 +230,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                     }
                 }
 
-                worth.setWorth(parseDouble(textField.getText()));
+                worth.setWorth(parseDouble(textField.getText().replace(',','.')));
 
                 baseArea.setWorth(length.getWorth() * width.getWorth());
                 roofArea.setWorth(baseArea.getWorth() / Math.cos(angle.getWorth() * Math.PI / 180));
@@ -245,10 +238,10 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                         / Math.cos(angle.getWorth() * Math.PI / 180));
                 ledge.setWorth(ledgeAndRoofArea.getWorth() - roofArea.getWorth());
 
-                lb_RoofArea.setText(decimalFormat.format(roofArea.getWorth()) + " m²");
-                lb_BaseArea.setText(decimalFormat.format(baseArea.getWorth()) + " m²");
-                lb_Ledge.setText(decimalFormat.format(ledge.getWorth()) + " m²");
-                lb_LedgeAndRoofArea.setText(decimalFormat.format(ledgeAndRoofArea.getWorth()) + " m²");
+                lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea.getWorth()));
+                lb_BaseArea.setText(UtilityFormat.getStringForLabel(baseArea.getWorth()));
+                lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge.getWorth()));
+                lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea.getWorth()));
 
                 Project_ResultAreaController.getInstance().calcArea();
 
@@ -274,17 +267,16 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
      */
     @Override
     public void update(Observable o, Object arg) {
-        lb_TotalBaseArea.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getBaseArea()) + " m²");
-        lb_TotalRoofArea.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
-        lb_TotalLegde.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getLedge()) + " m²");
-        lb_TotalLedgeAndRoofArea.setText(decimalFormat.format(Project_ResultAreaController.getInstance().getLedgeAndRoofArea()) + " m²");
+        lb_TotalBaseArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getBaseArea()) + " m²");
+        lb_TotalRoofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getRoofArea()) + " m²");
+        lb_TotalLegde.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getLedge()) + " m²");
+        lb_TotalLedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getLedgeAndRoofArea()) + " m²");
     }
 
     /**
      * Persists the calculated Values to the database.
      */
     public void persist() {
-        ParameterController parameterController = new ParameterController();
         WorthController worthController = new WorthController();
 
         int index = Project_ResultAreaController.getInstance().getIndex(getID());

@@ -39,9 +39,6 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
@@ -87,8 +84,6 @@ public class ProductListController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         products = null;
-        DecimalFormat decimalFormat = new DecimalFormat("#.####");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         tv_Products.setEditable(true);
         VBox placeholder = new VBox(new ImageView(new Image("/images/cloud.png")), new Label("Keine Daten vorhanden"));
@@ -98,7 +93,7 @@ public class ProductListController implements Initializable {
         tc_Name.setCellValueFactory(new PropertyValueFactory<>("name"));
         tc_Name.setCellFactory((TableColumn<Product, String> param) -> new ProductNameCell());
         tc_Name.setOnEditCommit((CellEditEvent<Product, String> event) -> {
-            Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Product product = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             product.setName(event.getNewValue());
             refreshTable();
         });
@@ -112,9 +107,9 @@ public class ProductListController implements Initializable {
         });
         tc_Width.setCellFactory((TableColumn<Product, String> param) -> new ProductValueCell());
         tc_Width.setOnEditCommit((CellEditEvent<Product, String> event) -> {
-            Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Product product = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                product.setWidthProduct(Double.parseDouble(event.getNewValue()));
+                product.setWidthProduct(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 product.setWidthProduct(null);
             }
@@ -130,9 +125,9 @@ public class ProductListController implements Initializable {
         });
         tc_Height.setCellFactory((TableColumn<Product, String> param) -> new ProductValueCell());
         tc_Height.setOnEditCommit((CellEditEvent<Product, String> event) -> {
-            Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Product product = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                product.setHeightProduct(Double.parseDouble(event.getNewValue()));
+                product.setHeightProduct(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 product.setHeightProduct(null);
             }
@@ -148,9 +143,9 @@ public class ProductListController implements Initializable {
         });
         tc_Length.setCellFactory((TableColumn<Product, String> param) -> new ProductValueCell());
         tc_Length.setOnEditCommit((CellEditEvent<Product, String> event) -> {
-            Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Product product = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                product.setLengthProduct(Double.parseDouble(event.getNewValue()));
+                product.setLengthProduct(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 product.setLengthProduct(null);
             }
@@ -167,10 +162,10 @@ public class ProductListController implements Initializable {
         tc_PriceUnit.setCellFactory((TableColumn<Product, String> param) -> new ProductValueCell());
         tc_PriceUnit.setOnEditCommit((CellEditEvent<Product, String> event) -> {
             String price = "";
-            Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Product product = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             price = event.getNewValue();
 
-            product.setPriceUnit(Double.parseDouble(price));
+            product.setPriceUnit(Double.parseDouble(price.replace(',','.')));
             refreshTable();
         });
 
@@ -183,9 +178,9 @@ public class ProductListController implements Initializable {
         });
         tc_ColourFactor.setCellFactory((TableColumn<Product, String> param) -> new ProductValueCell());
         tc_ColourFactor.setOnEditCommit((CellEditEvent<Product, String> event) -> {
-            Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Product product = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                product.setColorFactor(Double.parseDouble(event.getNewValue()));
+                product.setColorFactor(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 product.setColorFactor(null);
             }
@@ -195,7 +190,7 @@ public class ProductListController implements Initializable {
         tc_Unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         tc_Unit.setCellFactory((TableColumn<Product, Unit> param) -> new ProductUnitCell());
         tc_Unit.setOnEditCommit((CellEditEvent<Product, Unit> event) -> {
-            Product product = ((Product) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Product product = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             product.setUnit(event.getNewValue());
         });
 

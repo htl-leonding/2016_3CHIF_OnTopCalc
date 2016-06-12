@@ -148,17 +148,17 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
     }
 
     public void setPricePerSquare() {
-        tf_PricePerSquare.setText(tf_PricePerSquare.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_PricePerSquare.setText(tf_PricePerSquare.getText().replace('.',',').replaceAll("[^\\d,]", ""));
         tf_PricePerSquare.setText(UtilityFormat.removeUnnecessaryCommas(tf_PricePerSquare.getText()));
 
         if (tf_PricePerSquare.getText().isEmpty()) {
             this.pricePerSquare = 0;
-        } else if (tf_PricePerSquare.getText().isEmpty() || Double.valueOf(tf_PricePerSquare.getText()) < 0) {
+        } else if (tf_PricePerSquare.getText().isEmpty() || Double.valueOf(tf_PricePerSquare.getText().replace(',','.')) < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerSquare + "\"", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
-            this.pricePerSquare = Double.valueOf(tf_PricePerSquare.getText());
+            this.pricePerSquare = Double.valueOf(tf_PricePerSquare.getText().replace(',','.'));
             component.setPriceComponent(pricePerSquare);
         }
     }
@@ -335,7 +335,7 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
      */
     @Override
     public void update(Observable o, Object arg) {
-        double oldVal = Double.parseDouble(lb_VisibleFormwork.getText().substring(0, lb_VisibleFormwork.getText().length() - 3));
+        double oldVal = Double.parseDouble(lb_VisibleFormwork.getText().substring(0, lb_VisibleFormwork.getText().length() - 3).replace(',','.'));
         double newVal = Project_ResultAreaController.getInstance().getLedge();
         if (oldVal != newVal && ModifyController.getInstance().getProject_resultArea() == true
                 && !(tf_AbatementPercent.getText().isEmpty() || tf_PricePerSquare.getText().isEmpty())) {

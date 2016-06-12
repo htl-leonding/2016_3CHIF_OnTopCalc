@@ -26,7 +26,6 @@ import java.util.ResourceBundle;
  */
 public class PrinterSelectionController implements Initializable {
 
-    PrintService pr;
     Boolean PrinterSelected, CopiesSelected;
     @FXML
     private ComboBox<ComboBoxPrintService> cb_choosPrinter;

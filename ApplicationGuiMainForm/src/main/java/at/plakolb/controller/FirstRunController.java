@@ -153,14 +153,6 @@ public class FirstRunController {
             parameterController.create(new ParameterP("Länge", "l", unitController.findUnit(1L), false));
             parameterController.create(new ParameterP("Breite", "b", unitController.findUnit(1L), false));
             parameterController.create(new ParameterP("Grundfläche", "A", unitController.findUnit(2L), false));
-            parameterController.create(new ParameterP("Volumen", "V", unitController.findUnit(3L), false));
-            parameterController.create(new ParameterP("Preis pro m³ Holz", "PM3H", unitController.findUnit(16L), true, 250.0));
-            parameterController.create(new ParameterP("Kubikmeter Zuschnitt Dauer", "KZG", unitController.findUnit(6L), true, 0.5));
-            parameterController.create(new ParameterP("Kubikmeter Preis/Stunde Zuschnitt", "KPSZ", unitController.findUnit(15L), true, 40.0));
-            parameterController.create(new ParameterP("Kubikmeter Gesamtdauer", "KG", unitController.findUnit(6L), false));
-            parameterController.create(new ParameterP("Kumbikmeter Zuschnitt Gesamtpreis", "KZPG", unitController.findUnit(7L), false));
-            parameterController.create(new ParameterP("Gesamtpreis Volumen", "GP", unitController.findUnit(7L), false));
-            parameterController.create(new ParameterP("Gesamtkosten Material+Zuschnitt Volumen", "GKV", unitController.findUnit(7L), false));
             parameterController.create(new ParameterP("Neigung", "N", unitController.findUnit(8L), false));
             parameterController.create(new ParameterP("Dachfläche inkl. Dachvorsprung", "DF", unitController.findUnit(2L), false));
             parameterController.create(new ParameterP("Dachfläche ohne Dachvorsprung", "D", unitController.findUnit(2L), false));

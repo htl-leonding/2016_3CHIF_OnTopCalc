@@ -139,17 +139,17 @@ public class Assembling_FormworkController implements Initializable, Observer {
     }
 
     private void setPrice() {
-        tf_Price.setText(tf_Price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_Price.setText(tf_Price.getText().replace('.',',').replaceAll("[^\\d,]", ""));
         tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
 
         if (tf_Price.getText().isEmpty()) {
             this.price = 0;
-        } else if (Double.valueOf(tf_Price.getText()) < 0) {
+        } else if (Double.valueOf(tf_Price.getText().replace(',','.')) < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + price + "\"", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
-            this.price = Double.valueOf(tf_Price.getText());
+            this.price = Double.valueOf(tf_Price.getText().replace(',','.'));
             component.setPriceComponent(price);
         }
     }

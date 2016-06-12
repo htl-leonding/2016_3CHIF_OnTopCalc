@@ -23,11 +23,8 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
@@ -83,20 +80,17 @@ public class Project_ConstructionMaterialController implements Initializable {
             assemblyList = new AssemblyController().findAssembliesByProjectId(ProjectViewController.getOpenedProject().getId());
         }
 
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-
         tv_Assembly.setEditable(true);
 
         tf_Amount.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            tf_Amount.setText(tf_Amount.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Amount.setText(tf_Amount.getText().replace('.',',').replaceAll("[^\\d,]", ""));
             tf_Amount.setText(UtilityFormat.removeUnnecessaryCommas(tf_Amount.getText()));
         });
         tc_Amount.setCellFactory((TableColumn<Assembly, String> param) -> new AssemblyValueCell());
         tc_Amount.setOnEditCommit((TableColumn.CellEditEvent<Assembly, String> event) -> {
-            Assembly assembly = ((Assembly) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Assembly assembly = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                assembly.setNumberOfComponents(Double.parseDouble(event.getNewValue()));
+                assembly.setNumberOfComponents(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 assembly.setNumberOfComponents(null);
             }
@@ -104,7 +98,7 @@ public class Project_ConstructionMaterialController implements Initializable {
         });
 
         tf_Price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            tf_Price.setText(tf_Price.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Price.setText(tf_Price.getText().replace('.',',').replaceAll("[^\\d,]", ""));
             tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
         });
 
@@ -112,7 +106,7 @@ public class Project_ConstructionMaterialController implements Initializable {
         
         tc_Amount.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param) -> {
             if (param.getValue().getNumberOfComponents() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getNumberOfComponents()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getNumberOfComponents()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -122,16 +116,16 @@ public class Project_ConstructionMaterialController implements Initializable {
 
         tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param) -> {
             if (param.getValue().getPrice() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPrice()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getPrice()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
         tc_Price.setCellFactory((TableColumn<Assembly, String> param) -> new AssemblyValueCell());
         tc_Price.setOnEditCommit((TableColumn.CellEditEvent<Assembly, String> event) -> {
-            Assembly assembly = ((Assembly) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Assembly assembly = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                assembly.setPrice(Double.parseDouble(event.getNewValue()));
+                assembly.setPrice(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 assembly.setPrice(null);
             }
@@ -139,7 +133,7 @@ public class Project_ConstructionMaterialController implements Initializable {
         });
 
         tc_TotalPrice.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param)
-                -> new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPrice() * param.getValue().getNumberOfComponents()) + " €")
+                -> new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getPrice() * param.getValue().getNumberOfComponents()) + " €")
         );
 
         tc_Button.setCellFactory(new Callback<TableColumn<Component, String>, TableCell<Component, String>>() {
@@ -271,8 +265,8 @@ public class Project_ConstructionMaterialController implements Initializable {
         }
 
         try {
-            amount = Double.parseDouble(tf_Amount.getText());
-            price = Double.parseDouble(tf_Price.getText());
+            amount = Double.parseDouble(tf_Amount.getText().replace(',','.'));
+            price = Double.parseDouble(tf_Price.getText().replace(',','.'));
 
             if (amount == 0) {
                 errorMessage += "Die Anzahl muss größer als 0 sein.\n";

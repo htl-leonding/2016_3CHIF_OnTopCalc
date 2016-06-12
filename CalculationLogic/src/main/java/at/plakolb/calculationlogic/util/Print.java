@@ -38,6 +38,8 @@ public class Print {
     private static final Font NORMALFONT = new Font(Font.FontFamily.TIMES_ROMAN, 10);
     private static final Font BOLDFONT = new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLDITALIC);
     private static final Font SUBFONT = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+    private static final Font TABLE_HEADER_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f, Font.BOLD);
+    private static final Font TABLE_NORMAL_FONT = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f);
 
     private final String path;
     private final Project project;
@@ -269,9 +271,6 @@ public class Print {
         paragraph.add(new Paragraph("Holzmaterial für Konsruktion", SUBFONT));
         addEmptyLine(paragraph, -1);
 
-        Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f, Font.BOLD);
-        Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f);
-
         PdfPTable table = new PdfPTable(new float[]{5.5f, 5f, 3f, 3f, 3f, 3f, 3.5f, 3.5f, 3.5f});
 
         table.setWidthPercentage(100f);
@@ -281,68 +280,65 @@ public class Print {
 
         if (components.size() > 0) {
 
-            table.addCell(new Phrase("Kategorie",
-                    tableHeaderFont));
-            table.addCell(new Phrase("Holzprodukt",
-                    tableHeaderFont));
-            table.addCell(new Phrase("Anzahl",
-                    tableHeaderFont));
-            table.addCell(new Phrase("m³",
-                    tableHeaderFont));
-            table.addCell(new Phrase("Preis m³/€",
-                    tableHeaderFont));
-            table.addCell(new Phrase("Preis €",
-                    tableHeaderFont));
-            table.addCell(new Phrase("Zuschnitt h",
-                    tableHeaderFont));
-            table.addCell(new Phrase("Zuschnitt €/h",
-                    tableHeaderFont));
-            table.addCell(new Phrase("Zuschnitt €",
-                    tableHeaderFont));
+            table.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(new Phrase("Kategorie", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("Holzprodukt", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("Anzahl", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("m³", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("Preis m³/€", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("Preis €", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("Zuschnitt h", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("Zuschnitt €/h", TABLE_HEADER_FONT));
+            table.addCell(new Phrase("Zuschnitt €", TABLE_HEADER_FONT));
 
             for (Component component : components) {
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-                table.addCell(new Phrase(component.getCategory().getLongAndShortTerm(), tableNormalFont));
-                table.addCell(new Phrase(component.getProduct().getName(), tableNormalFont));
+                table.addCell(new Phrase(component.getCategory().getLongAndShortTerm(), TABLE_NORMAL_FONT));
+                table.addCell(new Phrase(component.getProduct().getName(), TABLE_NORMAL_FONT));
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
-                table.addCell(new Phrase("" + component.getNumberOfProducts(), tableNormalFont));
+                table.addCell(new Phrase(UtilityFormat.getStringForLabel(component.getNumberOfProducts()), TABLE_NORMAL_FONT));
                 table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getWidthComponent() / 100 * component.getHeightComponent() / 100
-                        * component.getLengthComponent() * component.getNumberOfProducts(), "m³"), NORMALFONT));
+                        * component.getLengthComponent() * component.getNumberOfProducts(), "m³"), TABLE_NORMAL_FONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getPriceComponent() / (component.getWidthComponent() / 100 * component.getHeightComponent() / 100
+                        * component.getLengthComponent() * component.getNumberOfProducts()), "€/m³"), TABLE_NORMAL_FONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(
-                        component.getWidthComponent() / 100 * component.getHeightComponent() / 100
-                                * component.getLengthComponent() * component.getNumberOfProducts() * component.getPriceComponent(), "€"), NORMALFONT));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), TABLE_NORMAL_FONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours(), "h"), NORMALFONT));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours(), "h"), TABLE_NORMAL_FONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringPricePerHour(), "€"), NORMALFONT));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringPricePerHour(), "€"), TABLE_NORMAL_FONT));
 
-                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours() * component.getTailoringPricePerHour(), "€"), NORMALFONT));
+                table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(component.getTailoringHours() * component.getTailoringPricePerHour(), "€"), TABLE_NORMAL_FONT));
             }
         }
         paragraph.add(table);
 
         WorthController worthJpaController = new WorthController();
 
-        Worth cubicMeter = worthJpaController.findWorthByShortTermAndProjectId("V", project.getId());
-        Worth price = worthJpaController.findWorthByShortTermAndProjectId("GP", project.getId());
-        Worth duration = worthJpaController.findWorthByShortTermAndProjectId("KG", project.getId());
-        Worth tailoringPrice = worthJpaController.findWorthByShortTermAndProjectId("KZPG", project.getId());
+
+        double cubicMeter = 0;
+        double price = 0;
+        double duration = 0;
+        double tailoringPrice = 0;
+
+        for (Component component : components) {
+            cubicMeter += component.getHeightComponent() / 100 * component.getWidthComponent() / 100 * component.getLengthComponent() * component.getNumberOfProducts();
+            price += component.getPriceComponent();
+            duration += component.getTailoringHours();
+            tailoringPrice += component.getTailoringPricePerHour() * component.getTailoringHours();
+        }
 
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
-        if (cubicMeter != null && price != null && duration != null && tailoringPrice != null) {
-            table.addCell(new Phrase("", tableHeaderFont));
-            table.addCell(new Phrase("", tableHeaderFont));
-            table.addCell(new Phrase("", tableHeaderFont));
-            table.addCell(new Phrase(UtilityFormat.formatWorth(cubicMeter), tableHeaderFont));
-            table.addCell(new Phrase("", tableHeaderFont));
-            table.addCell(new Phrase(UtilityFormat.formatWorth(price), tableHeaderFont));
-            table.addCell(new Phrase(UtilityFormat.formatWorth(duration), tableHeaderFont));
-            table.addCell(new Phrase("", tableHeaderFont));
-            table.addCell(new Phrase(UtilityFormat.formatWorth(tailoringPrice), tableHeaderFont));
-        }
+        table.addCell(new Phrase("", TABLE_HEADER_FONT));
+        table.addCell(new Phrase("", TABLE_HEADER_FONT));
+        table.addCell(new Phrase("", TABLE_HEADER_FONT));
+        table.addCell(new Phrase(UtilityFormat.formatValueWithShortTerm(cubicMeter, "m³"), TABLE_HEADER_FONT));
+        table.addCell(new Phrase("", TABLE_HEADER_FONT));
+        table.addCell(new Phrase(UtilityFormat.getStringForLabel(price), TABLE_HEADER_FONT));
+        table.addCell(new Phrase(UtilityFormat.getStringForLabel(duration), TABLE_HEADER_FONT));
+        table.addCell(new Phrase("", TABLE_HEADER_FONT));
+        table.addCell(new Phrase(UtilityFormat.getStringForLabel(tailoringPrice), TABLE_HEADER_FONT));
 
         Worth priceTotal = worthJpaController.findWorthByShortTermAndProjectId("GKV", project.getId());
         if (priceTotal != null) {
@@ -364,7 +360,7 @@ public class Print {
         Component component = componentJpaController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                 "Produkt", category.getId());
 
-        if (component != null) {
+        if (component != null && component.getFullNameProduct() != "") {
             paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph("Schalung", SUBFONT));
@@ -379,7 +375,7 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€") + " €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VSP", project.getId());
@@ -442,7 +438,7 @@ public class Print {
         Component component = componentJpaController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                 "Produkt", category.getId());
 
-        if (component != null) {
+        if (component != null && component.getFullNameProduct() != "") {
             paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph("Sichtbare Schalung", SUBFONT));
@@ -457,7 +453,7 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€") + " €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VSSP", project.getId());
@@ -536,7 +532,7 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€") + " €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("FUEP", project.getId());
@@ -643,7 +639,7 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€") + " €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VDP", project.getId());
@@ -748,7 +744,7 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€") + " €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VKLP", project.getId());
@@ -893,7 +889,7 @@ public class Print {
         }
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€") + " €", NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPLV", project.getId());
@@ -979,7 +975,7 @@ public class Print {
 
             for (Assembly assembly : listAssembly) {
                 table.addCell(new Phrase(assembly.getProduct() == null ? "" : assembly.getProduct().getName(), tableNormalFont));
-                table.addCell(new Phrase(String.format("%.2f",assembly.getNumberOfComponents()), tableNormalFont));
+                table.addCell(new Phrase(String.format("%.2f", assembly.getNumberOfComponents()), tableNormalFont));
                 table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(assembly.getPrice()), tableNormalFont));
                 table.addCell(new Phrase(assembly.getComponent() == null ? "" : assembly.getComponent().getDescription(), tableNormalFont));
                 double allAroundPriceD = assembly.getPrice() * assembly.getNumberOfComponents();
@@ -988,7 +984,7 @@ public class Print {
 
             paragraph.add(table);
         } else {
-            paragraph.add(new Paragraph("Keine Materialen vorhanden",NORMALFONT));
+            paragraph.add(new Paragraph("Keine Materialen vorhanden", NORMALFONT));
         }
         document.add(paragraph);
     }
@@ -1285,7 +1281,7 @@ public class Print {
                     }
                     cell = new PdfPCell(new Phrase(UtilityFormat.formatWorth(worth), tableNormalFont));
                 } else {
-                    cell = new PdfPCell(new Phrase("0.00", tableNormalFont));
+                    cell = new PdfPCell(new Phrase("0", tableNormalFont));
                 }
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

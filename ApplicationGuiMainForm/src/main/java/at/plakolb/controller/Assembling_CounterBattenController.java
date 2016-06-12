@@ -145,17 +145,17 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     }
 
     public void setPrice() {
-        tf_pricePerMeter.setText(tf_pricePerMeter.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+        tf_pricePerMeter.setText(tf_pricePerMeter.getText().replace('.',',').replaceAll("[^\\d,]", ""));
         tf_pricePerMeter.setText(UtilityFormat.removeUnnecessaryCommas(tf_pricePerMeter.getText()));
 
         if (tf_pricePerMeter.getText().isEmpty()) {
             this.pricePerMeter = 0;
-        } else if (tf_pricePerMeter.getText().isEmpty() || Double.valueOf(tf_pricePerMeter.getText()) < 0) {
+        } else if (tf_pricePerMeter.getText().isEmpty() || Double.valueOf(tf_pricePerMeter.getText().replace(',','.')) < 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Der Preis muss eine positive Zahl sein!\nEingabe: \"" + pricePerMeter + "\"", ButtonType.OK);
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         } else {
-            this.pricePerMeter = Double.valueOf(tf_pricePerMeter.getText());
+            this.pricePerMeter = Double.valueOf(tf_pricePerMeter.getText().replace(',','.'));
             component.setPriceComponent(pricePerMeter);
         }
     }

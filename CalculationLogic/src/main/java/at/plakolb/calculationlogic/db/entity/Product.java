@@ -3,6 +3,7 @@ package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -146,7 +147,7 @@ public class Product implements Serializable {
     public String getFullName() {
 
         String nameFull = name + " ";
-        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        DecimalFormat decimalFormat = new DecimalFormat("#.#", UtilityFormat.getDecimalFormatSymbols());
 
         if (ProductType.COLOR == productType) {
             return nameFull.substring(0, nameFull.length() - 1);

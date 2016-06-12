@@ -13,9 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
@@ -45,8 +42,6 @@ public class Project_TransportController extends java.util.Observable implements
     @FXML
     private Label lb_PriceComplete;
 
-    private DecimalFormat decimalFormat;
-
     private Worth kilometerAllowance;
     private Worth distance;
     private Worth days;
@@ -65,8 +60,6 @@ public class Project_TransportController extends java.util.Observable implements
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
 
         ParameterController parameterController = new ParameterController();
         kilometerAllowance = new Worth(parameterController.findParameterPByShortTerm("KMG"));
@@ -198,9 +191,9 @@ public class Project_TransportController extends java.util.Observable implements
             abidanceCosts.setWorth(pricePerHour.getWorth() * duration.getWorth());
             totalCosts.setWorth(transportCosts.getWorth() + abidanceCosts.getWorth());
 
-            lb_PriceTransport.setText(decimalFormat.format(transportCosts.getWorth()) + " €");
-            lb_PriceStay.setText(decimalFormat.format(abidanceCosts.getWorth()) + " €");
-            lb_PriceComplete.setText(decimalFormat.format(totalCosts.getWorth()) + " €");
+            lb_PriceTransport.setText(UtilityFormat.getStringForLabel(transportCosts.getWorth()));
+            lb_PriceStay.setText(UtilityFormat.getStringForLabel(abidanceCosts.getWorth()));
+            lb_PriceComplete.setText(UtilityFormat.getStringForLabel(totalCosts.getWorth()));
             setValuesChanged(true);
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Project_TransportController: calculate method didn't work.", ex);

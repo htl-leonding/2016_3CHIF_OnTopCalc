@@ -36,7 +36,7 @@ public class AssemblyValueCell extends TableCell<Assembly, String> {
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setText((String) getItem());
+        setText(getItem());
         setGraphic(null);
     }
 
@@ -67,7 +67,7 @@ public class AssemblyValueCell extends TableCell<Assembly, String> {
         textField.setPrefWidth(this.getWidth() - 5);
 
         textField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            textField.setText(textField.getText().replace('.', ',').replaceAll("[^\\d,]", ""));
             textField.setText(UtilityFormat.removeUnnecessaryCommas(textField.getText()));
         });
 
@@ -75,8 +75,8 @@ public class AssemblyValueCell extends TableCell<Assembly, String> {
             if (t.getCode() == KeyCode.ENTER) {
 
                 try {
-                    textField.setText(textField.getText().replace(",", "."));
-                    double number = Double.parseDouble(textField.getText());
+                    textField.setText(textField.getText().replace(".", ","));
+                    double number = Double.parseDouble(textField.getText().replace(',', '.'));
                     if (getTableColumn().getId().equals("tc_Amount") && UtilityFormat.getStringForTableColumn(number).equals("0")) {
                         textField.setText("1");
                     }

@@ -14,10 +14,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Kepplinger
  */
 public class UtilityFormat {
+
+    public static DecimalFormatSymbols decimalFormatSymbols;
+
+    public static DecimalFormatSymbols getDecimalFormatSymbols() {
+
+        if (decimalFormatSymbols == null) {
+            decimalFormatSymbols = new DecimalFormatSymbols(Locale.GERMAN);
+            decimalFormatSymbols.setDecimalSeparator(',');
+        }
+
+        return decimalFormatSymbols;
+    }
 
     /**
      * Parses a double into a formatted String.
@@ -35,9 +46,8 @@ public class UtilityFormat {
         if (number == 0 || number.isNaN()) {
             return "";
         } else {
-            DecimalFormat decimalFormat = new DecimalFormat("#.#######");
-            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-            return String.valueOf(decimalFormat.format(number));
+            DecimalFormat decimalFormat = new DecimalFormat("#.#######", getDecimalFormatSymbols());
+            return decimalFormat.format(number);
         }
     }
 
@@ -70,9 +80,8 @@ public class UtilityFormat {
             if (number.isInfinite()) {
                 number = 0.0;
             }
-            DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-            return String.valueOf(decimalFormat.format(number));
+            DecimalFormat decimalFormat = new DecimalFormat("#.##", getDecimalFormatSymbols());
+            return decimalFormat.format(number);
         }
     }
 
@@ -106,9 +115,8 @@ public class UtilityFormat {
             if (number.isInfinite()) {
                 number = 0.0;
             }
-            DecimalFormat decimalFormat = new DecimalFormat("#.##");
-            decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-            return String.valueOf(decimalFormat.format(number));
+            DecimalFormat decimalFormat = new DecimalFormat("#.##", getDecimalFormatSymbols());
+            return decimalFormat.format(number);
         }
     }
 
@@ -154,13 +162,13 @@ public class UtilityFormat {
 
         try {
             if (textField != null) {
-                textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+                textField.setText(textField.getText().replace('.', ',').replaceAll("[^\\d,]", ""));
                 textField.setText(removeUnnecessaryCommas(textField.getText()));
 
                 if (textField.getText().isEmpty()) {
                     worth.setWorth(0);
                 } else {
-                    worth.setWorth(Double.parseDouble(textField.getText()));
+                    worth.setWorth(Double.parseDouble(textField.getText().replace(',', '.')));
                 }
                 return true;
             }
@@ -173,34 +181,6 @@ public class UtilityFormat {
     }
 
     /**
-     * Saves the price of a textfield into a double.
-     *
-     * @param textField
-     * @param doubleValue
-     * @return
-     */
-    public static double getPriceFromTextField(TextField textField, double doubleValue) {
-
-        try {
-            if (textField != null) {
-                textField.setText(textField.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
-                textField.setText(removeUnnecessaryCommas(textField.getText()));
-
-                if (textField.getText().isEmpty()) {
-                    doubleValue = 0;
-                } else {
-                    doubleValue = Double.parseDouble(textField.getText());
-                }
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(UtilityFormat.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
-        }
-
-        return doubleValue;
-    }
-
-    /**
      * Reduces the amount of commas to one.
      *
      * @param numberString
@@ -210,12 +190,16 @@ public class UtilityFormat {
 
         String newString = numberString;
 
-        if ((numberString.length() - numberString.replace(".", "").length()) > 1) {
-            int index = numberString.lastIndexOf(".");
+        if (newString.equals(",")){
+            return "0";
+        }
+
+        if ((numberString.length() - numberString.replace(",", "").length()) > 1) {
+            int index = numberString.lastIndexOf(",");
 
             for (int i = 0; i < numberString.length(); i++) {
-                if (numberString.charAt(i) == '.' && i != index) {
-                    newString = newString.replaceFirst("\\.", "");
+                if (numberString.charAt(i) == ',' && i != index) {
+                    newString = newString.replaceFirst(",", "");
                 }
             }
         }
@@ -253,45 +237,45 @@ public class UtilityFormat {
 
     public static String worthWithTwoDecimalPlaces(double d) {
         if (d <= 0.001 && d != 0) {
-            return ("" + d).replace(".", ",");
+            return ("" + d);
         }
-        DecimalFormat twoDForm = new DecimalFormat("0.00");
-        return twoDForm.format(d).replaceAll(",", ".");
+        DecimalFormat twoDForm = new DecimalFormat("0.00", getDecimalFormatSymbols());
+        return twoDForm.format(d);
     }
 
     public static String worthWithThreeDecimalPlaces(double d) {
-        DecimalFormat twoDForm = new DecimalFormat("0.000");
-        return twoDForm.format(d).replace(",", ".");
+        DecimalFormat twoDForm = new DecimalFormat("0.000", getDecimalFormatSymbols());
+        return twoDForm.format(d);
     }
 
     public static String worthWithDecimalPattern(String pattern, double d) {
         if (d <= 0.001 && d != 0) {
-            return ("" + d).replace(",", ".");
+            return ("" + d);
         }
         if (pattern == null) {
             return worthWithTwoDecimalPlaces(d);
         }
-        DecimalFormat twoDForm = new DecimalFormat(pattern);
-        return twoDForm.format(d).replace(",", ".");
+        DecimalFormat twoDForm = new DecimalFormat(pattern, getDecimalFormatSymbols());
+        return twoDForm.format(d);
     }
 
     public static String formatValueWithShortTerm(double worth, String shortTerm) {
-        String decimalPlaces = "m³".equals(shortTerm) ? "0.000" : "#.##";
+        String decimalPlaces = "m³".equals(shortTerm) ? "0,000" : "#,##";
         return worthWithDecimalPattern(decimalPlaces, worth);
     }
 
     public static String formatWorth(Worth worth) {
-        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "#.##";
+        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0,000" : "#,##";
         return worthWithDecimalPattern(decimalPlaces, worth.getWorth());
     }
 
     public static String worthWithUnit(Worth worth) {
-        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "#.##";
+        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0,000" : "#,##";
         return worthWithDecimalPattern(decimalPlaces, worth.getWorth()) + " " + worth.getParameter().getUnit().getShortTerm();
     }
 
     public static String twoDecimalPlaces(double decimal) {
-        DecimalFormat twoDForm = new DecimalFormat("0.00");
+        DecimalFormat twoDForm = new DecimalFormat("0,00", getDecimalFormatSymbols());
         return twoDForm.format(decimal);
     }
 }

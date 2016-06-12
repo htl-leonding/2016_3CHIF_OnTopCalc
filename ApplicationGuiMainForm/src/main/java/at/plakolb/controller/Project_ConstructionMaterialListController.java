@@ -26,11 +26,8 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
@@ -95,10 +92,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         components = new LinkedList<>();
-        DecimalFormat decimalFormatTwo = new DecimalFormat("#.##");
-        decimalFormatTwo.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-        DecimalFormat decimalFormatFour = new DecimalFormat("#.####");
-        decimalFormatFour.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
+
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
             components = new ComponentController().findComponentsByProjectIdAndComponentType(ProjectViewController.getOpenedProject().getId(), "Kubikmeter");
         }
@@ -106,7 +100,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tv_Materials.setEditable(true);
 
         tf_Amount.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            tf_Amount.setText(tf_Amount.getText().replaceAll(",", ".").replaceAll("[^\\d.]", ""));
+            tf_Amount.setText(tf_Amount.getText().replace(".", ",").replaceAll("[^\\d,]", ""));
             tf_Amount.setText(UtilityFormat.removeUnnecessaryCommas(tf_Amount.getText()));
         });
 
@@ -116,7 +110,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         tc_Length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getLengthComponent() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getLengthComponent()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getLengthComponent()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -125,7 +119,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tc_Length.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
             Component component = event.getTableView().getItems().get(event.getTablePosition().getRow());
             if (!event.getNewValue().equals("")) {
-                component.setLengthComponent(Double.parseDouble(event.getNewValue()));
+                component.setLengthComponent(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 component.setLengthComponent(null);
             }
@@ -134,16 +128,16 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         tc_Amount.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getNumberOfProducts() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getNumberOfProducts()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getNumberOfProducts()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
         tc_Amount.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
         tc_Amount.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
-            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setNumberOfProducts(Double.parseDouble(event.getNewValue()));
+                component.setNumberOfProducts(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 component.setNumberOfProducts(null);
             }
@@ -152,32 +146,32 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         tc_Volume.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<>(decimalFormatFour.format(component.getWidthComponent() / 100 * component.getLengthComponent() * component.getHeightComponent() / 100 * component.getNumberOfProducts()));
+            return new ReadOnlyObjectWrapper<>(UtilityFormat.worthWithThreeDecimalPlaces(component.getWidthComponent() / 100 * component.getLengthComponent() * component.getHeightComponent() / 100 * component.getNumberOfProducts()));
         });
 
         tc_PricePerCubic.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts())));
+            return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(component.getPriceComponent() / ((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts())));
         });
         tc_PricePerCubic.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
         tc_PricePerCubic.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
-            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
-            component.setPriceComponent(((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts()) * Double.parseDouble(event.getNewValue()));
+            Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            component.setPriceComponent(((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts()) * (Double.parseDouble(event.getNewValue().replace(',','.'))));
             refreshTable();
         });
 
         tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getPriceComponent() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getPriceComponent()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getPriceComponent()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
         tc_Price.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
         tc_Price.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
-            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setPriceComponent(Double.parseDouble(event.getNewValue()));
+                component.setPriceComponent(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 component.setPriceComponent(null);
             }
@@ -186,16 +180,16 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         tc_CuttingHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getTailoringHours() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getTailoringHours()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getTailoringHours()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
         tc_CuttingHours.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
         tc_CuttingHours.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
-            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setTailoringHours(Double.parseDouble(event.getNewValue()));
+                component.setTailoringHours(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 component.setTailoringHours(null);
             }
@@ -204,16 +198,16 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         tc_CuttingPricePerHours.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getTailoringPricePerHour() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(param.getValue().getTailoringPricePerHour()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getTailoringPricePerHour()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
         tc_CuttingPricePerHours.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
         tc_CuttingPricePerHours.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
-            Component component = ((Component) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setTailoringPricePerHour(Double.parseDouble(event.getNewValue()));
+                component.setTailoringPricePerHour(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
                 component.setTailoringPricePerHour(null);
             }
@@ -222,7 +216,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         tc_CuttingPrice.setCellValueFactory((CellDataFeatures<Component, String> param) -> {
             Component component = param.getValue();
-            return new ReadOnlyObjectWrapper<>(decimalFormatTwo.format(component.getTailoringHours() * component.getTailoringPricePerHour()));
+            return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(component.getTailoringHours() * component.getTailoringPricePerHour()));
         });
 
         /**
@@ -320,15 +314,15 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     }
 
     public double getWage() {
-        return Double.parseDouble(lb_CuttingCostSum.getText().substring(0, lb_CuttingCostSum.getText().length() - 2));
+        return Double.parseDouble(lb_CuttingCostSum.getText().substring(0, lb_CuttingCostSum.getText().length() - 2).replace(',','.'));
     }
 
     public double getMaterial() {
-        return Double.parseDouble(lb_MaterialCostSum.getText().substring(0, lb_MaterialCostSum.getText().length() - 2));
+        return Double.parseDouble(lb_MaterialCostSum.getText().substring(0, lb_MaterialCostSum.getText().length() - 2).replace(',','.'));
     }
 
     public double getTotalCosts() {
-        return Double.parseDouble(lb_TotalCosts.getText().substring(0, lb_TotalCosts.getText().length() - 2));
+        return Double.parseDouble(lb_TotalCosts.getText().substring(0, lb_TotalCosts.getText().length() - 2).replace(',','.'));
     }
 
     /**
@@ -343,7 +337,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         Category category = cb_Category.getValue();
 
         try {
-            if (tf_Amount.getText().isEmpty() || Double.parseDouble(tf_Amount.getText()) <= 0) {
+            if (tf_Amount.getText().isEmpty() || Double.parseDouble(tf_Amount.getText().replace(',','.')) <= 0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine gültige Zahl ein, die größer als 0 ist.");
                 alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
@@ -352,8 +346,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                         product.getWidthProduct(),
                         product.getHeightProduct(),
                         product.getLengthProduct(),
-                        product.getPriceUnit() * Double.parseDouble(tf_Amount.getText()),
-                        Double.parseDouble(tf_Amount.getText()),
+                        product.getPriceUnit() * Double.parseDouble(tf_Amount.getText().replace(',','.')),
+                        Double.parseDouble(tf_Amount.getText().replace(',','.')),
                         category,
                         product.getUnit(),
                         product,
@@ -395,13 +389,11 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
      * Calulates the sums of certain TableColumns
      */
     private void calculateCosts() {
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
-        lb_CubicSum.setText(decimalFormat.format(getColmunSum(tc_Volume)) + " m³");
-        lb_MaterialCostSum.setText(decimalFormat.format(getColmunSum(tc_Price)) + " €");
-        lb_CuttingTimeSum.setText(decimalFormat.format(getColmunSum(tc_CuttingHours)) + " h");
-        lb_CuttingCostSum.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice)) + " €");
-        lb_TotalCosts.setText(decimalFormat.format(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)) + " €");
+        lb_CubicSum.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_Volume)) + " €");
+        lb_MaterialCostSum.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_Price)) + " €");
+        lb_CuttingTimeSum.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_CuttingHours)) + " €");
+        lb_CuttingCostSum.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_CuttingPrice)) + " €");
+        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)) + " €");
     }
 
     /**
@@ -413,7 +405,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     private double getColmunSum(TableColumn<Component, String> column) {
         double sum = 0;
         for (Component component : tv_Materials.getItems()) {
-            sum += Double.parseDouble(column.getCellData(component));
+            sum += Double.parseDouble(column.getCellData(component).replace(',','.'));
         }
         return sum;
     }

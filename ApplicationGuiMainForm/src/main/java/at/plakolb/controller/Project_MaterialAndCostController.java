@@ -3,6 +3,7 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.entity.Component;
 import at.plakolb.calculationlogic.db.entity.Unit;
+import at.plakolb.calculationlogic.util.UtilityFormat;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,11 +13,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -59,8 +57,6 @@ public class Project_MaterialAndCostController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ENGLISH));
         components = new LinkedList<>();
 
         tc_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
@@ -71,7 +67,7 @@ public class Project_MaterialAndCostController implements Initializable {
 
         tc_Width.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getProduct().getWidthProduct() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getProduct().getWidthProduct()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getProduct().getWidthProduct()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -79,7 +75,7 @@ public class Project_MaterialAndCostController implements Initializable {
 
         tc_Height.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getProduct().getHeightProduct() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getProduct().getHeightProduct()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getProduct().getHeightProduct()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -87,7 +83,7 @@ public class Project_MaterialAndCostController implements Initializable {
 
         tc_Length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getProduct().getLengthProduct() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getProduct().getLengthProduct()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getProduct().getLengthProduct()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -95,7 +91,7 @@ public class Project_MaterialAndCostController implements Initializable {
 
         tc_Amount.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getNumberOfProducts() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getNumberOfProducts()));
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getNumberOfProducts()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -105,7 +101,7 @@ public class Project_MaterialAndCostController implements Initializable {
 
         tc_PricePerUnit.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getPriceComponent() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getPriceComponent()) + " €");
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getPriceComponent()) + " €");
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
@@ -113,7 +109,7 @@ public class Project_MaterialAndCostController implements Initializable {
 
         tc_TotalCosts.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
             if (param.getValue().getProduct() != null && param.getValue().getNumberOfProducts() != null) {
-                return new ReadOnlyObjectWrapper<>(decimalFormat.format(param.getValue().getNumberOfProducts() * param.getValue().getPriceComponent()) + " €");
+                return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getNumberOfProducts() * param.getValue().getPriceComponent()) + " €");
             } else {
                 return new ReadOnlyObjectWrapper<>("");
             }
