@@ -1,18 +1,11 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.entity.Worth;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
+import at.plakolb.calculationlogic.util.Logging;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,6 +17,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+
+import java.net.URL;
+import java.util.*;
+import java.util.logging.Level;
 
 /**
  * FXML Controller class

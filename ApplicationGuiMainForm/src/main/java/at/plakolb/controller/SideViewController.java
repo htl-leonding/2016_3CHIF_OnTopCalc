@@ -2,11 +2,6 @@
 package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.util.Logging;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +13,10 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 /**
  * FXML Controller class The side view controller is responsible to load the

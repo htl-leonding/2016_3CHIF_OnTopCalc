@@ -1,7 +1,6 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.CategoryController;
 import at.plakolb.calculationlogic.db.controller.ComponentController;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
@@ -11,8 +10,20 @@ import at.plakolb.calculationlogic.db.entity.Category;
 import at.plakolb.calculationlogic.db.entity.Component;
 import at.plakolb.calculationlogic.db.entity.Product;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.edit.ComponentValueCell;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -22,26 +33,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Region;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class

@@ -1,6 +1,10 @@
 package at.plakolb.calculationlogic.util;
 
 import at.plakolb.calculationlogic.db.entity.Worth;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.text.Text;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -8,9 +12,6 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.text.Text;
 
 /**
  *

@@ -1,19 +1,10 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.entity.Project;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.settings.SettingsController;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +22,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+
 /**
  * FXML Controller class The main form controller is responsible to load the
  * correct fxml file into the main pane when a button is pressed.
@@ -39,9 +37,10 @@ import javafx.stage.Stage;
  */
 public class MainFormController implements Initializable {
 
+    private static MainFormController instance;
+
     @FXML
     private AnchorPane mainPane;
-    private static MainFormController instance;
     @FXML
     private MenuButton mb_openProjects;
     @FXML
@@ -66,7 +65,7 @@ public class MainFormController implements Initializable {
         }
 
         //Adds an item for all other projects if there are more than 5 projects.        
-        if (projectController.getCount() > 5) {
+        if (projectController.findProjectsByDeletion(false).size() > 5) {
             MenuItem menuItem = new MenuItem("Weitere Projekte");
             menuItem.setOnAction(EventHandler -> {
                 loadFxmlIntoPane("AllProjects.fxml");

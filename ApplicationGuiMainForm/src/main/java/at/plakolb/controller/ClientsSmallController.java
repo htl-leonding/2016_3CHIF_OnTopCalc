@@ -3,9 +3,6 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.entity.Client;
-import java.net.URL;
-import java.util.Observable;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +13,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.Observable;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class

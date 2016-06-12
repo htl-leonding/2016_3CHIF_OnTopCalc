@@ -1,11 +1,18 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.db.entity.Worth;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -15,14 +22,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Region;
 
 /**
  * FXML Controller class
@@ -299,7 +298,7 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         gableLeft.setShortTerm(gableLeft.getParameter().getShortTerm() + index);
 
         try {
-            if (!ProjectViewController.isProjectOpened()) {
+            if (isNewTab()) {
                 length.setProject(ProjectViewController.getOpenedProject());
                 width.setProject(ProjectViewController.getOpenedProject());
                 angle.setProject(ProjectViewController.getOpenedProject());
@@ -327,6 +326,21 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Project_BaseAndRoofAreaController: persist method didn't work.", ex);
         }
+    }
+
+    /**
+     * Retruns if the current tabs is already persitsted.
+     *
+     * @return
+     */
+    private boolean isNewTab() {
+        return (length.getId() == null ||
+                width.getId() == null ||
+                angle.getId() == null ||
+                eaves.getId() == null ||
+                ridge.getId() == null ||
+                gableRight.getId() == null ||
+                gableLeft.getId() == null);
     }
 
     /**

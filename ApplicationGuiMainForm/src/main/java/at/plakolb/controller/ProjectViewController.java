@@ -1,20 +1,12 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
-import at.plakolb.main.MainApp;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.entity.Client;
 import at.plakolb.calculationlogic.db.entity.Project;
-
-import java.net.URL;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-
+import at.plakolb.calculationlogic.util.Logging;
+import at.plakolb.main.MainApp;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -23,6 +15,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
+
+import java.net.URL;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 /**
  * FXML Controller class
@@ -227,7 +226,7 @@ public class ProjectViewController extends Observable implements Initializable, 
             }
 
             if (!projectOpened) {
-                bt_Dismiss.setText("Menü");
+                bt_Dismiss.setText("Abbrechen");
                 bt_Save.setText("Speichern");
             }
 

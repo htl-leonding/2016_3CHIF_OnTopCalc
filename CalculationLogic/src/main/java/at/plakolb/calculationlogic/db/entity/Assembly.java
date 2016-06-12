@@ -3,20 +3,10 @@ package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Clock;
 import java.time.LocalDateTime;
-import javax.persistence.CascadeType;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 /**
  * @author Kepplinger

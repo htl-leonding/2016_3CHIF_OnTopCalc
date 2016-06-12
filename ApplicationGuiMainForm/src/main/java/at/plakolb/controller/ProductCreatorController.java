@@ -1,19 +1,12 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProductController;
 import at.plakolb.calculationlogic.db.controller.UnitController;
 import at.plakolb.calculationlogic.db.entity.Product;
 import at.plakolb.calculationlogic.db.entity.Unit;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
-
-import static at.plakolb.calculationlogic.util.UtilityFormat.removeUnnecessaryCommas;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-
+import at.plakolb.calculationlogic.util.Logging;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +20,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+
+import static at.plakolb.calculationlogic.util.UtilityFormat.removeUnnecessaryCommas;
 
 /**
  * FXML Controller class

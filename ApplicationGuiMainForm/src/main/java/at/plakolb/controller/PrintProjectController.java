@@ -1,27 +1,14 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.entity.Project;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.Print;
 import at.plakolb.calculationlogic.util.PrintInformationException;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.settings.SettingsController;
 import com.itextpdf.text.DocumentException;
-
-import java.awt.Desktop;
-import java.awt.print.PrinterException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -32,6 +19,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -39,6 +29,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.print.PrintServiceLookup;
+import java.awt.*;
+import java.awt.print.PrinterException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 /**
  * FXML Controller class

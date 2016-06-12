@@ -2,11 +2,12 @@
 package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.util.UtilityFormat;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class

@@ -1,16 +1,11 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.edit.ParameterCell;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.entity.ParameterP;
 import at.plakolb.calculationlogic.db.entity.Unit;
 import at.plakolb.calculationlogic.util.UtilityFormat;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import at.plakolb.edit.ParameterCell;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -24,6 +19,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
