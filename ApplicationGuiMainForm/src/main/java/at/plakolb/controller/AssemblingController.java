@@ -1,15 +1,16 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+
 import java.net.URL;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 
 /**
  * This view contains the Assembling-TabPane and is also responsible for a

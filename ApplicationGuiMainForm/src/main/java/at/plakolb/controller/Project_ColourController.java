@@ -1,19 +1,17 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
-import at.plakolb.calculationlogic.db.controller.CategoryController;
-import at.plakolb.calculationlogic.db.controller.ComponentController;
-import at.plakolb.calculationlogic.db.controller.ParameterController;
-import at.plakolb.calculationlogic.db.controller.ProductController;
-import at.plakolb.calculationlogic.db.controller.WorthController;
-import at.plakolb.calculationlogic.db.entity.Category;
-import at.plakolb.calculationlogic.db.entity.Component;
-import at.plakolb.calculationlogic.db.entity.Product;
-import at.plakolb.calculationlogic.db.entity.Project;
-import at.plakolb.calculationlogic.db.entity.Worth;
+import at.plakolb.calculationlogic.db.controller.*;
+import at.plakolb.calculationlogic.db.entity.*;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -21,17 +19,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Region;
 
 /**
  * FXML Controller class
@@ -197,7 +184,6 @@ public class Project_ColourController implements Initializable {
         Project openedProject = ProjectViewController.getOpenedProject();
 
         timeofPainting = (worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("ZPFA", openedProject.getId()) : timeofPainting;
-        /*combobox*/
 
         profiHour = (worthController.findWorthByShortTermAndProjectId("PMFP", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("PMFP", openedProject.getId()) : profiHour;
         additionalColourFactor = (worthController.findWorthByShortTermAndProjectId("FK", openedProject.getId()) != null) ? worthController.findWorthByShortTermAndProjectId("FK", openedProject.getId()) : additionalColourFactor;
@@ -218,7 +204,6 @@ public class Project_ColourController implements Initializable {
                 tf_PricePerLiter.setText(UtilityFormat.getStringForTextField(componentPrice));
             }
         } else {
-            System.out.println("new Component");
             component = new Component();
             component.setDescription("Farbe");
             component.setComponentType(ProductType.COLOR.toString());

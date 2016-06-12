@@ -1,9 +1,6 @@
 /*	HTL Leonding	*/
 package at.plakolb.main;
 
-import at.plakolb.calculationlogic.db.controller.*;
-import at.plakolb.calculationlogic.db.entity.*;
-import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.settings.SettingsController;
 import javafx.application.Application;
@@ -13,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import sun.applet.Main;
 
 import java.io.File;
 import java.io.IOException;

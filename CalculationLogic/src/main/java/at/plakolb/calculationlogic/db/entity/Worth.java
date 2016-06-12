@@ -4,10 +4,10 @@ package at.plakolb.calculationlogic.db.entity;
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Clock;
 import java.time.LocalDateTime;
-import javax.persistence.*;
 
 /**
  * @author Kepplinger

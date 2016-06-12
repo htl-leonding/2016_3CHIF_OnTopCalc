@@ -1,19 +1,22 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.util.Logging;
-import at.plakolb.calculationlogic.db.controller.CategoryController;
-import at.plakolb.calculationlogic.db.controller.ComponentController;
-import at.plakolb.calculationlogic.db.controller.ParameterController;
-import at.plakolb.calculationlogic.db.controller.ProductController;
-import at.plakolb.calculationlogic.db.controller.WorthController;
-import at.plakolb.calculationlogic.db.entity.Category;
-import at.plakolb.calculationlogic.db.entity.Component;
-import at.plakolb.calculationlogic.db.entity.Product;
-import at.plakolb.calculationlogic.db.entity.Project;
-import at.plakolb.calculationlogic.db.entity.Worth;
+import at.plakolb.calculationlogic.db.controller.*;
+import at.plakolb.calculationlogic.db.entity.*;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,23 +24,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 
 /**
  * Over this view its possible to calculate either the battens or the full

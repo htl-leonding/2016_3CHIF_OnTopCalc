@@ -2,12 +2,6 @@
 package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.util.ComboBoxPrintService;
-
-import java.net.URL;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-
 import at.plakolb.settings.SettingsController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -20,6 +14,10 @@ import javafx.scene.layout.Region;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class

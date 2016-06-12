@@ -3,22 +3,13 @@ package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 /**
  *
