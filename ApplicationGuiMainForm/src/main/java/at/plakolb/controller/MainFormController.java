@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -54,26 +55,31 @@ public class MainFormController implements Initializable {
         List<Project> projects = projectController.findLastFiveProjects();
         List<MenuItem> items = new LinkedList<>();
 
-        //Adds the five most recent used projects.
-        for (int i = 0; i < Math.min(5, projects.size()); i++) {
-            MenuItem menuItem = new MenuItem(projects.get(i).toString());
-            menuItem.setOnAction(eventHandler -> {
-                ProjectViewController.openProject(projectController.findLastFiveProjects().get(items.indexOf(menuItem)));
-                loadFxmlIntoPane("ProjectView.fxml");
-            });
-            items.add(menuItem);
-        }
+        if (projects.size() == 0) {
+            mb_openProjects.setDisable(true);
+        } else {
+            //Adds the five most recent used projects.
+            for (int i = 0; i < Math.min(5, projects.size()); i++) {
+                MenuItem menuItem = new MenuItem(projects.get(i).toString());
+                menuItem.setOnAction(eventHandler -> {
+                    ProjectViewController.openProject(projectController.findLastFiveProjects().get(items.indexOf(menuItem)));
+                    loadFxmlIntoPane("ProjectView.fxml");
+                });
+                items.add(menuItem);
+            }
 
-        //Adds an item for all other projects if there are more than 5 projects.        
-        if (projectController.findProjectsByDeletion(false).size() > 5) {
-            MenuItem menuItem = new MenuItem("Weitere Projekte");
-            menuItem.setOnAction(EventHandler -> {
-                loadFxmlIntoPane("AllProjects.fxml");
-            });
-            items.add(menuItem);
-        }
+            //Adds an item for all other projects if there are more than 5 projects.
+            if (projectController.findProjectsByDeletion(false).size() > 5) {
+                MenuItem menuItem = new MenuItem("Weitere Projekte");
+                menuItem.setOnAction(EventHandler -> {
+                    loadFxmlIntoPane("AllProjects.fxml");
+                });
+                items.add(new SeparatorMenuItem());
+                items.add(menuItem);
+            }
 
-        mb_openProjects.getItems().addAll(items);
+            mb_openProjects.getItems().addAll(items);
+        }
 
         LocalDate lastBackup = SettingsController.getDateProperty("lastBackup");
 

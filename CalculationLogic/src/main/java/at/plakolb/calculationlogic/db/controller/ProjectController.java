@@ -63,7 +63,7 @@ public class ProjectController {
                 List<Worth> worths = project.getWorths();
                 project.setWorths(new ArrayList<Worth>());
                 for (Worth worth : worths) {
-                    em.persist(new Worth(project, worth.getParameter(), worth.getWorth()));
+                    em.persist(new Worth(project, worth.getParameter(), worth.getWorth(),worth.getShortTerm()));
                 }
             }
             ComponentController componentJpaController = new ComponentController();
