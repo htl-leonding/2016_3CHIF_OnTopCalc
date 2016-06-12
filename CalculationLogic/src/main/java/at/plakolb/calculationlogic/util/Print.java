@@ -282,7 +282,7 @@ public class Print {
         Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f, Font.BOLD);
         Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 10.5f);
 
-        PdfPTable table = new PdfPTable(new float[]{5.5f, 5f, 3f, 3f, 3f, 3f, 3f, 3f, 3f});
+        PdfPTable table = new PdfPTable(new float[]{5.5f, 5f, 3f, 3f, 3f, 3f, 3.5f, 3.5f, 3.5f});
 
         table.setWidthPercentage(100f);
 
@@ -389,12 +389,12 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VSP", project.getId());
         if (abatementPercent != null) {
-            paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
+            paragraph.add(new Paragraph("Eingegebener Verschnitt: "
                     + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
@@ -467,12 +467,12 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VSSP", project.getId());
         if (abatementPercent != null) {
-            paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
+            paragraph.add(new Paragraph("Eingegebener Verschnitt: "
                     + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
@@ -546,12 +546,12 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("FUEP", project.getId());
         if (abatementPercent != null) {
-            paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
+            paragraph.add(new Paragraph("Eingegebener Verschnitt: "
                     + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
@@ -653,12 +653,12 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VDP", project.getId());
         if (abatementPercent != null) {
-            paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
+            paragraph.add(new Paragraph("Eingegebener Verschnitt: "
                     + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
@@ -758,13 +758,13 @@ public class Print {
 
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
         }
 
         Worth abatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VKLP", project.getId());
 
         if (abatementPercent != null) {
-            paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
+            paragraph.add(new Paragraph("Eingegebener Verschnitt: "
                     + abatementPercent.worthFormatWithUnit(), NORMALFONT));
         }
 
@@ -855,7 +855,7 @@ public class Print {
 
             Worth worthAbatementPercent = worthJpaController.findWorthByShortTermAndProjectId("VLVP", project.getId());
             if (worthAbatementPercent != null) {
-                paragraph.add(new Paragraph("Eingegebener Verschnitt in Prozent: "
+                paragraph.add(new Paragraph("Eingegebener Verschnitt: "
                         + worthAbatementPercent.worthFormatWithUnit(), NORMALFONT));
             }
 
@@ -903,7 +903,7 @@ public class Print {
         }
         if (component != null && component.getPriceComponent() != null) {
             paragraph.add(new Paragraph("Preis: "
-                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€"), NORMALFONT));
+                    + UtilityFormat.formatValueWithShortTerm(component.getPriceComponent(), "€")+" €", NORMALFONT));
         }
 
         Worth worthCosts = worthJpaController.findWorthByShortTermAndProjectId("KPLV", project.getId());
@@ -972,7 +972,7 @@ public class Print {
             Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 10f, Font.BOLD);
             Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 10f);
 
-            PdfPTable table = new PdfPTable(new float[]{5f, 3.5f, 3.5f, 4, 4});
+            PdfPTable table = new PdfPTable(new float[]{5f, 3.5f, 3.4f, 4, 4.2f});
 
             table.setWidthPercentage(100f);
 
@@ -989,7 +989,7 @@ public class Print {
 
             for (Assembly assembly : listAssembly) {
                 table.addCell(new Phrase(assembly.getProduct() == null ? "" : assembly.getProduct().getName(), tableNormalFont));
-                table.addCell(new Phrase("" + assembly.getNumberOfComponents(), tableNormalFont));
+                table.addCell(new Phrase(String.format("%.2f",assembly.getNumberOfComponents()), tableNormalFont));
                 table.addCell(new Phrase(UtilityFormat.twoDecimalPlaces(assembly.getPrice()), tableNormalFont));
                 table.addCell(new Phrase(assembly.getComponent() == null ? "" : assembly.getComponent().getDescription(), tableNormalFont));
                 double allAroundPriceD = assembly.getPrice() * assembly.getNumberOfComponents();
@@ -1159,7 +1159,7 @@ public class Print {
             Font tableHeaderFont = new Font(Font.FontFamily.TIMES_ROMAN, 9f, Font.BOLD);
             Font tableNormalFont = new Font(Font.FontFamily.TIMES_ROMAN, 9f);
 
-            PdfPTable table = new PdfPTable(new float[]{4.5f, 4.5f, 4, 2, 2, 2, 2, 2, 2, 3});
+            PdfPTable table = new PdfPTable(new float[]{4.5f, 4.5f, 4, 2, 2, 2, 2.2f, 2.2f, 2.2f, 3.5f});
             table.setWidthPercentage(100f);
 
             table.addCell(
@@ -1175,9 +1175,9 @@ public class Print {
             table.addCell(
                     new Phrase("Länge in m", tableHeaderFont));
             table.addCell(
-                    new Phrase("Preis/Einheit", tableHeaderFont));
-            table.addCell(
                     new Phrase("Einheit", tableHeaderFont));
+            table.addCell(
+                    new Phrase("Preis/ Einheit", tableHeaderFont));
             table.addCell(
                     new Phrase("Anzahl", tableHeaderFont));
             table.addCell(
