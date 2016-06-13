@@ -99,7 +99,7 @@ public class ProductListController implements Initializable {
         });
 
         tc_Width.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
-            if (param.getValue() != null) {
+            if (param.getValue().getWidthProduct() != null && param.getValue().getWidthProduct() != 0) {
                 return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getWidthProduct()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
@@ -111,13 +111,13 @@ public class ProductListController implements Initializable {
             if (!event.getNewValue().equals("")) {
                 product.setWidthProduct(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
-                product.setWidthProduct(null);
+                product.setWidthProduct(0d);
             }
             refreshTable();
         });
 
         tc_Height.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
-            if (param.getValue().getHeightProduct() != null) {
+            if (param.getValue().getHeightProduct() != null && param.getValue().getHeightProduct() != 0) {
                 return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getHeightProduct()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
@@ -129,13 +129,13 @@ public class ProductListController implements Initializable {
             if (!event.getNewValue().equals("")) {
                 product.setHeightProduct(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
-                product.setHeightProduct(null);
+                product.setHeightProduct(0d);
             }
             refreshTable();
         });
 
         tc_Length.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
-            if (param.getValue().getLengthProduct() != null) {
+            if (param.getValue().getLengthProduct() != null && param.getValue().getLengthProduct() != 0) {
                 return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getLengthProduct()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
@@ -147,13 +147,13 @@ public class ProductListController implements Initializable {
             if (!event.getNewValue().equals("")) {
                 product.setLengthProduct(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
-                product.setLengthProduct(null);
+                product.setLengthProduct(0d);
             }
             refreshTable();
         });
 
         tc_PriceUnit.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
-            if (param.getValue().getPriceUnit() != null) {
+            if (param.getValue().getPriceUnit() != null && param.getValue().getPriceUnit() != 0) {
                 return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getPriceUnit()) + " €");
             } else {
                 return new ReadOnlyObjectWrapper<>("");
@@ -170,7 +170,7 @@ public class ProductListController implements Initializable {
         });
 
         tc_ColourFactor.setCellValueFactory((TableColumn.CellDataFeatures<Product, String> param) -> {
-            if (param.getValue().getColorFactor() != null) {
+            if (param.getValue().getColorFactor() != null && param.getValue().getColorFactor() != 0) {
                 return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getColorFactor()));
             } else {
                 return new ReadOnlyObjectWrapper<>("");
@@ -182,7 +182,7 @@ public class ProductListController implements Initializable {
             if (!event.getNewValue().equals("")) {
                 product.setColorFactor(Double.parseDouble(event.getNewValue().replace(',','.')));
             } else {
-                product.setColorFactor(null);
+                product.setColorFactor(0d);
             }
             refreshTable();
         });

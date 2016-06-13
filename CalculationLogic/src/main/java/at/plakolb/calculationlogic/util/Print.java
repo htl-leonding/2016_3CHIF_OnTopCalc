@@ -134,7 +134,6 @@ public class Print {
     }
 
     public void print(PrintService service, int copies) throws PrinterException, IOException {
-        System.out.println(absolutePath);
         PDDocument doc = PDDocument.load(new File(absolutePath));
 
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -1241,7 +1240,6 @@ public class Print {
                 if (worth != null) {
                     if (c == parameterArray.length-1) {
                         totalCosts += worth.getWorth();
-                        System.out.println(worth.getWorth());
                     }
                     cell = new PdfPCell(new Phrase(UtilityFormat.twoDecimalPlaces(worth.getWorth()), TABLE_NORMAL_FONT));
                 } else {
@@ -1251,7 +1249,6 @@ public class Print {
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 table.addCell(cell);
-
             }
         }
 
