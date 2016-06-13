@@ -234,6 +234,7 @@ public class PrintProjectController implements Initializable {
             bt_showLastPDF.setDisable(false);
             if (p) {
                 try {
+
                     if (PrintServiceLookup.lookupPrintServices(null, null).length < 1) {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte fügen Sie einen Drucker hinzu!");
                         alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
@@ -251,6 +252,7 @@ public class PrintProjectController implements Initializable {
                         PrinterSelectionController controller = (PrinterSelectionController) fxmlLoader.getController();
                         if (!controller.isCancled()) {
                             if (controller.getPrintService() != null) {
+                                print.createPDF();
                                 print.print(controller.getPrintService(), Integer.parseInt(controller.getCopyAmount()));
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Druckauftrag erfolgreich gesendet!", ButtonType.OK);
                                 alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
