@@ -193,6 +193,7 @@ public class OptionsController implements Initializable, Observer {
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ButtonType.NO, ButtonType.YES);
                 value = Integer.parseInt(SettingsController.getProperty("remindBackupWeeks"));
+                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
 
             }
@@ -472,6 +473,7 @@ public class OptionsController implements Initializable, Observer {
                                 alert.setTitle("Die Sicherung wurde erfolgreich wiederhergestellt!");
                                 alert.setHeaderText("Sicherung wiederhergestellt!");
                                 alert.setContentText("Die Sicherung wurde erfolgreich wiederhergestellt!");
+                                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                                 alert.showAndWait();
                                 SettingsController.setDateProperty("lastBackup", new Date());
 
@@ -480,6 +482,7 @@ public class OptionsController implements Initializable, Observer {
                                 alert.setTitle("Die Sicherung konnte nicht wiederhergestellt werden!");
                                 alert.setHeaderText("Fehler");
                                 alert.setContentText("Die Sicherung konnte nicht wiederhergestellt werden!");
+                                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                                 alert.showAndWait();
                             }
                             updateData();
@@ -500,6 +503,7 @@ public class OptionsController implements Initializable, Observer {
         Alert alert = new Alert(Alert.AlertType.WARNING, "Das Programm wird auf die Werkseinstellungen zurückgesetzt!\nDabei gehen alle ungesicherten Daten verloren!\n\nMöchten Sie fortfahren?");
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(ButtonType.NO, ButtonType.YES);
+        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
             SettingsController.setProperty("firstrun", "true");

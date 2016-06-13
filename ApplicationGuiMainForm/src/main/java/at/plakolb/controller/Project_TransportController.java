@@ -191,9 +191,9 @@ public class Project_TransportController extends java.util.Observable implements
             abidanceCosts.setWorth(pricePerHour.getWorth() * duration.getWorth());
             totalCosts.setWorth(transportCosts.getWorth() + abidanceCosts.getWorth());
 
-            lb_PriceTransport.setText(UtilityFormat.getStringForLabel(transportCosts.getWorth()));
-            lb_PriceStay.setText(UtilityFormat.getStringForLabel(abidanceCosts.getWorth()));
-            lb_PriceComplete.setText(UtilityFormat.getStringForLabel(totalCosts.getWorth()));
+            lb_PriceTransport.setText(UtilityFormat.getStringForLabel(transportCosts));
+            lb_PriceStay.setText(UtilityFormat.getStringForLabel(abidanceCosts));
+            lb_PriceComplete.setText(UtilityFormat.getStringForLabel(totalCosts));
             setValuesChanged(true);
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Project_TransportController: calculate method didn't work.", ex);
