@@ -275,15 +275,16 @@ public class BackUpDatabase extends Observable {
             setChanged();
             notifyObservers(9);
 
-            if (new File(path + "/" + assembly.getName()).length() != 0) {
-                Query query1 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-                query1.setParameter(1, null);
-                query1.setParameter(2, "ASSEMBLY");
-                query1.setParameter(3, path + "/ASSEMBLY" + FILETYPE);
-                query1.setParameter(4, "%");
-                query1.setParameter(5, null);
-                query1.setParameter(6, null);
-                query1.executeUpdate();
+
+            if (new File(path + "/" + unit.getName()).length() != 0) {
+                Query query7 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query7.setParameter(1, null);
+                query7.setParameter(2, "UNIT");
+                query7.setParameter(3, path + "/UNIT" + FILETYPE);
+                query7.setParameter(4, "%");
+                query7.setParameter(5, null);
+                query7.setParameter(6, null);
+                query7.executeUpdate();
             }
 
             setChanged();
@@ -303,19 +304,20 @@ public class BackUpDatabase extends Observable {
             setChanged();
             notifyObservers(27);
 
-            if (new File(path + "/" + component.getName()).length() != 0) {
-                Query query3 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-                query3.setParameter(1, null);
-                query3.setParameter(2, "COMPONENT");
-                query3.setParameter(3, path + "/COMPONENT" + FILETYPE);
-                query3.setParameter(4, "%");
-                query3.setParameter(5, null);
-                query3.setParameter(6, null);
-                query3.executeUpdate();
+            if (new File(path + "/" + product.getName()).length() != 0) {
+                Query query5 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query5.setParameter(1, null);
+                query5.setParameter(2, "PRODUCT");
+                query5.setParameter(3, path + "/PRODUCT" + FILETYPE);
+                query5.setParameter(4, "%");
+                query5.setParameter(5, null);
+                query5.setParameter(6, null);
+                query5.executeUpdate();
             }
 
             setChanged();
             notifyObservers(36);
+
 
             if (new File(path + "/" + parameterp.getName()).length() != 0) {
                 Query query4 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
@@ -331,15 +333,16 @@ public class BackUpDatabase extends Observable {
             setChanged();
             notifyObservers(45);
 
-            if (new File(path + "/" + product.getName()).length() != 0) {
-                Query query5 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-                query5.setParameter(1, null);
-                query5.setParameter(2, "PRODUCT");
-                query5.setParameter(3, path + "/PRODUCT" + FILETYPE);
-                query5.setParameter(4, "%");
-                query5.setParameter(5, null);
-                query5.setParameter(6, null);
-                query5.executeUpdate();
+
+            if (new File(path + "/" + client.getName()).length() != 0) {
+                Query query9 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query9.setParameter(1, null);
+                query9.setParameter(2, "CLIENT");
+                query9.setParameter(3, path + "/CLIENT" + FILETYPE);
+                query9.setParameter(4, "%");
+                query9.setParameter(5, null);
+                query9.setParameter(6, null);
+                query9.executeUpdate();
             }
 
             setChanged();
@@ -359,20 +362,6 @@ public class BackUpDatabase extends Observable {
             setChanged();
             notifyObservers(63);
 
-            if (new File(path + "/" + unit.getName()).length() != 0) {
-                Query query7 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-                query7.setParameter(1, null);
-                query7.setParameter(2, "UNIT");
-                query7.setParameter(3, path + "/UNIT" + FILETYPE);
-                query7.setParameter(4, "%");
-                query7.setParameter(5, null);
-                query7.setParameter(6, null);
-                query7.executeUpdate();
-            }
-
-            setChanged();
-            notifyObservers(72);
-
             if (new File(path + "/" + worth.getName()).length() != 0) {
                 Query query8 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
                 query8.setParameter(1, null);
@@ -385,17 +374,31 @@ public class BackUpDatabase extends Observable {
             }
 
             setChanged();
+            notifyObservers(72);
+
+            if (new File(path + "/" + component.getName()).length() != 0) {
+                Query query3 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query3.setParameter(1, null);
+                query3.setParameter(2, "COMPONENT");
+                query3.setParameter(3, path + "/COMPONENT" + FILETYPE);
+                query3.setParameter(4, "%");
+                query3.setParameter(5, null);
+                query3.setParameter(6, null);
+                query3.executeUpdate();
+            }
+
+            setChanged();
             notifyObservers(81);
 
-            if (new File(path + "/" + client.getName()).length() != 0) {
-                Query query9 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
-                query9.setParameter(1, null);
-                query9.setParameter(2, "CLIENT");
-                query9.setParameter(3, path + "/CLIENT" + FILETYPE);
-                query9.setParameter(4, "%");
-                query9.setParameter(5, null);
-                query9.setParameter(6, null);
-                query9.executeUpdate();
+            if (new File(path + "/" + assembly.getName()).length() != 0) {
+                Query query1 = em.createNativeQuery("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE (?,?,?,?,?,?,1)");
+                query1.setParameter(1, null);
+                query1.setParameter(2, "ASSEMBLY");
+                query1.setParameter(3, path + "/ASSEMBLY" + FILETYPE);
+                query1.setParameter(4, "%");
+                query1.setParameter(5, null);
+                query1.setParameter(6, null);
+                query1.executeUpdate();
             }
 
             setChanged();
