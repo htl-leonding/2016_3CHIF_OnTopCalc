@@ -123,8 +123,4 @@ public class Worth implements Serializable {
     public String toString() {
         return "Worth{" + "id=" + id + ", project=" + project + ", parameter=" + parameter + ", worth=" + worth + '}';
     }
-
-    public String worthFormatWithUnit() {
-        return UtilityFormat.worthWithUnit(this);
-    }
 }

@@ -154,7 +154,9 @@ public class Product implements Serializable {
         } else if (unit.getShortTerm().equals("m")) {
             return nameFull += (lengthProduct == null ? "0" : decimalFormat.format(lengthProduct)) + " " + unit.getShortTerm();
         } else if (productType.equals(ProductType.FORMWORK)) {
-            return nameFull + " " + decimalFormat.format(widthProduct * 100) + " mm";
+            return nameFull + " " + decimalFormat.format(widthProduct * 10) + " mm";
+        } else if (productType.equals(ProductType.FOIL)){
+            return nameFull + " " + decimalFormat.format(widthProduct) + " cm";
         } else if (productType.equals(ProductType.WOOD)) {
 
             nameFull += (widthProduct == null ? "0" : decimalFormat.format(widthProduct)) + "/";

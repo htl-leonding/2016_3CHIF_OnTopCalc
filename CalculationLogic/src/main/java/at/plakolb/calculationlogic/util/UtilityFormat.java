@@ -260,22 +260,22 @@ public class UtilityFormat {
     }
 
     public static String formatValueWithShortTerm(double worth, String shortTerm) {
-        String decimalPlaces = "m³".equals(shortTerm) ? "0,000" : "#,##";
+        String decimalPlaces = "m³".equals(shortTerm) ? "0.000" : "#.##";
         return worthWithDecimalPattern(decimalPlaces, worth);
     }
 
     public static String formatWorth(Worth worth) {
-        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0,000" : "#,##";
+        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "#.##";
         return worthWithDecimalPattern(decimalPlaces, worth.getWorth());
     }
 
     public static String worthWithUnit(Worth worth) {
-        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0,000" : "#,##";
+        String decimalPlaces = "m³".equals(worth.getParameter().getUnit().getShortTerm()) ? "0.000" : "#.##";
         return worthWithDecimalPattern(decimalPlaces, worth.getWorth()) + " " + worth.getParameter().getUnit().getShortTerm();
     }
 
     public static String twoDecimalPlaces(double decimal) {
-        DecimalFormat twoDForm = new DecimalFormat("0,00", getDecimalFormatSymbols());
+        DecimalFormat twoDForm = new DecimalFormat("0.00", getDecimalFormatSymbols());
         return twoDForm.format(decimal);
     }
 }
