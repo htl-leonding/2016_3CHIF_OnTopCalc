@@ -923,6 +923,7 @@ public class Print {
             paragraph.add(new Paragraph("Gesamtpreis: "
                     + UtilityFormat.getStringForLabel(allAroundPrice), NORMALFONT));
         }
+        addEmptyLine(paragraph,-1);
 
         AssemblyController assemblyJpaController = new AssemblyController();
         List<Assembly> listAssembly = assemblyJpaController.findAssembliesByProjectId(project.getId());
