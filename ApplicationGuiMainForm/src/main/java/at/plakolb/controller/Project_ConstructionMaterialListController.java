@@ -1,14 +1,8 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.db.controller.CategoryController;
-import at.plakolb.calculationlogic.db.controller.ComponentController;
-import at.plakolb.calculationlogic.db.controller.ParameterController;
-import at.plakolb.calculationlogic.db.controller.ProductController;
-import at.plakolb.calculationlogic.db.entity.Assembly;
-import at.plakolb.calculationlogic.db.entity.Category;
-import at.plakolb.calculationlogic.db.entity.Component;
-import at.plakolb.calculationlogic.db.entity.Product;
+import at.plakolb.calculationlogic.db.controller.*;
+import at.plakolb.calculationlogic.db.entity.*;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
@@ -119,7 +113,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tc_Length.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
             Component component = event.getTableView().getItems().get(event.getTablePosition().getRow());
             if (!event.getNewValue().equals("")) {
-                component.setLengthComponent(Double.parseDouble(event.getNewValue().replace(',','.')));
+                component.setLengthComponent(Double.parseDouble(event.getNewValue().replace(',', '.')));
             } else {
                 component.setLengthComponent(null);
             }
@@ -137,7 +131,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tc_Amount.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
             Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setNumberOfProducts(Double.parseDouble(event.getNewValue().replace(',','.')));
+                component.setNumberOfProducts(Double.parseDouble(event.getNewValue().replace(',', '.')));
             } else {
                 component.setNumberOfProducts(null);
             }
@@ -156,7 +150,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tc_PricePerCubic.setCellFactory((TableColumn<Component, String> param) -> new ComponentValueCell());
         tc_PricePerCubic.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
             Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
-            component.setPriceComponent(((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts()) * (Double.parseDouble(event.getNewValue().replace(',','.'))));
+            component.setPriceComponent(((component.getWidthComponent() / 100.0) * component.getLengthComponent() * (component.getHeightComponent() / 100.0) * component.getNumberOfProducts()) * (Double.parseDouble(event.getNewValue().replace(',', '.'))));
             refreshTable();
         });
 
@@ -171,7 +165,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tc_Price.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
             Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setPriceComponent(Double.parseDouble(event.getNewValue().replace(',','.')));
+                component.setPriceComponent(Double.parseDouble(event.getNewValue().replace(',', '.')));
             } else {
                 component.setPriceComponent(null);
             }
@@ -189,7 +183,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tc_CuttingHours.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
             Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setTailoringHours(Double.parseDouble(event.getNewValue().replace(',','.')));
+                component.setTailoringHours(Double.parseDouble(event.getNewValue().replace(',', '.')));
             } else {
                 component.setTailoringHours(null);
             }
@@ -207,7 +201,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         tc_CuttingPricePerHours.setOnEditCommit((TableColumn.CellEditEvent<Component, String> event) -> {
             Component component = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                component.setTailoringPricePerHour(Double.parseDouble(event.getNewValue().replace(',','.')));
+                component.setTailoringPricePerHour(Double.parseDouble(event.getNewValue().replace(',', '.')));
             } else {
                 component.setTailoringPricePerHour(null);
             }
@@ -303,6 +297,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         cb_Product.getSelectionModel().select(0);
 
         refreshTable();
+
+        ModifyController.getInstance().setProject_constructionmaterialList(Boolean.FALSE);
     }
 
     public List<Component> getComponents() {
@@ -314,15 +310,15 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     }
 
     public double getWage() {
-        return Double.parseDouble(lb_CuttingCostSum.getText().substring(0, lb_CuttingCostSum.getText().length() - 2).replace(',','.'));
+        return Double.parseDouble(lb_CuttingCostSum.getText().substring(0, lb_CuttingCostSum.getText().length() - 2).replace(',', '.'));
     }
 
     public double getMaterial() {
-        return Double.parseDouble(lb_MaterialCostSum.getText().substring(0, lb_MaterialCostSum.getText().length() - 2).replace(',','.'));
+        return Double.parseDouble(lb_MaterialCostSum.getText().substring(0, lb_MaterialCostSum.getText().length() - 2).replace(',', '.'));
     }
 
     public double getTotalCosts() {
-        return Double.parseDouble(lb_TotalCosts.getText().substring(0, lb_TotalCosts.getText().length() - 2).replace(',','.'));
+        return Double.parseDouble(lb_TotalCosts.getText().substring(0, lb_TotalCosts.getText().length() - 2).replace(',', '.'));
     }
 
     /**
@@ -337,7 +333,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         Category category = cb_Category.getValue();
 
         try {
-            if (tf_Amount.getText().isEmpty() || Double.parseDouble(tf_Amount.getText().replace(',','.')) <= 0) {
+            if (tf_Amount.getText().isEmpty() || Double.parseDouble(tf_Amount.getText().replace(',', '.')) <= 0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte geben Sie zum Erstellen eine gültige Zahl ein, die größer als 0 ist.");
                 alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
@@ -346,8 +342,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                         product.getWidthProduct(),
                         product.getHeightProduct(),
                         product.getLengthProduct(),
-                        product.getPriceUnit() * Double.parseDouble(tf_Amount.getText().replace(',','.')),
-                        Double.parseDouble(tf_Amount.getText().replace(',','.')),
+                        product.getPriceUnit() * Double.parseDouble(tf_Amount.getText().replace(',', '.')),
+                        Double.parseDouble(tf_Amount.getText().replace(',', '.')),
                         category,
                         product.getUnit(),
                         product,
@@ -394,6 +390,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         lb_CuttingTimeSum.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_CuttingHours)) + " €");
         lb_CuttingCostSum.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_CuttingPrice)) + " €");
         lb_TotalCosts.setText(UtilityFormat.getStringForLabel(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)) + " €");
+
+        ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
     }
 
     /**
@@ -405,7 +403,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     private double getColmunSum(TableColumn<Component, String> column) {
         double sum = 0;
         for (Component component : tv_Materials.getItems()) {
-            sum += Double.parseDouble(column.getCellData(component).replace(',','.'));
+            sum += Double.parseDouble(column.getCellData(component).replace(',', '.'));
         }
         return sum;
     }
@@ -414,11 +412,36 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
      * Persist all new components to the database.
      */
     public void persist() {
-        ComponentController componentController = new ComponentController();
-        for (Component component : components) {
-            if (component.getId() == null) {
-                componentController.create(component);
+        try {
+            ComponentController componentController = new ComponentController();
+            WorthController worthController = new WorthController();
+            ParameterController parameterController = new ParameterController();
+            for (Component component : components) {
+                if (component.getId() == null) {
+                    componentController.create(component);
+                } else {
+
+                    componentController.edit(component);
+
+                }
             }
+            if (ProjectViewController.isProjectOpened() == false) {
+                worthController.create(new Worth(ProjectViewController.getOpenedProject(), parameterController.findParameterPByShortTerm("GP"), getColmunSum(tc_Price)));
+                worthController.create(new Worth(ProjectViewController.getOpenedProject(), parameterController.findParameterPByShortTerm("KZPG"), getColmunSum(tc_CuttingPrice)));
+                worthController.create(new Worth(ProjectViewController.getOpenedProject(), parameterController.findParameterPByShortTerm("GKV"), getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price)));
+            } else {
+                Worth materialCost = worthController.findWorthByParameterIdAndProjectId(parameterController.findParameterPByShortTerm("GP").getId(), ProjectViewController.getOpenedProject().getId());
+                materialCost.setWorth(getColmunSum(tc_Price));
+                Worth wageCost = worthController.findWorthByParameterIdAndProjectId(parameterController.findParameterPByShortTerm("KZPG").getId(), ProjectViewController.getOpenedProject().getId());
+                wageCost.setWorth(getColmunSum(tc_CuttingPrice));
+                Worth totalCost = worthController.findWorthByParameterIdAndProjectId(parameterController.findParameterPByShortTerm("GKV").getId(), ProjectViewController.getOpenedProject().getId());
+                totalCost.setWorth(getColmunSum(tc_CuttingPrice)+getColmunSum(tc_Price));
+                worthController.edit(materialCost);
+                worthController.edit(wageCost);
+                worthController.edit(totalCost);
+            }
+        } catch (Exception e) {
+            Logging.getLogger().log(Level.SEVERE, "Project_ConstructionMaterialListController: persist method didn't work.", e);
         }
     }
 

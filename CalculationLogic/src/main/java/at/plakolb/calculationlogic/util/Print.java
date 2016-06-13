@@ -1234,16 +1234,17 @@ public class Print {
             cellTitle.setHorizontalAlignment(Element.ALIGN_LEFT);
             table.addCell(cellTitle);
 
-            for (String parameter : parameterArray) {
-                Worth worth = worthJpaController.findWorthByShortTermAndProjectId(parameter, project.getId());
+            for (int c = 0;c<parameterArray.length;c++) {
+                Worth worth = worthJpaController.findWorthByShortTermAndProjectId(parameterArray[c], project.getId());
                 PdfPCell cell;
                 if (worth != null) {
-                    if (parameterArray[2].equals(parameter)) {
+                    if (c == parameterArray.length-1) {
                         totalCosts += worth.getWorth();
+                        System.out.println(worth.getWorth());
                     }
                     cell = new PdfPCell(new Phrase(UtilityFormat.twoDecimalPlaces(worth.getWorth()), TABLE_NORMAL_FONT));
                 } else {
-                    cell = new PdfPCell(new Phrase("0", TABLE_NORMAL_FONT));
+                    cell = new PdfPCell(new Phrase("-", TABLE_NORMAL_FONT));
                 }
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

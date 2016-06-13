@@ -1,12 +1,11 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.db.controller.AssemblyController;
-import at.plakolb.calculationlogic.db.controller.ComponentController;
-import at.plakolb.calculationlogic.db.controller.ProductController;
+import at.plakolb.calculationlogic.db.controller.*;
 import at.plakolb.calculationlogic.db.entity.Assembly;
 import at.plakolb.calculationlogic.db.entity.Component;
 import at.plakolb.calculationlogic.db.entity.Product;
+import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
@@ -83,27 +82,28 @@ public class Project_ConstructionMaterialController implements Initializable {
         tv_Assembly.setEditable(true);
 
         tf_Amount.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            tf_Amount.setText(tf_Amount.getText().replace('.',',').replaceAll("[^\\d,]", ""));
+            tf_Amount.setText(tf_Amount.getText().replace('.', ',').replaceAll("[^\\d,]", ""));
             tf_Amount.setText(UtilityFormat.removeUnnecessaryCommas(tf_Amount.getText()));
         });
         tc_Amount.setCellFactory((TableColumn<Assembly, String> param) -> new AssemblyValueCell());
         tc_Amount.setOnEditCommit((TableColumn.CellEditEvent<Assembly, String> event) -> {
             Assembly assembly = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                assembly.setNumberOfComponents(Double.parseDouble(event.getNewValue().replace(',','.')));
+                assembly.setNumberOfComponents(Double.parseDouble(event.getNewValue().replace(',', '.')));
             } else {
                 assembly.setNumberOfComponents(null);
             }
+            ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
             refreshListView();
         });
 
         tf_Price.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            tf_Price.setText(tf_Price.getText().replace('.',',').replaceAll("[^\\d,]", ""));
+            tf_Price.setText(tf_Price.getText().replace('.', ',').replaceAll("[^\\d,]", ""));
             tf_Price.setText(UtilityFormat.removeUnnecessaryCommas(tf_Price.getText()));
         });
 
         tc_Product.setCellValueFactory(new PropertyValueFactory<>("product"));
-        
+
         tc_Amount.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param) -> {
             if (param.getValue().getNumberOfComponents() != null) {
                 return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getNumberOfComponents()));
@@ -111,7 +111,7 @@ public class Project_ConstructionMaterialController implements Initializable {
                 return new ReadOnlyObjectWrapper<>("");
             }
         });
-        
+
         tc_Component.setCellValueFactory(new PropertyValueFactory<>("component"));
 
         tc_Price.setCellValueFactory((TableColumn.CellDataFeatures<Assembly, String> param) -> {
@@ -125,10 +125,11 @@ public class Project_ConstructionMaterialController implements Initializable {
         tc_Price.setOnEditCommit((TableColumn.CellEditEvent<Assembly, String> event) -> {
             Assembly assembly = (event.getTableView().getItems().get(event.getTablePosition().getRow()));
             if (!event.getNewValue().equals("")) {
-                assembly.setPrice(Double.parseDouble(event.getNewValue().replace(',','.')));
+                assembly.setPrice(Double.parseDouble(event.getNewValue().replace(',', '.')));
             } else {
                 assembly.setPrice(null);
             }
+            ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
             refreshListView();
         });
 
@@ -157,7 +158,7 @@ public class Project_ConstructionMaterialController implements Initializable {
                             deletionLabel.setOnMouseClicked(event -> {
                                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten? Vorsicht, der Löschvorgang kann nicht mehr rückgängig gemacht werden.",
                                         ButtonType.YES, ButtonType.CANCEL);
-                                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
+                                alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                                 alert.showAndWait();
                                 if (alert.getResult() == ButtonType.YES) {
                                     try {
@@ -191,6 +192,7 @@ public class Project_ConstructionMaterialController implements Initializable {
         });
 
         refreshListView();
+        ModifyController.getInstance().setProject_constructionMaterial(Boolean.FALSE);
     }
 
     public static Project_ConstructionMaterialController getInstance() {
@@ -265,8 +267,8 @@ public class Project_ConstructionMaterialController implements Initializable {
         }
 
         try {
-            amount = Double.parseDouble(tf_Amount.getText().replace(',','.'));
-            price = Double.parseDouble(tf_Price.getText().replace(',','.'));
+            amount = Double.parseDouble(tf_Amount.getText().replace(',', '.'));
+            price = Double.parseDouble(tf_Price.getText().replace(',', '.'));
 
             if (amount == 0) {
                 errorMessage += "Die Anzahl muss größer als 0 sein.\n";
@@ -293,19 +295,32 @@ public class Project_ConstructionMaterialController implements Initializable {
             refreshListView();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, errorMessage);
-            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label)node).setMinHeight(Region.USE_PREF_SIZE));
+            alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
         }
     }
 
     public void persist() {
-
-        AssemblyController assemblyController = new AssemblyController();
-
-        for (Assembly assembly : assemblyList) {
-            if (assembly.getId() == null) {
-                assemblyController.create(assembly);
+        try {
+            AssemblyController assemblyController = new AssemblyController();
+            WorthController worthController = new WorthController();
+            ParameterController parameterController = new ParameterController();
+            for (Assembly assembly : assemblyList) {
+                if (assembly.getId() == null) {
+                    assemblyController.create(assembly);
+                } else {
+                    assemblyController.edit(assembly);
+                }
             }
+            if (ProjectViewController.isProjectOpened() == false) {
+                worthController.create(new Worth(ProjectViewController.getOpenedProject(), parameterController.findParameterPByShortTerm("GMFM"), getMaterial()));
+            } else {
+                Worth totalCost = worthController.findWorthByParameterIdAndProjectId(parameterController.findParameterPByShortTerm("GMFM").getId(), ProjectViewController.getOpenedProject().getId());
+                totalCost.setWorth(getMaterial());
+                worthController.edit(totalCost);
+            }
+        } catch (Exception e) {
+            Logging.getLogger().log(Level.SEVERE, "Project_ConstructionMaterialController: persist method didn't work.", e);
         }
     }
 
