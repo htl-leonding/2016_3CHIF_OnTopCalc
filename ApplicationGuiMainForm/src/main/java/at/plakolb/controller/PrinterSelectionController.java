@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  */
 public class PrinterSelectionController implements Initializable {
 
-    Boolean PrinterSelected, CopiesSelected;
+    boolean PrinterSelected, CopiesSelected;
     @FXML
     private ComboBox<ComboBoxPrintService> cb_choosPrinter;
     @FXML
@@ -51,6 +51,7 @@ public class PrinterSelectionController implements Initializable {
 
         cb_copieCount.setValue(SettingsController.getProperty("printCopies"));
         cb_copieCount.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5"));
+        cntChanged(null);
     }
 
     @FXML

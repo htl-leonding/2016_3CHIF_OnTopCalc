@@ -134,6 +134,7 @@ public class Print {
     }
 
     public void print(PrintService service, int copies) throws PrinterException, IOException {
+        System.out.println(absolutePath);
         PDDocument doc = PDDocument.load(new File(absolutePath));
 
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -692,7 +693,7 @@ public class Print {
         Component component = componentJpaController.findComponentByProjectIdAndComponentTypeAndCategoryId(project.getId(),
                 "Produkt", category.getId());
 
-        if (component != null && !component.getFullNameProduct().isEmpty()) {
+        if (component != null && component.getFullNameProduct()!=null&&!component.getFullNameProduct().isEmpty()) {
             paragraph.add(new Paragraph(component.getFullNameProduct(), SUBFONT));
         } else {
             paragraph.add(new Paragraph("Konterlattung", SUBFONT));
