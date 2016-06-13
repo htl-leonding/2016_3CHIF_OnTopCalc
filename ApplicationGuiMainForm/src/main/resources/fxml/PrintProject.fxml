@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane stylesheets="@../styles/printStyle.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
+
+<AnchorPane stylesheets="@../styles/printStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
    <children>
       <VBox fx:id="container" alignment="CENTER" maxWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -24,15 +28,22 @@
                   </TextField>
                   <HBox spacing="2.0">
                      <children>
-                        <TextField fx:id="tf_path" editable="false" layoutX="25.0" layoutY="81.0" onMouseClicked="#choosePath" prefHeight="27.0" promptText="Dateipfad" style="-fx-background-color: derive(gray,80%); -fx-border-color: derive(black,60%); -fx-background-radius: 5px; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="tf_path" editable="false" layoutX="25.0" layoutY="81.0" onMouseClicked="#choosePath" prefHeight="30.0" promptText="Dateipfad" style="-fx-background-color: derive(gray,80%); -fx-border-color: derive(black,60%); -fx-background-radius: 5px; -fx-border-radius: 5px;" HBox.hgrow="ALWAYS">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TextField>
-                        <Button id="choosePath" layoutX="362.0" layoutY="81.0" mnemonicParsing="false" onAction="#choosePath" text="🖿" textFill="#3c84ff">
+                        <Button id="choosePath" layoutX="362.0" layoutY="81.0" mnemonicParsing="false" onAction="#choosePath" textFill="#3c84ff">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <graphic>
+                              <ImageView>
+                                 <image>
+                                    <Image url="@../images/open3.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </children>
                   </HBox>

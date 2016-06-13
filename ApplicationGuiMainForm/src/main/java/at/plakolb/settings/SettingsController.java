@@ -93,6 +93,7 @@ public class SettingsController {
         SettingsController.setProperty("lastBackup", "01-01-2016");
         SettingsController.setProperty("backupPath", "");
         SettingsController.setProperty("pdfPath", "");
+        SettingsController.setProperty("printCopies", "1");
         SettingsController.setProperty("firstrun", "true");
     }
 }

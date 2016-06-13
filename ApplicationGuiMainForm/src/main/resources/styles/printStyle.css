@@ -37,9 +37,11 @@
     -fx-background-color:whitesmoke;
     -fx-border-color: #3c84ff;
     -fx-border-radius: 10%;
+    -fx-graphic: url("../images/open3.png");
 }
 #choosePath:hover{
     -fx-background-color:#3c84ff;
+    -fx-graphic: url("../images/open4.png");
     -fx-text-fill: whitesmoke;
 }
 .viewsEye{
