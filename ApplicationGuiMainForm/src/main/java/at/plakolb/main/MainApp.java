@@ -9,12 +9,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-import java.util.logging.Level;
+import java.util.logging.*;
 
 public class MainApp extends Application {
 
@@ -30,37 +29,45 @@ public class MainApp extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        rootStage = stage;
+        try {
+            rootStage = stage;
 
-        Parent root;
+            Parent root;
 
-        if(SettingsController.getBooleanProperty("firstrun")){
-            root = FXMLLoader.load(getClass().getResource("/fxml/FirstRun.fxml"));
+            if (SettingsController.getBooleanProperty("firstrun")) {
+                root = FXMLLoader.load(getClass().getResource("/fxml/FirstRun.fxml"));
+            } else {
+                root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
+            }
+
+            Scene scene = new Scene(root);
+
+            scene.getStylesheets().add("/styles/main.css");
+
+            stage.setTitle("OnTopCalc");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
+            stage.setScene(scene);
+            if (SettingsController.getBooleanProperty("firstrun")) {
+                stage.setResizable(false);
+                stage.setTitle("OnTopCalc - Erste Schritte");
+            }
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            Logging.getLogger().log(Level.SEVERE, null, e);
+            throw e;
         }
-        else {
-            root = FXMLLoader.load(getClass().getResource("/fxml/MainForm.fxml"));
-        }
-
-        Scene scene = new Scene(root);
-
-        scene.getStylesheets().add("/styles/main.css");
-
-        stage.setTitle("OnTopCalc");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
-        stage.setScene(scene);
-        if(SettingsController.getBooleanProperty("firstrun")){
-            stage.setResizable(false);
-            stage.setTitle("OnTopCalc - Erste Schritte");
-        }
-        stage.centerOnScreen();
-        stage.show();
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+        try {
+            launch(args);
+        } catch (Exception e) {
+            Logging.getLogger().log(Level.SEVERE, null, e);
+        }
     }
 
     public static void restart() {
