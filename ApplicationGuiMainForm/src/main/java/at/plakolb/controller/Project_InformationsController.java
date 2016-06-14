@@ -74,22 +74,7 @@ public class Project_InformationsController implements Initializable, Observer {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        tf_ClientName.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                ClientController c = new ClientController();
-                List<Client> clients = c.findAll();
-                for (Client client : clients) {
-                    if (client.getName().toLowerCase().contains(tf_ClientName.getText().toLowerCase())) {
-                        tf_ClientName.setText(client.getName());
-                        tf_City.setText(client.getCity());
-                        tf_Street.setText(client.getStreet());
-                        tf_ZipCode.setText(client.getZipCode());
-                        tf_PhoneNumber.setText(client.getTelephoneNumber());
-                        tf_Email.setText(client.getEmail());
-                    }
-                }
-            }
-        });
+
         tf_City.textProperty().addListener((observable,oldValue, newValue)-> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });

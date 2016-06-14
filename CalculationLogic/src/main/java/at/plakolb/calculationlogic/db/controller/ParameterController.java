@@ -138,4 +138,13 @@ public class ParameterController {
             em.clear();
         }
     }
+    public void reset(){
+        for(ParameterP a:findAll()){
+            try {
+                destroy(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

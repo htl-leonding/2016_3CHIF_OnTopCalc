@@ -198,4 +198,14 @@ public class ProductController {
             em.clear();
         }
     }
+
+    public void reset(){
+        for(Product a:findAll()){
+            try {
+                destroy(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

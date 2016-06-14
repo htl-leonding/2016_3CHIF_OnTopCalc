@@ -1,7 +1,8 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.db.controller.ProjectController;
+import at.plakolb.calculationlogic.db.JpaUtils;
+import at.plakolb.calculationlogic.db.controller.*;
 import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.util.BackUpDatabase;
@@ -28,9 +29,12 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sun.applet.Main;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
@@ -506,7 +510,18 @@ public class OptionsController implements Initializable, Observer {
         alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
         alert.showAndWait();
         if (alert.getResult().equals(ButtonType.YES)) {
-            SettingsController.setProperty("firstrun", "true");
+            new ProjectController().reset();
+            new ComponentController().reset();
+            new CategoryController().reset();
+            new AssemblyController().reset();
+            new ProductController().reset();
+            new ParameterController().reset();
+
+            new WorthController().reset();
+            new ClientController().reset();
+            new UnitController().reset();
+
+            SettingsController.setProperty("firstrun","true");
             MainApp.restart();
         }
     }

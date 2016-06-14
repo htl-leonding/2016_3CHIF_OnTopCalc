@@ -314,4 +314,10 @@ public class ProjectController {
             }
         }
     }
+
+    public void reset(){
+        for(Project a:findAll()){
+            delete(a.getId());
+        }
+    }
 }

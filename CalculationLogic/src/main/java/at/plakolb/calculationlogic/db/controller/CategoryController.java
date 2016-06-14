@@ -140,4 +140,14 @@ public class CategoryController {
             em.clear();
         }
     }
+
+    public void reset(){
+        for(Category a:findAll()){
+            try {
+                destroy(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -212,4 +212,14 @@ public class ComponentController {
             em.clear();
         }
     }
+
+    public void reset(){
+        for(Component a:findAll()){
+            try {
+                destroy(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

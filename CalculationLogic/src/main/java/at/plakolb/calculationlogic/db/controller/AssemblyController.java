@@ -154,4 +154,14 @@ public class AssemblyController {
             em.clear();
         }
     }
+
+    public void reset(){
+        for(Assembly a:findAll()){
+            try {
+                destroy(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

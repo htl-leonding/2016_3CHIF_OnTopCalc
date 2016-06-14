@@ -280,4 +280,14 @@ public class WorthController {
         }
         return worth;
     }
+
+    public void reset(){
+        for(Worth a:findAll()){
+            try {
+                destroy(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

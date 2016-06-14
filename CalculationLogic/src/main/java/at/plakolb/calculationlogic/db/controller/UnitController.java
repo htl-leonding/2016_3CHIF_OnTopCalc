@@ -133,4 +133,14 @@ public class UnitController {
             em.clear();
         }
     }
+
+    public void reset(){
+        for(Unit a:findAll()){
+            try {
+                destroy(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

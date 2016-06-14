@@ -175,4 +175,14 @@ public class ClientController {
             em.clear();
         }
     }
+
+    public void reset(){
+        for(Client a:findAll()){
+            try {
+                delete(a.getId());
+            } catch (NonexistentEntityException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
