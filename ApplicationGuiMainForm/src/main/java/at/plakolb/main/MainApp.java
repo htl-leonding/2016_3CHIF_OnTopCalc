@@ -69,9 +69,7 @@ public class MainApp extends Application {
         for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
             cmd.append(jvmArg + " ");
         }
-        cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
-        cmd.append(Window.class.getName()).append(" ");
-
+        cmd.append("-jar ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
         try {
             Runtime.getRuntime().exec(cmd.toString());
         } catch (IOException ex) {

@@ -54,6 +54,9 @@ public class SettingsController {
                 input = new FileInputStream(filename);
             }
             else{
+                if(!new File(filenameBuild).exists()){
+                    createSettingsFile();
+                }
                 input = new FileInputStream(filenameBuild);
             }
             // load a properties file
@@ -95,5 +98,13 @@ public class SettingsController {
         SettingsController.setProperty("pdfPath", "");
         SettingsController.setProperty("printCopies", "1");
         SettingsController.setProperty("firstrun", "true");
+    }
+    public static void createSettingsFile(){
+        try {
+            new File(filenameBuild).createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        resetProperties();
     }
 }
