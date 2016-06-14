@@ -4,14 +4,12 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ClientController;
 import at.plakolb.calculationlogic.db.entity.Client;
 import at.plakolb.calculationlogic.util.Logging;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
@@ -47,6 +45,8 @@ public class ClientModifierController implements Initializable {
 
     private Client openedClient;
 
+    private TableView modifyingTable;
+
     /**
      * Initializes the controller class.
      *
@@ -67,7 +67,7 @@ public class ClientModifierController implements Initializable {
      *
      * @param client
      */
-    public void loadClientIntoModifier(Client client) {
+    public void loadClientIntoModifier(TableView modifyingTable,Client client) {
         openedClient = client;
         lb_Id.setText(String.valueOf(openedClient.getId()));
         tf_Name.setText(openedClient.getName());
@@ -76,6 +76,8 @@ public class ClientModifierController implements Initializable {
         tf_City.setText(openedClient.getCity());
         tf_Phonenumber.setText(openedClient.getTelephoneNumber());
         tf_Email.setText(openedClient.getEmail());
+
+        this.modifyingTable = modifyingTable;
     }
 
     /**
@@ -97,7 +99,7 @@ public class ClientModifierController implements Initializable {
             Matcher matcher = Pattern.compile(regex).matcher(tf_Email.getText());
 
             if (!matcher.matches()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Die eingegeben E-Mail Adresse ist nicht korrekt.\nMöchten Sie trotzdem fortfahren.",
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Die eingegeben E-Mail Adresse ist nicht korrekt.\nMöchten Sie trotzdem fortfahren?",
                         ButtonType.YES, ButtonType.CANCEL);
                 alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
@@ -118,8 +120,9 @@ public class ClientModifierController implements Initializable {
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Client couldn't be modified correctly.", ex);
         }
-
-        ClientsController.getInstance().refreshTable();
+        modifyingTable.getItems().clear();
+        modifyingTable.setItems(FXCollections.observableArrayList(new ClientController().findAll()));
+        modifyingTable.refresh();
         ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
     }
 

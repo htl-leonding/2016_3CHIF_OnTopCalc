@@ -22,6 +22,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * FXML Controller class
@@ -183,18 +185,33 @@ public class ProjectViewController extends Observable implements Initializable, 
             alert.showAndWait();
             return false;
         } else {
-
-            if (informations.getClientName().isEmpty() && !projectOpened) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keinen Auftragsgebernamen eingegeben. Deshalb kann kein neuer Auftragsgeber erstellt werden. Möchten Sie fortfahren?",
+            if (informations.getClientName().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sie haben keinen Auftragsgebernamen eingegeben.\nDeshalb kann kein neuer Auftragsgeber erstellt werden.\n\nMöchten Sie fortfahren?",
                         ButtonType.YES, ButtonType.CANCEL);
                 alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.CANCEL) {
                     return false;
                 }
-            } else if (!informations.getClientName().isEmpty()) {
+            } else if (!informations.getEmail().isEmpty()) {
+                String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                Matcher matcher = Pattern.compile(regex).matcher(informations.getEmail());
+
+                if (!matcher.matches()) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Die eingegeben E-Mail Adresse ist nicht korrekt.\nMöchten Sie trotzdem fortfahren?",
+                            ButtonType.YES, ButtonType.CANCEL);
+                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                    alert.showAndWait();
+                    if (alert.getResult() == ButtonType.CANCEL) {
+                        return false;
+                    }
+                }
+            }
+            if (!informations.getClientName().isEmpty()) {
                 client = findClient(informations);
             }
+
 
             ProjectController projectController = new ProjectController();
             try {

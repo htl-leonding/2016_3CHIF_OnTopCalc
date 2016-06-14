@@ -119,7 +119,7 @@ public class ClientsController implements Initializable {
                                     Logging.getLogger().log(Level.SEVERE, "Couldn't open ClientModifier.fxml.", ex);
                                 }
 
-                                ClientModifierController.getInstance().loadClientIntoModifier(tv_Clients.getSelectionModel().getSelectedItem());
+                                ClientModifierController.getInstance().loadClientIntoModifier(tv_Clients,tv_Clients.getSelectionModel().getSelectedItem());
                             });
                             delete.setOnMouseClicked((MouseEvent event) -> {
                                 try {
@@ -164,7 +164,7 @@ public class ClientsController implements Initializable {
                     } catch (IOException ex) {
                         Logging.getLogger().log(Level.SEVERE, "Couldn't open ClientModifier.fxml.", ex);
                     }
-                    ClientModifierController.getInstance().loadClientIntoModifier(tableRow.getItem());
+                    ClientModifierController.getInstance().loadClientIntoModifier(tv_Clients,tableRow.getItem());
                 }
             });
 

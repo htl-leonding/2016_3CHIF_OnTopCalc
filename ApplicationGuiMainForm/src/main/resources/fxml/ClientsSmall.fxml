@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="420.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientsSmallController">
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" styleClass="mainFxmlClass" stylesheets="@../styles/columnbuttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientsSmallController">
    <children>
       <TableView fx:id="tv_ClientTable" layoutX="49.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <columns>
-          <TableColumn fx:id="tb_Name" prefWidth="200.0" style="-fx-alignement: center;" text="Name" />
-          <TableColumn fx:id="tb_City" prefWidth="200.0" style="-fx-alignement: center;" text="Stadt" />
+          <TableColumn fx:id="tb_Name" editable="false" prefWidth="200.0" style="-fx-alignement: center;" text="Name" />
+          <TableColumn fx:id="tb_City" editable="false" prefWidth="200.0" style="-fx-alignement: center;" text="Stadt" />
+            <TableColumn fx:id="tb_Edit" editable="false" maxWidth="100.0" minWidth="30.0" prefWidth="50.0" style="-fx-alignement: center;" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
