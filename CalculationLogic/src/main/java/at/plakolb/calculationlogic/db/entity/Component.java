@@ -43,7 +43,7 @@ public class Component implements Serializable {
     private Product product;
     @ManyToOne
     private Project project;
-    @OneToMany(mappedBy = "component", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL)
     private List<Assembly> assemblys = new ArrayList<>();
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

@@ -162,10 +162,17 @@ public class Project_ConstructionMaterialController implements Initializable {
                                 alert.showAndWait();
                                 if (alert.getResult() == ButtonType.YES) {
                                     try {
-                                        assemblyList.remove(tv_Assembly.getSelectionModel().getSelectedItem());
+                                        Assembly assembly = tv_Assembly.getSelectionModel().getSelectedItem();
+                                        Component owningComponent = assembly.getComponent();
+                                        assemblyList.remove(assembly);
+                                        LinkedList<Assembly> newAssemblies = new LinkedList<>();
+                                        newAssemblies.addAll(assembly.getComponent().getAssemblys());
+                                        newAssemblies.remove(assembly);
+                                        owningComponent.setAssemblys(newAssemblies);
                                         if (tv_Assembly.getSelectionModel().getSelectedItem().getId() != null) {
-                                            new ComponentController().destroy(tv_Assembly.getSelectionModel().getSelectedItem().getId());
+                                            new AssemblyController().destroy(assembly.getId());
                                         }
+                                        assembly = null;
                                         ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
                                     } catch (Exception ex) {
                                         Logging.getLogger().log(Level.SEVERE, "Couldn't delete material.", ex);
@@ -306,9 +313,12 @@ public class Project_ConstructionMaterialController implements Initializable {
             WorthController worthController = new WorthController();
             ParameterController parameterController = new ParameterController();
             for (Assembly assembly : assemblyList) {
-                if (assembly.getId() == null) {
-                    assemblyController.create(assembly);
-                } else {
+//                if (assembly.getId() == null) {
+//                    assemblyController.create(assembly);
+//                } else {
+//                    assemblyController.edit(assembly);
+//                }
+                if (assembly.getId() != null) {
                     assemblyController.edit(assembly);
                 }
             }

@@ -23,7 +23,7 @@ public class Assembly implements Serializable {
     private Long id;
     @OneToOne
     private Product product;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Component component;
     @ManyToOne
     private Project project;
