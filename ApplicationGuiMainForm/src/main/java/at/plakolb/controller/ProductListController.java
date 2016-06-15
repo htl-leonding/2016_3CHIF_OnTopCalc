@@ -156,7 +156,7 @@ public class ProductListController implements Initializable {
             if (param.getValue().getPriceUnit() != null && param.getValue().getPriceUnit() != 0) {
                 return new ReadOnlyObjectWrapper<>(UtilityFormat.getStringForTableColumn(param.getValue().getPriceUnit()) + " €");
             } else {
-                return new ReadOnlyObjectWrapper<>("");
+                return new ReadOnlyObjectWrapper<>("0 €");
             }
         });
         tc_PriceUnit.setCellFactory((TableColumn<Product, String> param) -> new ProductValueCell());

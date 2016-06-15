@@ -204,7 +204,7 @@ public class ProductCreatorController implements Initializable {
             numberString = numberString.replace(",", ".");
             return Double.parseDouble(numberString);
         } catch (NumberFormatException ex) {
-            return null;
+            return 0d;
         }
     }
 

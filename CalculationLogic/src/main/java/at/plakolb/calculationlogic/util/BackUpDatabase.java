@@ -205,25 +205,6 @@ public class BackUpDatabase extends Observable {
             File unit = new File(dir + "/UNIT" + FILETYPE);
             File worth = new File(dir + "/WORTH" + FILETYPE);
 
-//            encrypt(CRYPTOKEY, assembly, new File(dir + "/crypto" + assembly.getName()));
-//            encrypt(CRYPTOKEY, category, new File(dir + "/crypto" + category.getName()));
-//            encrypt(CRYPTOKEY, client, new File(dir + "/crypto" + client.getName()));
-//            encrypt(CRYPTOKEY, component, new File(dir + "/crypto" + component.getName()));
-//            encrypt(CRYPTOKEY, parameterp, new File(dir + "/crypto" + parameterp.getName()));
-//            encrypt(CRYPTOKEY, product, new File(dir + "/crypto" + product.getName()));
-//            encrypt(CRYPTOKEY, project, new File(dir + "/crypto" + project.getName()));
-//            encrypt(CRYPTOKEY, unit, new File(dir + "/crypto" + unit.getName()));
-//            encrypt(CRYPTOKEY, worth, new File(dir + "/crypto" + worth.getName()));
-//            assembly = new File(dir + "/cryptoASSEMBLY" + FILETYPE);
-//            category = new File(dir + "/cryptoCATEGORY" + FILETYPE);
-//            client = new File(dir + "/cryptoCLIENT" + FILETYPE);
-//            component = new File(dir + "/cryptoCOMPONENT" + FILETYPE);
-//            parameterp = new File(dir + "/cryptoPARAMETERP" + FILETYPE);
-//            product = new File(dir + "/cryptoPRODUCT" + FILETYPE);
-//            project = new File(dir + "/cryptoPROJECT" + FILETYPE);
-//            unit = new File(dir + "/cryptoUNIT" + FILETYPE);
-//            worth = new File(dir + "/cryptoWORTH" + FILETYPE);
-//
             assembly.renameTo(new File(result.getAbsolutePath() + "/ASSEMBLY" + FILETYPE));
             category.renameTo(new File(result.getAbsolutePath() + "/CATEGORY" + FILETYPE));
             client.renameTo(new File(result.getAbsolutePath() + "/CLIENT" + FILETYPE));
@@ -261,16 +242,6 @@ public class BackUpDatabase extends Observable {
             worth.deleteOnExit();
 
             em.getTransaction().begin();
-
-//            decrypt(CRYPTOKEY, new File(path + "/" + assembly.getName()), assembly);
-//            decrypt(CRYPTOKEY, new File(path + "/" + category.getName()), category);
-//            decrypt(CRYPTOKEY, new File(path + "/" + client.getName()), client);
-//            decrypt(CRYPTOKEY, new File(path + "/" + component.getName()), component);
-//            decrypt(CRYPTOKEY, new File(path + "/" + parameterp.getName()), parameterp);
-//            decrypt(CRYPTOKEY, new File(path + "/" + product.getName()), product);
-//            decrypt(CRYPTOKEY, new File(path + "/" + project.getName()), project);
-//            decrypt(CRYPTOKEY, new File(path + "/" + unit.getName()), unit);
-//            decrypt(CRYPTOKEY, new File(path + "/" + worth.getName()), worth);
 
             setChanged();
             notifyObservers(9);
