@@ -85,18 +85,6 @@ public class FirstRunController {
      */
     private void insertTestData() {
 
-        ClientController clientController = new ClientController();
-        ProjectController projectController = new ProjectController();
-        if (clientController.findAll().size() == 0 && projectController.findAll().size() == 0) {
-            Client client1 = new Client("Mustermann", "Feldstraße", "Linz", "4020", "123456789", "max.m@mail.com");
-            Client client2 = new Client("Musterfrau", "Landstraße", "Linz", "4020", "987654321", "erika.m@mail.com");
-            clientController.create(client1);
-            clientController.create(client2);
-
-            projectController.create(new Project("Testprojekt2", "9827245", "Notiz", "Haus", "Pultdach", client2));
-            projectController.create(new Project("Testprojekt1", "8467389", "Notiz", "Haus", "Pultdach", client1));
-        }
-
         UnitController unitController = new UnitController();
         if (unitController.findAll().size() == 0) {
             unitController.create(new Unit("Meter", "m"));
@@ -219,7 +207,8 @@ public class FirstRunController {
 
             parameterController.create(new ParameterP("Lattenabstand", "LA", unitController.findUnit(13L), false));
             parameterController.create(new ParameterP("Länge der Dachlatten ohne Verschnitt", "LDOV", unitController.findUnit(1L), false));
-            parameterController.create(new ParameterP("Verschnitt Lattung oder Vollschalung in Prozent", "VLVP", unitController.findUnit(9L), true, 16.0));
+            parameterController.create(new ParameterP("Verschnitt Lattung in Prozent", "VLP", unitController.findUnit(9L), true, 16.0));
+            parameterController.create(new ParameterP("Verschnitt Vollschalung in Prozent", "VVP", unitController.findUnit(9L), true, 16.0));
             parameterController.create(new ParameterP("Verschnitt Lattung", "VL", unitController.findUnit(1L), false));
             parameterController.create(new ParameterP("Länge Lattung", "LL", unitController.findUnit(1L), false));
             parameterController.create(new ParameterP("Verschnitt Vollschalung", "VVS", unitController.findUnit(2L), false));

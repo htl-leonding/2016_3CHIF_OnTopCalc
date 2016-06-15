@@ -49,6 +49,8 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Logging.getLogger().log(Level.INFO, "Application initialized.");
+
         instance = this;
 
         ProjectController projectController = new ProjectController();

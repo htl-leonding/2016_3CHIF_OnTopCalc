@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Kepplinger
  */
 public class ProjectController {
@@ -25,7 +24,7 @@ public class ProjectController {
     public ProjectController() {
     }
 
-//    private EntityManager getEntityManager(){
+    //    private EntityManager getEntityManager(){
 //        return JpaUtils.getEntityManager();
 //    }
     public void create(Project project) {
@@ -54,8 +53,7 @@ public class ProjectController {
     //Auf Korrektheit überprüfen
     public void createCosting(Project project, long originalProjectId) {
         try {
-            WorthController wc =new WorthController();
-            System.out.println( wc.BaseAndRoofAreaCountTabs(originalProjectId));
+            WorthController wc = new WorthController();
             create(project);
 
             em = JpaUtils.getEntityManager();
@@ -65,7 +63,7 @@ public class ProjectController {
                 List<Worth> worths = project.getWorths();
                 project.setWorths(new ArrayList<Worth>());
                 for (Worth worth : worths) {
-                    em.persist(new Worth(project, worth.getParameter(), worth.getWorth(),worth.getShortTerm()));
+                    em.persist(new Worth(project, worth.getParameter(), worth.getWorth(), worth.getShortTerm()));
                 }
             }
             ComponentController componentJpaController = new ComponentController();
@@ -317,8 +315,8 @@ public class ProjectController {
         }
     }
 
-    public void reset(){
-        for(Project a:findAll()){
+    public void reset() {
+        for (Project a : findAll()) {
             delete(a.getId());
         }
     }

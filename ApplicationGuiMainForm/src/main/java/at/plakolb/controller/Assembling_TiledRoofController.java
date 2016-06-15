@@ -41,6 +41,7 @@ public class Assembling_TiledRoofController implements Initializable {
     @FXML
     private Label lb_length;
 
+    private Worth wastePercent;
     private Worth slatSpacing;
     private Worth waste;
     private Worth lengthNoWaste;
@@ -58,11 +59,14 @@ public class Assembling_TiledRoofController implements Initializable {
         instance = this;
 
         ParameterController parameterController = new ParameterController();
+        wastePercent = new Worth(parameterController.findParameterPByShortTerm("VLP"));
         slatSpacing = new Worth(parameterController.findParameterPByShortTerm("LA"));
         waste = new Worth(parameterController.findParameterPByShortTerm("VL"));
         length = new Worth(parameterController.findParameterPByShortTerm("LL"));
         lengthNoWaste = new Worth(parameterController.findParameterPByShortTerm("LDOV"));
 
+        tf_slatSpacing.setText(UtilityFormat.getStringForTextField(slatSpacing));
+        tf_waste.setText(UtilityFormat.getStringForTextField(wastePercent));
         lb_length.setText(UtilityFormat.getStringForLabel(length));
         lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
         lb_waste.setText(UtilityFormat.getStringForLabel(waste));
@@ -73,7 +77,7 @@ public class Assembling_TiledRoofController implements Initializable {
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
         tf_waste.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            UtilityFormat.setWorthFromTextField(tf_waste, waste);
+            UtilityFormat.setWorthFromTextField(tf_waste, wastePercent);
             Assembling_BattensOrFullFormworkController.getInstance().calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
@@ -108,9 +112,11 @@ public class Assembling_TiledRoofController implements Initializable {
                     ? worthController.findWorthByShortTermAndProjectId("LL", project.getId()) : length;
             lengthNoWaste = (worthController.findWorthByShortTermAndProjectId("LDOV", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("LDOV", project.getId()) : lengthNoWaste;
+            wastePercent = (worthController.findWorthByShortTermAndProjectId("VLP", project.getId()) != null)
+                    ? worthController.findWorthByShortTermAndProjectId("VLP", project.getId()) : wastePercent;
 
             tf_slatSpacing.setText(UtilityFormat.getStringForTextField(slatSpacing));
-            tf_waste.setText(UtilityFormat.getStringForTextField(Assembling_BattensOrFullFormworkController.getInstance().getWastePercent()));
+            tf_waste.setText(UtilityFormat.getStringForTextField(wastePercent));
 
             lb_length.setText(UtilityFormat.getStringForLabel(length));
             lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
@@ -131,7 +137,7 @@ public class Assembling_TiledRoofController implements Initializable {
             lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
 
             //Verschnitt Lattung
-            waste.setWorth(lengthNoWaste.getWorth() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
+            waste.setWorth(lengthNoWaste.getWorth() * (wastePercent.getWorth() / 100));
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
 
             //Länge der Dachlatten - Lattung
@@ -160,17 +166,20 @@ public class Assembling_TiledRoofController implements Initializable {
                 waste.setProject(ProjectViewController.getOpenedProject());
                 lengthNoWaste.setProject(ProjectViewController.getOpenedProject());
                 length.setProject(ProjectViewController.getOpenedProject());
+                wastePercent.setProject(ProjectViewController.getOpenedProject());
 
                 wc.create(slatSpacing);
                 wc.create(waste);
                 wc.create(lengthNoWaste);
                 wc.create(length);
+                wc.create(wastePercent);
             } else {
 
                 wc.edit(slatSpacing);
                 wc.edit(waste);
                 wc.edit(lengthNoWaste);
                 wc.edit(length);
+                wc.edit(wastePercent);
             }
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Assembling_TiledRoofController: persist method didn't work.", ex);

@@ -24,7 +24,6 @@ public class Logging {
                 logger = Logger.getLogger("");
                 String logFilePath = getLogFilePath();
 
-                System.out.println(logFilePath);
                 FileHandler fh = new FileHandler(logFilePath, true);
                 fh.setFormatter(new SimpleFormatter());
                 logger.addHandler(fh);

@@ -20,7 +20,6 @@ public class JpaUtils {
                 puUnitName = defautlPuName;  
             }
             emf = Persistence.createEntityManagerFactory(puUnitName);
-            System.out.println("PUunit: " + puUnitName);
         }
         return emf.createEntityManager();
     }

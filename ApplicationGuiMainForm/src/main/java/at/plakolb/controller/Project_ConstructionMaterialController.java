@@ -162,7 +162,6 @@ public class Project_ConstructionMaterialController implements Initializable {
                                         for (Component c : getComponentList()) {
                                             if (c.getAssemblys().contains(assembly)) {
                                                 c.getAssemblys().remove(assembly);
-                                                System.out.println("Assembly gelöscht");
                                             }
                                         }
                                         refreshListView();

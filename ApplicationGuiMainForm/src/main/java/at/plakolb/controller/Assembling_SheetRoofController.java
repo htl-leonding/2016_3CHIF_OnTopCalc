@@ -40,8 +40,9 @@ public class Assembling_SheetRoofController extends Observable implements Initia
     @FXML
     private Label lb_formwork;
 
-    Worth waste;
-    Worth formwork;
+    private Worth waste;
+    private Worth formwork;
+    private Worth wastePercent;
 
     /**
      * Initializes the controller class and all worth objects. Also adds a
@@ -58,12 +59,14 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         ParameterController parameterController = new ParameterController();
         waste = new Worth(parameterController.findParameterPByShortTerm("VVS"));
         formwork = new Worth(parameterController.findParameterPByShortTerm("VollS"));
+        wastePercent = new Worth(parameterController.findParameterPByShortTerm("VVP"));
 
         lb_waste.setText(UtilityFormat.getStringForLabel(waste));
         lb_formwork.setText(UtilityFormat.getStringForLabel(formwork));
+        tf_wastePercent.setText(UtilityFormat.getStringForTextField(wastePercent));
 
         tf_wastePercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            UtilityFormat.setWorthFromTextField(tf_wastePercent, waste);
+            UtilityFormat.setWorthFromTextField(tf_wastePercent, wastePercent);
             Assembling_BattensOrFullFormworkController.getInstance().calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
@@ -95,7 +98,10 @@ public class Assembling_SheetRoofController extends Observable implements Initia
                     ? worthController.findWorthByShortTermAndProjectId("VVS", project.getId()) : waste;
             formwork = (worthController.findWorthByShortTermAndProjectId("VollS", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("VollS", project.getId()) : formwork;
-            tf_wastePercent.setText(UtilityFormat.getStringForTextField(Assembling_BattensOrFullFormworkController.getInstance().getWastePercent()));
+            wastePercent = (worthController.findWorthByShortTermAndProjectId("VVP", project.getId()) != null)
+                    ? worthController.findWorthByShortTermAndProjectId("VVP", project.getId()) : wastePercent;
+
+            tf_wastePercent.setText(UtilityFormat.getStringForTextField(wastePercent));
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
             lb_formwork.setText(UtilityFormat.getStringForLabel(formwork));
         }
@@ -109,7 +115,7 @@ public class Assembling_SheetRoofController extends Observable implements Initia
         try {
 
             //Verschnitt Vollschalung
-            waste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
+            waste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * (wastePercent.getWorth() / 100));
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
 
             //Vollschalung
@@ -140,13 +146,16 @@ public class Assembling_SheetRoofController extends Observable implements Initia
             if (!ProjectViewController.isProjectOpened() || waste.getProject() == null) {
                 waste.setProject(ProjectViewController.getOpenedProject());
                 formwork.setProject(ProjectViewController.getOpenedProject());
+                wastePercent.setProject(ProjectViewController.getOpenedProject());
 
                 wc.create(waste);
                 wc.create(formwork);
+                wc.create(wastePercent);
             } else {
 
                 wc.edit(waste);
                 wc.edit(formwork);
+                wc.edit(wastePercent);
             }
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Assembling_SheetRoofController: persist method didn't work.", ex);

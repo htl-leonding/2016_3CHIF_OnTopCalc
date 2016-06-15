@@ -68,7 +68,6 @@ public class Print {
         String fileName = project.getProjectName().replace(" ", "_") + "_" + UtilityFormat.getDateTime(LocalDateTime.now()) + ".pdf";
         File file = new File(path + "/" + fileName);
         absolutePath = file.getAbsolutePath();
-        System.out.println("Erstelle: " + file.toPath());
         document = new Document();
         document.setPageSize(PageSize.A4);
         float cm = 72.0f / 2.54f;

@@ -72,7 +72,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
     private Worth productCosts;
     private Worth montageCosts;
     private Worth totalCosts;
-    private Worth wastePercent;
     private Component component;
 
     private int loadedIndex = -1;
@@ -93,7 +92,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         cb_roofType.getItems().addAll("Ziegeldach", "Blechdach");
         ParameterController parameterController = new ParameterController();
 
-        wastePercent = new Worth(parameterController.findParameterPByShortTerm("VLVP"));
         workCosts = new Worth(parameterController.findParameterPByShortTerm("KPLV"));
         assemblingDuration = new Worth(parameterController.findParameterPByShortTerm("ZPLV"));
         montageCosts = new Worth(parameterController.findParameterPByShortTerm("KMLatVoll"));
@@ -124,6 +122,7 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
+
 
         cb_product.getSelectionModel().selectedItemProperty().addListener((source, oldValue, newValue) -> {
             if (newValue != null) {
@@ -228,14 +227,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         calculate();
     }
 
-    public double getWastePercent() {
-        return wastePercent.getWorth();
-    }
-
-    public void setWastePercent(double worth) {
-        wastePercent.setWorth(worth);
-    }
-
     public Component getComponent() {
         return component;
     }
@@ -272,8 +263,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                     ? worthController.findWorthByShortTermAndProjectId("KPLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("KPLatVoll"));
             totalCosts = (worthController.findWorthByShortTermAndProjectId("GKLatVoll", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("GKLatVoll", project.getId()) : new Worth(parameterController.findParameterPByShortTerm("GKLatVoll"));
-            wastePercent = (new WorthController().findWorthByShortTermAndProjectId("VLVP", project.getId()) != null)
-                    ? new WorthController().findWorthByShortTermAndProjectId("VLVP", project.getId()) : new Worth(new ParameterController().findParameterPByShortTerm("VLVP"));
 
             if ("Ziegeldach".equals(ProjectViewController.getOpenedProject().getRoofMaterial())) {
                 loadedIndex = 0;
@@ -427,7 +416,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 montageCosts.setProject(project);
                 productCosts.setProject(project);
                 totalCosts.setProject(project);
-                wastePercent.setProject(project);
                 component.setProject(project);
 
                 worthController.create(assemblingDuration);
@@ -435,7 +423,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 worthController.create(montageCosts);
                 worthController.create(productCosts);
                 worthController.create(totalCosts);
-                worthController.create(wastePercent);
                 componentController.create(component);
             } else {
                 worthController.edit(assemblingDuration);
@@ -443,7 +430,6 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
                 worthController.edit(montageCosts);
                 worthController.edit(productCosts);
                 worthController.edit(totalCosts);
-                worthController.edit(wastePercent);
                 componentController.edit(component);
             }
         } catch (Exception ex) {

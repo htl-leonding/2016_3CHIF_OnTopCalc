@@ -237,6 +237,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                     openedProject.setConstructionType(informations.getConstructionType());
                     openedProject.setRoofForm(informations.getRoofForm());
                     projectController.edit(openedProject);
+                    Logging.getLogger().log(Level.INFO, "Project saved. (Id: " + openedProject.getId() + ")");
 
                 } else {
                     openedProject.setClient(client);
@@ -246,6 +247,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                     openedProject.setConstructionType(informations.getConstructionType());
                     openedProject.setRoofForm(informations.getRoofForm());
                     projectController.create(openedProject);
+                    Logging.getLogger().log(Level.INFO, "New Project created. (Id: " + openedProject.getId() + ")");
                 }
             } catch (Exception ex) {
                 Logging.getLogger().log(Level.SEVERE, "Couldn't persist project.", ex);
@@ -268,7 +270,6 @@ public class ProjectViewController extends Observable implements Initializable, 
             Project_ConstructionMaterialController.getInstance().persist();
 
             ModifyController.getInstance().reset();
-
             projectOpened = true;
         }
         bar.setDisable(false);
@@ -301,7 +302,6 @@ public class ProjectViewController extends Observable implements Initializable, 
             projectOpened = false;
             openedProject = null;
         }
-
     }
 
     /**

@@ -98,7 +98,7 @@ public class SettingsController {
         SettingsController.setProperty("pdfPath", "");
         SettingsController.setProperty("printCopies", "1");
         SettingsController.setProperty("firstrun", "true");
-        SettingsController.setProperty("version", "0.9.2");
+        SettingsController.setProperty("version", "1.0.0");
     }
     public static void createSettingsFile(){
         try {

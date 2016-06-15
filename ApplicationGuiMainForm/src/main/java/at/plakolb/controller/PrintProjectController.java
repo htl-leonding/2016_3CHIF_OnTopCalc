@@ -155,7 +155,6 @@ public class PrintProjectController implements Initializable {
                 return;
             }
         }
-        System.out.println(project.getProjectNameWithId() + " steht nicht zur Druckauswahl!");
         refreshPrintAbility();
     }
 

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
 <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" prefHeight="480.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.AboutController">
     <content>
         <VBox>
@@ -134,9 +141,6 @@
                     </padding>
                 </VBox>
                 <BorderPane prefHeight="120.0" style="-fx-border-color: darkgrey transparent transparent transparent;">
-                    <center>
-                        <Label text="OnTopCalc ist eine Weiterführung der Diplomarbeit von Elisabeth Pilz. " BorderPane.alignment="CENTER" />
-                    </center>
                     <top>
                         <Label alignment="CENTER" text="Information" textFill="#3c84ff" BorderPane.alignment="CENTER">
                             <font>
@@ -147,6 +151,9 @@
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
                     </padding>
+               <center>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="420.0" text="OnTopCalc baut auf der Diplomarbeit (Kalkulations-Assistent) von Elisabeth Pilz auf." textAlignment="JUSTIFY" wrapText="true" BorderPane.alignment="CENTER" />
+               </center>
                 </BorderPane>
             </children>
             <padding>
