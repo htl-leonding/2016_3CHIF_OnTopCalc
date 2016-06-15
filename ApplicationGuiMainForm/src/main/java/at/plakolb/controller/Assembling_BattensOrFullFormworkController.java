@@ -319,23 +319,27 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         try {
             int index = cb_roofType.getSelectionModel().getSelectedIndex();
 
-            //Produktkosten
-            //Alte Formel-ID: KProdLV
+            if (Assembling_TiledRoofController.getInstance() != null)
+                Assembling_TiledRoofController.getInstance().calculate();
+
+            if (Assembling_SheetRoofController.getInstance() != null)
+                Assembling_SheetRoofController.getInstance().calculate();
+
+            //Kosten Produkt Lattung oder Vollschalung
             if (Assembling_SheetRoofController.getInstance() != null) {
                 productCosts.setWorth(price * (index == 0 ? Assembling_TiledRoofController.getInstance().getLength().getWorth()
                         : Assembling_SheetRoofController.getInstance().getFormwork().getWorth()));
                 lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
             }
 
-            //Montagekosten
-            //Alte Formel-ID: KMLV
+            //Kosten Montage Lattung oder Vollschalung
             montageCosts.setWorth(workCosts.getWorth() * assemblingDuration.getWorth());
             lb_assemblingCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
 
-            //Totalcosts
-            //Alte Formel-ID: GKLV
+            //Gesamtkosten Lattung oder Vollschalung
             totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK);

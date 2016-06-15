@@ -235,50 +235,24 @@ public class Assembling_FormworkController implements Initializable, Observer {
     public void calculate() {
 
         try {
-            //Verschnittberechnung
-            //########################
-            //select 
-            //(select NULLIF(w.worth, 0) from Worth w join
-            // ParameterP p on w.parameter_id = p.id where w.project_id = ? 
-            //and p.shortterm = ''D'' and w.shortterm is null) * 
-            //(select NULLIF(w.worth, 0)/100 from Worth w join ParameterP p on
-            //w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''VSP'')
-            //from sysibm.sysdummy1
+
+            //Verschnitt Dachfläche m²
             waste.setWorth(blend.getWorth() / 100 * roofArea);
             lb_Waste.setText(UtilityFormat.getStringForLabel(waste));
 
-            //Schalung-Berechnung
-            //-------------------------------------------
-            //select (select NULLIF(w.worth, 0) from Worth 
-            //w join ParameterP p on w.parameter_id = p.id 
-            //where w.project_id = ? and p.shortterm = ''D'' and w.shortterm is null) 
-            //+ (select NULLIF(w.worth, 0) from Worth w 
-            //join ParameterP p on w.parameter_id = p.id where w.project_id = ? 
-            //and p.shortterm = ''VS'') from sysibm.sysdummy1
+            //Schalung
             formwork.setWorth(roofArea + waste.getWorth());
             lb_Formwork.setText(UtilityFormat.getStringForLabel(formwork));
 
-            //Produktkosten
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            //select (select c.pricecomponent from component c where c.project_id = ? 
-            //and c.category_id = ? and c.componenttype = ''Produkt'') * 
-            //(select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id 
-            //where w.project_id = ? and p.shortterm = ''S'') from sysibm.sysdummy1
+            //Kosten Produkt Schalung
             productCosts.setWorth(price * formwork.getWorth());
             lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
 
-            //Montagekosten
-            //´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´
-            //select (select NULLIF(w.worth, 0) from Worth w join ParameterP p 
-            //on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KPS'')
-            //* (select NULLIF(w.worth, 0) from Worth w join ParameterP p 
-            //on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''ZPS'')
-            //from sysibm.sysdummy1
+            //Kosten Montage Schalung
             costsMontage.setWorth(wage.getWorth() * time.getWorth());
             lb_AssebmlyCosts.setText(UtilityFormat.getStringForLabel(costsMontage));
 
-            //Gesamtkosten
-            //°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+            //Gesamtkosten Schalung
             totalCosts.setWorth(costsMontage.getWorth() + productCosts.getWorth());
             lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 

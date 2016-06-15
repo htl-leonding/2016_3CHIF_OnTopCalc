@@ -238,10 +238,10 @@ public class Project_BaseAndRoofAreaController implements Initializable, Observe
                         / Math.cos(angle.getWorth() * Math.PI / 180));
                 ledge.setWorth(ledgeAndRoofArea.getWorth() - roofArea.getWorth());
 
-                lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea.getWorth()));
-                lb_BaseArea.setText(UtilityFormat.getStringForLabel(baseArea.getWorth()));
-                lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge.getWorth()));
-                lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea.getWorth()));
+                lb_RoofArea.setText(UtilityFormat.getStringForLabel(roofArea));
+                lb_BaseArea.setText(UtilityFormat.getStringForLabel(baseArea));
+                lb_Ledge.setText(UtilityFormat.getStringForLabel(ledge));
+                lb_LedgeAndRoofArea.setText(UtilityFormat.getStringForLabel(ledgeAndRoofArea));
 
                 Project_ResultAreaController.getInstance().calcArea();
 

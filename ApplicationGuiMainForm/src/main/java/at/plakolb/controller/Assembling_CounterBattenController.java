@@ -128,7 +128,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
         });
 
         cl_dachsparrenLength.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) -> {
-            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent())) + " m");
+            return new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent() * param.getValue().getNumberOfProducts())) + " m");
         });
 
         if (ProjectViewController.getOpenedProject() != null) {
@@ -229,6 +229,7 @@ public class Assembling_CounterBattenController implements Observer, Initializab
     public void calculate() {
         try {
             double sum = Project_ConstructionMaterialListController.getInstance().getTotalRafterLength();
+
             //Verschnitt in m
             lengthWaste.setWorth(sum * (waste.getWorth() / 100));
             lb_lengthWaste.setText(UtilityFormat.getStringForLabel(lengthWaste));

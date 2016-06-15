@@ -124,18 +124,16 @@ public class Assembling_TiledRoofController extends Observable implements Initia
      */
     public void calculate() {
         try {
+
             //Länge der Dachlatten ohne Verschnitt
-            //Alte Formel-ID: LDOV
-            lengthNoWaste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() / slatSpacing.getWorth() / 100);
+            lengthNoWaste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() / (slatSpacing.getWorth() / 100));
             lb_lengthNoWaste.setText(UtilityFormat.getStringForLabel(lengthNoWaste));
 
-            //Verschnitt
-            //Alte Formel-ID:VL
+            //Verschnitt Lattung
             waste.setWorth(lengthNoWaste.getWorth() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
 
-            //Länge + Verschnitt
-            //Alte Formel-ID:LL
+            //Länge der Dachlatten - Lattung
             length.setWorth(lengthNoWaste.getWorth() + waste.getWorth());
             lb_length.setText(UtilityFormat.getStringForLabel(length));
 
