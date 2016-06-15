@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.util.logging.*;
@@ -71,14 +72,31 @@ public class MainApp extends Application {
     }
 
     public static void restart() {
+        StringBuilder deleteDB = new StringBuilder();
+        deleteDB.append("#!/bin/bash\n");
+        deleteDB.append(String.format("while [ -d %s ] do\n","database"));
+        deleteDB.append(String.format("rm -r %s || echo \"Cannot delete database directory.\"\n", "database"));
+        deleteDB.append("end\n\n");
+
         StringBuilder cmd = new StringBuilder();
         cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
         for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
             cmd.append(jvmArg + " ");
         }
         cmd.append("-jar ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
+
+        deleteDB.append(cmd.toString());
         try {
-            Runtime.getRuntime().exec(cmd.toString());
+            FileWriter fileWriter = new FileWriter("restart.sh");
+            fileWriter.write(deleteDB.toString());
+            fileWriter.flush();
+            fileWriter.close();
+            new File("restart.sh").setExecutable(true);
+        } catch (IOException e) {
+            Logging.getLogger().log(Level.SEVERE, "Couldn`t write to restart file.", e);
+        }
+        try {
+            Runtime.getRuntime().exec("restart.sh");
         } catch (IOException ex) {
             Logging.getLogger().log(Level.SEVERE, "Application couldn't be restarted.", ex);
         }
