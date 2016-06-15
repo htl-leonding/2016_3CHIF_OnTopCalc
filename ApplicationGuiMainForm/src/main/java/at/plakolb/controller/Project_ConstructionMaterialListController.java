@@ -379,6 +379,15 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         calculateCosts();
         setChanged();
         notifyObservers();
+
+        for(Component component : components){
+            System.out.println(component.getFullNameProduct() + ": ");
+            for (Assembly assembly : component.getAssemblys()){
+                System.out.println(assembly.toString());
+            }
+            System.out.println("\n");
+        }
+
     }
 
     /**
