@@ -3,12 +3,16 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Tooltip?>
 <TabPane fx:id="tb_Roofarea" tabClosingPolicy="ALL_TABS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ResultAreaController">
   <tabs>
       <Tab closable="false" onSelectionChanged="#addTab">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
+          <tooltip>
+              <Tooltip text="Neue Dach- oder Grundfläche hinzufügen" />
+          </tooltip>
       </Tab>
   </tabs>
 </TabPane>

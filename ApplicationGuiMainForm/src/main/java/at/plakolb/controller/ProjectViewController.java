@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
 import java.net.URL;
@@ -56,8 +57,10 @@ public class ProjectViewController extends Observable implements Initializable, 
     private Tab tab_Colour;
     @FXML
     private Tab tab_Overview;
-
+    @FXML
     private TabPane tb_Assebmling;
+    @FXML
+    public GridPane bar;
 
     /**
      * Initializes the controller class.
@@ -176,6 +179,7 @@ public class ProjectViewController extends Observable implements Initializable, 
      */
     @FXML
     public boolean saveProject(ActionEvent event) {
+        bar.setDisable(true);
         Project_InformationsController informations = Project_InformationsController.getInstance();
         Client client = null;
 
@@ -183,6 +187,7 @@ public class ProjectViewController extends Observable implements Initializable, 
             Alert alert = new Alert(Alert.AlertType.ERROR, "Bitte geben Sie einen Projektnamen ein.");
             alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
             alert.showAndWait();
+            bar.setDisable(false);
             return false;
         } else {
             if (informations.getClientName().isEmpty()) {
@@ -191,6 +196,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                 alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                 alert.showAndWait();
                 if (alert.getResult() == ButtonType.CANCEL) {
+                    bar.setDisable(false);
                     return false;
                 }
             } else if (!informations.getEmail().isEmpty()) {
@@ -204,6 +210,7 @@ public class ProjectViewController extends Observable implements Initializable, 
                     alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                     alert.showAndWait();
                     if (alert.getResult() == ButtonType.CANCEL) {
+                        bar.setDisable(false);
                         return false;
                     }
                 }
@@ -258,6 +265,7 @@ public class ProjectViewController extends Observable implements Initializable, 
 
             projectOpened = true;
         }
+        bar.setDisable(false);
         return true;
     }
 

@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" styleClass="mainFxmlClass" stylesheets="@../styles/columnbuttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ClientsSmallController">
    <children>
       <TableView fx:id="tv_ClientTable" layoutX="49.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -17,6 +19,22 @@
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
+          <placeholder>
+              <VBox alignment="CENTER" spacing="10">
+                  <children>
+                      <ImageView preserveRatio="true">
+                          <image>
+                              <Image url="@../images/client.png" />
+                          </image>
+                      </ImageView>
+                      <Label alignment="CENTER" text="Keine Auftraggeber vorhanden" textFill="#3c84ff">
+                          <font>
+                              <Font name="Berlin Sans FB" size="14.0" />
+                          </font>
+                      </Label>
+                  </children>
+              </VBox>
+          </placeholder>
       </TableView>
       <Button layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#chooseClient" prefHeight="16.0" prefWidth="400.0" text="Auswahl bestätigen" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <font>

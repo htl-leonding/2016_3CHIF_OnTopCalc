@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_SealingBandController">
    <children>
       <VBox alignment="CENTER" layoutY="32.0" spacing="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
@@ -197,6 +199,22 @@
                      <HBox.margin>
                         <Insets bottom="20.0" top="20.0" />
                      </HBox.margin>
+                     <placeholder>
+                        <VBox alignment="CENTER" spacing="10">
+                           <children>
+                              <ImageView preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/cloud.png" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" text="Keine Dachsparren vorhanden" textFill="#3c84ff">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </placeholder>
                   </TableView>
                </children>
             </HBox>

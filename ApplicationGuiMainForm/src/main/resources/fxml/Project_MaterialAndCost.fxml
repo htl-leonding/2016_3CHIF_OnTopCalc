@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane id="AnchorPane" stylesheets="@../styles/tableViewFonts.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_MaterialAndCostController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane id="AnchorPane" stylesheets="@../styles/tableViewFonts.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_MaterialAndCostController">
    <children>
       <VBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -29,6 +35,22 @@
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
+                      <placeholder>
+                          <VBox alignment="CENTER" spacing="10">
+                              <children>
+                                  <ImageView preserveRatio="true">
+                                      <image>
+                                          <Image url="@../images/cloud.png" />
+                                      </image>
+                                  </ImageView>
+                                  <Label alignment="CENTER" text="Keine Daten vorhanden" textFill="#3c84ff">
+                                      <font>
+                                          <Font size="14.0" />
+                                      </font>
+                                  </Label>
+                              </children>
+                          </VBox>
+                      </placeholder>
                   </TableView>
                </children>
             </HBox>

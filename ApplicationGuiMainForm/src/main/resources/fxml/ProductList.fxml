@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProductListController">
    <left>
        <fx:include source="SideView.fxml" />
@@ -45,6 +47,22 @@
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
+                      <placeholder>
+                          <VBox alignment="CENTER" spacing="10">
+                              <children>
+                                  <ImageView preserveRatio="true">
+                                      <image>
+                                          <Image url="@../images/cloud.png" />
+                                      </image>
+                                  </ImageView>
+                                  <Label alignment="CENTER" text="Keine Daten vorhanden" textFill="#3c84ff">
+                                      <font>
+                                          <Font name="Berlin Sans FB" size="14.0" />
+                                      </font>
+                                  </Label>
+                              </children>
+                          </VBox>
+                      </placeholder>
                   </TableView>
                </children>
             </VBox>
