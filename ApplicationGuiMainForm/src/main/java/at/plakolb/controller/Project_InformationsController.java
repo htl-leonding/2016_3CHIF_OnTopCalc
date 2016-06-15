@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,6 +26,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * FXML Controller class
@@ -75,38 +78,38 @@ public class Project_InformationsController implements Initializable, Observer {
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
 
-        tf_City.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_City.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_ClientName.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_ClientName.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_Description.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_Description.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_Email.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_Email.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_InvoiceNumber.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_InvoiceNumber.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_ProjectName.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_ProjectName.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_PhoneNumber.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_PhoneNumber.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_Street.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_Street.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        tf_ZipCode.textProperty().addListener((observable,oldValue, newValue)-> {
+        tf_ZipCode.textProperty().addListener((observable, oldValue, newValue) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
 
-        lv_ConstructionType.getSelectionModel().selectedItemProperty().addListener((event)->{
+        lv_ConstructionType.getSelectionModel().selectedItemProperty().addListener((event) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
-        lv_RoofForm.getSelectionModel().selectedItemProperty().addListener((event)->{
+        lv_RoofForm.getSelectionModel().selectedItemProperty().addListener((event) -> {
             ModifyController.getInstance().setProject_information(Boolean.TRUE);
         });
 
@@ -193,10 +196,9 @@ public class Project_InformationsController implements Initializable, Observer {
     public void openProject(Project project) {
         lb_Id.setText(String.valueOf(project.getId()));
         lb_typeOfCalculation.setText(project.getModeOfCalculation());
-        if(project.getModeOfCalculation().equals("Vorkalkulation") ){
+        if (project.getModeOfCalculation().equals("Vorkalkulation")) {
             iv_calcualtionType.setImage(new Image("/images/forward.png"));
-        }
-        else {
+        } else {
             iv_calcualtionType.setImage(new Image("/images/backward.png"));
         }
         tf_ProjectName.setText(project.getProjectName());

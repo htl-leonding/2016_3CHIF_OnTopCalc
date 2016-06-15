@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProductListController">
    <left>
        <fx:include source="SideView.fxml" />
@@ -22,7 +25,7 @@
                         <HBox alignment="CENTER_LEFT" spacing="3.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label id="productlistheadline" text="Anzeige Typ:" />
-                              <MenuButton fx:id="mb_ProductTypesFilter" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Alle" HBox.hgrow="NEVER" />
+                              <MenuButton fx:id="mb_ProductTypesFilter" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" text="Alle" HBox.hgrow="NEVER" />
                            </children>
                         </HBox>
                         <Button id="add_Product" mnemonicParsing="false" onAction="#addProduct" stylesheets="@../styles/buttons.css" text="Hinzufügen" />

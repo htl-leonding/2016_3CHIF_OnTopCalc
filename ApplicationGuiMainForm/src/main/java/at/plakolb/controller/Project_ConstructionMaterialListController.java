@@ -3,6 +3,7 @@ package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.*;
 import at.plakolb.calculationlogic.db.entity.*;
+import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.eunmeration.ProductType;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
@@ -76,6 +77,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
     private List<Component> components;
 
+    private List<Component> deletedComponents;
+
     /**
      * Initializes the controller class.
      *
@@ -86,6 +89,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
         components = new LinkedList<>();
+        deletedComponents = new LinkedList<>();
 
         if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
             components = new ComponentController().findComponentsByProjectIdAndComponentType(ProjectViewController.getOpenedProject().getId(), "Kubikmeter");
@@ -239,18 +243,19 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                                 Alert alert = null;
 
                                 if (Project_ConstructionMaterialController.getInstance().getAssemblyCount() > 0) {
-                                    alert = new Alert(Alert.AlertType.CONFIRMATION, "Wenn Sie dieses Material löschen, werden auch alle dazugehörigen Produkte gelöscht:\n" + getBelongings(tv_Materials.getSelectionModel().getSelectedItem()) + ".\nMöchten Sie troztdem fortfahren?",
-                                            ButtonType.YES, ButtonType.CANCEL);
-                                    alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
-                                    alert.showAndWait();
-                                    if (alert.getResult() == ButtonType.YES) {
+                                    if(getBelongings(tv_Materials.getSelectionModel().getSelectedItem()).length() != 0) {
+                                        alert = new Alert(Alert.AlertType.CONFIRMATION, "Wenn Sie dieses Material löschen, werden auch alle dazugehörigen Produkte gelöscht:\n"
+                                                + getBelongings(tv_Materials.getSelectionModel().getSelectedItem()) + "\nMöchten Sie troztdem fortfahren?",
+                                                ButtonType.YES, ButtonType.CANCEL);
+                                        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+                                        alert.showAndWait();
+                                    }
+                                    if (getBelongings(tv_Materials.getSelectionModel().getSelectedItem()).length() == 0 || alert.getResult() == ButtonType.YES) {
                                         Project_ConstructionMaterialController.getInstance().deleteRelativeAssemblies(tv_Materials.getSelectionModel().getSelectedItem());
 
                                         try {
+                                            deletedComponents.add(tv_Materials.getSelectionModel().getSelectedItem());
                                             components.remove(tv_Materials.getSelectionModel().getSelectedItem());
-                                            if (tv_Materials.getSelectionModel().getSelectedItem().getId() != null) {
-                                                new ComponentController().destroy(tv_Materials.getSelectionModel().getSelectedItem().getId());
-                                            }
                                             ModifyController.getInstance().setProject_constructionmaterialList(Boolean.TRUE);
                                         } catch (Exception ex) {
                                             Logging.getLogger().log(Level.SEVERE, "Couldn't delete material.", ex);
@@ -380,14 +385,6 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
         setChanged();
         notifyObservers();
 
-        for(Component component : components){
-            System.out.println(component.getFullNameProduct() + ": ");
-            for (Assembly assembly : component.getAssemblys()){
-                System.out.println(assembly.toString());
-            }
-            System.out.println("\n");
-        }
-
     }
 
     /**
@@ -411,7 +408,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
      */
     private double getColmunSum(TableColumn<Component, String> column) {
         double sum = 0;
-        for (Component component : tv_Materials.getItems()) {
+        for (Component component : components) {
             sum += Double.parseDouble(column.getCellData(component).replace(',', '.'));
         }
         return sum;
@@ -425,6 +422,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
             ComponentController componentController = new ComponentController();
             WorthController worthController = new WorthController();
             ParameterController parameterController = new ParameterController();
+            AssemblyController assemblyController = new AssemblyController();
             for (Component component : components) {
                 if (component.getId() == null) {
                     componentController.create(component);
@@ -434,6 +432,28 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
                 }
             }
+            for (int i = deletedComponents.size() - 1; i >= 0; i--) {
+                if (deletedComponents.get(i).getId() != null) {
+                    for (int b = deletedComponents.get(i).getAssemblys().size() - 1; b >= 0; b--) {
+                        if (deletedComponents.get(i).getAssemblys().get(b).getId() != null) {
+                            try {
+                                assemblyController.destroy(deletedComponents.get(i).getAssemblys().get(b).getId());
+                            } catch (NonexistentEntityException ex) {
+
+                            }
+                            deletedComponents.get(i).getAssemblys().remove(i);
+                        }
+                    }
+
+                    try {
+                        componentController.destroy(deletedComponents.get(i).getId());
+                    } catch (NonexistentEntityException ex) {
+
+                    }
+                }
+            }
+            deletedComponents.clear();
+
             if (ProjectViewController.isProjectOpened() == false) {
                 worthController.create(new Worth(ProjectViewController.getOpenedProject(), parameterController.findParameterPByShortTerm("GP"), getColmunSum(tc_Price)));
                 worthController.create(new Worth(ProjectViewController.getOpenedProject(), parameterController.findParameterPByShortTerm("KZPG"), getColmunSum(tc_CuttingPrice)));
@@ -444,7 +464,7 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
                 Worth wageCost = worthController.findWorthByParameterIdAndProjectId(parameterController.findParameterPByShortTerm("KZPG").getId(), ProjectViewController.getOpenedProject().getId());
                 wageCost.setWorth(getColmunSum(tc_CuttingPrice));
                 Worth totalCost = worthController.findWorthByParameterIdAndProjectId(parameterController.findParameterPByShortTerm("GKV").getId(), ProjectViewController.getOpenedProject().getId());
-                totalCost.setWorth(getColmunSum(tc_CuttingPrice)+getColmunSum(tc_Price));
+                totalCost.setWorth(getColmunSum(tc_CuttingPrice) + getColmunSum(tc_Price));
                 worthController.edit(materialCost);
                 worthController.edit(wageCost);
                 worthController.edit(totalCost);
@@ -480,10 +500,8 @@ public class Project_ConstructionMaterialListController extends java.util.Observ
 
         if (component != null) {
 
-            for (Assembly assembly : Project_ConstructionMaterialController.getInstance().getAssemblys()) {
-                if (assembly.getComponent().equals(component)) {
-                    belongings += ("- " + assembly.getProduct().toString() + "\n");
-                }
+            for (Assembly assembly : component.getAssemblys()) {
+                belongings += ("- " + assembly.getProduct().toString() + "\n");
             }
         }
         return belongings;

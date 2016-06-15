@@ -81,7 +81,6 @@ public class Project_ResultAreaController extends Observable implements Initiali
             WorthController worthController = new WorthController();
             int max_index = worthController.BaseAndRoofAreaCountTabs(ProjectViewController.getOpenedProject().getId());
             if (max_index > 0) {
-                System.out.println(max_index);
                 for (int i = 0; i < max_index; i++) {
                     addTab(null);
                 }
@@ -288,7 +287,6 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 Logging.getLogger().log(Level.SEVERE, "Project_ResultAreaController: persist method didn't work.", ex);
             }
         }
-        System.out.println(next_ID);
         for (Project_BaseAndRoofAreaController c : areaController) {
             c.persist();
         }

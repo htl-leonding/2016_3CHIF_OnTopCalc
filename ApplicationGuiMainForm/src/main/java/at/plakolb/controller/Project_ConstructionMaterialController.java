@@ -22,6 +22,7 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -60,8 +61,6 @@ public class Project_ConstructionMaterialController implements Initializable {
     @FXML
     private Label lb_TotalCosts;
 
-    private List<Assembly> assemblyList;
-    private List<Component> componentList;
 
     /**
      * Initializes the controller class.
@@ -72,12 +71,6 @@ public class Project_ConstructionMaterialController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        assemblyList = new LinkedList<>();
-        componentList = new LinkedList<>();
-
-        if (ProjectViewController.getOpenedProject() != null && ProjectViewController.getOpenedProject().getId() != null) {
-            assemblyList = new AssemblyController().findAssembliesByProjectId(ProjectViewController.getOpenedProject().getId());
-        }
 
         tv_Assembly.setEditable(true);
 
@@ -156,23 +149,20 @@ public class Project_ConstructionMaterialController implements Initializable {
                             deletionLabel.setTooltip(new Tooltip("Material löschen"));
 
                             deletionLabel.setOnMouseClicked(event -> {
-                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten? Vorsicht, der Löschvorgang kann nicht mehr rückgängig gemacht werden.",
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sind Sie sicher, dass sie dieses Material entgültig löschen möchten?\nVorsicht, der Löschvorgang kann nicht mehr rückgängig gemacht werden.",
                                         ButtonType.YES, ButtonType.CANCEL);
                                 alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
                                 alert.showAndWait();
                                 if (alert.getResult() == ButtonType.YES) {
                                     try {
                                         Assembly assembly = tv_Assembly.getSelectionModel().getSelectedItem();
-                                        Component owningComponent = assembly.getComponent();
-                                        assemblyList.remove(assembly);
-                                        LinkedList<Assembly> newAssemblies = new LinkedList<>();
-                                        newAssemblies.addAll(assembly.getComponent().getAssemblys());
-                                        newAssemblies.remove(assembly);
-                                        owningComponent.setAssemblys(newAssemblies);
-                                        if (tv_Assembly.getSelectionModel().getSelectedItem().getId() != null) {
-                                            new AssemblyController().destroy(assembly.getId());
+                                        for (Component c : getComponentList()) {
+                                            if (c.getAssemblys().contains(assembly)) {
+                                                c.getAssemblys().remove(assembly);
+                                                System.out.println("Assembly gelöscht");
+                                            }
                                         }
-                                        assembly = null;
+                                        refreshListView();
                                         ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
                                     } catch (Exception ex) {
                                         Logging.getLogger().log(Level.SEVERE, "Couldn't delete material.", ex);
@@ -207,57 +197,19 @@ public class Project_ConstructionMaterialController implements Initializable {
     }
 
     public Double getMaterial() {
-        return getTotalCosts(assemblyList);
+        return getTotalCosts(getAssemblies());
     }
 
     public List<Assembly> getAssemblys() {
-        return assemblyList;
+        return getAssemblies();
     }
 
     public void refreshListView() {
-        tv_Assembly.setItems(FXCollections.observableArrayList(assemblyList));
-        tv_Assembly.getColumns().get(0).setVisible(false);
-        tv_Assembly.getColumns().get(0).setVisible(true);
-        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(getTotalCosts(assemblyList)) + " €");
+        tv_Assembly.setItems(FXCollections.observableArrayList(getAssemblies()));
+        tv_Assembly.refresh();
+        lb_TotalCosts.setText(UtilityFormat.getStringForLabel(getTotalCosts(getAssemblies())) + " €");
     }
 
-    public void refreshComponents() {
-
-        componentList.clear();
-        componentList.addAll(Project_ConstructionMaterialListController.getInstance().getComponents());
-
-        if (Assembling_FormworkController.getInstance().getComponent().getProduct() != null) {
-            componentList.add(Assembling_FormworkController.getInstance().getComponent());
-        }
-
-        if (Assembling_VisibleFormworkController.getInstance().getComponent().getProduct() != null) {
-            componentList.add(Assembling_VisibleFormworkController.getInstance().getComponent());
-        }
-
-        if (Assembling_FoilController.getInstance().getComponent().getProduct() != null) {
-            componentList.add(Assembling_FoilController.getInstance().getComponent());
-        }
-
-        if (Assembling_SealingBandController.getInstance().getComponent().getProduct() != null) {
-            componentList.add(Assembling_SealingBandController.getInstance().getComponent());
-        }
-
-        if (Assembling_CounterBattenController.getInstance().getComponent().getProduct() != null) {
-            componentList.add(Assembling_CounterBattenController.getInstance().getComponent());
-        }
-
-        if (Assembling_BattensOrFullFormworkController.getInstance().getComponent().getProduct() != null) {
-            componentList.add(Assembling_BattensOrFullFormworkController.getInstance().getComponent());
-        }
-
-        cb_Component.setItems(FXCollections.observableArrayList(componentList));
-
-        if (cb_Component.getItems().isEmpty()) {
-            cb_Component.setPromptText("Kein Bauteil vorhanden");
-        } else {
-            cb_Component.setPromptText("Bauteil auswählen");
-        }
-    }
 
     @FXML
     private void addMaterial(ActionEvent event) {
@@ -292,12 +244,11 @@ public class Project_ConstructionMaterialController implements Initializable {
             Component component = cb_Component.getSelectionModel().getSelectedItem();
             component.setProject(ProjectViewController.getOpenedProject());
 
-            assemblyList.add(new Assembly(cb_Product.getSelectionModel().getSelectedItem(),
+            new Assembly(cb_Product.getSelectionModel().getSelectedItem(),
                     component,
                     ProjectViewController.getOpenedProject(),
                     amount,
-                    price));
-
+                    price);
             ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
             refreshListView();
         } else {
@@ -312,13 +263,11 @@ public class Project_ConstructionMaterialController implements Initializable {
             AssemblyController assemblyController = new AssemblyController();
             WorthController worthController = new WorthController();
             ParameterController parameterController = new ParameterController();
-            for (Assembly assembly : assemblyList) {
-//                if (assembly.getId() == null) {
-//                    assemblyController.create(assembly);
-//                } else {
-//                    assemblyController.edit(assembly);
-//                }
-                if (assembly.getId() != null) {
+
+            for (Assembly assembly : getAssemblies()) {
+                if (assembly.getId() == null) {
+                    assemblyController.create(assembly);
+                } else {
                     assemblyController.edit(assembly);
                 }
             }
@@ -334,6 +283,16 @@ public class Project_ConstructionMaterialController implements Initializable {
         }
     }
 
+    public void refreshComponents() {
+        cb_Component.setItems(FXCollections.observableArrayList(getComponentList()));
+
+        if (cb_Component.getItems().isEmpty()) {
+            cb_Component.setPromptText("Kein Bauteil vorhanden");
+        } else {
+            cb_Component.setPromptText("Bauteil auswählen");
+        }
+    }
+
     private double getTotalCosts(List<Assembly> assemblys) {
 
         double totalCosts = 0;
@@ -346,24 +305,15 @@ public class Project_ConstructionMaterialController implements Initializable {
     }
 
     public int getAssemblyCount() {
-        return assemblyList.size();
+        return getAssemblies().size();
     }
 
     public void deleteRelativeAssemblies(Component c) {
         try {
-            List<Assembly> supportList = new LinkedList<>();
-            supportList.addAll(assemblyList);
-            for (Assembly assembly : supportList) {
-                if (assembly.getComponent().equals(c) || assembly.getComponent().getId().equals(c.getId())) {
-                    assemblyList.remove(assembly);
-
-                    if (assembly.getId() != null) {
-                        new AssemblyController().destroy(assembly.getId());
-                    }
-                }
+            if (getComponentList().contains(c)) {
+                c.getAssemblys().clear();
+                ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
             }
-
-            ModifyController.getInstance().setProject_constructionMaterial(Boolean.TRUE);
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Couldn't delete relative assemblies.", ex);
         } finally {
@@ -371,4 +321,48 @@ public class Project_ConstructionMaterialController implements Initializable {
         }
     }
 
+    private List<Assembly> getAssemblies() {
+        List<Assembly> resultList = new LinkedList<>();
+        for (Component c : getComponentList()) {
+            resultList.addAll(c.getAssemblys());
+        }
+        return resultList;
+    }
+    private List<Component> getComponentList(){
+        List<Component> componentList = new ArrayList<>();
+        componentList.addAll(Project_ConstructionMaterialListController.getInstance().getComponents());
+
+        if (Assembling_FormworkController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_FormworkController.getInstance().getComponent());
+        }
+
+        if (Assembling_VisibleFormworkController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_VisibleFormworkController.getInstance().getComponent());
+        }
+
+        if (Assembling_FoilController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_FoilController.getInstance().getComponent());
+        }
+
+        if (Assembling_SealingBandController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_SealingBandController.getInstance().getComponent());
+        }
+
+        if (Assembling_CounterBattenController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_CounterBattenController.getInstance().getComponent());
+        }
+
+        if (Assembling_BattensOrFullFormworkController.getInstance().getComponent().getProduct() != null) {
+            componentList.add(Assembling_BattensOrFullFormworkController.getInstance().getComponent());
+        }
+
+        cb_Component.setItems(FXCollections.observableArrayList(componentList));
+
+        if (cb_Component.getItems().isEmpty()) {
+            cb_Component.setPromptText("Kein Bauteil vorhanden");
+        } else {
+            cb_Component.setPromptText("Bauteil auswählen");
+        }
+        return componentList;
+    }
 }

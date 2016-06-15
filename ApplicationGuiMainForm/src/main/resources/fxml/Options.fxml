@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -10,13 +14,15 @@
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.URL?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.OptionsController">
     <left>
         <fx:include source="SideView.fxml" />
     </left>
     <stylesheets>
         <URL value="@../styles/columnbuttons.css" />
         <URL value="@../styles/optionStyle.css" />
+      <URL value="@../styles/customScrollbar.css" />
     </stylesheets>
     <center>
         <VBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
@@ -85,7 +91,7 @@
                                     </font>
                                 </Label>
                                 <Label text="Standard Kopien" />
-                                <ComboBox fx:id="cb_defaultCopies" editable="true" onAction="#setDefaultPrintCopies" prefWidth="60.0" promptText="1">
+                                <ComboBox fx:id="cb_defaultCopies" editable="true" onAction="#setDefaultPrintCopies" prefWidth="60.0" promptText="1" styleClass="customScrollbar">
                                     <items>
                                         <FXCollections fx:factory="observableArrayList">
                                             <String fx:value="1" />
@@ -179,7 +185,7 @@
                         <HBox layoutY="29.0" spacing="5.0">
                             <children>
                                 <CheckBox fx:id="cb_backUpStartCheck" minHeight="27.0" mnemonicParsing="false" text="Beim Start überprüfen ob die Letzte Sicherung älter als" />
-                                <ComboBox fx:id="cb_weeks" editable="true" prefHeight="25.0" prefWidth="54.0" promptText="1" />
+                                <ComboBox fx:id="cb_weeks" editable="true" prefHeight="25.0" prefWidth="54.0" promptText="1" styleClass="customScrollbar" />
                                 <Label fx:id="lb_weekTXT" minHeight="27.0" text="Wochen ist." />
                             </children>
                         </HBox>

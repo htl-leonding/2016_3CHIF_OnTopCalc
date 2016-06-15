@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.*?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -7,7 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
-<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_InformationsController">
+
+<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="886.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_InformationsController">
    <children>
       <VBox alignment="CENTER" layoutY="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -193,7 +195,7 @@
                         </Label>
                         <GridPane layoutX="14.0" layoutY="43.0" prefHeight="121.0" prefWidth="392.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
                            <children>
-                              <ListView fx:id="lv_ConstructionType" prefHeight="103.0" prefWidth="204.0" styleClass="ownListView" GridPane.rowIndex="1">
+                              <ListView fx:id="lv_ConstructionType" prefHeight="103.0" prefWidth="204.0" GridPane.rowIndex="1">
                                  <items>
                                     <FXCollections fx:factory="observableArrayList">
                                        <String fx:value="Carport" />
@@ -203,8 +205,12 @@
                                  <GridPane.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </GridPane.margin>
+                                 <styleClass>
+                                    <String fx:value="ownListView" />
+                                    <String fx:value="customScrollbar" />
+                                 </styleClass>
                               </ListView>
-                              <ListView fx:id="lv_RoofForm" prefHeight="103.0" prefWidth="204.0" styleClass="ownListView" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <ListView fx:id="lv_RoofForm" prefHeight="103.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <items>
                                     <FXCollections fx:factory="observableArrayList">
                                        <String fx:value="Pultdach" />
@@ -215,6 +221,10 @@
                                  <GridPane.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </GridPane.margin>
+                                 <styleClass>
+                                    <String fx:value="ownListView" />
+                                    <String fx:value="customScrollbar" />
+                                 </styleClass>
                               </ListView>
                               <Label id="normalLettering" text="Konstruktionstyp:">
                                  <GridPane.margin>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane stylesheets="@../styles/printStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
+<AnchorPane prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrintProjectController">
    <children>
       <VBox fx:id="container" alignment="CENTER" maxWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -20,7 +21,7 @@
               </Label>
             <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="ALWAYS">
                <children>
-                      <ComboBox fx:id="cb_projects" maxWidth="1.7976931348623157E308" promptText="Projekt auswählen" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS" />
+                      <ComboBox fx:id="cb_projects" maxWidth="1.7976931348623157E308" promptText="Projekt auswählen" styleClass="customScrollbar" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS" />
                       <TextField fx:id="tf_dateAndPosition" layoutY="40.0" promptText="Ort- und Datumsangabe" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="35.0">
                      <VBox.margin>
                         <Insets bottom="10.0" />
@@ -203,35 +204,51 @@
                <children>
                   <HBox alignment="CENTER" spacing="5.0" stylesheets="@../styles/printStyle.css">
                      <children>
-                            <Button id="createpdf" fx:id="bt_createPDF" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="137.0" layoutY="522.0" mnemonicParsing="false" onAction="#createPDF" prefHeight="76.0" prefWidth="45.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0">
-                                <font>
+                        <VBox alignment="CENTER">
+                           <children>
+                                  <Button id="createpdf" fx:id="bt_createPDF" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="137.0" layoutY="522.0" mnemonicParsing="false" onAction="#createPDF" prefHeight="76.0" prefWidth="45.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0">
+                                      <font>
+                                          <Font size="18.0" />
+                                      </font>
+                                  </Button>
+                              <CheckBox fx:id="cb_openAfterCreation" alignment="CENTER" mnemonicParsing="false" selected="true" text="PDF nach dem Erstellen öffnen" textAlignment="CENTER">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Button id="print" fx:id="bt_createPDFAndPrint" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="294.0" layoutY="522.0" mnemonicParsing="false" onAction="#print" prefHeight="78.0" prefWidth="16.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="25.0">
+                                 <font>
                                     <Font size="18.0" />
-                                </font>
-                            </Button>
-                        <Button id="print" fx:id="bt_createPDFAndPrint" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="294.0" layoutY="522.0" mnemonicParsing="false" onAction="#print" prefHeight="78.0" prefWidth="16.0" styleClass="printButton" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="25.0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="30.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <CheckBox fx:id="cb_openAfterCreation1" alignment="CENTER" mnemonicParsing="false" selected="true" textAlignment="CENTER" visible="false">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Button id="showPDF" fx:id="bt_showLastPDF" disable="true" layoutX="284.0" mnemonicParsing="false" onAction="#showLastPDF" styleClass="printButton" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                 <HBox.margin>
+                                    <Insets left="100.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                      <padding>
                         <Insets top="10.0" />
                      </padding>
                   </HBox>
-                  <AnchorPane minWidth="500.0">
-                     <children>
-                        <Button id="showPDF" fx:id="bt_showLastPDF" disable="true" layoutX="284.0" mnemonicParsing="false" onAction="#showLastPDF" styleClass="printButton" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
-                           <HBox.margin>
-                              <Insets left="100.0" />
-                           </HBox.margin>
-                        </Button>
-                        <CheckBox fx:id="cb_openAfterCreation" alignment="CENTER" layoutY="15.0" mnemonicParsing="false" selected="true" text="PDF nach dem Erstellen öffnen" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                           <HBox.margin>
-                              <Insets left="100.0" />
-                           </HBox.margin>
-                        </CheckBox>
-                     </children>
-                  </AnchorPane>
                </children>
             </VBox>
          </children>
@@ -240,4 +257,8 @@
          </padding>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@../styles/printStyle.css" />
+      <URL value="@../styles/customScrollbar.css" />
+   </stylesheets>
 </AnchorPane>

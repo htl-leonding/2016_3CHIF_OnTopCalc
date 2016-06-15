@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" prefHeight="380.0" prefWidth="394.0" stylesheets="@../styles/buttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProductCreatorController">
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" prefHeight="380.0" prefWidth="394.0" styleClass="customScrollbar" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ProductCreatorController">
    <children>
       <VBox alignment="TOP_CENTER" layoutY="10.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -61,7 +65,7 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="240.0" prefWidth="196.0" spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <ComboBox fx:id="cb_ProductType" maxWidth="1.7976931348623157E308" onAction="#productTypeChanged" prefHeight="25.0" promptText="Produkttyp auswählen">
+                        <ComboBox fx:id="cb_ProductType" maxWidth="1.7976931348623157E308" onAction="#productTypeChanged" prefHeight="25.0" promptText="Produkttyp auswählen" styleClass="customScrollbar">
                            <VBox.margin>
                               <Insets top="4.0" />
                            </VBox.margin></ComboBox>
@@ -74,7 +78,7 @@
                         <TextField fx:id="tf_Length" prefHeight="25.0" promptText="Länge in m" />
                         <TextField fx:id="tf_ColorFactor" prefHeight="25.0" promptText="Farbfaktor" />
                         <TextField fx:id="tf_PriceUnit" prefHeight="25.0" promptText="Preis pro Einheit in €" />
-                        <ComboBox fx:id="cb_Unit" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Einheit auswählen" />
+                        <ComboBox fx:id="cb_Unit" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="Einheit auswählen" styleClass="customScrollbar" />
                      </children>
                   </VBox>
                </children>
@@ -102,4 +106,8 @@
          </children>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@../styles/buttons.css" />
+      <URL value="@../styles/customScrollbar.css" />
+   </stylesheets>
 </AnchorPane>

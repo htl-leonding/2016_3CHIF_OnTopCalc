@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane id="AnchorPane" prefHeight="295.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Assembling_VisibleFormworkController">
    <children>
       <VBox alignment="CENTER" layoutY="32.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
@@ -53,7 +55,7 @@
                               </VBox>
                               <VBox alignment="CENTER" spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Product" prefWidth="180.0" promptText="Produkt auswählen" />
+                                    <ComboBox fx:id="cb_Product" prefWidth="180.0" promptText="Produkt auswählen" styleClass="customScrollbar" />
                                     <TextField fx:id="tf_PricePerSquare" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Preis in €" />
                                     <TextField fx:id="tf_AbatementPercent" minHeight="25.0" prefHeight="25.0" prefWidth="180.0" promptText="Verschnitt in %" />
                                  </children>

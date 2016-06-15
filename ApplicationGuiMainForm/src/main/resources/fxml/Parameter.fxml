@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../styles/columnbuttons.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.ParameterViewController">
    <center>
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
@@ -14,7 +17,7 @@
                         <Font name="Berlin Sans FB" size="25.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="tv_Prameter" layoutX="41.0" layoutY="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                  <TableView fx:id="tv_Prameter" layoutX="41.0" layoutY="100.0" styleClass="customScrollbar" stylesheets="@../styles/customScrollbar.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                      <columns>
                         <TableColumn fx:id="tc_LongTerm" maxWidth="400.0" minWidth="200.0" prefWidth="250.0" text="Langbezeichnung" />
                         <TableColumn fx:id="tc_DefaultValue" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" style="-fx-alignment: center;" text="Vorgabewert" />

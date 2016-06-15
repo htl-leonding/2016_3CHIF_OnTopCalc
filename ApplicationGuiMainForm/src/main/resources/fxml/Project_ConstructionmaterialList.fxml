@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.URL?>
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialListController">
+
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialListController">
    <children>
       <VBox alignment="CENTER" layoutX="-14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -126,8 +129,8 @@
                         </HBox>
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="1.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                            <children>
-                              <ComboBox fx:id="cb_Category" />
-                              <ComboBox fx:id="cb_Product">
+                              <ComboBox fx:id="cb_Category" styleClass="customScrollbar" />
+                              <ComboBox fx:id="cb_Product" styleClass="customScrollbar">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>

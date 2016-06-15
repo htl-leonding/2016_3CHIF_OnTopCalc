@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane prefHeight="373.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ColourController">
    <children>
       <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
@@ -63,7 +65,7 @@
                               </VBox>
                               <VBox spacing="2.0">
                                  <children>
-                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Farbe auswählen" />
+                                    <ComboBox fx:id="cb_Product" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Farbe auswählen" styleClass="customScrollbar" />
                                     <TextField fx:id="tf_AdittionalColourFactor" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Faktor in m²" />
                                     <TextField fx:id="tf_PricePerLiter" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Farbe in €/l" />
                                     <TextField fx:id="tf_ProfiHour" minHeight="25.0" prefHeight="25.0" prefWidth="160.0" promptText="Kosten in €/h" />

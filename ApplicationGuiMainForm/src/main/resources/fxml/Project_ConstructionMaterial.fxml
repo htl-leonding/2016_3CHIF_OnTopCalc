@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane id="AnchorPane" stylesheets="@../styles/columnbuttons.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialController">
+
+<AnchorPane id="AnchorPane" stylesheets="@../styles/columnbuttons.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.Project_ConstructionMaterialController">
    <children>
       <VBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -56,10 +60,10 @@
             </HBox>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <ComboBox fx:id="cb_Product" prefHeight="25.0" prefWidth="192.0" promptText="Produkt auswählen" />
+                  <ComboBox fx:id="cb_Product" prefHeight="25.0" prefWidth="192.0" promptText="Produkt auswählen" styleClass="customScrollbar" />
                   <TextField fx:id="tf_Amount" prefHeight="25.0" prefWidth="106.0" promptText="Anzahl" />
                   <TextField fx:id="tf_Price" prefHeight="25.0" prefWidth="103.0" promptText="Preis in €" />
-                  <ComboBox fx:id="cb_Component" prefHeight="25.0" prefWidth="199.0" promptText="Bauteil auswählen" />
+                  <ComboBox fx:id="cb_Component" prefHeight="25.0" prefWidth="199.0" promptText="Bauteil auswählen" styleClass="customScrollbar" />
                </children>
                <opaqueInsets>
                   <Insets />
