@@ -1,14 +1,12 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.db.JpaUtils;
-import at.plakolb.calculationlogic.db.controller.*;
+import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.util.BackUpDatabase;
 import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
-import at.plakolb.main.MainApp;
 import at.plakolb.settings.SettingsController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -29,12 +27,9 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import sun.applet.Main;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;

@@ -17,8 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 

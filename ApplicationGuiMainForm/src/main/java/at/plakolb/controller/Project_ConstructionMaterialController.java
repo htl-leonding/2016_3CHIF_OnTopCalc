@@ -1,7 +1,10 @@
 /*	HTL Leonding	*/
 package at.plakolb.controller;
 
-import at.plakolb.calculationlogic.db.controller.*;
+import at.plakolb.calculationlogic.db.controller.AssemblyController;
+import at.plakolb.calculationlogic.db.controller.ParameterController;
+import at.plakolb.calculationlogic.db.controller.ProductController;
+import at.plakolb.calculationlogic.db.controller.WorthController;
 import at.plakolb.calculationlogic.db.entity.Assembly;
 import at.plakolb.calculationlogic.db.entity.Component;
 import at.plakolb.calculationlogic.db.entity.Product;

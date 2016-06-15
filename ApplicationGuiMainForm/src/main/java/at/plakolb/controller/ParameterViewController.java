@@ -4,6 +4,7 @@ package at.plakolb.controller;
 import at.plakolb.calculationlogic.db.controller.ParameterController;
 import at.plakolb.calculationlogic.db.entity.ParameterP;
 import at.plakolb.calculationlogic.db.entity.Unit;
+import at.plakolb.calculationlogic.util.Logging;
 import at.plakolb.calculationlogic.util.UtilityFormat;
 import at.plakolb.edit.ParameterCell;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -22,6 +23,7 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 /**
  * FXML Controller class
@@ -86,6 +88,17 @@ public class ParameterViewController implements Initializable {
      * Refreshes the TableView.
      */
     public void refreshTable() {
+
+        ParameterController parameterController = new ParameterController();
+
+        for (ParameterP parameter : tv_Prameter.getItems()){
+            try {
+                parameterController.edit(parameter);
+            } catch (Exception ex) {
+                Logging.getLogger().log(Level.SEVERE, "Couldn't refresh parameters.", ex);
+            }
+        }
+
         tv_Prameter.getColumns().get(0).setVisible(false);
         tv_Prameter.getColumns().get(0).setVisible(true);
     }

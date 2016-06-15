@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane id="AnchorPane" prefHeight="216.0" prefWidth="600.0" stylesheets="@../styles/customScrollbar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.plakolb.controller.PrinterSelectionController">
    <children>
       <ComboBox fx:id="cb_choosPrinter" layoutX="157.0" layoutY="175.0" onAction="#printerserviceChanged" prefHeight="25.0" prefWidth="262.0" promptText="Drucker auswählen" styleClass="customScrollbar" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="110.0" />

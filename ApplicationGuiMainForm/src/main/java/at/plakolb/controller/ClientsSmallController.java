@@ -2,10 +2,7 @@
 package at.plakolb.controller;
 
 import at.plakolb.calculationlogic.db.controller.ClientController;
-import at.plakolb.calculationlogic.db.controller.ProjectController;
 import at.plakolb.calculationlogic.db.entity.Client;
-import at.plakolb.calculationlogic.db.entity.Project;
-import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
 import at.plakolb.calculationlogic.util.Logging;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

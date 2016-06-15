@@ -2,7 +2,6 @@
 package at.plakolb.calculationlogic.db.entity;
 
 import at.plakolb.calculationlogic.util.LocalDateTimeAttributeConverter;
-import at.plakolb.calculationlogic.util.UtilityFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
