@@ -54,6 +54,8 @@ public class ProjectController {
     //Auf Korrektheit überprüfen
     public void createCosting(Project project, long originalProjectId) {
         try {
+            WorthController wc =new WorthController();
+            System.out.println( wc.BaseAndRoofAreaCountTabs(originalProjectId));
             create(project);
 
             em = JpaUtils.getEntityManager();
@@ -220,7 +222,7 @@ public class ProjectController {
             return false;
         } finally {
             if (em != null) {
-                em.close();
+                em.clear();
             }
         }
     }

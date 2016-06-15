@@ -81,6 +81,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
             WorthController worthController = new WorthController();
             int max_index = worthController.BaseAndRoofAreaCountTabs(ProjectViewController.getOpenedProject().getId());
             if (max_index > 0) {
+                System.out.println(max_index);
                 for (int i = 0; i < max_index; i++) {
                     addTab(null);
                 }
@@ -104,19 +105,28 @@ public class Project_ResultAreaController extends Observable implements Initiali
     }
 
     public double getBaseArea() {
+        if (worthArea==null)
+            return 0;
+        else
         return worthArea.getWorth();
     }
 
     public double getRoofArea() {
+        if (worthRoofArea!=null)
         return worthRoofArea.getWorth();
+        else return 0;
     }
 
     public double getLedge() {
+        if (worthRoofOverhang!=null)
         return worthRoofOverhang.getWorth();
+        else return 0;
     }
 
     public double getLedgeAndRoofArea() {
+        if (worthRoofAreaWithRoofOverhang!=null)
         return worthRoofAreaWithRoofOverhang.getWorth();
+        else return 0;
     }
 
     public Worth getLedgeAndRoofAreaWorth() {
@@ -127,34 +137,36 @@ public class Project_ResultAreaController extends Observable implements Initiali
      * Calculates the total area of the roof.
      */
     public void calcArea() {
+        if (worthArea!=null&&worthRoofArea!=null&&worthRoofOverhang!=null&&worthRoofAreaWithRoofOverhang!=null) {
+            double baseArea = 0;
+            double roofArea = 0;
+            double ledge = 0;
+            double ledgeAndRoofArea = 0;
 
-        double baseArea = 0;
-        double roofArea = 0;
-        double ledge = 0;
-        double ledgeAndRoofArea = 0;
+            double oldBA = worthArea.getWorth();
+            double oldRA = worthRoofArea.getWorth();
+            double oldL = worthRoofOverhang.getWorth();
+            double oldLARA = worthRoofAreaWithRoofOverhang.getWorth();
 
-        double oldBA = worthArea.getWorth();
-        double oldRA = worthRoofArea.getWorth();
-        double oldL = worthRoofOverhang.getWorth();
-        double oldLARA = worthRoofAreaWithRoofOverhang.getWorth();
+            for (Project_BaseAndRoofAreaController controller : areaController) {
+                baseArea += controller.getBaseAreaValue();
+                roofArea += controller.getRoofAreaValue();
+                ledge += controller.getLedgeValue();
+                ledgeAndRoofArea += controller.getLedgeAndRoofAreaValue();
+            }
 
-        for (Project_BaseAndRoofAreaController controller : areaController) {
-            baseArea += controller.getBaseAreaValue();
-            roofArea += controller.getRoofAreaValue();
-            ledge += controller.getLedgeValue();
-            ledgeAndRoofArea += controller.getLedgeAndRoofAreaValue();
+            worthArea.setWorth(baseArea);
+            worthRoofArea.setWorth(roofArea);
+            worthRoofOverhang.setWorth(ledge);
+            worthRoofAreaWithRoofOverhang.setWorth(ledgeAndRoofArea);
+
+            setChanged();
+            notifyObservers();
+            if (oldBA != baseArea || oldRA != roofArea || oldL != ledge || oldLARA != ledgeAndRoofArea) {
+                ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
+            }
         }
 
-        worthArea.setWorth(baseArea);
-        worthRoofArea.setWorth(roofArea);
-        worthRoofOverhang.setWorth(ledge);
-        worthRoofAreaWithRoofOverhang.setWorth(ledgeAndRoofArea);
-
-        setChanged();
-        notifyObservers();
-        if (oldBA != baseArea || oldRA != roofArea || oldL != ledge || oldLARA != ledgeAndRoofArea) {
-            ModifyController.getInstance().setProject_resultArea(Boolean.TRUE);
-        }
     }
 
     /**
@@ -276,7 +288,7 @@ public class Project_ResultAreaController extends Observable implements Initiali
                 Logging.getLogger().log(Level.SEVERE, "Project_ResultAreaController: persist method didn't work.", ex);
             }
         }
-
+        System.out.println(next_ID);
         for (Project_BaseAndRoofAreaController c : areaController) {
             c.persist();
         }

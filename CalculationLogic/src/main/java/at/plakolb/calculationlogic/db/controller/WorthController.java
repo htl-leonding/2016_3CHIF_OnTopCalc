@@ -6,6 +6,7 @@ import at.plakolb.calculationlogic.db.entity.ParameterP;
 import at.plakolb.calculationlogic.db.entity.Project;
 import at.plakolb.calculationlogic.db.entity.Worth;
 import at.plakolb.calculationlogic.db.exceptions.NonexistentEntityException;
+import at.plakolb.calculationlogic.util.Logging;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  *
@@ -173,7 +175,7 @@ public class WorthController {
                     getSingleResult();
             return Integer.valueOf(object.toString());
         } catch (Exception ex) {
-            //logger.debug(ex.getMessage());    TODO
+            Logging.getLogger().log(Level.SEVERE,null,ex);
             return 0;
         } finally {
             em.clear();
