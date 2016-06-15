@@ -319,6 +319,12 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
         try {
             int index = cb_roofType.getSelectionModel().getSelectedIndex();
 
+            if (Assembling_TiledRoofController.getInstance() != null)
+                Assembling_TiledRoofController.getInstance().calculate();
+
+            if (Assembling_SheetRoofController.getInstance() != null)
+                Assembling_SheetRoofController.getInstance().calculate();
+
             //Kosten Produkt Lattung oder Vollschalung
             if (Assembling_SheetRoofController.getInstance() != null) {
                 productCosts.setWorth(price * (index == 0 ? Assembling_TiledRoofController.getInstance().getLength().getWorth()
