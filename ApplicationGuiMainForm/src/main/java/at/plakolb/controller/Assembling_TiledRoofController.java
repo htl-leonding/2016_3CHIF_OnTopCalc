@@ -28,7 +28,7 @@ import java.util.logging.Level;
  *
  * @author Kepplinger
  */
-public class Assembling_TiledRoofController extends Observable implements Initializable, Observer {
+public class Assembling_TiledRoofController implements Initializable {
 
     private static Assembling_TiledRoofController instance;
 
@@ -58,7 +58,6 @@ public class Assembling_TiledRoofController extends Observable implements Initia
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         instance = this;
-        Project_ResultAreaController.getInstance().addObserver(this);
 
         ParameterController parameterController = new ParameterController();
         slatSpacing = new Worth(parameterController.findParameterPByShortTerm("LA"));
@@ -72,16 +71,19 @@ public class Assembling_TiledRoofController extends Observable implements Initia
 
         tf_slatSpacing.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_slatSpacing, slatSpacing);
-            calculate();
+            Assembling_BattensOrFullFormworkController.getInstance().calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
         tf_waste.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_waste, waste);
-            calculate();
+            Assembling_BattensOrFullFormworkController.getInstance().calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
 
         load();
+
+        if (Assembling_BattensOrFullFormworkController.getInstance() != null)
+            Assembling_BattensOrFullFormworkController.getInstance().calculate();
     }
 
     public static Assembling_TiledRoofController getInstance() {
@@ -98,6 +100,7 @@ public class Assembling_TiledRoofController extends Observable implements Initia
     public void load() {
         WorthController worthController = new WorthController();
         Project project = ProjectViewController.getOpenedProject();
+
         if (project != null) {
             slatSpacing = (worthController.findWorthByShortTermAndProjectId("LA", project.getId()) != null)
                     ? worthController.findWorthByShortTermAndProjectId("LA", project.getId()) : slatSpacing;
@@ -145,9 +148,6 @@ public class Assembling_TiledRoofController extends Observable implements Initia
                 Logging.getLogger().log(Level.SEVERE, "Assembling_TiledRoofController: calculate method didn't work.", ex);
             }
         }
-
-        setChanged();
-        notifyObservers();
     }
 
     /**
@@ -177,16 +177,5 @@ public class Assembling_TiledRoofController extends Observable implements Initia
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Assembling_TiledRoofController: persist method didn't work.", ex);
         }
-    }
-
-    /**
-     * Recalculates all values when something has changed.
-     *
-     * @param o
-     * @param arg
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        calculate();
     }
 }

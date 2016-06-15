@@ -160,16 +160,12 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             ap_general.setVisible(true);
             ProductController productController = new ProductController();
             if (newValue.intValue() == 0) {
-                Assembling_SheetRoofController.getInstance().deleteObserver(this);
-                Assembling_TiledRoofController.getInstance().addObserver(this);
                 contentPane.getChildren().clear();
                 contentPane.getChildren().add(tiledRoof);
                 title.setText("Lattung");
                 ProjectViewController.getOpenedProject().setRoofMaterial("Ziegeldach");
                 cb_product.setItems(FXCollections.observableArrayList(productController.findByProductTypeOrderByName(ProductType.BATTEN)));
             } else if (newValue.intValue() == 1) {
-                Assembling_TiledRoofController.getInstance().deleteObserver(this);
-                Assembling_SheetRoofController.getInstance().addObserver(this);
                 contentPane.getChildren().clear();
                 contentPane.getChildren().add(sheetRoof);
                 title.setText("Vollschalung");
@@ -310,6 +306,8 @@ public class Assembling_BattensOrFullFormworkController implements Initializable
             tf_assemblingDuration.setText(UtilityFormat.getStringForTextField(assemblingDuration));
             tf_workCosts.setText(UtilityFormat.getStringForTextField(workCosts));
         }
+
+        calculate();
     }
 
     /**

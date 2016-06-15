@@ -64,11 +64,14 @@ public class Assembling_SheetRoofController extends Observable implements Initia
 
         tf_wastePercent.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             UtilityFormat.setWorthFromTextField(tf_wastePercent, waste);
-            calculate();
+            Assembling_BattensOrFullFormworkController.getInstance().calculate();
             ModifyController.getInstance().setAssembling_battensOrFullFormwork(Boolean.TRUE);
         });
 
         load();
+
+        if (Assembling_BattensOrFullFormworkController.getInstance() != null)
+            Assembling_BattensOrFullFormworkController.getInstance().calculate();
     }
 
     public static Assembling_SheetRoofController getInstance() {
@@ -159,6 +162,6 @@ public class Assembling_SheetRoofController extends Observable implements Initia
     @Override
     public void update(Observable o, Object arg) {
         lb_roofArea.setText(UtilityFormat.getStringForLabel(Project_ResultAreaController.getInstance().getLedgeAndRoofAreaWorth()));
-        calculate();
+        Assembling_BattensOrFullFormworkController.getInstance().calculate();
     }
 }

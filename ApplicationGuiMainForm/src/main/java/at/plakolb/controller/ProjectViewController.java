@@ -76,6 +76,7 @@ public class ProjectViewController extends Observable implements Initializable, 
         addObserver(Assembling_FormworkController.getInstance());
         addObserver(Assembling_VisibleFormworkController.getInstance());
         addObserver(Assembling_FoilController.getInstance());
+        addObserver(Assembling_BattensOrFullFormworkController.getInstance());
         ModifyController.getInstance().addObserver(this);
 
         if (projectOpened) {
@@ -116,12 +117,17 @@ public class ProjectViewController extends Observable implements Initializable, 
         });
 
         tab_Overview.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_MaterialAndCostController.getInstance().refreshTableView();
+            Project_ColourController.getInstance().updateVisibleFormwork();
+            Project_OverviewController.getInstance().refreshValues();
             setChanged();
             notifyObservers();
             Project_ColourController.getInstance().updateVisibleFormwork();
             Project_MaterialAndCostController.getInstance().refreshTableView();
             Project_ColourController.getInstance().updateVisibleFormwork();
             Project_OverviewController.getInstance().refreshValues();
+
         });
     }
 
