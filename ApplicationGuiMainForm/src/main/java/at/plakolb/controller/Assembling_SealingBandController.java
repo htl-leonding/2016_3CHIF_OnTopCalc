@@ -137,7 +137,7 @@ public class Assembling_SealingBandController implements Initializable, Observer
                 new ReadOnlyObjectWrapper<>(param.getValue().getDescription()));
 
         cl_length.setCellValueFactory((TableColumn.CellDataFeatures<Component, String> param) ->
-                new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent())) + " m"));
+                new ReadOnlyObjectWrapper<>(String.valueOf(UtilityFormat.getStringForLabel(param.getValue().getLengthComponent() * param.getValue().getNumberOfProducts())) + " m"));
 
         if (ProjectViewController.getOpenedProject() != null) {
             load();
@@ -253,23 +253,22 @@ public class Assembling_SealingBandController implements Initializable, Observer
     public void calculate() {
         try {
             //Verschnitt Nageldichtband
-            //Alte Formel-ID: VD
             waste.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() * blend.getWorth() / 100);
             lb_blend.setText(UtilityFormat.getStringForLabel(waste));
+
             //Nageldichtband
-            //Alte Formel-ID: ND
             sealingBand.setWorth(Project_ConstructionMaterialListController.getInstance().getTotalRafterLength() + waste.getWorth());
             lb_sealingBand.setText(UtilityFormat.getStringForLabel(sealingBand));
-            //Produktkosten
-            //Alte Formel-ID: KPND
+
+            //Kosten Produkt Nageldichtband
             productCosts.setWorth(price * sealingBand.getWorth());
             lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
-            //Montagekosten
-            //Alte Formel-ID: KMND
+
+            //Kosten Montage Nageldichtband
             montageCosts.setWorth(workerCosts.getWorth() * duration.getWorth());
             lb_montageCosts.setText(UtilityFormat.getStringForLabel(montageCosts));
-            //Totalcosts
-            //Alte Formel-ID: GKND
+
+            //Gesamtkosten Nageldichtband
             totalCosts.setWorth(productCosts.getWorth() + montageCosts.getWorth());
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 

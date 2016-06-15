@@ -228,30 +228,26 @@ public class Assembling_VisibleFormworkController implements Initializable, Obse
      */
     private void calculate() {
         try {
-            //Verschnittsfläche
-            //Alte Formel-ID: VSS
+            //Verschnitt sichtbare Schalung m²
             abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedge() * abatementPercent.getWorth() / 100);
             lb_AbatementArea.setText(UtilityFormat.getStringForLabel(abatementArea));
 
-            //sicht. Schalung
-            //Alte Formel-ID: SS
+            //sichtbare Schalung
             visibleFormwork.setWorth(Project_ResultAreaController.getInstance().getLedge() + abatementArea.getWorth());
             lb_VisibleFormwork.setText(UtilityFormat.getStringForLabel(visibleFormwork));
 
-            //Kosten Produkt
-            //Alte Formel-ID: KPSS
+            //Kosten Produkt sichtbare Schalung
             productCosts.setWorth(pricePerSquare * visibleFormwork.getWorth());
             lb_ProductCosts.setText(UtilityFormat.getStringForLabel(productCosts));
 
-            //Kosten Montage
-            //Alte Formel-ID: KMSS
+            //Kosten Montage sichtbare Schalung
             assemblingCosts.setWorth(workerCosts.getWorth() * assemblingDuration.getWorth());
             lb_AssemblingCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
 
-            //Gesamtkosten
-            //Alte Formel-ID: GKSS
+            //Gesamtkosten sichtbare Schalung
             totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
             lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
+
         } catch (Exception ex) {
             if (ProjectViewController.isProjectOpened()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Werte können nicht berechnet werden!\nFehlerinformation: " + ex.getLocalizedMessage(), ButtonType.OK);

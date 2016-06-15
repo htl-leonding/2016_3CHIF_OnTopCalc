@@ -216,32 +216,26 @@ public class Project_ColourController implements Initializable {
 
     public void calculate() {
         try {
-            //Benötigte Farbe in m²
-            //Alte Formel-ID: FMM
+            //Farbmenge in m²
             paintArea.setWorth(Assembling_VisibleFormworkController.getInstance().getVisibleFormwork() + additionalColourFactor.getWorth());
             lb_PaintArea.setText(UtilityFormat.getStringForLabel(paintArea));
 
-            //Benötigte Farbe in l
-            //Alte Formel-ID:FML
+            //Farbmenge in Liter
             paintLiter.setWorth(paintArea.getWorth() / 10);
             lb_PaintLiter.setText(UtilityFormat.getStringForLabel(paintLiter));
 
-            //Montage Kosten
-            //Alte Formel-ID: KMFarbe
+            //Kosten Montage Farbe
             montageCost.setWorth(profiHour.getWorth() * timeofPainting.getWorth());
             lb_MontageCost.setText(UtilityFormat.getStringForLabel(montageCost));
 
-            //product Kosten
-            //Alte Formel KPFarbe
+            //Kosten Produkt Farbe
             productCost.setWorth(pricePerLiter * paintLiter.getWorth());
             lb_ProductCost.setText(UtilityFormat.getStringForLabel(productCost));
-            //Gesamtkosten
-            //Alte Formel: GK
-            //INSERT INTO FORMULA (ID,LONGTERM,SELECTSTATEMENT,SHORTTERM) values (NEXT VALUE FOR FORMULA_SEQ,'Gesamtkosten Farbe',
-            //'select NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KPFarbe''), 0) + 
-            // NULLIF((select NULLIF(w.worth, 0) from Worth w join ParameterP p on w.parameter_id = p.id where w.project_id = ? and p.shortterm = ''KMFarbe''), 0) from sysibm.sysdummy1','GKFarbe');
+
+            //Gesamtkosten Farbe
             totalCost.setWorth(productCost.getWorth() + montageCost.getWorth());
             lb_TotalCosts.setText(UtilityFormat.getStringForLabel(totalCost));
+
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Project_BaseAndRoofAreaController: calculate method didn't work.", ex);
         }

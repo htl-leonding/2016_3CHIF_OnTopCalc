@@ -104,13 +104,12 @@ public class Assembling_SheetRoofController extends Observable implements Initia
      */
     public void calculate() {
         try {
+
             //Verschnitt Vollschalung
-            //Alte Formel-ID: VSS
             waste.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * Assembling_BattensOrFullFormworkController.getInstance().getWastePercent() / 100);
             lb_waste.setText(UtilityFormat.getStringForLabel(waste));
 
             //Vollschalung
-            //Alte Formel-ID: VollS
             formwork.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() + waste.getWorth());
             lb_formwork.setText(UtilityFormat.getStringForLabel(formwork));
 

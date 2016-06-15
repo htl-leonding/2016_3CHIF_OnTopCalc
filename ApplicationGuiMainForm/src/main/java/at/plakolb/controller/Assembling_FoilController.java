@@ -236,28 +236,24 @@ public class Assembling_FoilController implements Initializable, Observer {
      */
     public void calculate() {
         try {
-            //Fläche (mit Verschnitt) in m²
-            //Alte Formel-ID: FUE
+
+            //Folie Überlappung m²
             abatementArea.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() * abatementPercent.getWorth() / 100);
             lb_blend.setText(UtilityFormat.getStringForLabel(abatementArea));
 
             //Folie
-            //Alte Formel-ID: F
             foil.setWorth(Project_ResultAreaController.getInstance().getLedgeAndRoofArea() + abatementArea.getWorth());
             lb_foil.setText(UtilityFormat.getStringForLabel(foil));
 
-            //Produktkosten
-            //Alte Formel-ID: KPF
+            //Kosten Produkt Folie
             productCosts.setWorth(pricePerSquare * foil.getWorth());
             lb_productCosts.setText(UtilityFormat.getStringForLabel(productCosts));
 
-            //Montage Kosten
-            //Alte Formel-ID: KMF
+            //Kosten Montage Folie
             assemblingCosts.setWorth(workerCosts.getWorth() * assemblingDuration.getWorth());
             lb_montageCosts.setText(UtilityFormat.getStringForLabel(assemblingCosts));
 
-            //Totalcosts
-            //Alte Formel-ID: GKF
+            //Gesamtkosten Folie
             totalCosts.setWorth(productCosts.getWorth() + assemblingCosts.getWorth());
             lb_totalCosts.setText(UtilityFormat.getStringForLabel(totalCosts));
 

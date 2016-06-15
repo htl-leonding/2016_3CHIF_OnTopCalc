@@ -187,13 +187,19 @@ public class Project_TransportController extends java.util.Observable implements
     private void calculate() {
 
         try {
-            transportCosts.setWorth(days.getWorth() * kilometerAllowance.getWorth() * distance.getWorth() * 2);
-            abidanceCosts.setWorth(pricePerHour.getWorth() * duration.getWorth());
-            totalCosts.setWorth(transportCosts.getWorth() + abidanceCosts.getWorth());
 
+            //Kosten Transport
+            transportCosts.setWorth(days.getWorth() * kilometerAllowance.getWorth() * distance.getWorth() * 2);
             lb_PriceTransport.setText(UtilityFormat.getStringForLabel(transportCosts));
+
+            //Kosten Aufenthalt
+            abidanceCosts.setWorth(pricePerHour.getWorth() * duration.getWorth());
             lb_PriceStay.setText(UtilityFormat.getStringForLabel(abidanceCosts));
+
+            //Gesamtpreis Transport
+            totalCosts.setWorth(transportCosts.getWorth() + abidanceCosts.getWorth());
             lb_PriceComplete.setText(UtilityFormat.getStringForLabel(totalCosts));
+
             setValuesChanged(true);
         } catch (Exception ex) {
             Logging.getLogger().log(Level.SEVERE, "Project_TransportController: calculate method didn't work.", ex);
