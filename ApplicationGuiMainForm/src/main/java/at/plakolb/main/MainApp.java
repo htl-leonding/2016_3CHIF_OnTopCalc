@@ -70,38 +70,4 @@ public class MainApp extends Application {
             Logging.getLogger().log(Level.SEVERE, null, e);
         }
     }
-
-    public static void restart() {
-        if (!System.getProperty("os.name").toLowerCase().contains("windows")) {
-            StringBuilder deleteDB = new StringBuilder();
-            deleteDB.append("#!/bin/bash\n");
-            deleteDB.append(String.format("while [ -d %s ] do\n", "database"));
-            deleteDB.append(String.format("rm -r %s || echo \"Cannot delete database directory.\"\n", "database"));
-            deleteDB.append("end\n\n");
-
-            StringBuilder cmd = new StringBuilder();
-            cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
-            for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
-                cmd.append(jvmArg + " ");
-            }
-            cmd.append("-jar ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
-
-            deleteDB.append(cmd.toString());
-            try {
-                FileWriter fileWriter = new FileWriter("restart.sh");
-                fileWriter.write(deleteDB.toString());
-                fileWriter.flush();
-                fileWriter.close();
-                new File("restart.sh").setExecutable(true);
-            } catch (IOException e) {
-                Logging.getLogger().log(Level.SEVERE, "Couldn`t write to restart file.", e);
-            }
-            try {
-                Runtime.getRuntime().exec("restart.sh");
-            } catch (IOException ex) {
-                Logging.getLogger().log(Level.SEVERE, "Application couldn't be restarted.", ex);
-            }
-        }
-        System.exit(0);
-    }
 }

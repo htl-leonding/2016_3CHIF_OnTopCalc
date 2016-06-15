@@ -503,29 +503,6 @@ public class OptionsController implements Initializable, Observer {
         }
     }
 
-    public void revertAll(ActionEvent actionEvent) throws Exception {
-        Alert alert = new Alert(Alert.AlertType.WARNING, "Das Programm wird auf die Werkseinstellungen zurückgesetzt!\nDabei gehen alle ungesicherten Daten verloren!\n\nMöchten Sie fortfahren?");
-        alert.getButtonTypes().clear();
-        alert.getButtonTypes().addAll(ButtonType.NO, ButtonType.YES);
-        alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
-        alert.showAndWait();
-        if (alert.getResult().equals(ButtonType.YES)) {
-            new ProjectController().reset();
-            new ComponentController().reset();
-            new CategoryController().reset();
-            new AssemblyController().reset();
-            new ProductController().reset();
-            new ParameterController().reset();
-
-            new WorthController().reset();
-            new ClientController().reset();
-            new UnitController().reset();
-
-            SettingsController.setProperty("firstrun","true");
-            MainApp.restart();
-        }
-    }
-
     public void setDefaultPrintCopies(ActionEvent actionEvent) {
         try {
             Integer.parseInt(cb_defaultCopies.getValue());

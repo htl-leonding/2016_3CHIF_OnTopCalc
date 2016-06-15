@@ -104,30 +104,6 @@
                                 </ComboBox>
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" spacing="5.0" AnchorPane.rightAnchor="0.0">
-                            <children>
-                                <Label text="Einstellungen">
-                                    <font>
-                                        <Font name="System Bold" size="14.0" />
-                                    </font>
-                                </Label>
-                                <Button minWidth="150.0" mnemonicParsing="false" onAction="#revertAll" text="Alles zurücksetzen">
-                                    <graphic>
-                                        <ImageView>
-                                            <image>
-                                                <Image url="@../images/interact.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
                </children>
             </AnchorPane>
                 <AnchorPane layoutX="20.0" layoutY="406.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="15.0">
